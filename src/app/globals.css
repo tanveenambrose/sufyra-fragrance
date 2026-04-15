@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+@theme {
+  --color-luxury-gold: #C5A059;
+  --color-luxury-charcoal: #0A0A0A;
+  --color-luxury-cream: #FAF9F6;
+  --color-luxury-bronze: #8B5E3C;
+  --font-serif: var(--font-playfair), serif;
+  --font-sans: var(--font-inter), sans-serif;
+}
+
+:root {
+  --background: #0a0a0a;
+  --foreground: #faf9f6;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: var(--font-inter), sans-serif;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-playfair), serif;
+}
+
+@layer utilities {
+  .luxury-gradient {
+    background: linear-gradient(135deg, #c5a059 0%, #8b5e3c 100%);
+  }
+
+  .luxury-card {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(197, 160, 89, 0.1);
+    transition: all 0.3s ease;
+  }
+
+  .luxury-card:hover {
+    border-color: rgba(197, 160, 89, 0.5);
+    transform: translateY(-5px);
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  .cart-drawer {
+    background: #0d0d0d;
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+  }
+}
+
