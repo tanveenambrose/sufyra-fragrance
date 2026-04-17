@@ -23,9 +23,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   };
 
   return (
-    <div className="luxury-card group rounded-2xl overflow-hidden flex flex-col h-full reveal">
+    <div className="luxury-card group rounded-2xl overflow-hidden flex flex-col h-full reveal" suppressHydrationWarning>
       {/* Product Image */}
-      <div className="relative aspect-[4/5] overflow-hidden bg-white/5 border-b border-white/5">
+      <div className="relative aspect-[4/5] overflow-hidden bg-white/5 border-b border-white/5" suppressHydrationWarning>
         <Image
           src={product.image}
           alt={product.name}
@@ -36,8 +36,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       </div>
 
       {/* Product Info */}
-      <div className="p-5 flex flex-col flex-1">
-        <div className="flex justify-between items-start mb-1">
+      <div className="p-5 flex flex-col flex-1" suppressHydrationWarning>
+        <div className="flex justify-between items-start mb-1" suppressHydrationWarning>
           <h3 className="text-lg font-serif text-luxury-cream leading-tight">{product.name}</h3>
           <span className="text-luxury-gold font-bold text-base">{currentPrice}৳</span>
         </div>
@@ -68,12 +68,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           </div>
         </div>
 
-        {/* Permanent Quick Add Button */}
         <button 
           onClick={handleAddItem}
-          className="w-full bg-luxury-gold text-luxury-charcoal py-3 rounded-xl font-bold text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-luxury-cream transition-colors mt-auto"
+          className="w-full bg-[#FFD700] text-black py-3.5 rounded-xl font-bold text-[11px] uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-[#FFE55C] active:scale-95 transition-all mt-auto shadow-[0_0_20px_rgba(255,215,0,0.2)]"
         >
-          <Plus className="w-3.5 h-3.5" />
+          <Plus className="w-4 h-4" />
           Add to Bag
         </button>
       </div>

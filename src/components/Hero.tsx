@@ -61,11 +61,11 @@ const Hero = () => {
 
       {/* Content */}
       <div className="relative z-10 text-center px-6 max-w-4xl">
-        <h2 ref={subtitleRef} className="text-luxury-gold uppercase tracking-[0.5em] text-sm md:text-base mb-6 font-medium">
+        <h2 ref={subtitleRef} className="text-luxury-gold uppercase tracking-[0.4em] text-[10px] sm:text-xs md:text-base mb-6 font-medium">
           Pure Essence of Luxury
         </h2>
-        <h1 ref={titleRef} className="text-5xl md:text-8xl font-serif text-luxury-cream mb-8 leading-tight">
-          Fragrance That <br /> <span className="font-normal">Suites you</span>
+        <h1 ref={titleRef} className="text-4xl sm:text-6xl md:text-8xl font-serif text-luxury-cream mb-8 leading-tight">
+          Fragrance That <br /> <span className="font-normal">Suits you</span>
         </h1>
         <div ref={ctaRef} className="flex flex-col sm:flex-row items-center justify-center gap-6 mt-10">
           <button className="luxury-gradient px-12 py-4 rounded-full text-luxury-charcoal font-bold uppercase tracking-wider text-sm hover:scale-105 transition-transform flex items-center justify-center gap-2 min-w-[220px]">
