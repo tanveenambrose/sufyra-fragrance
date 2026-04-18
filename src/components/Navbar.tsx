@@ -3,14 +3,16 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Search, ShoppingBag, Menu, X } from 'lucide-react';
+import { Search, ShoppingBag, Menu, X, User as UserIcon, LogOut } from 'lucide-react';
 import { useCart } from '@/store/useCart';
+import { useAuth } from '@/hooks/useAuth';
 import { gsap } from 'gsap';
 
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const { user, signOut } = useAuth();
   const itemCount = useCart((state) => state.getItemCount());
   const totalPrice = useCart((state) => state.getTotalPrice());
   const setIsCartOpen = useCart((state) => state.setIsCartOpen);
@@ -78,9 +80,24 @@ const Navbar: React.FC = () => {
 
           {/* Right side Actions - Icons always visible */}
           <div className="flex items-center gap-3 md:gap-6 nav-item flex-shrink-0">
-            <Link href="/login" className="hidden lg:flex text-[10px] uppercase tracking-widest hover:text-luxury-gold transition-colors font-bold whitespace-nowrap">
-              Login
-            </Link>
+            {isMounted && user ? (
+              <div className="hidden lg:flex items-center gap-4">
+                <span className="text-[10px] uppercase tracking-widest text-luxury-gold font-bold">
+                  {user.user_metadata?.full_name || user.email?.split('@')[0]}
+                </span>
+                <button 
+                  onClick={() => signOut()}
+                  className="text-white/40 hover:text-red-400 transition-colors p-1"
+                  title="Sign Out"
+                >
+                  <LogOut size={16} />
+                </button>
+              </div>
+            ) : (
+              <Link href="/login" className="hidden lg:flex text-[10px] uppercase tracking-widest hover:text-luxury-gold transition-colors font-bold whitespace-nowrap">
+                Login
+              </Link>
+            )}
             
             <button className="relative group p-1" onClick={() => setIsCartOpen(true)}>
               <div className="flex items-center gap-1 md:gap-2">
@@ -116,7 +133,22 @@ const Navbar: React.FC = () => {
         <div className="flex flex-col items-center justify-center h-full gap-8 text-2xl uppercase tracking-widest font-serif text-luxury-cream">
           <Link href="/" onClick={() => setIsMenuOpen(false)} className="hover:text-luxury-gold transition-colors">Home</Link>
           <Link href="/products" onClick={() => setIsMenuOpen(false)} className="hover:text-luxury-gold transition-colors">Products</Link>
-          <Link href="/login" onClick={() => setIsMenuOpen(false)} className="hover:text-luxury-gold transition-colors text-sm">Login / Register</Link>
+          {isMounted && user ? (
+            <div className="flex flex-col items-center gap-4 mt-4">
+              <span className="text-sm text-luxury-gold font-bold">{user.email}</span>
+              <button 
+                onClick={() => {
+                  signOut();
+                  setIsMenuOpen(false);
+                }} 
+                className="text-sm text-red-400 font-bold uppercase tracking-widest"
+              >
+                Sign Out
+              </button>
+            </div>
+          ) : (
+            <Link href="/login" onClick={() => setIsMenuOpen(false)} className="hover:text-luxury-gold transition-colors text-sm">Login / Register</Link>
+          )}
         </div>
       </div>
     </nav>

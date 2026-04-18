@@ -5,10 +5,9 @@ import Link from 'next/link';
 import { Mail, Lock, User, UserPlus, ArrowLeft, CheckCircle2 } from 'lucide-react';
 import AuthInput from '@/components/Auth/AuthInput';
 import SocialButton from '@/components/Auth/SocialButton';
-import { auth, db } from '@/lib/firebase';
-import { createUserWithEmailAndPassword, updateProfile, GoogleAuthProvider, FacebookAuthProvider, signInWithPopup } from 'firebase/auth';
-import { doc, setDoc } from 'firebase/firestore';
+import { supabase } from '@/lib/supabase';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '@/hooks/useAuth';
 import { gsap } from 'gsap';
 
 const RegisterPage = () => {
@@ -18,8 +17,15 @@ const RegisterPage = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const { user, loading: authLoading } = useAuth();
   const router = useRouter();
   const formRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!authLoading && user) {
+      router.push('/');
+    }
+  }, [user, authLoading, router]);
 
   useEffect(() => {
     if (formRef.current) {
@@ -42,20 +48,31 @@ const RegisterPage = () => {
     setError('');
     
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-
-      // Update Firebase Profile
-      await updateProfile(user, { displayName: fullName });
-
-      // Save to Firestore
-      await setDoc(doc(db, 'users', user.uid), {
-        uid: user.uid,
-        displayName: fullName,
-        email: email,
-        createdAt: new Date().toISOString(),
-        role: 'customer'
+      const { data, error: authError } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            full_name: fullName,
+          }
+        }
       });
+
+      if (authError) throw authError;
+
+      if (data.user) {
+        // Save to users table
+        const { error: dbError } = await supabase
+          .from('users')
+          .insert({
+            id: data.user.id,
+            display_name: fullName,
+            email: email,
+            role: 'customer'
+          });
+
+        if (dbError) throw dbError;
+      }
 
       router.push('/');
     } catch (err: any) {
@@ -65,30 +82,22 @@ const RegisterPage = () => {
     }
   };
 
-  const handleSocialRegister = async (providerName: 'google' | 'facebook') => {
+  const handleSocialRegister = async (provider: 'google' | 'facebook') => {
     setLoading(true);
     setError('');
-    const provider = providerName === 'google' 
-      ? new GoogleAuthProvider() 
-      : new FacebookAuthProvider();
     
     try {
-      const result = await signInWithPopup(auth, provider);
-      const user = result.user;
-
-      // Save to Firestore if new user
-      await setDoc(doc(db, 'users', user.uid), {
-        uid: user.uid,
-        displayName: user.displayName,
-        email: user.email,
-        createdAt: new Date().toISOString(),
-        role: 'customer'
-      }, { merge: true });
-
-      router.push('/');
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider,
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback`,
+        }
+      });
+      
+      if (error) throw error;
+      // Note: Redirect happens automatically for OAuth
     } catch (err: any) {
-      setError(err.message || `Failed to register with ${providerName}.`);
-    } finally {
+      setError(err.message || `Failed to register with ${provider}.`);
       setLoading(false);
     }
   };

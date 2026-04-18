@@ -21,7 +21,7 @@ const SocialButton: React.FC<SocialButtonProps> = ({ provider, onClick, isLoadin
       <div className="relative w-5 h-5 flex-shrink-0">
         {isGoogle ? (
           <Image 
-            src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" 
+            src="https://www.google.com/favicon.ico" 
             alt="Google" 
             fill
             className="object-contain"

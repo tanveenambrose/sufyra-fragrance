@@ -5,9 +5,9 @@ import Link from 'next/link';
 import { Mail, Lock, LogIn, ArrowRight } from 'lucide-react';
 import AuthInput from '@/components/Auth/AuthInput';
 import SocialButton from '@/components/Auth/SocialButton';
-import { auth } from '@/lib/firebase';
-import { signInWithEmailAndPassword, GoogleAuthProvider, FacebookAuthProvider, signInWithPopup } from 'firebase/auth';
+import { supabase } from '@/lib/supabase';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '@/hooks/useAuth';
 import { gsap } from 'gsap';
 
 const LoginPage = () => {
@@ -15,8 +15,15 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const { user, loading: authLoading } = useAuth();
   const router = useRouter();
   const formRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!authLoading && user) {
+      router.push('/');
+    }
+  }, [user, authLoading, router]);
 
   useEffect(() => {
     if (formRef.current) {
@@ -33,7 +40,11 @@ const LoginPage = () => {
     setLoading(true);
     setError('');
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+      if (error) throw error;
       router.push('/');
     } catch (err: any) {
       setError(err.message || 'Failed to login. Please check your credentials.');
@@ -42,19 +53,20 @@ const LoginPage = () => {
     }
   };
 
-  const handleSocialLogin = async (providerName: 'google' | 'facebook') => {
+  const handleSocialLogin = async (provider: 'google' | 'facebook') => {
     setLoading(true);
     setError('');
-    const provider = providerName === 'google' 
-      ? new GoogleAuthProvider() 
-      : new FacebookAuthProvider();
     
     try {
-      await signInWithPopup(auth, provider);
-      router.push('/');
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider,
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback`,
+        }
+      });
+      if (error) throw error;
     } catch (err: any) {
-      setError(err.message || `Failed to sign in with ${providerName}.`);
-    } finally {
+      setError(err.message || `Failed to sign in with ${provider}.`);
       setLoading(false);
     }
   };
