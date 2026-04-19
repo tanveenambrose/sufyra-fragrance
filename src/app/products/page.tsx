@@ -68,12 +68,12 @@ function ProductsContent() {
     <main className="min-h-screen bg-luxury-charcoal pb-24 pt-32">
       <div className="container mx-auto px-6">
         {/* Header Section */}
-        <div className="mb-16 text-center md:text-left">
-          <h1 className="text-luxury-cream font-serif text-4xl md:text-6xl mb-4">Sufyra Boutique</h1>
-          <p className="text-white/40 text-sm tracking-widest uppercase">Elegance in every drop</p>
+        <div className="mb-10 sm:mb-16 text-center md:text-left">
+          <h1 className="text-luxury-cream font-serif text-3xl sm:text-5xl md:text-6xl mb-2 sm:mb-4">Sufyra Boutique</h1>
+          <p className="text-white/40 text-[10px] sm:text-xs md:text-sm tracking-[0.3em] uppercase italic">Elegance in every drop</p>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-12">
+        <div className="flex flex-col lg:flex-row gap-8 sm:gap-12">
           {/* Sidebar Filters - Desktop */}
           <aside className="hidden lg:block w-72 flex-shrink-0 space-y-12">
             {/* Price Filter */}
@@ -155,7 +155,7 @@ function ProductsContent() {
           {/* Product Grid */}
           <div className="flex-grow">
             {filteredProducts.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
+              <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 sm:gap-x-8 gap-y-10 sm:gap-y-12">
                 {filteredProducts.map((product) => (
                   <ProductCard key={product.id} product={product} />
                 ))}

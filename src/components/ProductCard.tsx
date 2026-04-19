@@ -36,27 +36,27 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       </div>
 
       {/* Product Info */}
-      <div className="p-5 flex flex-col flex-1" suppressHydrationWarning>
-        <div className="flex justify-between items-start mb-1" suppressHydrationWarning>
-          <h3 className="text-lg font-serif text-luxury-cream leading-tight">{product.name}</h3>
-          <span className="text-luxury-gold font-bold text-base">{currentPrice}৳</span>
+      <div className="p-4 sm:p-5 flex flex-col flex-1" suppressHydrationWarning>
+        <div className="flex justify-between items-start mb-1 gap-2" suppressHydrationWarning>
+          <h3 className="text-sm sm:text-lg font-serif text-luxury-cream leading-tight">{product.name}</h3>
+          <span className="text-luxury-gold font-bold text-sm sm:text-base whitespace-nowrap">{currentPrice}৳</span>
         </div>
         
-        <p className="text-white/40 text-[10px] mb-4 line-clamp-1">
+        <p className="text-white/40 text-[9px] sm:text-[10px] mb-4 line-clamp-1">
           {product.description}
         </p>
 
         {/* Size Selection */}
         <div className="mb-4">
-          <label className="text-[9px] uppercase tracking-widest text-white/20 mb-2 block">
+          <label className="text-[8px] sm:text-[9px] uppercase tracking-widest text-white/20 mb-2 block">
             {product.category === 'combo' ? 'Bundle Includes' : 'Size'}
           </label>
-          <div className="flex gap-1.5">
+          <div className="flex gap-1 sm:gap-1.5">
             {product.variants.map((variant) => (
               <button
                 key={variant.size}
                 onClick={() => setSelectedSize(variant.size)}
-                className={`flex-1 py-1.5 rounded-md transition-all text-[10px] font-bold border ${
+                className={`flex-1 py-1.5 rounded-md transition-all text-[9px] sm:text-[10px] font-bold border ${
                   selectedSize === variant.size
                     ? 'border-luxury-gold bg-luxury-gold/10 text-luxury-gold'
                     : 'border-white/5 text-white/30 hover:border-white/20'
@@ -70,7 +70,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
         <button 
           onClick={handleAddItem}
-          className="w-full bg-[#FFD700] text-black py-3.5 rounded-xl font-bold text-[11px] uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-[#FFE55C] active:scale-95 transition-all mt-auto shadow-[0_0_20px_rgba(255,215,0,0.2)]"
+          className="w-full bg-[#FFD700] text-black py-3 sm:py-3.5 rounded-xl font-bold text-[10px] sm:text-[11px] uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-[#FFE55C] active:scale-95 transition-all mt-auto shadow-[0_0_20px_rgba(255,215,0,0.2)]"
         >
           <Plus className="w-4 h-4" />
           Add to Bag

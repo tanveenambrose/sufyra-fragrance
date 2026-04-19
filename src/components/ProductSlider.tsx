@@ -33,30 +33,30 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products, title, subtitle
   }, [emblaApi]);
 
   return (
-    <div className="py-16">
+    <div className="py-12 sm:py-16">
       <div className="container mx-auto px-6">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6 reveal">
-          <div>
+        <div className="flex flex-col md:flex-row justify-between items-center sm:items-end mb-8 sm:mb-12 gap-6 reveal">
+          <div className="text-center md:text-left">
             {subtitle && (
-              <h2 className="text-luxury-gold uppercase tracking-[0.3em] text-sm mb-4">
+              <h2 className="text-luxury-gold uppercase tracking-[0.2em] sm:tracking-[0.3em] text-[10px] sm:text-sm mb-2 sm:mb-4">
                 {subtitle}
               </h2>
             )}
-            <h3 className="text-4xl md:text-6xl font-serif text-luxury-cream">{title}</h3>
+            <h3 className="text-3xl sm:text-5xl md:text-6xl font-serif text-luxury-cream">{title}</h3>
           </div>
           
-          <div className="flex gap-4">
+          <div className="flex gap-3 sm:gap-4 scale-90 sm:scale-100">
             <button 
               onClick={scrollPrev}
-              className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:border-luxury-gold hover:text-luxury-gold transition-all"
+              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:border-luxury-gold hover:text-luxury-gold transition-all"
             >
-              <ChevronLeft className="w-6 h-6" />
+              <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
             </button>
             <button 
               onClick={scrollNext}
-              className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:border-luxury-gold hover:text-luxury-gold transition-all"
+              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:border-luxury-gold hover:text-luxury-gold transition-all"
             >
-              <ChevronRight className="w-6 h-6" />
+              <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
             </button>
           </div>
         </div>
@@ -66,7 +66,7 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products, title, subtitle
             {products.map((product) => (
               <div 
                 key={product.id} 
-                className="flex-[0_0_75%] sm:flex-[0_0_40%] lg:flex-[0_0_25%] xl:flex-[0_0_20%] pl-3 md:pl-6 min-w-0"
+                className="flex-[0_0_80%] sm:flex-[0_0_45%] lg:flex-[0_0_25%] xl:flex-[0_0_20%] pl-4 md:pl-6 min-w-0"
               >
                 <div className="h-full" suppressHydrationWarning>
                   <ProductCard product={product} />

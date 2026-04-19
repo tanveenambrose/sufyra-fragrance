@@ -60,15 +60,15 @@ const Hero = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 text-center px-6 max-w-4xl">
-        <h2 ref={subtitleRef} className="text-luxury-gold uppercase tracking-[0.4em] text-[10px] sm:text-xs md:text-base mb-6 font-medium">
+      <div className="relative z-10 text-center px-6 max-w-4xl pt-20">
+        <h2 ref={subtitleRef} className="text-luxury-gold uppercase tracking-[0.2em] sm:tracking-[0.4em] text-[8px] sm:text-xs md:text-base mb-4 md:mb-6 font-medium">
           Pure Essence of Luxury
         </h2>
-        <h1 ref={titleRef} className="text-4xl sm:text-6xl md:text-8xl font-serif text-luxury-cream mb-8 leading-tight">
-          Fragrance That <br /> <span className="font-normal">Suits you</span>
+        <h1 ref={titleRef} className="text-3xl sm:text-6xl md:text-8xl font-serif text-luxury-cream mb-6 md:mb-8 leading-tight">
+          Fragrance That <br /> <span className="font-normal italic">Suits you</span>
         </h1>
-        <div ref={ctaRef} className="flex flex-col sm:flex-row items-center justify-center gap-6 mt-10">
-          <button className="luxury-gradient px-12 py-4 rounded-full text-luxury-charcoal font-bold uppercase tracking-wider text-sm hover:scale-105 transition-transform flex items-center justify-center gap-2 min-w-[220px]">
+        <div ref={ctaRef} className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mt-6 md:mt-10">
+          <button className="luxury-gradient w-full sm:w-auto px-8 sm:px-12 py-3.5 sm:py-4 rounded-full text-luxury-charcoal font-bold uppercase tracking-wider text-[11px] sm:text-sm hover:scale-105 transition-transform flex items-center justify-center gap-2 min-w-[180px] sm:min-w-[220px]">
             Discover Collection
             <ChevronRight className="w-4 h-4" />
           </button>
