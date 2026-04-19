@@ -42,16 +42,16 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           <span className="text-luxury-gold font-bold text-sm sm:text-base whitespace-nowrap">{currentPrice}৳</span>
         </div>
         
-        <p className="text-white/40 text-[9px] sm:text-[10px] mb-4 line-clamp-1">
+        <p className="text-white/40 text-[9px] sm:text-[10px] mb-4 line-clamp-1" suppressHydrationWarning>
           {product.description}
         </p>
 
         {/* Size Selection */}
-        <div className="mb-4">
-          <label className="text-[8px] sm:text-[9px] uppercase tracking-widest text-white/20 mb-2 block">
+        <div className="mb-4" suppressHydrationWarning>
+          <label className="text-[8px] sm:text-[9px] uppercase tracking-widest text-white/20 mb-2 block" suppressHydrationWarning>
             {product.category === 'combo' ? 'Bundle Includes' : 'Size'}
           </label>
-          <div className="flex gap-1 sm:gap-1.5">
+          <div className="flex gap-1 sm:gap-1.5" suppressHydrationWarning>
             {product.variants.map((variant) => (
               <button
                 key={variant.size}
@@ -71,6 +71,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <button 
           onClick={handleAddItem}
           className="w-full bg-[#FFD700] text-black py-3 sm:py-3.5 rounded-xl font-bold text-[10px] sm:text-[11px] uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-[#FFE55C] active:scale-95 transition-all mt-auto shadow-[0_0_20px_rgba(255,215,0,0.2)]"
+          suppressHydrationWarning
         >
           <Plus className="w-4 h-4" />
           Add to Bag

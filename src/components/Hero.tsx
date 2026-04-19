@@ -47,7 +47,7 @@ const Hero = () => {
   return (
     <div ref={containerRef} className="relative h-screen w-full flex items-center justify-center overflow-hidden">
       {/* Background with Zoom Effect */}
-      <div ref={bgRef} className="absolute inset-0 scale-110">
+      <div ref={bgRef} className="absolute inset-0 scale-110" suppressHydrationWarning>
         <Image
           src="/hero.png"
           alt="Luxury Fragrance Hero"
@@ -60,7 +60,7 @@ const Hero = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 text-center px-6 max-w-4xl pt-20">
+      <div className="relative z-10 text-center px-6 max-w-4xl pt-20" suppressHydrationWarning>
         <h2 ref={subtitleRef} className="text-luxury-gold uppercase tracking-[0.2em] sm:tracking-[0.4em] text-[8px] sm:text-xs md:text-base mb-4 md:mb-6 font-medium">
           Pure Essence of Luxury
         </h2>
@@ -68,7 +68,7 @@ const Hero = () => {
           Fragrance That <br /> <span className="font-normal italic">Suits you</span>
         </h1>
         <div ref={ctaRef} className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mt-6 md:mt-10">
-          <button className="luxury-gradient w-full sm:w-auto px-8 sm:px-12 py-3.5 sm:py-4 rounded-full text-luxury-charcoal font-bold uppercase tracking-wider text-[11px] sm:text-sm hover:scale-105 transition-transform flex items-center justify-center gap-2 min-w-[180px] sm:min-w-[220px]">
+          <button className="luxury-gradient w-full sm:w-auto px-8 sm:px-12 py-3.5 sm:py-4 rounded-full text-luxury-charcoal font-bold uppercase tracking-wider text-[11px] sm:text-sm hover:scale-105 transition-transform flex items-center justify-center gap-2 min-w-[180px] sm:min-w-[220px]" suppressHydrationWarning>
             Discover Collection
             <ChevronRight className="w-4 h-4" />
           </button>

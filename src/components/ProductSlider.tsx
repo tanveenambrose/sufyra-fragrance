@@ -67,6 +67,7 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products, title, subtitle
               <div 
                 key={product.id} 
                 className="flex-[0_0_80%] sm:flex-[0_0_45%] lg:flex-[0_0_25%] xl:flex-[0_0_20%] pl-4 md:pl-6 min-w-0"
+                suppressHydrationWarning
               >
                 <div className="h-full" suppressHydrationWarning>
                   <ProductCard product={product} />
