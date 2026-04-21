@@ -61,8 +61,10 @@ const Hero = () => {
 
       {/* Content */}
       <div className="relative z-10 text-center px-6 max-w-4xl pt-20" suppressHydrationWarning>
-        <h2 ref={subtitleRef} className="text-luxury-gold uppercase tracking-[0.2em] sm:tracking-[0.4em] text-[8px] sm:text-xs md:text-base mb-4 md:mb-6 font-medium">
-          Pure Essence of Luxury
+        <h2 ref={subtitleRef} className="mb-4 md:mb-6">
+          <span className="text-luxury-gold uppercase tracking-[0.2em] sm:tracking-[0.4em] text-[8px] sm:text-xs md:text-base font-medium backdrop-blur-md bg-white/5 px-4 py-2 rounded-full border border-white/10 inline-block">
+            Pure Essence of Luxury
+          </span>
         </h2>
         <h1 ref={titleRef} className="text-3xl sm:text-6xl md:text-8xl font-serif text-luxury-cream mb-6 md:mb-8 leading-tight">
           Fragrance That <br /> <span className="font-normal italic">Suits you</span>
