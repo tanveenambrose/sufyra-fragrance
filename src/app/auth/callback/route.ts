@@ -3,11 +3,14 @@ import { createClient } from '@/lib/supabaseServer';
 import { getURL } from '@/lib/utils';
 
 export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
+  const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get('code');
   // if "next" is in search params, use it as the redirection URL
   const next = searchParams.get('next') ?? '/';
-  const baseUrl = getURL();
+  
+  // Use the incoming request's origin as the base for redirects
+  // This ensures the user stays on the same domain (Vercel or localhost)
+  const baseUrl = origin.endsWith('/') ? origin : `${origin}/`;
 
   if (code) {
     const supabase = await createClient();
