@@ -44,9 +44,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             src={displayImage}
             alt={product.name}
             fill
-            quality={90}
-            sizes="(max-width: 640px) 70vw, (max-width: 1024px) 30vw, 20vw"
-            className="object-cover transition-transform duration-700 group-hover:scale-110"
+            quality={100}
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            className="object-cover transition-transform duration-700 group-hover:scale-110 saturate-[1.1] contrast-[1.02] brightness-[1.05]"
+            priority={product.id === '1' || product.id === '9'} // Example of prioritizing top products
           />
         ) : (
           <div className="w-full h-full flex flex-col items-center justify-center bg-white/[0.02] text-white/10 gap-2">

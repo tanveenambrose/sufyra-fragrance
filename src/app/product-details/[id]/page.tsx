@@ -158,9 +158,9 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
                   alt={product.name}
                   fill
                   priority
-                  quality={95}
+                  quality={100}
                   sizes="(max-width: 1024px) 100vw, 60vw"
-                  className="object-cover transition-transform duration-[1.5s] group-hover:scale-105"
+                  className="object-cover transition-transform duration-[1.5s] group-hover:scale-105 saturate-[1.1] contrast-[1.02] brightness-[1.05]"
                 />
               ) : (
                 <div className="w-full h-full flex items-center justify-center text-white/10 uppercase tracking-widest text-[10px]">No Portrait Available</div>
