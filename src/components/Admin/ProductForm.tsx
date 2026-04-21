@@ -13,6 +13,12 @@ interface ProductFormProps {
 type ComboType = 'duo' | 'trio' | 'quad' | 'set';
 type BaseSize = '3ml' | '6ml' | '12ml' | 'set';
 
+interface Variant {
+  size: string;
+  price: number;
+  image_url?: string;
+}
+
 export default function ProductForm({ initialData }: ProductFormProps) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
@@ -28,7 +34,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
     image_url: initialData?.image_url || '',
     category: initialData?.category || 'perfume-oil',
     discount_percent: initialData?.discount_percent || 0,
-    variants: (initialData?.variants as any) || [{ size: '3ml', price: 0, image_url: '' }, { size: '6ml', price: 0, image_url: '' }],
+    variants: (initialData?.variants as Variant[]) || [{ size: '3ml', price: 0, image_url: '' }, { size: '6ml', price: 0, image_url: '' }],
     top_notes: initialData?.top_notes || '',
     middle_notes: initialData?.middle_notes || '',
     base_notes: initialData?.base_notes || '',
@@ -60,8 +66,8 @@ export default function ProductForm({ initialData }: ProductFormProps) {
       setFormData(prev => ({
         ...prev,
         variants: [
-          { size: '3ml', price: prev.variants.find(v => v.size === '3ml')?.price || 0 },
-          { size: '6ml', price: prev.variants.find(v => v.size === '6ml')?.price || 0 }
+          { size: '3ml', price: prev.variants.find((v: Variant) => v.size === '3ml')?.price || 0 },
+          { size: '6ml', price: prev.variants.find((v: Variant) => v.size === '6ml')?.price || 0 }
         ]
       }));
     } else {
@@ -136,7 +142,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
   };
 
   const handleVariantChange = (index: number, field: string, value: string | number) => {
-    const newVariants = [...formData.variants] as any;
+    const newVariants = [...formData.variants] as any[];
     newVariants[index][field] = value;
     setFormData({ ...formData, variants: newVariants });
   };
