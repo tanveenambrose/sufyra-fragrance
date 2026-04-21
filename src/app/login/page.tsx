@@ -9,6 +9,7 @@ import { supabase } from '@/lib/supabase';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
 import { gsap } from 'gsap';
+import { getURL } from '@/lib/utils';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -61,7 +62,7 @@ const LoginPage = () => {
       const { error } = await supabase.auth.signInWithOAuth({
         provider,
         options: {
-          redirectTo: `${window.location.origin}/auth/callback`,
+          redirectTo: `${getURL()}auth/callback`,
         }
       });
       if (error) throw error;
