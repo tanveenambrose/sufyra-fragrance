@@ -37,13 +37,16 @@ export const useCart = create<CartStore>((set, get) => ({
       updatedItems[existingItemIndex].quantity += 1;
       set({ items: updatedItems });
     } else {
+      const discount = product.discount_percent || 0;
+      const discountedPrice = discount > 0 ? Math.round(variant.price * (1 - discount / 100)) : variant.price;
+      
       set({
         items: [
           ...currentItems,
           {
             ...product,
             selectedSize: size,
-            selectedPrice: variant.price,
+            selectedPrice: discountedPrice,
             quantity: 1,
           },
         ],

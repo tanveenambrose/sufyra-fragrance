@@ -3,7 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import Hero from '@/components/Hero';
 import ProductSlider from '@/components/ProductSlider';
-import { products } from '@/data/products';
+import { Product } from '@/data/products';
+import { supabase } from '@/lib/supabase';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 
@@ -13,6 +14,28 @@ if (typeof window !== 'undefined') {
 }
 
 export default function Home() {
+  const [dbProducts, setDbProducts] = useState<Product[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('products')
+          .select('*')
+          .order('created_at', { ascending: false });
+        
+        if (error) throw error;
+        if (data) setDbProducts(data);
+      } catch (err) {
+        console.error('Error fetching products:', err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -37,7 +60,7 @@ export default function Home() {
     return () => {
       ctx.revert(); // Properly cleanup all GSAP animations
     };
-  }, []);
+  }, [dbProducts]);
 
   return (
     <main className="min-h-screen bg-luxury-charcoal" suppressHydrationWarning>
@@ -45,13 +68,13 @@ export default function Home() {
 
       {/* Featured Collections */}
       <ProductSlider 
-        products={products.filter(p => p.category === 'perfume-oil')}
+        products={dbProducts.filter(p => p.category === 'perfume-oil')}
         title="Timeless Fragrances"
         subtitle="Perfume Oils"
       />
 
       <ProductSlider 
-        products={products.filter(p => p.category === 'combo')}
+        products={dbProducts.filter(p => p.category === 'combo')}
         title="Exclusive Sets"
         subtitle="Combo Packs"
       />

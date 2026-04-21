@@ -72,7 +72,13 @@ const CartDrawer: React.FC = () => {
             items.map((item) => (
               <div key={`${item.id}-${item.selectedSize}`} className="flex gap-4 group">
                 <div className="relative w-20 h-24 bg-white/5 rounded-lg overflow-hidden flex-shrink-0">
-                  <Image src={item.image} alt={item.name} fill className="object-cover" />
+                  <Image 
+                    src={item.image_url} 
+                    alt={item.name} 
+                    fill 
+                    sizes="80px"
+                    className="object-cover" 
+                  />
                 </div>
                 <div className="flex-1">
                   <div className="flex justify-between items-start mb-1">

@@ -7,6 +7,8 @@ import { products } from '@/data/products';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import { SlidersHorizontal, ChevronDown } from 'lucide-react';
+import { supabase } from '@/lib/supabase';
+import { Product } from '@/data/products';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -14,10 +16,32 @@ if (typeof window !== 'undefined') {
 
 function ProductsContent() {
   const searchParams = useSearchParams();
+  const [dbProducts, setDbProducts] = useState<Product[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [minPrice, setMinPrice] = useState<number>(0);
   const [maxPrice, setMaxPrice] = useState<number>(2000);
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('products')
+          .select('*')
+          .order('created_at', { ascending: false });
+        
+        if (error) throw error;
+        if (data) setDbProducts(data);
+      } catch (err) {
+        console.error('Error fetching products:', err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   useEffect(() => {
     const category = searchParams.get('category');
@@ -49,13 +73,24 @@ function ProductsContent() {
     });
 
     return () => ctx.revert();
-  }, [selectedCategory, minPrice, maxPrice]);
+  }, [selectedCategory, minPrice, maxPrice, dbProducts]);
 
-  const filteredProducts = products.filter(product => {
+  const filteredProducts = dbProducts.filter(product => {
+    const searchQuery = searchParams.get('search')?.toLowerCase() || '';
+    const matchesSearch = !searchQuery || 
+      product.name.toLowerCase().includes(searchQuery) || 
+      product.description.toLowerCase().includes(searchQuery) ||
+      product.category.toLowerCase().includes(searchQuery);
+
     const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory;
-    const productPrice = Math.min(...product.variants.map(v => v.price));
+    const lowestPrice = Math.min(...product.variants.map(v => v.price));
+    
+    // Calculate discounted price for filtering if discount exists
+    const discount = product.discount_percent || 0;
+    const productPrice = discount > 0 ? Math.round(lowestPrice * (1 - discount / 100)) : lowestPrice;
+    
     const matchesPrice = productPrice >= minPrice && productPrice <= maxPrice;
-    return matchesCategory && matchesPrice;
+    return matchesSearch && matchesCategory && matchesPrice;
   });
 
   const categories = [

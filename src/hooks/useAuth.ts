@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 import { User } from '@supabase/supabase-js';
@@ -31,5 +33,7 @@ export const useAuth = () => {
     await supabase.auth.signOut();
   };
 
-  return { user, loading, signOut };
+  const isAdmin = user?.email === 'racoctanveen15@gmail.com';
+
+  return { user, loading, signOut, isAdmin };
 };

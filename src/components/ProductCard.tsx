@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { Plus } from 'lucide-react';
 import { Product } from '@/data/products';
 import { useCart } from '@/store/useCart';
@@ -14,7 +15,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const [selectedSize, setSelectedSize] = useState<string>(product.variants[0].size);
   const addItem = useCart((state) => state.addItem);
 
-  const currentPrice = product.variants.find(v => v.size === selectedSize)?.price || product.variants[0].price;
+  const currentVariant = product.variants.find(v => v.size === selectedSize) || product.variants[0];
+  const currentPrice = currentVariant.price;
+  const displayImage = currentVariant.image_url || product.image_url;
 
   const handleAddItem = () => {
     // Determine the correct size type for the cart store
@@ -22,24 +25,49 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     addItem(product, size);
   };
 
+  const discount = product.discount_percent || 0;
+  const discountedPrice = discount > 0 ? Math.round(currentPrice * (1 - discount / 100)) : currentPrice;
+
   return (
-    <div className="luxury-card group rounded-2xl overflow-hidden flex flex-col h-full reveal" suppressHydrationWarning>
+    <div className="luxury-card group rounded-2xl overflow-hidden flex flex-col h-full reveal relative" suppressHydrationWarning>
+      {/* Discount Badge */}
+      {discount > 0 && (
+        <div className="absolute top-4 left-4 z-10 bg-red-500 text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-lg">
+          -{discount}%
+        </div>
+      )}
+
       {/* Product Image */}
-      <div className="relative aspect-[4/5] overflow-hidden bg-white/5 border-b border-white/5" suppressHydrationWarning>
-        <Image
-          src={product.image}
-          alt={product.name}
-          fill
-          sizes="(max-width: 640px) 70vw, (max-width: 1024px) 30vw, 20vw"
-          className="object-cover transition-transform duration-700 group-hover:scale-110"
-        />
-      </div>
+      <Link href={`/product-details/${product.id}`} className="relative aspect-[4/5] block overflow-hidden bg-white/5 border-b border-white/5 group-hover:cursor-pointer" suppressHydrationWarning>
+        {displayImage ? (
+          <Image
+            src={displayImage}
+            alt={product.name}
+            fill
+            quality={90}
+            sizes="(max-width: 640px) 70vw, (max-width: 1024px) 30vw, 20vw"
+            className="object-cover transition-transform duration-700 group-hover:scale-110"
+          />
+        ) : (
+          <div className="w-full h-full flex flex-col items-center justify-center bg-white/[0.02] text-white/10 gap-2">
+            <Plus className="w-8 h-8 opacity-20" strokeWidth={1} />
+            <span className="text-[10px] uppercase tracking-widest font-bold opacity-20">Scent Portrait Missing</span>
+          </div>
+        )}
+      </Link>
 
       {/* Product Info */}
       <div className="p-4 sm:p-5 flex flex-col flex-1" suppressHydrationWarning>
         <div className="flex justify-between items-start mb-1 gap-2" suppressHydrationWarning>
-          <h3 className="text-sm sm:text-lg font-serif text-luxury-cream leading-tight">{product.name}</h3>
-          <span className="text-luxury-gold font-bold text-sm sm:text-base whitespace-nowrap">{currentPrice}৳</span>
+          <Link href={`/product-details/${product.id}`} className="hover:text-luxury-gold transition-colors">
+            <h3 className="text-sm sm:text-lg font-serif text-luxury-cream leading-tight">{product.name}</h3>
+          </Link>
+          <div className="flex flex-col items-end">
+             {discount > 0 && (
+               <span className="text-white/30 line-through text-[10px]">{currentPrice}৳</span>
+             )}
+             <span className="text-luxury-gold font-bold text-sm sm:text-base whitespace-nowrap">{discountedPrice}৳</span>
+          </div>
         </div>
         
         <p className="text-white/40 text-[9px] sm:text-[10px] mb-4 line-clamp-1" suppressHydrationWarning>
