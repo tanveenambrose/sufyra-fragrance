@@ -60,10 +60,10 @@ const Hero = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 text-center px-6 max-w-4xl pt-20" suppressHydrationWarning>
+      <div className="relative z-10 text-center px-6 max-w-4xl pt-20 pb-24 sm:pb-32" suppressHydrationWarning>
         <h2 ref={subtitleRef} className="mb-4 md:mb-6">
           <div className="inline-flex items-center justify-center rounded-full border border-white/20 bg-black/40 backdrop-blur-lg px-4 sm:px-6 py-2 sm:py-2.5 transition-all hover:bg-black/50 overflow-hidden">
-            <span className="bg-[#c5a059] text-black px-3 sm:px-4 py-1.5 font-serif uppercase tracking-[0.3em] sm:tracking-[0.5em] text-[9px] sm:text-[11px] font-bold">
+            <span className="bg-[#c5a059] text-black px-3 sm:px-4 py-1.5 font-serif uppercase tracking-[0.3em] sm:tracking-[0.5em] text-[10px] sm:text-[11px] font-bold">
               Pure Essence of Luxury
             </span>
           </div>
@@ -78,11 +78,11 @@ const Hero = () => {
           </button>
         </div>
       </div>
-
+ 
       {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 animate-bounce opacity-50">
+      <div className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 animate-bounce opacity-50">
         <span className="text-[10px] uppercase tracking-widest text-white/50">Scroll</span>
-        <div className="w-[1px] h-12 bg-gradient-to-b from-luxury-gold to-transparent" />
+        <div className="w-[1px] h-8 sm:h-12 bg-gradient-to-b from-luxury-gold to-transparent" />
       </div>
     </div>
   );
