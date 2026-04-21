@@ -83,20 +83,47 @@ const RegisterPage = () => {
     }
   };
 
+  const openPopup = (url: string) => {
+    const width = 600;
+    const height = 700;
+    const left = window.screenX + (window.outerWidth - width) / 2;
+    const top = window.screenY + (window.outerHeight - height) / 2;
+    
+    return window.open(
+      url,
+      'Sufyra Authentication',
+      `width=${width},height=${height},left=${left},top=${top},status=no,menubar=no,toolbar=no`
+    );
+  };
+
   const handleSocialRegister = async (provider: 'google' | 'facebook') => {
     setLoading(true);
     setError('');
     
     try {
-      const { error } = await supabase.auth.signInWithOAuth({
+      const redirectURL = `${getURL()}auth/callback`;
+      
+      const { data, error } = await supabase.auth.signInWithOAuth({
         provider,
         options: {
-          redirectTo: `${getURL()}auth/callback`,
+          redirectTo: redirectURL,
+          skipBrowserRedirect: true,
         }
       });
       
       if (error) throw error;
-      // Note: Redirect happens automatically for OAuth
+      
+      if (data?.url) {
+        const popup = openPopup(data.url);
+        
+        const checkPopup = setInterval(() => {
+          if (popup?.closed) {
+            clearInterval(checkPopup);
+            setLoading(false);
+            router.refresh();
+          }
+        }, 1000);
+      }
     } catch (err: any) {
       setError(err.message || `Failed to register with ${provider}.`);
       setLoading(false);

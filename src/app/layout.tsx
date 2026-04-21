@@ -14,6 +14,7 @@ const inter = Inter({
 
 import Navbar from "@/components/Navbar";
 import CartDrawer from "@/components/CartDrawer";
+import AuthInitializer from "@/components/Auth/AuthInitializer";
 
 export const metadata: Metadata = {
   title: "Sufyra | Premium Attar & Perfume Oils",
@@ -31,6 +32,7 @@ export default function RootLayout({
         className={`${playfair.variable} ${inter.variable} antialiased bg-luxury-charcoal text-luxury-cream selection:bg-luxury-gold selection:text-luxury-charcoal`}
         suppressHydrationWarning
       >
+        <AuthInitializer />
         <Navbar />
         <CartDrawer />
         {children}

@@ -34,28 +34,7 @@ export default function Home() {
       }
     };
 
-    // Backup Auth Handler for cases where Supabase redirects to the root instead of /auth/callback
-    const handleAuthBackup = async () => {
-      if (typeof window !== 'undefined') {
-        const params = new URLSearchParams(window.location.search);
-        const code = params.get('code');
-        
-        if (code) {
-          console.log('Detecting auth code on home page, attempting exchange...');
-          const { error } = await supabase.auth.exchangeCodeForSession(code);
-          if (!error) {
-            // Clean the URL without refreshing
-            const newUrl = window.location.pathname;
-            window.history.replaceState({}, document.title, newUrl);
-          } else {
-            console.error('Auth exchange error on home page:', error);
-          }
-        }
-      }
-    };
-
     fetchProducts();
-    handleAuthBackup();
   }, []);
 
   useEffect(() => {
