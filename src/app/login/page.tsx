@@ -54,19 +54,6 @@ const LoginPage = () => {
     }
   };
 
-  const openPopup = (url: string) => {
-    const width = 600;
-    const height = 700;
-    const left = window.screenX + (window.outerWidth - width) / 2;
-    const top = window.screenY + (window.outerHeight - height) / 2;
-    
-    return window.open(
-      url,
-      'Sufyra Authentication',
-      `width=${width},height=${height},left=${left},top=${top},status=no,menubar=no,toolbar=no`
-    );
-  };
-
   const handleSocialLogin = async (provider: 'google' | 'facebook') => {
     setLoading(true);
     setError('');
@@ -74,29 +61,14 @@ const LoginPage = () => {
     try {
       const redirectURL = `${getURL()}auth/callback`;
       
-      const { data, error } = await supabase.auth.signInWithOAuth({
+      const { error } = await supabase.auth.signInWithOAuth({
         provider,
         options: {
           redirectTo: redirectURL,
-          skipBrowserRedirect: true, // This allows us to handle the URL ourselves
         }
       });
       
       if (error) throw error;
-      
-      if (data?.url) {
-        const popup = openPopup(data.url);
-        
-        // Listen for the popup closing or detecting a code
-        const checkPopup = setInterval(() => {
-          if (popup?.closed) {
-            clearInterval(checkPopup);
-            setLoading(false);
-            // Refresh to check if auth succeeded
-            router.refresh();
-          }
-        }, 1000);
-      }
     } catch (err: any) {
       setError(err.message || `Failed to sign in with ${provider}.`);
       setLoading(false);
