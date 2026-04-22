@@ -150,7 +150,7 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 xl:gap-20 items-start">
           {/* Left: Product Image */}
-          <div className="reveal-img relative w-full flex justify-center lg:justify-end">
+          <div className="reveal-img relative w-full flex flex-col items-center lg:items-end">
             <div className="relative aspect-[4/5] bg-white/5 rounded-2xl overflow-hidden shadow-2xl group border border-white/10 w-[85%] md:w-[70%] lg:w-full lg:max-w-[480px]">
               {activeImage ? (
                 <Image 
@@ -180,6 +180,32 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
                   <span className="bg-red-500 text-white text-[10px] font-bold px-4 py-1.5 rounded-full shadow-xl">-{discount}% SPECIAL</span>
                 </div>
               )}
+            </div>
+
+            {/* Thumbnail Gallery */}
+            <div className="flex gap-4 mt-6 justify-center lg:justify-start overflow-x-auto pb-2 scrollbar-hide">
+              <button 
+                onClick={() => setActiveImage(product.image_url)}
+                className={`relative w-20 aspect-[4/5] rounded-lg overflow-hidden border-2 transition-all flex-shrink-0 ${
+                  activeImage === product.image_url ? 'border-luxury-gold shadow-lg shadow-luxury-gold/20' : 'border-white/5 hover:border-white/20'
+                }`}
+              >
+                <Image src={product.image_url} alt={product.name} fill sizes="80px" className="object-cover" />
+              </button>
+              {product.variants.map((v, i) => v.image_url && (
+                <button 
+                  key={i}
+                  onClick={() => {
+                    setActiveImage(v.image_url!);
+                    setSelectedSize(v.size);
+                  }}
+                  className={`relative w-20 aspect-[4/5] rounded-lg overflow-hidden border-2 transition-all flex-shrink-0 ${
+                    activeImage === v.image_url ? 'border-luxury-gold shadow-lg shadow-luxury-gold/20' : 'border-white/5 hover:border-white/20'
+                  }`}
+                >
+                  <Image src={v.image_url} alt={`${product.name} - ${v.size}`} fill sizes="80px" className="object-cover" />
+                </button>
+              ))}
             </div>
           </div>
 

@@ -17,7 +17,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
   const currentVariant = product.variants.find(v => v.size === selectedSize) || product.variants[0];
   const currentPrice = currentVariant.price;
-  const displayImage = currentVariant.image_url || product.image_url;
+  const displayImage = product.image_url;
 
   const handleAddItem = () => {
     // Determine the correct size type for the cart store

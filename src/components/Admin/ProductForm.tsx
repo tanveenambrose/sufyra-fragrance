@@ -470,6 +470,9 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                             accept="image/*"
                             onChange={(e) => handleVariantImageChange(index, e)}
                           />
+                          <div className="absolute bottom-0 left-0 right-0 bg-black/60 py-1 text-[7px] text-white/70 text-center uppercase tracking-tighter">
+                            Size View
+                          </div>
                         </div>
 
                         <div className="flex-grow grid grid-cols-2 gap-6">
