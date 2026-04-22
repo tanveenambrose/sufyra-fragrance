@@ -266,19 +266,19 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
                    )}
                 </div>
 
-                <div className="flex flex-col sm:flex-row gap-4 h-14">
+                <div className="flex flex-col sm:flex-row gap-4 sm:h-14">
                   {/* Quantity */}
-                  <div className="flex items-center bg-white/5 rounded-xl border border-white/10 h-full px-2">
+                  <div className="flex items-center justify-between bg-white/5 rounded-xl border border-white/10 h-14 sm:h-full px-4 w-full sm:w-32">
                     <button 
                       onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                      className="p-3 text-white/40 hover:text-white transition-colors"
+                      className="p-2 text-white/40 hover:text-white transition-colors"
                     >
                       <Minus size={14} />
                     </button>
-                    <span className="w-12 text-center text-sm font-bold text-white font-mono">{quantity}</span>
+                    <span className="text-sm font-bold text-white font-mono">{quantity}</span>
                     <button 
                       onClick={() => setQuantity(quantity + 1)}
-                      className="p-3 text-white/40 hover:text-white transition-colors"
+                      className="p-2 text-white/40 hover:text-white transition-colors"
                     >
                       <Plus size={14} />
                     </button>
@@ -287,13 +287,13 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
                   {/* ATC Button */}
                   <button 
                     onClick={handleAddToCart}
-                    className="flex-grow h-full luxury-gradient rounded-xl text-luxury-charcoal font-bold uppercase tracking-[0.2em] text-[10px] hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-2xl shadow-luxury-gold/10"
+                    className="flex-grow h-14 sm:h-full luxury-gradient rounded-xl text-luxury-charcoal font-bold uppercase tracking-[0.2em] text-[10px] hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-2xl shadow-luxury-gold/10"
                   >
                     Add to Cart Portfolio
                   </button>
                   
                   {/* Buy Now Button */}
-                  <button className="px-8 h-full bg-white/[0.03] border border-white/10 rounded-xl text-white/80 font-bold uppercase tracking-[0.2em] text-[10px] hover:bg-white/5 transition-all text-center">
+                  <button className="flex-grow sm:flex-none sm:px-8 h-14 sm:h-full bg-white/[0.03] border border-white/10 rounded-xl text-white/80 font-bold uppercase tracking-[0.2em] text-[10px] hover:bg-white/5 transition-all text-center">
                     Purchase Now
                   </button>
                 </div>
