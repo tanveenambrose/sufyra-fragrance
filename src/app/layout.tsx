@@ -13,6 +13,7 @@ const inter = Inter({
 });
 
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
 import AuthInitializer from "@/components/Auth/AuthInitializer";
 
@@ -35,7 +36,8 @@ export default function RootLayout({
         <AuthInitializer />
         <Navbar />
         <CartDrawer />
-        {children}
+        <main>{children}</main>
+        <Footer />
       </body>
     </html>
   );
