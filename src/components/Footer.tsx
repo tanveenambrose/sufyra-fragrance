@@ -151,28 +151,28 @@ const Footer: React.FC = () => {
             <div className="space-y-4">
               <a 
                 href="mailto:sufyrafragrance@gmail.com" 
-                className="flex items-center gap-3 text-[var(--foreground)]/60 hover:text-luxury-gold transition-all group"
+                className="flex items-center gap-3 text-[var(--foreground)] hover:text-luxury-gold transition-all group"
               >
-                <div className="w-10 h-10 rounded-xl bg-[var(--foreground)]/5 flex items-center justify-center group-hover:bg-luxury-gold/10 border border-[var(--foreground)]/5 transition-colors">
-                  <Mail size={18} className="text-luxury-gold" />
+                <div className="w-12 h-12 rounded-2xl bg-[var(--foreground)]/5 flex items-center justify-center group-hover:bg-luxury-gold/20 border border-[var(--foreground)]/10 transition-all duration-300 shadow-sm">
+                  <Mail size={20} className="text-luxury-gold" />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-[10px] uppercase tracking-widest text-[var(--foreground)]/40 font-bold">Email Us</span>
-                  <span className="text-sm">sufyrafragrance@gmail.com</span>
+                  <span className="text-[10px] uppercase tracking-[0.2em] text-[var(--foreground)]/40 font-bold">Email Us</span>
+                  <span className="text-sm font-bold">sufyrafragrance@gmail.com</span>
                 </div>
               </a>
               <a 
                 href="https://wa.me/message/ALWRUNUBV6L3A1" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 text-[var(--foreground)]/60 hover:text-luxury-gold transition-all group"
+                className="flex items-center gap-3 text-[var(--foreground)] hover:text-luxury-gold transition-all group"
               >
-                <div className="w-10 h-10 rounded-xl bg-[var(--foreground)]/5 flex items-center justify-center group-hover:bg-luxury-gold/10 border border-[var(--foreground)]/5 transition-colors">
-                  <WhatsAppIcon size={18} className="text-luxury-gold" />
+                <div className="w-12 h-12 rounded-2xl bg-[var(--foreground)]/5 flex items-center justify-center group-hover:bg-luxury-gold/20 border border-[var(--foreground)]/10 transition-all duration-300 shadow-sm">
+                  <WhatsAppIcon size={20} className="text-luxury-gold" />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-[10px] uppercase tracking-widest text-[var(--foreground)]/40 font-bold">WhatsApp</span>
-                  <span className="text-sm">+880 1886-141861</span>
+                  <span className="text-[10px] uppercase tracking-[0.2em] text-[var(--foreground)]/40 font-bold">WhatsApp</span>
+                  <span className="text-sm font-bold">+880 1886-141861</span>
                 </div>
               </a>
             </div>
@@ -186,31 +186,31 @@ const Footer: React.FC = () => {
                 href="https://www.facebook.com/SufyraFragrance/" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 text-[var(--foreground)]/60 hover:text-luxury-gold transition-all group"
+                className="flex items-center gap-3 text-[var(--foreground)] hover:text-luxury-gold transition-all group"
               >
-                <div className="w-10 h-10 rounded-xl bg-[var(--foreground)]/5 flex items-center justify-center group-hover:bg-luxury-gold/10 border border-[var(--foreground)]/5 transition-colors">
-                  <FacebookIcon size={18} className="text-luxury-gold" />
+                <div className="w-12 h-12 rounded-2xl bg-[var(--foreground)]/5 flex items-center justify-center group-hover:bg-luxury-gold/20 border border-[var(--foreground)]/10 transition-all duration-300 shadow-sm">
+                  <FacebookIcon size={20} className="text-luxury-gold" />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-[10px] uppercase tracking-widest text-[var(--foreground)]/40 font-bold">Facebook</span>
-                  <span className="text-sm">Syfura Fragrance</span>
+                  <span className="text-[10px] uppercase tracking-[0.2em] text-[var(--foreground)]/40 font-bold">Facebook</span>
+                  <span className="text-sm font-bold">Syfura Fragrance</span>
                 </div>
-                <ExternalLink size={12} className="opacity-0 group-hover:opacity-100 transition-opacity ml-auto" />
+                <ExternalLink size={14} className="opacity-0 group-hover:opacity-100 transition-opacity ml-auto" />
               </a>
               <a 
                 href="https://www.instagram.com/sufyra_fragrance" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 text-[var(--foreground)]/60 hover:text-luxury-gold transition-all group"
+                className="flex items-center gap-3 text-[var(--foreground)] hover:text-luxury-gold transition-all group"
               >
-                <div className="w-10 h-10 rounded-xl bg-[var(--foreground)]/5 flex items-center justify-center group-hover:bg-luxury-gold/10 border border-[var(--foreground)]/5 transition-colors">
-                  <InstagramIcon size={18} className="text-luxury-gold" />
+                <div className="w-12 h-12 rounded-2xl bg-[var(--foreground)]/5 flex items-center justify-center group-hover:bg-luxury-gold/20 border border-[var(--foreground)]/10 transition-all duration-300 shadow-sm">
+                  <InstagramIcon size={20} className="text-luxury-gold" />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-[10px] uppercase tracking-widest text-[var(--foreground)]/40 font-bold">Instagram</span>
-                  <span className="text-sm">Sufyra Fragrance</span>
+                  <span className="text-[10px] uppercase tracking-[0.2em] text-[var(--foreground)]/40 font-bold">Instagram</span>
+                  <span className="text-sm font-bold">Sufyra Fragrance</span>
                 </div>
-                <ExternalLink size={12} className="opacity-0 group-hover:opacity-100 transition-opacity ml-auto" />
+                <ExternalLink size={14} className="opacity-0 group-hover:opacity-100 transition-opacity ml-auto" />
               </a>
             </div>
           </div>

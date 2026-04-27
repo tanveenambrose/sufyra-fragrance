@@ -38,7 +38,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       )}
 
       {/* Product Image */}
-      <Link href={`/product-details/${product.id}`} className="relative aspect-[4/5] block overflow-hidden bg-[var(--foreground)]/[0.03] border-b border-[var(--foreground)]/5 group-hover:cursor-pointer" suppressHydrationWarning>
+      <Link href={`/product-details/${product.id}`} className="relative aspect-[1/1] block overflow-hidden bg-[var(--foreground)]/[0.02] group-hover:cursor-pointer" suppressHydrationWarning>
         {displayImage ? (
           <Image
             src={displayImage}
@@ -58,16 +58,16 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       </Link>
 
       {/* Product Info */}
-      <div className="p-4 sm:p-5 flex flex-col flex-1" suppressHydrationWarning>
-        <div className="flex justify-between items-start mb-1 gap-2" suppressHydrationWarning>
+      <div className="p-6 sm:p-8 flex flex-col flex-1" suppressHydrationWarning>
+        <div className="flex justify-between items-start mb-2 gap-2" suppressHydrationWarning>
           <Link href={`/product-details/${product.id}`} className="hover:text-luxury-gold transition-colors">
-            <h3 className="text-sm sm:text-lg font-serif text-[var(--foreground)] font-bold leading-tight">{product.name}</h3>
+            <h3 className="text-base sm:text-xl font-serif text-[var(--foreground)] font-bold tracking-tight">{product.name}</h3>
           </Link>
           <div className="flex flex-col items-end">
+             <span className="text-luxury-gold font-bold text-base sm:text-xl whitespace-nowrap">{discountedPrice}৳</span>
              {discount > 0 && (
-               <span className="text-[var(--foreground)]/40 line-through text-[10px]">{currentPrice}৳</span>
+               <span className="text-[var(--foreground)]/40 line-through text-[11px] font-medium">{currentPrice}৳</span>
              )}
-             <span className="text-luxury-gold font-bold text-sm sm:text-lg whitespace-nowrap">{discountedPrice}৳</span>
           </div>
         </div>
         
@@ -99,7 +99,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
         <button 
           onClick={handleAddItem}
-          className="w-full bg-[#FFD700] text-black py-3 sm:py-3.5 rounded-xl font-bold text-[10px] sm:text-[11px] uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-[#FFE55C] active:scale-95 transition-all mt-auto shadow-[0_0_20px_rgba(255,215,0,0.2)]"
+          className="w-full bg-[#FFD700] text-black py-4 sm:py-5 rounded-2xl font-bold text-[11px] sm:text-[12px] uppercase tracking-[0.2em] flex items-center justify-center gap-2 hover:bg-[#FFE55C] active:scale-95 transition-all mt-6 shadow-xl shadow-yellow-500/10"
           suppressHydrationWarning
         >
           <Plus className="w-4 h-4" />

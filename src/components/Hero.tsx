@@ -74,14 +74,14 @@ const Hero = () => {
 
       {/* Content */}
       <div className="relative z-10 text-center px-6 max-w-4xl pt-20 pb-24 sm:pb-32" suppressHydrationWarning>
-        <h2 ref={subtitleRef} className="mb-4 md:mb-6">
-          <div className="inline-flex items-center justify-center rounded-full border border-white/20 bg-black/40 backdrop-blur-lg px-4 sm:px-6 py-2 sm:py-2.5 transition-all hover:bg-black/50 overflow-hidden">
-            <span className="bg-[#c5a059] text-black px-3 sm:px-4 py-1.5 font-serif uppercase tracking-[0.3em] sm:tracking-[0.5em] text-[10px] sm:text-[11px] font-bold">
+        <h2 ref={subtitleRef} className="mb-6 md:mb-10">
+          <div className="inline-flex items-center justify-center border-b border-luxury-gold/60 pb-3 transition-all">
+            <span className="text-luxury-gold uppercase tracking-[0.5em] sm:tracking-[0.8em] text-[10px] sm:text-[13px] font-bold">
               Pure Essence of Luxury
             </span>
           </div>
         </h2>
-        <h1 ref={titleRef} className="text-3xl sm:text-6xl md:text-8xl font-serif text-[var(--foreground)] mb-6 md:mb-8 leading-tight transition-colors duration-300">
+        <h1 ref={titleRef} className="text-4xl sm:text-7xl md:text-9xl font-serif text-white mb-8 md:mb-12 leading-tight transition-colors duration-300 drop-shadow-2xl">
           Fragrance That <br /> <span className="font-normal italic">Suits you</span>
         </h1>
         <div ref={ctaRef} className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mt-6 md:mt-10">
@@ -93,9 +93,9 @@ const Hero = () => {
       </div>
  
       {/* Scroll Indicator */}
-      <div className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 animate-bounce opacity-50">
-        <span className="text-[10px] uppercase tracking-widest text-[var(--foreground)]/50">Scroll</span>
-        <div className="w-[1px] h-8 sm:h-12 bg-gradient-to-b from-luxury-gold to-transparent" />
+      <div className="absolute bottom-4 sm:bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 animate-bounce opacity-80">
+        <span className="text-[10px] uppercase tracking-[0.3em] text-white font-bold">Scroll</span>
+        <div className="w-[1px] h-10 sm:h-16 bg-gradient-to-b from-luxury-gold to-transparent" />
       </div>
     </div>
   );
