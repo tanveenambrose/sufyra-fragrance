@@ -52,50 +52,33 @@ const Hero = () => {
   }, []);
 
   return (
-    <div ref={containerRef} className="relative h-screen w-full flex items-center justify-center overflow-hidden">
-      {/* Background with Zoom Effect */}
-      <div ref={bgRef} className="absolute inset-0 scale-110" suppressHydrationWarning>
-        <Image
-          src="/hero.png"
-          alt="Luxury Fragrance Hero"
-          fill
-          sizes="100vw"
-          className="object-cover"
-          priority
-        />
-        <div className={`absolute inset-0 transition-colors duration-500 ${
-          mounted && theme === 'light' 
-            ? 'bg-gradient-to-b from-black/50 via-black/20 to-black/30' 
-            : 'bg-gradient-to-b from-black/60 via-black/20 to-[var(--background)]'
-        }`} />
-
-
-      </div>
+    <div ref={containerRef} className="relative h-[90vh] w-full flex items-center justify-center overflow-hidden bg-[var(--background)] transition-colors duration-500">
+      {/* Subtle Decorative Elements */}
+      <div className="absolute top-1/4 -left-20 w-[500px] h-[500px] bg-luxury-gold/5 rounded-full blur-[150px] pointer-events-none" />
+      <div className="absolute bottom-1/4 -right-20 w-[500px] h-[500px] bg-luxury-bronze/5 rounded-full blur-[150px] pointer-events-none" />
 
       {/* Content */}
-      <div className="relative z-10 text-center px-6 max-w-4xl pt-20 pb-24 sm:pb-32" suppressHydrationWarning>
-        <h2 ref={subtitleRef} className="mb-6 md:mb-10">
-          <div className="inline-flex items-center justify-center border-b border-luxury-gold/60 pb-3 transition-all">
-            <span className="text-luxury-gold uppercase tracking-[0.5em] sm:tracking-[0.8em] text-[10px] sm:text-[13px] font-bold">
-              Pure Essence of Luxury
-            </span>
-          </div>
+      <div className="relative z-10 text-center px-6 max-w-7xl pt-20" suppressHydrationWarning>
+        <h2 ref={subtitleRef} className="mb-8 md:mb-12">
+          <span className="text-luxury-gold uppercase tracking-[1em] sm:tracking-[1.5em] text-[10px] sm:text-[13px] font-bold">
+            Pure Essence of Luxury
+          </span>
         </h2>
-        <h1 ref={titleRef} className="text-4xl sm:text-7xl md:text-9xl font-serif text-white mb-8 md:mb-12 leading-tight transition-colors duration-300 drop-shadow-2xl">
+        <h1 ref={titleRef} className="text-5xl sm:text-8xl md:text-[9rem] lg:text-[11rem] font-serif text-[var(--foreground)] mb-12 md:mb-16 leading-[1] tracking-tight transition-colors duration-300">
           Fragrance That <br /> <span className="font-normal italic">Suits you</span>
         </h1>
-        <div ref={ctaRef} className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mt-6 md:mt-10">
-          <button className="luxury-gradient w-full sm:w-auto px-8 sm:px-12 py-3.5 sm:py-4 rounded-full text-luxury-charcoal font-bold uppercase tracking-wider text-[11px] sm:text-sm hover:scale-105 transition-transform flex items-center justify-center gap-2 min-w-[180px] sm:min-w-[220px]" suppressHydrationWarning>
+        <div ref={ctaRef} className="flex flex-col sm:flex-row items-center justify-center gap-8 mt-10 md:mt-16">
+          <button className="luxury-gradient px-12 sm:px-16 py-4 sm:py-5 rounded-full text-luxury-charcoal font-bold uppercase tracking-[0.2em] text-[11px] sm:text-sm hover:scale-[1.03] active:scale-95 transition-all flex items-center justify-center gap-3 min-w-[220px] shadow-2xl shadow-luxury-gold/10" suppressHydrationWarning>
             Discover Collection
             <ChevronRight className="w-4 h-4" />
           </button>
         </div>
       </div>
- 
+
       {/* Scroll Indicator */}
-      <div className="absolute bottom-4 sm:bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 animate-bounce opacity-80">
-        <span className="text-[10px] uppercase tracking-[0.3em] text-white font-bold">Scroll</span>
-        <div className="w-[1px] h-10 sm:h-16 bg-gradient-to-b from-luxury-gold to-transparent" />
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 animate-bounce opacity-40">
+        <span className="text-[10px] uppercase tracking-[0.4em] text-[var(--foreground)] font-bold">Scroll</span>
+        <div className="w-[1px] h-12 bg-gradient-to-b from-luxury-gold to-transparent" />
       </div>
     </div>
   );

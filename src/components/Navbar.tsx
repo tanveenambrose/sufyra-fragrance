@@ -106,16 +106,16 @@ const Navbar: React.FC = () => {
     <>
       <nav
         ref={navRef}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled ? 'bg-[var(--navbar)] backdrop-blur-md py-2 shadow-2xl' : 'bg-black/20 backdrop-blur-sm py-4'
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled ? 'bg-[var(--navbar)] backdrop-blur-md py-2 shadow-2xl' : 'bg-transparent py-6'
           }`}
         suppressHydrationWarning
       >
         <div className="container mx-auto px-4 md:px-6" suppressHydrationWarning>
           <div className="flex items-center justify-between gap-2 md:gap-4 relative" suppressHydrationWarning>
             {/* Logo - Adjust size for mobile completeness */}
-            <Link href="/" className={`items-center nav-item transition-transform hover:scale-105 h-8 w-24 md:h-12 md:w-44 grow-0 shrink-0 relative ${isSearchExpanded ? 'hidden sm:flex' : 'flex'}`}>
+            <Link href="/" className="items-center nav-item transition-transform hover:scale-105 h-8 w-24 md:h-12 md:w-44 grow-0 shrink-0 relative flex">
               <Image
-                src={(isMounted && theme === 'light' && isScrolled) ? "/logo- dark.png" : "/logo.png"}
+                src={isMounted && theme === 'light' ? "/logo- dark.png" : "/logo.png"}
                 alt="Sufyra Logo"
                 fill
                 sizes="(max-width: 768px) 100px, 180px"
@@ -128,7 +128,7 @@ const Navbar: React.FC = () => {
             <div className="hidden lg:block relative group nav-item">
               <Link
                 href="/products"
-                className={`text-[10px] uppercase tracking-widest hover:text-luxury-gold transition-colors font-bold flex items-center gap-1.5 py-4 ${isScrolled ? 'text-[var(--foreground)]' : 'text-white'}`}
+                className={`text-[10px] uppercase tracking-widest hover:text-luxury-gold transition-colors font-bold flex items-center gap-1.5 py-4 text-[var(--foreground)]`}
               >
                 Products
                 <div className="w-1.5 h-1.5 border-r border-b border-current translate-y-[-20%] rotate-45 group-hover:rotate-[225deg] transition-transform duration-300" />
@@ -152,60 +152,28 @@ const Navbar: React.FC = () => {
               </div>
             </div>
 
-            {/* Search Bar - Expanded on mobile when clicked */}
-            <div className={`flex items-center justify-end transition-all duration-300 nav-item ${isSearchExpanded ? 'flex-grow px-2' : 'flex-grow max-w-[40%] sm:max-w-[45%]'}`}>
-              <form onSubmit={handleSearch} className="relative w-full group flex justify-end items-center h-10">
-                <div className={`relative w-full flex items-center ${isSearchExpanded ? 'block' : 'hidden sm:flex'}`}>
-                  <input
-                    type="text"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    autoFocus={isSearchExpanded}
-                    placeholder="Search scents..."
-                    className={`w-full border rounded-full py-2 pl-6 pr-10 focus:outline-none focus:border-luxury-gold text-sm transition-all font-bold shadow-sm ${
-                      isScrolled 
-                        ? 'bg-[var(--foreground)]/5 border-[var(--foreground)]/15 text-[var(--foreground)] placeholder:text-[var(--foreground)]/30' 
-                        : 'bg-white/20 border-white/30 text-white placeholder:text-white/60 backdrop-blur-md'
-                    }`}
-                  />
-                  {isSearchExpanded && (
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setIsSearchExpanded(false);
-                        setSearchQuery('');
-                      }}
-                      className="absolute right-3 p-1 text-[var(--foreground)]/40 hover:text-luxury-gold sm:hidden"
-                    >
-                      <X size={16} />
-                    </button>
-                  )}
-                </div>
-
-                {!isSearchExpanded && (
-                  <button
-                    type="submit"
-                    onClick={handleSearch}
-                    className={`h-10 w-10 transition-colors flex items-center justify-center shrink-0 sm:absolute sm:right-1 ${
-                      isScrolled ? 'text-[var(--foreground)]' : 'text-white'
-                    } hover:text-luxury-gold`}
-                  >
-                    <Search className="w-5 h-5 md:w-4 md:h-4" />
-                  </button>
-                )}
-
-                {/* Desktop Search Icon inside input when not expanded (sm and up) */}
+            {/* Search Bar - Always Visible */}
+            <div className="flex-grow flex justify-center max-w-[150px] sm:max-w-xs md:max-w-md lg:max-w-lg mx-2 md:mx-4 nav-item">
+              <form onSubmit={handleSearch} className="relative w-full group">
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search scents..."
+                  className={`w-full border rounded-full py-2 pl-4 md:pl-6 pr-10 focus:outline-none focus:border-luxury-gold text-[10px] md:text-sm transition-all font-bold shadow-sm bg-[var(--foreground)]/5 border-[var(--foreground)]/15 text-[var(--foreground)] placeholder:text-[var(--foreground)]/40`}
+                />
                 <button
                   type="submit"
-                  className={`hidden sm:flex items-center justify-center text-[var(--foreground)]/40 hover:text-luxury-gold transition-colors absolute right-4`}
+                  className={`absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8 transition-colors flex items-center justify-center shrink-0 text-[var(--foreground)] hover:text-luxury-gold`}
                 >
                   <Search className="w-4 h-4" />
                 </button>
               </form>
             </div>
 
+
             {/* Right side Actions */}
-            <div className={`items-center gap-2 sm:gap-4 md:gap-6 nav-item flex-shrink-0 ${isSearchExpanded ? 'hidden sm:flex' : 'flex'}`}>
+            <div className="items-center gap-2 sm:gap-4 md:gap-6 nav-item flex-shrink-0 flex">
               {/* Desktop Auth */}
               <div className="hidden lg:flex items-center gap-4">
                 {isMounted && user ? (
@@ -230,7 +198,7 @@ const Navbar: React.FC = () => {
                   <Link href="/login" className={`text-[10px] uppercase tracking-widest hover:text-white hover:bg-luxury-gold transition-all duration-300 font-bold whitespace-nowrap border px-6 py-2 rounded-full ${
                     isScrolled 
                       ? 'border-luxury-gold/30 text-[var(--foreground)] bg-[var(--foreground)]/5' 
-                      : 'border-white/30 text-white bg-white/10'
+                      : 'border-[var(--foreground)]/20 text-[var(--foreground)] bg-[var(--foreground)]/5'
                   }`}>
                     Login
                   </Link>
@@ -257,9 +225,9 @@ const Navbar: React.FC = () => {
 
               <button className="relative group p-1 h-10 flex items-center justify-center" onClick={() => setIsCartOpen(true)}>
                 <div className="flex items-center gap-1 md:gap-2">
-                  <ShoppingBag className={`w-5 h-5 group-hover:text-luxury-gold transition-colors ${isScrolled ? 'text-[var(--foreground)]' : 'text-white'}`} />
+                  <ShoppingBag className={`w-5 h-5 group-hover:text-luxury-gold transition-colors text-[var(--foreground)]`} />
                   {/* Desktop Cart Summary */}
-                  <div className={`hidden lg:flex flex-col items-start leading-none text-[10px] uppercase tracking-tighter w-16 font-bold ${isScrolled ? 'text-[var(--foreground)]' : 'text-white'}`}>
+                  <div className={`hidden lg:flex flex-col items-start leading-none text-[10px] uppercase tracking-tighter w-16 font-bold text-[var(--foreground)]`}>
                     {isMounted ? (
                       <>
                         <span>{itemCount} items</span>
