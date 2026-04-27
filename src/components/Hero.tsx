@@ -65,9 +65,10 @@ const Hero = () => {
         />
         <div className={`absolute inset-0 transition-colors duration-500 ${
           mounted && theme === 'light' 
-            ? 'bg-luxury-cream/20' 
+            ? 'bg-gradient-to-b from-black/50 via-black/20 to-black/30' 
             : 'bg-gradient-to-b from-black/60 via-black/20 to-[var(--background)]'
         }`} />
+
 
       </div>
 

@@ -6,7 +6,7 @@
   --color-luxury-cream: #FAF9F6;
   --color-luxury-bronze: #8B5E3C;
   --font-serif: var(--font-playfair), serif;
-  --font-sans: var(--font-inter), sans-serif;
+  --font-sans: var(--font-montserrat), sans-serif;
 }
 
 :root {
@@ -36,7 +36,7 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: var(--font-inter), sans-serif;
+  font-family: var(--font-montserrat), sans-serif;
   overflow-x: hidden;
   font-weight: 500; /* Medium weight by default for better visibility */
 }

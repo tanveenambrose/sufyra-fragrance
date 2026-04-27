@@ -106,7 +106,7 @@ const Navbar: React.FC = () => {
     <>
       <nav
         ref={navRef}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled ? 'bg-[var(--navbar)] backdrop-blur-md py-2 shadow-2xl' : 'bg-transparent py-4'
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled ? 'bg-[var(--navbar)] backdrop-blur-md py-2 shadow-2xl' : 'bg-black/20 backdrop-blur-sm py-4'
           }`}
         suppressHydrationWarning
       >
@@ -165,7 +165,7 @@ const Navbar: React.FC = () => {
                     className={`w-full border rounded-full py-2 pl-6 pr-10 focus:outline-none focus:border-luxury-gold text-sm transition-all font-bold shadow-sm ${
                       isScrolled 
                         ? 'bg-[var(--foreground)]/5 border-[var(--foreground)]/15 text-[var(--foreground)] placeholder:text-[var(--foreground)]/30' 
-                        : 'bg-white/10 border-white/20 text-white placeholder:text-white/40 backdrop-blur-sm'
+                        : 'bg-white/20 border-white/30 text-white placeholder:text-white/60 backdrop-blur-md'
                     }`}
                   />
                   {isSearchExpanded && (
