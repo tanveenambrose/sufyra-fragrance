@@ -88,6 +88,7 @@ const Footer: React.FC = () => {
                   src="/logo.png"
                   alt="Sufyra Logo"
                   fill
+                  sizes="(max-width: 768px) 150px, 180px"
                   className="object-contain"
                 />
               </div>

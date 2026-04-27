@@ -17,8 +17,11 @@ import {
   LayoutGrid,
   Maximize2,
   MessageCircle,
-  X
+  X,
+  Smartphone,
+  Send
 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { gsap } from 'gsap';
 import { useGSAP } from '@gsap/react';
 
@@ -32,32 +35,50 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
   const [quantity, setQuantity] = useState(1);
   const [activeImage, setActiveImage] = useState<string>('');
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  const [isPurchaseModalOpen, setIsPurchaseModalOpen] = useState(false);
+  const [adjacentIds, setAdjacentIds] = useState<{ prev: string | null, next: string | null }>({ prev: null, next: null });
   const addItem = useCart((state) => state.addItem);
+  const router = useRouter();
 
   useEffect(() => {
-    const fetchProduct = async () => {
+    const fetchProductAndNavigation = async () => {
       try {
-        const { data, error } = await supabase
+        // Fetch current product
+        const { data: productData, error: productError } = await supabase
           .from('products')
           .select('*')
           .eq('id', id)
           .single();
 
-        if (error) throw error;
-        if (data) {
-          setProduct(data);
-          setSelectedSize(data.variants[0].size);
-          const initialImage = data.variants[0].image_url || data.image_url;
+        if (productError) throw productError;
+        if (productData) {
+          setProduct(productData);
+          setSelectedSize(productData.variants[0].size);
+          const initialImage = productData.variants[0].image_url || productData.image_url;
           setActiveImage(initialImage);
         }
+
+        // Fetch all products to determine navigation
+        const { data: allProducts, error: navError } = await supabase
+          .from('products')
+          .select('id')
+          .order('created_at', { ascending: true });
+
+        if (allProducts) {
+          const currentIndex = allProducts.findIndex(p => p.id === id);
+          setAdjacentIds({
+            prev: currentIndex > 0 ? allProducts[currentIndex - 1].id : null,
+            next: currentIndex < allProducts.length - 1 ? allProducts[currentIndex + 1].id : null
+          });
+        }
       } catch (err) {
-        console.error('Error fetching product:', err);
+        console.error('Error fetching product details:', err);
       } finally {
         setIsLoading(false);
       }
     };
 
-    fetchProduct();
+    fetchProductAndNavigation();
   }, [id]);
 
   useEffect(() => {
@@ -136,13 +157,21 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
           </nav>
 
           <div className="flex items-center gap-6 text-white/40">
-            <button className="hover:text-luxury-gold transition-colors flex items-center gap-2 text-[10px] uppercase tracking-widest font-bold">
+            <button 
+              onClick={() => adjacentIds.prev && router.push(`/product-details/${adjacentIds.prev}`)}
+              disabled={!adjacentIds.prev}
+              className={`hover:text-luxury-gold transition-colors flex items-center gap-2 text-[10px] uppercase tracking-widest font-bold ${!adjacentIds.prev ? 'opacity-20 cursor-not-allowed' : ''}`}
+            >
               <ArrowLeft size={14} /> Prev
             </button>
             <Link href="/products" className="hover:text-luxury-gold transition-colors">
               <LayoutGrid size={16} />
             </Link>
-            <button className="hover:text-luxury-gold transition-colors flex items-center gap-2 text-[10px] uppercase tracking-widest font-bold">
+            <button 
+              onClick={() => adjacentIds.next && router.push(`/product-details/${adjacentIds.next}`)}
+              disabled={!adjacentIds.next}
+              className={`hover:text-luxury-gold transition-colors flex items-center gap-2 text-[10px] uppercase tracking-widest font-bold ${!adjacentIds.next ? 'opacity-20 cursor-not-allowed' : ''}`}
+            >
               Next <ArrowRight size={14} />
             </button>
           </div>
@@ -158,7 +187,7 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
                   alt={product.name}
                   fill
                   priority
-                  quality={100}
+                  quality={90}
                   sizes="(max-width: 1024px) 100vw, 60vw"
                   className="object-cover transition-transform duration-[1.5s] group-hover:scale-105 saturate-[1.1] contrast-[1.02] brightness-[1.05]"
                 />
@@ -316,7 +345,10 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
                   </button>
 
                   {/* Buy Now Button */}
-                  <button className="flex-grow sm:flex-none sm:px-8 h-14 sm:h-full bg-white/[0.03] border border-white/10 rounded-xl text-white/80 font-bold uppercase tracking-[0.2em] text-[10px] hover:bg-white/5 transition-all text-center">
+                  <button 
+                    onClick={() => setIsPurchaseModalOpen(true)}
+                    className="flex-grow sm:flex-none sm:px-8 h-14 sm:h-full bg-luxury-gold text-luxury-charcoal font-bold uppercase tracking-[0.2em] text-[10px] hover:bg-luxury-gold/90 transition-all text-center rounded-xl shadow-xl shadow-luxury-gold/20"
+                  >
                     Purchase Now
                   </button>
                 </div>
@@ -380,7 +412,7 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
                 src={activeImage}
                 alt={product.name}
                 fill
-                quality={100}
+                quality={90}
                 priority
                 sizes="100vw"
                 className="object-contain"
@@ -391,6 +423,89 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
           {/* Aromatic Preview Label */}
           <div className="absolute bottom-12 left-1/2 -translate-x-1/2 text-[10px] uppercase tracking-[0.4em] text-white/20 font-bold pointer-events-none">
             High Fidelity Scent Portrait
+          </div>
+        </div>
+      )}
+
+      {/* Purchase Modal */}
+      {isPurchaseModalOpen && (
+        <div className="fixed inset-0 z-[300] flex items-center justify-center p-4 sm:p-6 animate-in fade-in duration-300">
+          <div className="absolute inset-0 bg-black/90 backdrop-blur-xl" onClick={() => setIsPurchaseModalOpen(false)} />
+          
+          <div className="relative w-full max-w-lg bg-luxury-charcoal border border-white/10 rounded-3xl overflow-hidden shadow-2xl animate-in zoom-in-95 duration-300">
+            {/* Close Button */}
+            <button
+              onClick={() => setIsPurchaseModalOpen(false)}
+              className="absolute top-4 right-4 z-10 p-2 bg-white/5 hover:bg-white/10 rounded-full text-white/40 hover:text-white transition-all"
+            >
+              <X size={20} />
+            </button>
+
+            <div className="p-8">
+              <div className="flex flex-col items-center text-center gap-6">
+                <div className="w-20 h-20 bg-luxury-gold/10 rounded-full flex items-center justify-center">
+                  <Smartphone size={32} className="text-luxury-gold" />
+                </div>
+                
+                <div>
+                  <h2 className="text-2xl font-serif text-luxury-cream mb-2">Finalize Your Purchase</h2>
+                  <p className="text-[10px] uppercase tracking-[0.2em] text-white/40 font-bold">Exquisite Selection</p>
+                </div>
+
+                {/* Product Summary for Screenshot */}
+                <div className="w-full bg-white/5 rounded-2xl p-6 border border-white/10 flex items-center gap-6 text-left">
+                  <div className="relative w-20 h-24 rounded-lg overflow-hidden flex-shrink-0">
+                    <Image 
+                      src={activeImage} 
+                      alt={product.name} 
+                      fill 
+                      sizes="100px"
+                      className="object-cover"
+                    />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-serif text-white mb-1">{product.name}</h3>
+                    <p className="text-[10px] uppercase tracking-widest text-luxury-gold font-bold mb-2">Size: {selectedSize}</p>
+                    <p className="text-2xl font-bold text-white">৳{currentVariant.price * quantity}</p>
+                  </div>
+                </div>
+
+                {/* The Noticeable Note */}
+                <div className="w-full bg-luxury-gold/10 border border-luxury-gold/30 rounded-2xl p-5 relative overflow-hidden text-left">
+                  <div className="absolute top-0 left-0 w-1 h-full bg-luxury-gold" />
+                  <p className="text-sm text-luxury-cream leading-relaxed font-medium">
+                    <span className="text-luxury-gold mr-2 text-lg">📸</span>
+                    <span className="font-bold text-luxury-gold">Action Required:</span> Please take a screenshot of this screen and share it with our concierge to complete your purchase. <span className="text-luxury-gold font-bold">( Courier Charge Applicable )</span>
+                  </p>
+                </div>
+
+                {/* Social Links */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
+                  <a 
+                    href="https://wa.me/message/ALWRUNUBV6L3A1" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-3 py-4 bg-[#25D366] hover:bg-[#20ba59] text-white rounded-xl font-bold uppercase tracking-widest text-[10px] transition-all shadow-lg shadow-green-500/10"
+                  >
+                    <MessageCircle size={18} />
+                    WhatsApp
+                  </a>
+                  <a 
+                    href="https://m.me/SufyraFragrance" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-3 py-4 bg-[#0084FF] hover:bg-[#0077e6] text-white rounded-xl font-bold uppercase tracking-widest text-[10px] transition-all shadow-lg shadow-blue-500/10"
+                  >
+                    <Send size={18} />
+                    Messenger
+                  </a>
+                </div>
+                
+                <p className="text-[9px] uppercase tracking-widest text-white/20 font-bold">
+                  Sufyra Fragrance — Artisanal Perfumery
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       )}
