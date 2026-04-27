@@ -38,7 +38,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       )}
 
       {/* Product Image */}
-      <Link href={`/product-details/${product.id}`} className="relative aspect-[4/5] block overflow-hidden bg-white/5 border-b border-white/5 group-hover:cursor-pointer" suppressHydrationWarning>
+      <Link href={`/product-details/${product.id}`} className="relative aspect-[4/5] block overflow-hidden bg-[var(--foreground)]/[0.03] border-b border-[var(--foreground)]/5 group-hover:cursor-pointer" suppressHydrationWarning>
         {displayImage ? (
           <Image
             src={displayImage}
@@ -50,7 +50,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             priority={product.id === '1' || product.id === '9'} // Example of prioritizing top products
           />
         ) : (
-          <div className="w-full h-full flex flex-col items-center justify-center bg-white/[0.02] text-white/10 gap-2">
+          <div className="w-full h-full flex flex-col items-center justify-center bg-[var(--foreground)]/[0.02] text-[var(--foreground)]/10 gap-2">
             <Plus className="w-8 h-8 opacity-20" strokeWidth={1} />
             <span className="text-[10px] uppercase tracking-widest font-bold opacity-20">Scent Portrait Missing</span>
           </div>
@@ -61,23 +61,23 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       <div className="p-4 sm:p-5 flex flex-col flex-1" suppressHydrationWarning>
         <div className="flex justify-between items-start mb-1 gap-2" suppressHydrationWarning>
           <Link href={`/product-details/${product.id}`} className="hover:text-luxury-gold transition-colors">
-            <h3 className="text-sm sm:text-lg font-serif text-luxury-cream leading-tight">{product.name}</h3>
+            <h3 className="text-sm sm:text-lg font-serif text-[var(--foreground)] font-bold leading-tight">{product.name}</h3>
           </Link>
           <div className="flex flex-col items-end">
              {discount > 0 && (
-               <span className="text-white/30 line-through text-[10px]">{currentPrice}৳</span>
+               <span className="text-[var(--foreground)]/40 line-through text-[10px]">{currentPrice}৳</span>
              )}
-             <span className="text-luxury-gold font-bold text-sm sm:text-base whitespace-nowrap">{discountedPrice}৳</span>
+             <span className="text-luxury-gold font-bold text-sm sm:text-lg whitespace-nowrap">{discountedPrice}৳</span>
           </div>
         </div>
         
-        <p className="text-white/40 text-[9px] sm:text-[10px] mb-4 line-clamp-1" suppressHydrationWarning>
+        <p className="text-[var(--foreground)]/80 text-[9px] sm:text-[10px] mb-4 line-clamp-2 leading-relaxed" suppressHydrationWarning>
           {product.description}
         </p>
 
         {/* Size Selection */}
         <div className="mb-4" suppressHydrationWarning>
-          <label className="text-[8px] sm:text-[9px] uppercase tracking-widest text-white/20 mb-2 block" suppressHydrationWarning>
+          <label className="text-[8px] sm:text-[9px] uppercase tracking-widest text-[var(--foreground)]/40 mb-2 block font-bold" suppressHydrationWarning>
             {product.category === 'combo' ? 'Bundle Includes' : 'Size'}
           </label>
           <div className="flex gap-1 sm:gap-1.5" suppressHydrationWarning>
@@ -87,8 +87,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                 onClick={() => setSelectedSize(variant.size)}
                 className={`flex-1 py-1.5 rounded-md transition-all text-[9px] sm:text-[10px] font-bold border ${
                   selectedSize === variant.size
-                    ? 'border-luxury-gold bg-luxury-gold/10 text-luxury-gold'
-                    : 'border-white/5 text-white/30 hover:border-white/20'
+                    ? 'border-luxury-gold bg-luxury-gold text-white'
+                    : 'border-[var(--foreground)]/10 text-[var(--foreground)]/40 hover:border-luxury-gold hover:text-luxury-gold'
                 }`}
               >
                 {variant.size}

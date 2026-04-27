@@ -20,27 +20,27 @@ const AuthInput: React.FC<AuthInputProps> = ({ label, icon: Icon, type, error, .
 
   return (
     <div className="w-full space-y-2">
-      <label className="block text-[10px] uppercase tracking-widest text-white/40 font-bold ml-1">
+      <label className="block text-[10px] uppercase tracking-widest text-[var(--foreground)]/40 font-bold ml-1">
         {label}
       </label>
       <div className="relative group">
         {Icon && (
-          <Icon className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20 group-focus-within:text-luxury-gold transition-colors" />
+          <Icon className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--foreground)]/20 group-focus-within:text-luxury-gold transition-colors" />
         )}
         <input
           {...props}
           type={inputType}
-          className={`w-full bg-white/5 border ${
-            error ? 'border-red-500/50' : 'border-white/10'
+          className={`w-full bg-[var(--foreground)]/5 border ${
+            error ? 'border-red-500/50' : 'border-[var(--foreground)]/10'
           } rounded-xl py-3 ${
             Icon ? 'pl-11' : 'px-4'
-          } ${isPassword ? 'pr-12' : 'pr-4'} focus:outline-none focus:border-luxury-gold transition-all text-sm placeholder:text-white/10 hover:bg-white/10`}
+          } ${isPassword ? 'pr-12' : 'pr-4'} focus:outline-none focus:border-luxury-gold transition-all text-sm placeholder:text-[var(--foreground)]/10 hover:bg-[var(--foreground)]/10 text-[var(--foreground)]`}
         />
         {isPassword && (
           <button
             type="button"
             onClick={togglePasswordVisibility}
-            className="absolute right-4 top-1/2 -translate-y-1/2 text-white/20 hover:text-luxury-gold transition-colors focus:outline-none"
+            className="absolute right-4 top-1/2 -translate-y-1/2 text-[var(--foreground)]/20 hover:text-luxury-gold transition-colors focus:outline-none"
           >
             {showPassword ? (
               <EyeOff className="w-4 h-4" />

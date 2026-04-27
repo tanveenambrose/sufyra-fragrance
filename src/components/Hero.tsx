@@ -4,6 +4,7 @@ import React, { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { gsap } from 'gsap';
 import { ChevronRight } from 'lucide-react';
+import { useTheme } from 'next-themes';
 
 const Hero = () => {
   const titleRef = useRef(null);
@@ -11,6 +12,12 @@ const Hero = () => {
   const ctaRef = useRef(null);
   const bgRef = useRef(null);
   const containerRef = useRef(null);
+  const { theme } = useTheme();
+  const [mounted, setMounted] = React.useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -56,7 +63,12 @@ const Hero = () => {
           className="object-cover"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-luxury-charcoal" />
+        <div className={`absolute inset-0 transition-colors duration-500 ${
+          mounted && theme === 'light' 
+            ? 'bg-luxury-cream/20' 
+            : 'bg-gradient-to-b from-black/60 via-black/20 to-[var(--background)]'
+        }`} />
+
       </div>
 
       {/* Content */}
@@ -68,7 +80,7 @@ const Hero = () => {
             </span>
           </div>
         </h2>
-        <h1 ref={titleRef} className="text-3xl sm:text-6xl md:text-8xl font-serif text-luxury-cream mb-6 md:mb-8 leading-tight">
+        <h1 ref={titleRef} className="text-3xl sm:text-6xl md:text-8xl font-serif text-[var(--foreground)] mb-6 md:mb-8 leading-tight transition-colors duration-300">
           Fragrance That <br /> <span className="font-normal italic">Suits you</span>
         </h1>
         <div ref={ctaRef} className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mt-6 md:mt-10">
@@ -81,7 +93,7 @@ const Hero = () => {
  
       {/* Scroll Indicator */}
       <div className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 animate-bounce opacity-50">
-        <span className="text-[10px] uppercase tracking-widest text-white/50">Scroll</span>
+        <span className="text-[10px] uppercase tracking-widest text-[var(--foreground)]/50">Scroll</span>
         <div className="w-[1px] h-8 sm:h-12 bg-gradient-to-b from-luxury-gold to-transparent" />
       </div>
     </div>

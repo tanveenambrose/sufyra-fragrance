@@ -63,7 +63,7 @@ export default function Home() {
   }, [dbProducts]);
 
   return (
-    <main className="min-h-screen bg-luxury-charcoal" suppressHydrationWarning>
+    <main className="min-h-screen bg-[var(--background)] transition-colors duration-300" suppressHydrationWarning>
       <Hero />
 
       {/* Featured Collections */}
@@ -80,10 +80,10 @@ export default function Home() {
       />
 
       {/* Luxury Quote Section */}
-      <section className="py-20 sm:py-32 bg-white/[0.02] border-y border-white/5 relative overflow-hidden reveal">
+      <section className="py-20 sm:py-32 bg-[var(--accent-soft)] border-y border-[var(--foreground)]/5 relative overflow-hidden reveal">
         <div className="container mx-auto px-6 text-center">
           <span className="text-6xl sm:text-8xl text-luxury-gold/10 font-serif absolute top-[-20px] left-1/2 -translate-x-1/2 select-none">&quot;</span>
-          <p className="text-lg sm:text-2xl md:text-4xl font-serif text-luxury-cream/80 max-w-3xl mx-auto italic leading-snug sm:leading-normal">
+          <p className="text-lg sm:text-2xl md:text-4xl font-serif text-[var(--foreground)]/80 max-w-3xl mx-auto italic leading-snug sm:leading-normal transition-colors duration-300">
             Perfume is the most intense form of memory. <br className="hidden sm:block" />
             It is the key to our heart, and the soul of our identity.
           </p>
@@ -95,20 +95,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="py-12 sm:py-16 border-t border-white/5">
-         <div className="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8 md:gap-12 text-center md:text-left">
-            <div className="text-2xl font-serif text-luxury-gold tracking-widest">SUFYRA</div>
-            <div className="flex flex-wrap justify-center md:justify-start gap-6 sm:gap-10 text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-white/30">
-               <a href="#" className="hover:text-luxury-gold transition-colors">Privacy Policy</a>
-               <a href="#" className="hover:text-luxury-gold transition-colors">Terms of Service</a>
-               <a href="#" className="hover:text-luxury-gold transition-colors">Contact Us</a>
-            </div>
-            <div className="text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-white/20">
-               © 2026 Sufyra Fragrances. <br className="sm:hidden" /> All rights reserved.
-            </div>
-         </div>
-      </footer>
 
     </main>
   );

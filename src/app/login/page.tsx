@@ -76,7 +76,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen pt-24 pb-12 px-4 flex items-center justify-center bg-luxury-charcoal">
+    <div className="min-h-screen pt-24 pb-12 px-4 flex items-center justify-center bg-[var(--background)] transition-colors duration-300">
       {/* Decorative Elements */}
       <div className="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none -z-10">
         <div className="absolute top-[-10%] right-[-10%] w-[40%] h-[40%] bg-luxury-gold/5 blur-[120px] rounded-full"></div>
@@ -86,7 +86,7 @@ const LoginPage = () => {
       <div ref={formRef} className="w-full max-w-md luxury-card p-8 md:p-10 rounded-[30px] border border-luxury-gold/10">
         <div className="text-center mb-10">
           <h1 className="text-3xl md:text-4xl font-serif text-luxury-gold mb-3">Welcome Back</h1>
-          <p className="text-white/40 text-sm italic">Enter your credentials to access your luxury sanctuary.</p>
+          <p className="text-[var(--foreground)]/40 text-sm italic">Enter your credentials to access your luxury sanctuary.</p>
         </div>
 
         {error && (
@@ -135,9 +135,9 @@ const LoginPage = () => {
         </form>
 
         <div className="my-8 flex items-center gap-4">
-          <div className="h-px bg-white/5 flex-grow"></div>
-          <span className="text-[10px] uppercase tracking-widest text-white/20 font-bold whitespace-nowrap">Or continue with</span>
-          <div className="h-px bg-white/5 flex-grow"></div>
+          <div className="h-px bg-[var(--foreground)]/5 flex-grow"></div>
+          <span className="text-[10px] uppercase tracking-widest text-[var(--foreground)]/20 font-bold whitespace-nowrap">Or continue with</span>
+          <div className="h-px bg-[var(--foreground)]/5 flex-grow"></div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -146,7 +146,7 @@ const LoginPage = () => {
         </div>
 
         <div className="mt-10 text-center">
-          <p className="text-sm text-white/40">
+          <p className="text-sm text-[var(--foreground)]/40">
             Don't have an account?{' '}
             <Link href="/register" className="text-luxury-gold font-bold hover:underline inline-flex items-center gap-1 group">
               Register Now <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />

@@ -46,12 +46,12 @@ const CartDrawer: React.FC = () => {
       {/* Drawer */}
       <div
         ref={drawerRef}
-        className="fixed top-0 right-0 h-full w-full max-w-md bg-luxury-charcoal z-[101] translate-x-full cart-drawer flex flex-col"
+        className="fixed top-0 right-0 h-full w-full max-w-md bg-[var(--background)] z-[101] translate-x-full cart-drawer flex flex-col transition-colors duration-300"
       >
         {/* Header */}
-        <div className="p-6 border-b border-white/10 flex items-center justify-between">
-          <h2 className="text-2xl font-serif text-luxury-cream">Shopping Bag</h2>
-          <button onClick={onClose} className="p-2 hover:bg-white/5 rounded-full transition-colors">
+        <div className="p-6 border-b border-[var(--foreground)]/10 flex items-center justify-between">
+          <h2 className="text-2xl font-serif text-[var(--foreground)]">Shopping Bag</h2>
+          <button onClick={onClose} className="p-2 hover:bg-[var(--foreground)]/5 rounded-full transition-colors text-[var(--foreground)]">
             <X className="w-6 h-6" />
           </button>
         </div>
@@ -60,10 +60,10 @@ const CartDrawer: React.FC = () => {
         <div className="flex-1 overflow-y-auto p-6 space-y-6">
           {items.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center text-center">
-              <div className="w-20 h-20 bg-white/5 rounded-full flex items-center justify-center mb-4">
-                <Trash2 className="w-8 h-8 text-white/20" />
+              <div className="w-20 h-20 bg-[var(--foreground)]/5 rounded-full flex items-center justify-center mb-4">
+                <Trash2 className="w-8 h-8 text-[var(--foreground)]/20" />
               </div>
-              <p className="text-white/40 uppercase tracking-widest text-sm">Your bag is empty</p>
+              <p className="text-[var(--foreground)]/40 uppercase tracking-widest text-sm">Your bag is empty</p>
               <button 
                 onClick={onClose}
                 className="mt-6 text-luxury-gold font-bold uppercase tracking-widest text-xs underline underline-offset-8"
@@ -75,7 +75,7 @@ const CartDrawer: React.FC = () => {
             <>
               {(isExpanded ? items : items.slice(0, 3)).map((item) => (
                 <div key={`${item.id}-${item.selectedSize}`} className="flex gap-4 group">
-                  <div className="relative w-20 h-24 bg-white/5 rounded-lg overflow-hidden flex-shrink-0">
+                  <div className="relative w-20 h-24 bg-[var(--foreground)]/5 rounded-lg overflow-hidden flex-shrink-0">
                     <Image 
                       src={item.image_url} 
                       alt={item.name} 
@@ -85,11 +85,11 @@ const CartDrawer: React.FC = () => {
                     />
                   </div>
                   <div className="flex-1">
-                    <div className="flex justify-between items-start mb-1">
+                    <div className="flex justify-between items-start mb-1 text-[var(--foreground)]">
                       <h3 className="font-serif text-lg">{item.name}</h3>
                       <button 
                           onClick={() => removeItem(item.id, item.selectedSize)}
-                          className="text-white/20 hover:text-red-500 transition-colors"
+                          className="text-[var(--foreground)]/20 hover:text-red-500 transition-colors"
                       >
                         <X className="w-4 h-4" />
                       </button>
@@ -97,7 +97,7 @@ const CartDrawer: React.FC = () => {
                     <p className="text-[10px] text-luxury-gold uppercase tracking-widest mb-3">{item.selectedSize}</p>
                     
                     <div className="flex justify-between items-end">
-                      <div className="flex items-center gap-3 bg-white/5 rounded-md px-2 py-1">
+                      <div className="flex items-center gap-3 bg-[var(--foreground)]/5 rounded-md px-2 py-1 text-[var(--foreground)]">
                         <button 
                           onClick={() => updateQuantity(item.id, item.selectedSize, item.quantity - 1)}
                           className="p-1 hover:text-luxury-gold transition-colors"
@@ -112,7 +112,7 @@ const CartDrawer: React.FC = () => {
                           <Plus className="w-3 h-3" />
                         </button>
                       </div>
-                      <span className="font-bold text-luxury-cream">{item.selectedPrice * item.quantity}৳</span>
+                      <span className="font-bold text-[var(--foreground)]">{item.selectedPrice * item.quantity}৳</span>
                     </div>
                   </div>
                 </div>
@@ -121,7 +121,7 @@ const CartDrawer: React.FC = () => {
               {items.length > 3 && (
                 <button 
                   onClick={() => setIsExpanded(!isExpanded)}
-                  className="w-full py-3 border border-white/5 rounded-xl text-luxury-gold text-[10px] uppercase tracking-widest font-bold flex items-center justify-center gap-2 hover:bg-white/5 transition-all"
+                  className="w-full py-3 border border-[var(--foreground)]/5 rounded-xl text-luxury-gold text-[10px] uppercase tracking-widest font-bold flex items-center justify-center gap-2 hover:bg-[var(--foreground)]/5 transition-all"
                 >
                   {isExpanded ? (
                     <><ChevronUp size={14} /> See Less</>
@@ -136,10 +136,10 @@ const CartDrawer: React.FC = () => {
 
         {/* Footer */}
         {items.length > 0 && (
-          <div className="p-6 border-t border-white/10 space-y-4">
-            <div className="flex justify-between items-center text-white/60">
+          <div className="p-6 border-t border-[var(--foreground)]/10 space-y-4">
+            <div className="flex justify-between items-center text-[var(--foreground)]/60">
               <span className="uppercase tracking-[0.2em] text-[10px]">Subtotal</span>
-              <span className="text-xl font-serif text-luxury-cream">{getTotalPrice()}৳</span>
+              <span className="text-xl font-serif text-[var(--foreground)]">{getTotalPrice()}৳</span>
             </div>
             <button 
               onClick={() => setIsPurchaseModalOpen(true)}
@@ -147,7 +147,7 @@ const CartDrawer: React.FC = () => {
             >
               Proceed to Checkout
             </button>
-            <p className="text-[9px] text-center text-white/30 uppercase tracking-widest">
+            <p className="text-[9px] text-center text-[var(--foreground)]/30 uppercase tracking-widest">
               Shipping & taxes calculated at checkout
             </p>
           </div>
@@ -159,11 +159,11 @@ const CartDrawer: React.FC = () => {
         <div className="fixed inset-0 z-[300] flex items-center justify-center p-4 sm:p-6 animate-in fade-in duration-300">
           <div className="absolute inset-0 bg-black/90 backdrop-blur-xl" onClick={() => setIsPurchaseModalOpen(false)} />
           
-          <div className="relative w-full max-w-lg bg-luxury-charcoal border border-white/10 rounded-3xl overflow-hidden shadow-2xl animate-in zoom-in-95 duration-300">
+          <div className="relative w-full max-w-lg bg-[var(--background)] border border-[var(--foreground)]/10 rounded-3xl overflow-hidden shadow-2xl animate-in zoom-in-95 duration-300">
             {/* Close Button */}
             <button
               onClick={() => setIsPurchaseModalOpen(false)}
-              className="absolute top-4 right-4 z-10 p-2 bg-white/5 hover:bg-white/10 rounded-full text-white/40 hover:text-white transition-all"
+              className="absolute top-4 right-4 z-10 p-2 bg-[var(--foreground)]/5 hover:bg-[var(--foreground)]/10 rounded-full text-[var(--foreground)]/40 hover:text-[var(--foreground)] transition-all"
             >
               <X size={20} />
             </button>
@@ -175,12 +175,12 @@ const CartDrawer: React.FC = () => {
                 </div>
                 
                 <div>
-                  <h2 className="text-2xl font-serif text-luxury-cream mb-2">Finalize Your Purchase</h2>
-                  <p className="text-[10px] uppercase tracking-[0.2em] text-white/40 font-bold">Your Exquisite Collection</p>
+                  <h2 className="text-2xl font-serif text-[var(--foreground)] mb-2">Finalize Your Purchase</h2>
+                  <p className="text-[10px] uppercase tracking-[0.2em] text-[var(--foreground)]/40 font-bold">Your Exquisite Collection</p>
                 </div>
 
                 {/* Cart Summary for Screenshot */}
-                <div className="w-full bg-white/5 rounded-2xl p-6 border border-white/10 flex flex-col gap-4 text-left max-h-60 overflow-y-auto scrollbar-hide">
+                <div className="w-full bg-[var(--foreground)]/5 rounded-2xl p-6 border border-[var(--foreground)]/10 flex flex-col gap-4 text-left max-h-60 overflow-y-auto scrollbar-hide">
                   {items.map((item, idx) => (
                     <div key={idx} className="flex items-center gap-4">
                       <div className="relative w-12 h-14 rounded-lg overflow-hidden flex-shrink-0">
@@ -193,14 +193,14 @@ const CartDrawer: React.FC = () => {
                         />
                       </div>
                       <div className="flex-1">
-                        <h3 className="text-sm font-serif text-white">{item.name}</h3>
+                        <h3 className="text-sm font-serif text-[var(--foreground)]">{item.name}</h3>
                         <p className="text-[8px] uppercase tracking-widest text-luxury-gold font-bold">Qty: {item.quantity} | {item.selectedSize}</p>
                       </div>
-                      <span className="text-sm font-bold text-white">{item.selectedPrice * item.quantity}৳</span>
+                      <span className="text-sm font-bold text-[var(--foreground)]">{item.selectedPrice * item.quantity}৳</span>
                     </div>
                   ))}
-                  <div className="pt-4 border-t border-white/10 flex justify-between items-center">
-                    <span className="text-[10px] uppercase tracking-widest text-white/40 font-bold">Total Amount</span>
+                  <div className="pt-4 border-t border-[var(--foreground)]/10 flex justify-between items-center">
+                    <span className="text-[10px] uppercase tracking-widest text-[var(--foreground)]/40 font-bold">Total Amount</span>
                     <span className="text-xl font-bold text-luxury-gold">{getTotalPrice()}৳</span>
                   </div>
                 </div>
@@ -208,7 +208,7 @@ const CartDrawer: React.FC = () => {
                 {/* The Noticeable Note */}
                 <div className="w-full bg-luxury-gold/10 border border-luxury-gold/30 rounded-2xl p-5 relative overflow-hidden text-left">
                   <div className="absolute top-0 left-0 w-1 h-full bg-luxury-gold" />
-                  <p className="text-sm text-luxury-cream leading-relaxed font-medium">
+                  <p className="text-sm text-[var(--foreground)] leading-relaxed font-medium">
                     <span className="text-luxury-gold mr-2 text-lg">📸</span>
                     <span className="font-bold text-luxury-gold">Action Required:</span> Please take a screenshot of this screen and share it with our concierge to complete your purchase. <span className="text-luxury-gold font-bold">( Courier Charge Applicable )</span>
                   </p>
@@ -236,7 +236,7 @@ const CartDrawer: React.FC = () => {
                   </a>
                 </div>
                 
-                <p className="text-[9px] uppercase tracking-widest text-white/20 font-bold">
+                <p className="text-[9px] uppercase tracking-widest text-[var(--foreground)]/20 font-bold">
                   Sufyra Fragrance — Artisanal Perfumery
                 </p>
               </div>

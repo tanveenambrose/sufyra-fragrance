@@ -22,6 +22,8 @@ export const metadata: Metadata = {
   description: "Experience the essence of luxury with Sufyra's handcrafted attar and perfume oils.",
 };
 
+import { ThemeProvider } from "@/components/ThemeProvider";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -30,15 +32,24 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth" data-scroll-behavior="smooth" suppressHydrationWarning>
       <body
-        className={`${playfair.variable} ${inter.variable} antialiased bg-luxury-charcoal text-luxury-cream selection:bg-luxury-gold selection:text-luxury-charcoal`}
+        className={`${playfair.variable} ${inter.variable} antialiased selection:bg-luxury-gold selection:text-luxury-charcoal transition-colors duration-300`}
         suppressHydrationWarning
       >
-        <AuthInitializer />
-        <Navbar />
-        <CartDrawer />
-        <main>{children}</main>
-        <Footer />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+
+          <AuthInitializer />
+          <Navbar />
+          <CartDrawer />
+          <main>{children}</main>
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );
 }
+

@@ -106,7 +106,7 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="min-h-screen pt-24 pb-12 px-4 flex items-center justify-center bg-luxury-charcoal">
+    <div className="min-h-screen pt-24 pb-12 px-4 flex items-center justify-center bg-[var(--background)] transition-colors duration-300">
       {/* Decorative Gradient */}
       <div className="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none -z-10">
         <div className="absolute top-[-5%] left-[-5%] w-[50%] h-[50%] bg-luxury-gold/5 blur-[150px] rounded-full"></div>
@@ -114,11 +114,11 @@ const RegisterPage = () => {
 
       <div ref={formRef} className="w-full max-w-lg luxury-card p-8 md:p-12 rounded-[30px] border border-luxury-gold/10">
         <div className="mb-8">
-          <Link href="/login" className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-white/40 hover:text-luxury-gold transition-colors font-bold mb-6">
+          <Link href="/login" className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-[var(--foreground)]/40 hover:text-luxury-gold transition-colors font-bold mb-6">
             <ArrowLeft className="w-3 h-3" /> Back to Login
           </Link>
           <h1 className="text-3xl md:text-4xl font-serif text-luxury-gold mb-2">Create Account</h1>
-          <p className="text-white/40 text-sm italic">Join the exclusive world of Sufyra fragrances.</p>
+          <p className="text-[var(--foreground)]/40 text-sm italic">Join the exclusive world of Sufyra fragrances.</p>
         </div>
 
         {error && (
@@ -187,9 +187,9 @@ const RegisterPage = () => {
         </form>
 
         <div className="my-8 flex items-center gap-4">
-          <div className="h-px bg-white/5 flex-grow"></div>
-          <span className="text-[10px] uppercase tracking-widest text-white/20 font-bold">Registration via Social</span>
-          <div className="h-px bg-white/5 flex-grow"></div>
+          <div className="h-px bg-[var(--foreground)]/5 flex-grow"></div>
+          <span className="text-[10px] uppercase tracking-widest text-[var(--foreground)]/20 font-bold">Registration via Social</span>
+          <div className="h-px bg-[var(--foreground)]/5 flex-grow"></div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -197,7 +197,7 @@ const RegisterPage = () => {
           <SocialButton provider="facebook" onClick={() => handleSocialRegister('facebook')} isLoading={loading} />
         </div>
 
-        <p className="mt-8 text-center text-[11px] text-white/30 leading-relaxed uppercase tracking-tighter font-medium">
+        <p className="mt-8 text-center text-[11px] text-[var(--foreground)]/30 leading-relaxed uppercase tracking-tighter font-medium">
           By joining, you agree to our <span className="text-luxury-gold cursor-pointer hover:underline">Terms of Service</span> and <span className="text-luxury-gold cursor-pointer hover:underline">Privacy Policy</span>.
         </p>
       </div>

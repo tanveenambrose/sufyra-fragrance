@@ -100,12 +100,12 @@ function ProductsContent() {
   ];
 
   return (
-    <main className="min-h-screen bg-luxury-charcoal pb-24 pt-32">
+    <main className="min-h-screen bg-[var(--background)] pb-24 pt-32 transition-colors duration-300">
       <div className="container mx-auto px-6">
         {/* Header Section */}
         <div className="mb-10 sm:mb-16 text-center md:text-left">
-          <h1 className="text-luxury-cream font-serif text-3xl sm:text-5xl md:text-6xl mb-2 sm:mb-4">Sufyra Boutique</h1>
-          <p className="text-white/40 text-[10px] sm:text-xs md:text-sm tracking-[0.3em] uppercase italic">Elegance in every drop</p>
+          <h1 className="text-[var(--foreground)] font-serif text-3xl sm:text-5xl md:text-6xl mb-2 sm:mb-4 transition-colors duration-300">Sufyra Boutique</h1>
+          <p className="text-[var(--foreground)]/40 text-[10px] sm:text-xs md:text-sm tracking-[0.3em] uppercase italic transition-colors duration-300">Elegance in every drop</p>
         </div>
 
         <div className="flex flex-col lg:flex-row gap-8 sm:gap-12">
@@ -113,11 +113,11 @@ function ProductsContent() {
           <aside className="hidden lg:block w-72 flex-shrink-0 space-y-12">
             {/* Price Filter */}
             <div className="space-y-6">
-              <h3 className="text-luxury-gold text-xs font-bold uppercase tracking-[0.3em] border-b border-white/5 pb-4">Filter By Price</h3>
+              <h3 className="text-luxury-gold text-xs font-bold uppercase tracking-[0.3em] border-b border-[var(--foreground)]/5 pb-4">Filter By Price</h3>
               <div className="space-y-6">
                 <div className="flex flex-col gap-4">
                   <div className="space-y-2">
-                     <label className="text-[10px] text-white/20 uppercase tracking-widest">Min Price</label>
+                     <label className="text-[10px] text-[var(--foreground)]/20 uppercase tracking-widest">Min Price</label>
                      <input 
                        type="range" 
                        min="0" 
@@ -129,7 +129,7 @@ function ProductsContent() {
                      />
                   </div>
                   <div className="space-y-2">
-                     <label className="text-[10px] text-white/20 uppercase tracking-widest">Max Price</label>
+                     <label className="text-[10px] text-[var(--foreground)]/20 uppercase tracking-widest">Max Price</label>
                      <input 
                        type="range" 
                        min="0" 
@@ -141,7 +141,7 @@ function ProductsContent() {
                      />
                   </div>
                 </div>
-                <div className="flex justify-between items-center text-[10px] font-bold text-white/40 uppercase tracking-widest bg-white/5 p-3 rounded-lg border border-white/5">
+                <div className="flex justify-between items-center text-[10px] font-bold text-[var(--foreground)]/40 uppercase tracking-widest bg-[var(--foreground)]/5 p-3 rounded-lg border border-[var(--foreground)]/5">
                   <span>{minPrice}৳ — {maxPrice}৳</span>
                   <button 
                     onClick={() => { setMinPrice(0); setMaxPrice(2000); }} 
@@ -155,19 +155,19 @@ function ProductsContent() {
 
             {/* Category Filter */}
             <div className="space-y-6">
-              <h3 className="text-luxury-gold text-xs font-bold uppercase tracking-[0.3em] border-b border-white/5 pb-4">Product Status</h3>
+              <h3 className="text-luxury-gold text-xs font-bold uppercase tracking-[0.3em] border-b border-[var(--foreground)]/5 pb-4">Product Status</h3>
               <div className="flex flex-col gap-4">
                 {categories.map((cat) => (
                   <button
                     key={cat.id}
                     onClick={() => setSelectedCategory(cat.id)}
                     className={`text-left text-[11px] uppercase tracking-widest transition-all duration-300 flex items-center justify-between group ${
-                      selectedCategory === cat.id ? 'text-luxury-gold' : 'text-white/30 hover:text-white'
+                      selectedCategory === cat.id ? 'text-luxury-gold' : 'text-[var(--foreground)]/30 hover:text-[var(--foreground)]'
                     }`}
                   >
                     <span>{cat.label}</span>
                     <span className={`w-1.5 h-1.5 rounded-full transition-all ${
-                      selectedCategory === cat.id ? 'bg-luxury-gold scale-100' : 'bg-white/10 scale-0 group-hover:scale-50'
+                      selectedCategory === cat.id ? 'bg-luxury-gold scale-100' : 'bg-[var(--foreground)]/10 scale-0 group-hover:scale-50'
                     }`} />
                   </button>
                 ))}
@@ -176,7 +176,7 @@ function ProductsContent() {
           </aside>
 
           {/* Mobile Filter Toggle */}
-          <div className="lg:hidden flex items-center justify-between border-y border-white/5 py-4 mb-8">
+          <div className="lg:hidden flex items-center justify-between border-y border-[var(--foreground)]/5 py-4 mb-8">
              <button 
               onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}
               className="flex items-center gap-2 text-luxury-gold text-[10px] font-bold uppercase tracking-widest"
@@ -184,7 +184,7 @@ function ProductsContent() {
                 <SlidersHorizontal size={14} />
                 Filters
              </button>
-             <span className="text-[10px] text-white/30 uppercase tracking-widest">{filteredProducts.length} Products Found</span>
+             <span className="text-[10px] text-[var(--foreground)]/30 uppercase tracking-widest">{filteredProducts.length} Products Found</span>
           </div>
 
           {/* Product Grid */}
@@ -197,7 +197,7 @@ function ProductsContent() {
               </div>
             ) : (
               <div className="h-64 flex flex-col items-center justify-center text-center space-y-4">
-                <p className="text-white/20 uppercase tracking-widest text-sm">No scents found in this range.</p>
+                <p className="text-[var(--foreground)]/20 uppercase tracking-widest text-sm">No scents found in this range.</p>
                 <button 
                   onClick={() => { setSelectedCategory('all'); setMinPrice(0); setMaxPrice(2000); }}
                   className="text-luxury-gold text-xs font-bold uppercase tracking-[0.2em] border-b border-luxury-gold pb-1"
@@ -212,24 +212,24 @@ function ProductsContent() {
 
       {/* Mobile Filter Overlay */}
       {isMobileFilterOpen && (
-        <div className="fixed inset-0 z-[100] bg-luxury-charcoal/95 backdrop-blur-lg p-8 flex flex-col overflow-y-auto">
+        <div className="fixed inset-0 z-[100] bg-[var(--background)]/95 backdrop-blur-lg p-8 flex flex-col overflow-y-auto">
           <div className="flex justify-between items-center mb-12">
             <h2 className="text-luxury-gold text-xs font-bold uppercase tracking-[0.3em]">Filters</h2>
-            <button onClick={() => setIsMobileFilterOpen(false)} className="text-white hover:text-luxury-gold">
+            <button onClick={() => setIsMobileFilterOpen(false)} className="text-[var(--foreground)] hover:text-luxury-gold">
               <ChevronDown size={24} />
             </button>
           </div>
           
           <div className="space-y-12">
             <div className="space-y-6">
-              <h3 className="text-white text-[10px] font-bold uppercase tracking-widest text-white/40">Status</h3>
+              <h3 className="text-[var(--foreground)] text-[10px] font-bold uppercase tracking-widest text-[var(--foreground)]/40">Status</h3>
               <div className="flex flex-col gap-6">
                 {categories.map((cat) => (
                   <button
                     key={cat.id}
                     onClick={() => { setSelectedCategory(cat.id); setIsMobileFilterOpen(false); }}
                     className={`text-2xl font-serif text-left ${
-                      selectedCategory === cat.id ? 'text-luxury-gold' : 'text-white/60'
+                      selectedCategory === cat.id ? 'text-luxury-gold' : 'text-[var(--foreground)]/60'
                     }`}
                   >
                     {cat.label}
@@ -239,10 +239,10 @@ function ProductsContent() {
             </div>
 
             <div className="space-y-6">
-              <h3 className="text-white text-[10px] font-bold uppercase tracking-widest text-white/40 uppercase">Price Range: {minPrice}৳ — {maxPrice}৳</h3>
+              <h3 className="text-[var(--foreground)] text-[10px] font-bold uppercase tracking-widest text-[var(--foreground)]/40 uppercase">Price Range: {minPrice}৳ — {maxPrice}৳</h3>
               <div className="space-y-6">
                 <div className="space-y-2">
-                   <label className="text-[10px] text-white/20">Min Price</label>
+                   <label className="text-[10px] text-[var(--foreground)]/20">Min Price</label>
                    <input 
                      type="range" 
                      min="0" 
@@ -254,7 +254,7 @@ function ProductsContent() {
                    />
                 </div>
                 <div className="space-y-2">
-                   <label className="text-[10px] text-white/20">Max Price</label>
+                   <label className="text-[10px] text-[var(--foreground)]/20">Max Price</label>
                    <input 
                      type="range" 
                      min="0" 
@@ -284,7 +284,7 @@ function ProductsContent() {
 
 export default function ProductsPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-luxury-charcoal" />}>
+    <Suspense fallback={<div className="min-h-screen bg-[var(--background)]" />}>
       <ProductsContent />
     </Suspense>
   );

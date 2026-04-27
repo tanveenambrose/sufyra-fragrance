@@ -4,10 +4,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Search, ShoppingBag, Menu, X, User as UserIcon, LogOut, ChevronDown, ChevronRight } from 'lucide-react';
+import { Search, ShoppingBag, Menu, X, User as UserIcon, LogOut, ChevronDown } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { useCart } from '@/store/useCart';
 import { useAuth } from '@/hooks/useAuth';
+import { useTheme } from 'next-themes';
+import { ThemeToggle } from './ThemeToggle';
 import { gsap } from 'gsap';
 
 const Navbar: React.FC = () => {
@@ -24,7 +26,9 @@ const Navbar: React.FC = () => {
   const setIsCartOpen = useCart((state) => state.setIsCartOpen);
   const navRef = useRef<HTMLDivElement>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
+
   const pathname = usePathname();
+  const { theme } = useTheme();
 
   const isAdminPage = pathname?.startsWith('/admin');
 
@@ -102,7 +106,7 @@ const Navbar: React.FC = () => {
     <>
       <nav
         ref={navRef}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled ? 'bg-[#0A0A0A]/95 backdrop-blur-md py-2 shadow-2xl' : 'bg-transparent py-4'
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled ? 'bg-[var(--navbar)] backdrop-blur-md py-2 shadow-2xl' : 'bg-transparent py-4'
           }`}
         suppressHydrationWarning
       >
@@ -111,7 +115,7 @@ const Navbar: React.FC = () => {
             {/* Logo - Adjust size for mobile completeness */}
             <Link href="/" className={`items-center nav-item transition-transform hover:scale-105 h-8 w-24 md:h-12 md:w-44 grow-0 shrink-0 relative ${isSearchExpanded ? 'hidden sm:flex' : 'flex'}`}>
               <Image
-                src="/logo.png"
+                src={(isMounted && theme === 'light' && isScrolled) ? "/logo- dark.png" : "/logo.png"}
                 alt="Sufyra Logo"
                 fill
                 sizes="(max-width: 768px) 100px, 180px"
@@ -124,23 +128,23 @@ const Navbar: React.FC = () => {
             <div className="hidden lg:block relative group nav-item">
               <Link
                 href="/products"
-                className="text-[10px] uppercase tracking-widest hover:text-luxury-gold transition-colors font-bold flex items-center gap-1.5 py-4"
+                className={`text-[10px] uppercase tracking-widest hover:text-luxury-gold transition-colors font-bold flex items-center gap-1.5 py-4 ${isScrolled ? 'text-[var(--foreground)]' : 'text-white'}`}
               >
                 Products
                 <div className="w-1.5 h-1.5 border-r border-b border-current translate-y-[-20%] rotate-45 group-hover:rotate-[225deg] transition-transform duration-300" />
               </Link>
 
               <div className="absolute top-full left-0 w-48 pt-2 opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-300">
-                <div className="bg-[#0A0A0A] border border-white/10 rounded-xl overflow-hidden shadow-2xl backdrop-blur-md">
+                <div className="bg-[var(--background)] border border-luxury-gold/20 rounded-xl overflow-hidden shadow-2xl backdrop-blur-md">
                   <Link
                     href="/products?category=perfume-oil"
-                    className="block px-6 py-4 text-[10px] uppercase tracking-widest text-white/80 hover:text-luxury-gold hover:bg-white/5 transition-all border-b border-white/5"
+                    className="block px-6 py-4 text-[10px] uppercase tracking-widest text-[var(--foreground)] hover:text-luxury-gold hover:bg-luxury-gold/5 transition-all border-b border-luxury-gold/10"
                   >
                     Regular
                   </Link>
                   <Link
                     href="/products?category=combo"
-                    className="block px-6 py-4 text-[10px] uppercase tracking-widest text-white/80 hover:text-luxury-gold hover:bg-white/5 transition-all"
+                    className="block px-6 py-4 text-[10px] uppercase tracking-widest text-[var(--foreground)] hover:text-luxury-gold hover:bg-luxury-gold/5 transition-all"
                   >
                     Combo
                   </Link>
@@ -158,7 +162,11 @@ const Navbar: React.FC = () => {
                     onChange={(e) => setSearchQuery(e.target.value)}
                     autoFocus={isSearchExpanded}
                     placeholder="Search scents..."
-                    className="w-full bg-white/5 border border-white/10 rounded-full py-2 pl-6 pr-10 focus:outline-none focus:border-luxury-gold text-sm placeholder:text-white/20 group-hover:bg-white/10 transition-all"
+                    className={`w-full border rounded-full py-2 pl-6 pr-10 focus:outline-none focus:border-luxury-gold text-sm transition-all font-bold shadow-sm ${
+                      isScrolled 
+                        ? 'bg-[var(--foreground)]/5 border-[var(--foreground)]/15 text-[var(--foreground)] placeholder:text-[var(--foreground)]/30' 
+                        : 'bg-white/10 border-white/20 text-white placeholder:text-white/40 backdrop-blur-sm'
+                    }`}
                   />
                   {isSearchExpanded && (
                     <button
@@ -167,7 +175,7 @@ const Navbar: React.FC = () => {
                         setIsSearchExpanded(false);
                         setSearchQuery('');
                       }}
-                      className="absolute right-3 p-1 text-white/40 hover:text-luxury-gold sm:hidden"
+                      className="absolute right-3 p-1 text-[var(--foreground)]/40 hover:text-luxury-gold sm:hidden"
                     >
                       <X size={16} />
                     </button>
@@ -178,7 +186,9 @@ const Navbar: React.FC = () => {
                   <button
                     type="submit"
                     onClick={handleSearch}
-                    className="h-10 w-10 text-white/60 hover:text-luxury-gold transition-colors flex items-center justify-center shrink-0 sm:absolute sm:right-1"
+                    className={`h-10 w-10 transition-colors flex items-center justify-center shrink-0 sm:absolute sm:right-1 ${
+                      isScrolled ? 'text-[var(--foreground)]' : 'text-white'
+                    } hover:text-luxury-gold`}
                   >
                     <Search className="w-5 h-5 md:w-4 md:h-4" />
                   </button>
@@ -187,7 +197,7 @@ const Navbar: React.FC = () => {
                 {/* Desktop Search Icon inside input when not expanded (sm and up) */}
                 <button
                   type="submit"
-                  className={`hidden sm:flex items-center justify-center text-white/40 hover:text-luxury-gold transition-colors absolute right-4`}
+                  className={`hidden sm:flex items-center justify-center text-[var(--foreground)]/40 hover:text-luxury-gold transition-colors absolute right-4`}
                 >
                   <Search className="w-4 h-4" />
                 </button>
@@ -210,14 +220,18 @@ const Navbar: React.FC = () => {
                     )}
                     <button
                       onClick={() => signOut()}
-                      className="text-white/40 hover:text-red-400 transition-colors p-1"
+                      className="text-[var(--foreground)]/60 hover:text-red-500 transition-colors p-1"
                       title="Sign Out"
                     >
                       <LogOut size={16} />
                     </button>
                   </>
                 ) : (
-                  <Link href="/login" className="text-[10px] uppercase tracking-widest hover:text-luxury-gold transition-colors font-bold whitespace-nowrap border border-white/10 px-4 py-1.5 rounded-full">
+                  <Link href="/login" className={`text-[10px] uppercase tracking-widest hover:text-white hover:bg-luxury-gold transition-all duration-300 font-bold whitespace-nowrap border px-6 py-2 rounded-full ${
+                    isScrolled 
+                      ? 'border-luxury-gold/30 text-[var(--foreground)] bg-[var(--foreground)]/5' 
+                      : 'border-white/30 text-white bg-white/10'
+                  }`}>
                     Login
                   </Link>
                 )}
@@ -239,18 +253,20 @@ const Navbar: React.FC = () => {
                 )}
               </div>
 
+              <ThemeToggle />
+
               <button className="relative group p-1 h-10 flex items-center justify-center" onClick={() => setIsCartOpen(true)}>
                 <div className="flex items-center gap-1 md:gap-2">
-                  <ShoppingBag className="w-5 h-5 group-hover:text-luxury-gold transition-colors text-white/80" />
+                  <ShoppingBag className={`w-5 h-5 group-hover:text-luxury-gold transition-colors ${isScrolled ? 'text-[var(--foreground)]' : 'text-white'}`} />
                   {/* Desktop Cart Summary */}
-                  <div className="hidden lg:flex flex-col items-start leading-none text-[10px] uppercase tracking-tighter w-16">
+                  <div className={`hidden lg:flex flex-col items-start leading-none text-[10px] uppercase tracking-tighter w-16 font-bold ${isScrolled ? 'text-[var(--foreground)]' : 'text-white'}`}>
                     {isMounted ? (
                       <>
-                        <span className="font-bold">{itemCount} items</span>
-                        <span className="text-luxury-gold font-bold">{totalPrice}৳</span>
+                        <span>{itemCount} items</span>
+                        <span className="text-luxury-gold">{totalPrice}৳</span>
                       </>
                     ) : (
-                      <span className="font-bold">...</span>
+                      <span>...</span>
                     )}
                   </div>
                   {/* Mobile Badge Only */}
@@ -262,7 +278,7 @@ const Navbar: React.FC = () => {
                 </div>
               </button>
 
-              <button className="lg:hidden p-1 h-10 flex items-center justify-center text-white/80 hover:text-luxury-gold transition-colors" onClick={() => setIsMenuOpen(true)}>
+              <button className="lg:hidden p-1 h-10 flex items-center justify-center text-[var(--foreground)] hover:text-luxury-gold transition-colors" onClick={() => setIsMenuOpen(true)}>
                 <Menu size={24} />
               </button>
             </div>
@@ -285,15 +301,15 @@ const Navbar: React.FC = () => {
         {/* Slider - Consistent with main site background (Luxury Charcoal) */}
         <div
           ref={mobileMenuRef}
-          className="absolute top-0 right-0 bottom-0 w-[75%] bg-[#0A0A0A] border-l border-white/10 shadow-[-20px_0_50px_rgba(0,0,0,1)] pointer-events-auto translate-x-full flex flex-col opacity-100"
+          className="absolute top-0 right-0 bottom-0 w-[75%] bg-[var(--background)] border-l border-[var(--foreground)]/10 shadow-[-20px_0_50px_rgba(0,0,0,0.2)] pointer-events-auto translate-x-full flex flex-col opacity-100"
           suppressHydrationWarning
         >
           {/* Header of mobile menu */}
-          <div className="flex items-center justify-between p-6 border-b border-white/10 bg-white/[0.02]">
+          <div className="flex items-center justify-between p-6 border-b border-[var(--foreground)]/10 bg-[var(--foreground)]/[0.02]">
             <span className="font-serif text-luxury-gold text-lg tracking-[0.2em] uppercase font-bold">Navigation</span>
             <button
               onClick={() => setIsMenuOpen(false)}
-              className="p-2 text-white/60 hover:text-luxury-gold transition-colors"
+              className="p-2 text-[var(--foreground)]/60 hover:text-luxury-gold transition-colors"
             >
               <X size={24} />
             </button>
@@ -302,7 +318,7 @@ const Navbar: React.FC = () => {
           {/* Links and Cart Summary */}
           <div className="flex-grow overflow-y-auto py-8 px-6 space-y-10">
             {/* Bag Section inside Sidebar (Mobile only) */}
-            <div className="bg-white/[0.03] rounded-2xl p-6 border border-white/10 shadow-lg space-y-5">
+            <div className="bg-[var(--foreground)]/[0.03] rounded-2xl p-6 border border-[var(--foreground)]/10 shadow-lg space-y-5">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 rounded-xl bg-luxury-gold/10 flex items-center justify-center border border-luxury-gold/30">
@@ -310,7 +326,7 @@ const Navbar: React.FC = () => {
                   </div>
                   <div>
                     <p className="text-[10px] uppercase tracking-[0.2em] text-luxury-gold/60 font-bold mb-1">My Bag</p>
-                    <p className="text-base text-luxury-cream font-bold">{itemCount} Items</p>
+                    <p className="text-base text-[var(--foreground)] font-bold">{itemCount} Items</p>
                   </div>
                 </div>
                 <div className="text-right">
@@ -333,7 +349,7 @@ const Navbar: React.FC = () => {
               <Link
                 href="/"
                 onClick={() => setIsMenuOpen(false)}
-                className="block text-2xl uppercase tracking-[0.1em] font-serif text-luxury-cream hover:text-luxury-gold transition-colors font-medium"
+                className="block text-2xl uppercase tracking-[0.1em] font-serif text-[var(--foreground)] hover:text-luxury-gold transition-colors font-medium"
               >
                 Home
               </Link>
@@ -352,7 +368,7 @@ const Navbar: React.FC = () => {
               <div className="space-y-6">
                 <button
                   onClick={() => setIsProductsOpen(!isProductsOpen)}
-                  className="flex items-center justify-between w-full text-2xl uppercase tracking-[0.1em] font-serif text-luxury-cream hover:text-luxury-gold transition-colors font-medium border-b border-white/5 pb-2"
+                  className="flex items-center justify-between w-full text-2xl uppercase tracking-[0.1em] font-serif text-[var(--foreground)] hover:text-luxury-gold transition-colors font-medium border-b border-[var(--foreground)]/5 pb-2"
                 >
                   <span>Products</span>
                   <ChevronDown className={`w-6 h-6 transition-transform duration-300 text-luxury-gold/50 ${isProductsOpen ? 'rotate-180' : ''}`} />
@@ -362,7 +378,7 @@ const Navbar: React.FC = () => {
                   <Link
                     href="/products?category=perfume-oil"
                     onClick={() => setIsMenuOpen(false)}
-                    className="flex items-center gap-3 text-sm uppercase tracking-[0.25em] text-white/70 hover:text-luxury-gold font-bold transition-colors"
+                    className="flex items-center gap-3 text-sm uppercase tracking-[0.25em] text-[var(--foreground)]/70 hover:text-luxury-gold font-bold transition-colors"
                   >
                     <div className="w-1.5 h-1.5 rounded-full bg-luxury-gold shadow-[0_0_8px_rgba(212,175,55,0.4)]" />
                     Regular Versions
@@ -370,7 +386,7 @@ const Navbar: React.FC = () => {
                   <Link
                     href="/products?category=combo"
                     onClick={() => setIsMenuOpen(false)}
-                    className="flex items-center gap-3 text-sm uppercase tracking-[0.25em] text-white/70 hover:text-luxury-gold font-bold transition-colors"
+                    className="flex items-center gap-3 text-sm uppercase tracking-[0.25em] text-[var(--foreground)]/70 hover:text-luxury-gold font-bold transition-colors"
                   >
                     <div className="w-1.5 h-1.5 rounded-full bg-luxury-gold shadow-[0_0_8px_rgba(212,175,55,0.4)]" />
                     Combo Packs
@@ -386,8 +402,8 @@ const Navbar: React.FC = () => {
                     <UserIcon size={22} className="text-luxury-gold" />
                   </div>
                   <div className="flex flex-col">
-                    <span className="text-[10px] uppercase tracking-[0.2em] text-white/40 font-bold mb-1">Logged In As</span>
-                    <span className="text-base text-luxury-cream font-bold truncate max-w-[150px]">
+                    <span className="text-[10px] uppercase tracking-[0.2em] text-[var(--foreground)]/40 font-bold mb-1">Logged In As</span>
+                    <span className="text-base text-[var(--foreground)] font-bold truncate max-w-[150px]">
                       {user.user_metadata?.full_name || user.email?.split('@')[0]}
                     </span>
                   </div>
@@ -416,8 +432,8 @@ const Navbar: React.FC = () => {
             )}
           </div>
 
-          <div className="p-8 border-t border-white/10 text-center bg-white/[0.01]">
-            <p className="text-[9px] uppercase tracking-[0.5em] text-white/20 font-medium">Sufyra Signature Fragrances</p>
+          <div className="p-8 border-t border-[var(--foreground)]/10 text-center bg-[var(--foreground)]/[0.01]">
+            <p className="text-[9px] uppercase tracking-[0.5em] text-[var(--foreground)]/20 font-medium">Sufyra Signature Fragrances</p>
           </div>
         </div>
       </div>
