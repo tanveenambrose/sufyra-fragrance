@@ -119,8 +119,8 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
 
   if (!product) {
     return (
-      <div className="min-h-screen bg-luxury-charcoal flex flex-col items-center justify-center gap-6">
-        <p className="text-white/40 uppercase tracking-widest font-serif">Scent not found in the manifest</p>
+      <div className="min-h-screen bg-[var(--background)] flex flex-col items-center justify-center gap-6 transition-colors duration-500">
+        <p className="text-[var(--foreground)]/40 uppercase tracking-widest font-serif">Scent not found in the manifest</p>
         <Link href="/products" className="text-luxury-gold border-b border-luxury-gold pb-1 text-sm uppercase tracking-widest">Back to Collection</Link>
       </div>
     );
@@ -142,22 +142,22 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
   };
 
   return (
-    <main className="min-h-screen bg-luxury-charcoal pt-32 pb-24">
+    <main className="min-h-screen bg-[var(--background)] pt-40 lg:pt-32 pb-24 transition-colors duration-500">
       <div className="container mx-auto px-6">
         {/* Top Navigation & Breadcrumbs */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-6">
           <nav className="flex items-center gap-3 text-[10px] uppercase tracking-[0.2em] font-bold">
-            <Link href="/" className="text-white/40 hover:text-white transition-colors">Home</Link>
-            <ChevronRight size={10} className="text-white/20" />
-            <Link href="/products" className="text-white/40 hover:text-white transition-colors">
-              {product.category === 'combo' ? 'Combo Packs' : 'Perfume Oil'}
+            <Link href="/" className="text-[var(--foreground)]/40 hover:text-[var(--foreground)] transition-colors">Home</Link>
+            <ChevronRight size={10} className="text-[var(--foreground)]/20" />
+            <Link href="/products" className="text-[var(--foreground)]/40 hover:text-[var(--foreground)] transition-colors">
+              {product.category === 'combo' ? 'Bundle Collection' : 'Perfume Oil'}
             </Link>
-            <ChevronRight size={10} className="text-white/20" />
+            <ChevronRight size={10} className="text-[var(--foreground)]/20" />
             <span className="text-luxury-gold">{product.name}</span>
           </nav>
 
-          <div className="flex items-center gap-6 text-white/40">
-            <button 
+          <div className="flex items-center gap-6 text-[var(--foreground)]/40">
+            <button
               onClick={() => adjacentIds.prev && router.push(`/product-details/${adjacentIds.prev}`)}
               disabled={!adjacentIds.prev}
               className={`hover:text-luxury-gold transition-colors flex items-center gap-2 text-[10px] uppercase tracking-widest font-bold ${!adjacentIds.prev ? 'opacity-20 cursor-not-allowed' : ''}`}
@@ -167,7 +167,7 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
             <Link href="/products" className="hover:text-luxury-gold transition-colors">
               <LayoutGrid size={16} />
             </Link>
-            <button 
+            <button
               onClick={() => adjacentIds.next && router.push(`/product-details/${adjacentIds.next}`)}
               disabled={!adjacentIds.next}
               className={`hover:text-luxury-gold transition-colors flex items-center gap-2 text-[10px] uppercase tracking-widest font-bold ${!adjacentIds.next ? 'opacity-20 cursor-not-allowed' : ''}`}
@@ -180,7 +180,7 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 xl:gap-20 items-start">
           {/* Left: Product Image */}
           <div className="reveal-img relative w-full flex flex-col items-center lg:items-end">
-            <div className="relative aspect-[4/5] bg-white/5 rounded-2xl overflow-hidden shadow-2xl group border border-white/10 w-[85%] md:w-[70%] lg:w-full lg:max-w-[480px]">
+            <div className="relative aspect-[4/5] bg-[var(--foreground)]/5 rounded-2xl overflow-hidden shadow-2xl group border border-[var(--foreground)]/10 w-[85%] md:w-[70%] lg:w-full lg:max-w-[480px]">
               {activeImage ? (
                 <Image
                   src={activeImage}
@@ -192,13 +192,13 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
                   className="object-cover transition-transform duration-[1.5s] group-hover:scale-105 saturate-[1.1] contrast-[1.02] brightness-[1.05]"
                 />
               ) : (
-                <div className="w-full h-full flex items-center justify-center text-white/10 uppercase tracking-widest text-[10px]">No Portrait Available</div>
+                <div className="w-full h-full flex items-center justify-center text-[var(--foreground)]/10 uppercase tracking-widest text-[10px]">No Portrait Available</div>
               )}
 
               {/* Expand Icon - Bottom Left per reference */}
               <button
                 onClick={() => setIsLightboxOpen(true)}
-                className="absolute bottom-6 left-6 p-3.5 bg-white/90 backdrop-blur-md rounded-full text-luxury-charcoal hover:bg-white transition-all opacity-0 group-hover:opacity-100 border border-white/20 shadow-xl z-10 hover:scale-110 active:scale-95"
+                className="absolute bottom-6 left-6 p-3.5 bg-[var(--background)]/90 backdrop-blur-md rounded-full text-luxury-charcoal dark:text-[var(--foreground)] hover:bg-[var(--background)] transition-all opacity-0 group-hover:opacity-100 border border-[var(--foreground)]/20 shadow-xl z-10 hover:scale-110 active:scale-95"
               >
                 <Maximize2 size={18} />
               </button>
@@ -215,7 +215,7 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
             <div className="flex gap-4 mt-6 justify-center lg:justify-start overflow-x-auto pb-2 scrollbar-hide">
               <button
                 onClick={() => setActiveImage(product.image_url)}
-                className={`relative w-20 aspect-[4/5] rounded-lg overflow-hidden border-2 transition-all flex-shrink-0 ${activeImage === product.image_url ? 'border-luxury-gold shadow-lg shadow-luxury-gold/20' : 'border-white/5 hover:border-white/20'
+                className={`relative w-20 aspect-[4/5] rounded-lg overflow-hidden border-2 transition-all flex-shrink-0 ${activeImage === product.image_url ? 'border-luxury-gold shadow-lg shadow-luxury-gold/20' : 'border-[var(--foreground)]/15 hover:border-[var(--foreground)]/40'
                   }`}
               >
                 <Image src={product.image_url} alt={product.name} fill sizes="80px" className="object-cover" />
@@ -227,7 +227,7 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
                     setActiveImage(v.image_url!);
                     setSelectedSize(v.size);
                   }}
-                  className={`relative w-20 aspect-[4/5] rounded-lg overflow-hidden border-2 transition-all flex-shrink-0 ${activeImage === v.image_url ? 'border-luxury-gold shadow-lg shadow-luxury-gold/20' : 'border-white/5 hover:border-white/20'
+                  className={`relative w-20 aspect-[4/5] rounded-lg overflow-hidden border-2 transition-all flex-shrink-0 ${activeImage === v.image_url ? 'border-luxury-gold shadow-lg shadow-luxury-gold/20' : 'border-[var(--foreground)]/15 hover:border-[var(--foreground)]/40'
                     }`}
                 >
                   <Image src={v.image_url} alt={`${product.name} - ${v.size}`} fill sizes="80px" className="object-cover" />
@@ -239,30 +239,30 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
           {/* Right: Product Details */}
           <div className="flex flex-col pt-4 lg:pt-0">
             <div className="reveal-text opacity-0">
-              <h1 className="text-4xl md:text-5xl xl:text-7xl font-serif text-luxury-cream mb-6 leading-tight">{product.name}</h1>
+              <h1 className="text-4xl md:text-6xl xl:text-8xl font-serif text-[var(--foreground)] mb-6 leading-[0.9] tracking-tight">{product.name}</h1>
               <div className="flex items-center gap-4 mb-8">
                 <div className="flex items-center gap-2">
-                  <span className="text-xl md:text-2xl text-luxury-gold font-medium">৳{minPrice} — ৳{maxPrice}</span>
+                  <span className="text-xl md:text-3xl text-luxury-gold font-bold">৳{minPrice} — ৳{maxPrice}</span>
                 </div>
-                <div className="h-4 w-px bg-white/10" />
-                <span className="text-[10px] uppercase tracking-[0.2em] text-white/40 font-bold">{product.category === 'combo' ? 'Bundle Collection' : 'Pure Scent Profile'}</span>
+                <div className="h-4 w-px bg-[var(--foreground)]/20" />
+                <span className="text-[10px] uppercase tracking-[0.2em] text-[var(--foreground)]/60 font-bold">{product.category === 'combo' ? 'Bundle Collection' : 'Pure Scent Profile'}</span>
               </div>
             </div>
 
             <div className="reveal-text space-y-8">
               {/* Size Selection */}
               <div className="space-y-4">
-                <label className="text-[10px] uppercase tracking-[0.2em] text-white/40 font-bold flex items-center gap-2">
-                  Size Selection: <span className="text-white">{selectedSize}</span>
+                <label className="text-[10px] uppercase tracking-[0.2em] text-[var(--foreground)]/60 font-bold flex items-center gap-2">
+                  Size Selection: <span className="text-[var(--foreground)]">{selectedSize}</span>
                 </label>
                 <div className="flex flex-wrap gap-3">
                   {product.variants.map((v) => (
                     <button
                       key={v.size}
                       onClick={() => setSelectedSize(v.size)}
-                      className={`px-6 py-3 rounded-xl text-[10px] font-bold uppercase tracking-widest border transition-all ${selectedSize === v.size
-                          ? 'bg-luxury-gold border-luxury-gold text-luxury-charcoal shadow-lg shadow-luxury-gold/20'
-                          : 'bg-white/5 border-white/10 text-white/60 hover:border-white/30 hover:text-white'
+                      className={`px-6 py-3 rounded-2xl text-[10px] font-bold uppercase tracking-widest border transition-all ${selectedSize === v.size
+                        ? 'bg-luxury-gold border-luxury-gold text-white shadow-lg shadow-luxury-gold/20'
+                        : 'bg-[var(--foreground)]/10 border-[var(--foreground)]/30 text-[var(--foreground)] hover:border-luxury-gold hover:text-luxury-gold'
                         }`}
                     >
                       {v.size}
@@ -273,25 +273,25 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
 
               {/* Aromatic Structure (Notes) */}
               {(product.top_notes || product.middle_notes || product.base_notes) && (
-                <div className="space-y-4 py-8 border-y border-white/5">
+                <div className="space-y-4 py-8 border-y border-[var(--foreground)]/15">
                   <h3 className="text-[10px] uppercase tracking-[0.3em] text-luxury-gold font-bold">Aromatic Structure</h3>
                   <ul className="space-y-2">
                     {product.top_notes && (
                       <li className="flex items-start gap-3 text-xs leading-relaxed">
-                        <span className="text-white/20 font-bold uppercase tracking-widest w-24 flex-shrink-0">Top:</span>
-                        <span className="text-white/70 italic">{product.top_notes}</span>
+                        <span className="text-[var(--foreground)]/60 font-bold uppercase tracking-widest w-24 flex-shrink-0">Top:</span>
+                        <span className="text-[var(--foreground)]/70 italic">{product.top_notes}</span>
                       </li>
                     )}
                     {product.middle_notes && (
                       <li className="flex items-start gap-3 text-xs leading-relaxed">
-                        <span className="text-white/20 font-bold uppercase tracking-widest w-24 flex-shrink-0">Middle:</span>
-                        <span className="text-white/70 italic">{product.middle_notes}</span>
+                        <span className="text-[var(--foreground)]/60 font-bold uppercase tracking-widest w-24 flex-shrink-0">Middle:</span>
+                        <span className="text-[var(--foreground)]/70 italic">{product.middle_notes}</span>
                       </li>
                     )}
                     {product.base_notes && (
                       <li className="flex items-start gap-3 text-xs leading-relaxed">
-                        <span className="text-white/20 font-bold uppercase tracking-widest w-24 flex-shrink-0">Base:</span>
-                        <span className="text-white/70 italic">{product.base_notes}</span>
+                        <span className="text-[var(--foreground)]/60 font-bold uppercase tracking-widest w-24 flex-shrink-0">Base:</span>
+                        <span className="text-[var(--foreground)]/70 italic">{product.base_notes}</span>
                       </li>
                     )}
                   </ul>
@@ -300,11 +300,11 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
 
               {/* Description */}
               <div className="space-y-4">
-                <p className="text-white/50 text-sm leading-relaxed font-light italic">
+                <p className="text-[var(--foreground)]/70 text-sm leading-relaxed font-light italic">
                   {product.description}
                 </p>
                 <div className="flex items-center gap-2">
-                  <span className="w-8 h-px bg-luxury-gold/30" />
+                  <span className="w-8 h-px bg-luxury-gold/50" />
                   <span className="text-[10px] uppercase tracking-widest text-luxury-gold font-bold">Artisanal Craftsmanship</span>
                 </div>
               </div>
@@ -312,25 +312,25 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
               {/* Pricing & Add to Cart */}
               <div className="space-y-8 pt-8">
                 <div className="flex items-baseline gap-4">
-                  <span className="text-4xl font-serif text-white">৳{currentVariant.price * quantity}</span>
+                  <span className="text-4xl sm:text-6xl font-serif text-[var(--foreground)]">৳{currentVariant.price * quantity}</span>
                   {originalPrice && (
-                    <span className="text-xl text-white/30 line-through">৳{originalPrice * quantity}</span>
+                    <span className="text-xl sm:text-2xl text-[var(--foreground)]/50 line-through">৳{originalPrice * quantity}</span>
                   )}
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-4 sm:h-14">
                   {/* Quantity */}
-                  <div className="flex items-center justify-between bg-white/5 rounded-xl border border-white/10 h-14 sm:h-full px-4 w-full sm:w-32">
+                  <div className="flex items-center justify-between bg-[var(--foreground)]/5 rounded-xl border border-[var(--foreground)]/20 h-14 sm:h-full px-4 w-full sm:w-32">
                     <button
                       onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                      className="p-2 text-white/40 hover:text-white transition-colors"
+                      className="p-2 text-[var(--foreground)]/90 hover:text-luxury-gold transition-colors"
                     >
                       <Minus size={14} />
                     </button>
-                    <span className="text-sm font-bold text-white font-mono">{quantity}</span>
+                    <span className="text-sm font-bold text-[var(--foreground)] font-mono">{quantity}</span>
                     <button
                       onClick={() => setQuantity(quantity + 1)}
-                      className="p-2 text-white/40 hover:text-white transition-colors"
+                      className="p-2 text-[var(--foreground)]/90 hover:text-luxury-gold transition-colors"
                     >
                       <Plus size={14} />
                     </button>
@@ -345,7 +345,7 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
                   </button>
 
                   {/* Buy Now Button */}
-                  <button 
+                  <button
                     onClick={() => setIsPurchaseModalOpen(true)}
                     className="flex-grow sm:flex-none sm:px-8 h-14 sm:h-full bg-luxury-gold text-luxury-charcoal font-bold uppercase tracking-[0.2em] text-[10px] hover:bg-luxury-gold/90 transition-all text-center rounded-xl shadow-xl shadow-luxury-gold/20"
                   >
@@ -355,12 +355,12 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
               </div>
 
               {/* Order Support */}
-              <div className="p-6 bg-white/[0.02] border border-dashed border-white/10 rounded-2xl flex items-start gap-4">
+              <div className="p-6 bg-[var(--foreground)]/[0.02] border border-dashed border-[var(--foreground)]/10 rounded-2xl flex items-start gap-4">
                 <div className="w-10 h-10 rounded-full bg-emerald-500/10 flex items-center justify-center flex-shrink-0">
                   <MessageCircle size={18} className="text-emerald-500" />
                 </div>
                 <div>
-                  <p className="text-xs text-white/70 mb-1">Need assistance with your procurement?</p>
+                  <p className="text-xs text-[var(--foreground)]/70 mb-1">Need assistance with your procurement?</p>
                   <p className="text-[10px] uppercase tracking-widest text-emerald-500 font-bold cursor-pointer hover:underline">
                     Contact our Concierge via WhatsApp
                   </p>
@@ -368,25 +368,25 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
               </div>
 
               {/* Metadata & Social */}
-              <div className="space-y-4 pt-8 border-t border-white/5">
+              <div className="space-y-4 pt-8 border-t border-[var(--foreground)]/5">
                 <div className="flex flex-col gap-2">
                   <div className="flex items-center gap-4 text-[10px] uppercase tracking-widest">
-                    <span className="text-white/20 font-bold w-20">Art Code:</span>
-                    <span className="text-white/60">SF-00{product.id}</span>
+                    <span className="text-[var(--foreground)]/20 font-bold w-20">Art Code:</span>
+                    <span className="text-[var(--foreground)]/60">SF-00{product.id}</span>
                   </div>
                   <div className="flex items-center gap-4 text-[10px] uppercase tracking-widest">
-                    <span className="text-white/20 font-bold w-20">Category:</span>
-                    <span className="text-white/60">{product.category === 'combo' ? 'Bundle Selection' : 'Premium Oil'}</span>
+                    <span className="text-[var(--foreground)]/20 font-bold w-20">Category:</span>
+                    <span className="text-[var(--foreground)]/60">{product.category === 'combo' ? 'Bundle Selection' : 'Premium Oil'}</span>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-6 pt-2">
-                  <span className="text-[10px] uppercase tracking-widest text-white/20 font-bold">Transmit:</span>
-                  <div className="flex items-center gap-4 text-white/40">
-                    <Share2 size={14} className="hover:text-white cursor-pointer transition-colors" />
-                    <Share2 size={14} className="hover:text-white cursor-pointer transition-colors" />
-                    <Share2 size={14} className="hover:text-white cursor-pointer transition-colors" />
-                    <Share2 size={14} className="hover:text-white cursor-pointer transition-colors" />
+                  <span className="text-[10px] uppercase tracking-widest text-[var(--foreground)]/20 font-bold">Transmit:</span>
+                  <div className="flex items-center gap-4 text-[var(--foreground)]/40">
+                    <Share2 size={14} className="hover:text-luxury-gold cursor-pointer transition-colors" />
+                    <Share2 size={14} className="hover:text-luxury-gold cursor-pointer transition-colors" />
+                    <Share2 size={14} className="hover:text-luxury-gold cursor-pointer transition-colors" />
+                    <Share2 size={14} className="hover:text-luxury-gold cursor-pointer transition-colors" />
                   </div>
                 </div>
               </div>
@@ -401,7 +401,7 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
 
           <button
             onClick={() => setIsLightboxOpen(false)}
-            className="absolute top-8 right-8 z-[210] p-4 bg-white/5 hover:bg-white/10 rounded-full text-white/40 hover:text-white transition-all border border-white/10"
+            className="absolute top-8 right-8 z-[210] p-4 bg-[var(--foreground)]/5 hover:bg-[var(--foreground)]/10 rounded-full text-[var(--foreground)]/40 hover:text-[var(--foreground)] transition-all border border-[var(--foreground)]/10"
           >
             <X size={24} />
           </button>
@@ -421,7 +421,7 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
           </div>
 
           {/* Aromatic Preview Label */}
-          <div className="absolute bottom-12 left-1/2 -translate-x-1/2 text-[10px] uppercase tracking-[0.4em] text-white/20 font-bold pointer-events-none">
+          <div className="absolute bottom-12 left-1/2 -translate-x-1/2 text-[10px] uppercase tracking-[0.4em] text-[var(--foreground)]/20 font-bold pointer-events-none">
             High Fidelity Scent Portrait
           </div>
         </div>
@@ -431,12 +431,20 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
       {isPurchaseModalOpen && (
         <div className="fixed inset-0 z-[300] flex items-center justify-center p-4 sm:p-6 animate-in fade-in duration-300">
           <div className="absolute inset-0 bg-black/90 backdrop-blur-xl" onClick={() => setIsPurchaseModalOpen(false)} />
-          
-          <div className="relative w-full max-w-lg bg-luxury-charcoal border border-white/10 rounded-3xl overflow-hidden shadow-2xl animate-in zoom-in-95 duration-300">
+
+          {/* Decorative Review Quote Tag */}
+          <div className="absolute top-[10%] left-0 z-40 bg-[var(--foreground)]/5 backdrop-blur-md border border-[var(--foreground)]/10 p-4 rounded-2xl shadow-lg max-w-[200px] floating-item-2 hidden sm:block">
+            <p className="text-[10px] text-[var(--foreground)] font-bold italic leading-relaxed">
+              "The most captivating scent I have ever worn. Pure luxury in a bottle."
+            </p>
+            <div className="mt-2 text-luxury-gold text-[8px] font-bold uppercase tracking-widest">- Sarah J.</div>
+          </div>
+
+          <div className="relative w-full max-w-lg bg-[var(--background)] border border-[var(--foreground)]/10 rounded-3xl overflow-hidden shadow-2xl animate-in zoom-in-95 duration-300">
             {/* Close Button */}
             <button
               onClick={() => setIsPurchaseModalOpen(false)}
-              className="absolute top-4 right-4 z-10 p-2 bg-white/5 hover:bg-white/10 rounded-full text-white/40 hover:text-white transition-all"
+              className="absolute top-4 right-4 z-10 p-2 bg-[var(--foreground)]/5 hover:bg-[var(--foreground)]/10 rounded-full text-[var(--foreground)]/40 hover:text-[var(--foreground)] transition-all"
             >
               <X size={20} />
             </button>
@@ -446,34 +454,34 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
                 <div className="w-20 h-20 bg-luxury-gold/10 rounded-full flex items-center justify-center">
                   <Smartphone size={32} className="text-luxury-gold" />
                 </div>
-                
+
                 <div>
-                  <h2 className="text-2xl font-serif text-luxury-cream mb-2">Finalize Your Purchase</h2>
-                  <p className="text-[10px] uppercase tracking-[0.2em] text-white/40 font-bold">Exquisite Selection</p>
+                  <h2 className="text-2xl font-serif text-[var(--foreground)] mb-2">Finalize Your Purchase</h2>
+                  <p className="text-[10px] uppercase tracking-[0.2em] text-[var(--foreground)]/40 font-bold">Exquisite Selection</p>
                 </div>
 
                 {/* Product Summary for Screenshot */}
-                <div className="w-full bg-white/5 rounded-2xl p-6 border border-white/10 flex items-center gap-6 text-left">
+                <div className="w-full bg-[var(--foreground)]/5 rounded-2xl p-6 border border-[var(--foreground)]/10 flex items-center gap-6 text-left">
                   <div className="relative w-20 h-24 rounded-lg overflow-hidden flex-shrink-0">
-                    <Image 
-                      src={activeImage} 
-                      alt={product.name} 
-                      fill 
+                    <Image
+                      src={activeImage}
+                      alt={product.name}
+                      fill
                       sizes="100px"
                       className="object-cover"
                     />
                   </div>
                   <div>
-                    <h3 className="text-lg font-serif text-white mb-1">{product.name}</h3>
+                    <h3 className="text-lg font-serif text-[var(--foreground)] mb-1">{product.name}</h3>
                     <p className="text-[10px] uppercase tracking-widest text-luxury-gold font-bold mb-2">Size: {selectedSize}</p>
-                    <p className="text-2xl font-bold text-white">৳{currentVariant.price * quantity}</p>
+                    <p className="text-2xl font-bold text-[var(--foreground)]">৳{currentVariant.price * quantity}</p>
                   </div>
                 </div>
 
                 {/* The Noticeable Note */}
                 <div className="w-full bg-luxury-gold/10 border border-luxury-gold/30 rounded-2xl p-5 relative overflow-hidden text-left">
                   <div className="absolute top-0 left-0 w-1 h-full bg-luxury-gold" />
-                  <p className="text-sm text-luxury-cream leading-relaxed font-medium">
+                  <p className="text-sm text-[var(--foreground)] leading-relaxed font-medium">
                     <span className="text-luxury-gold mr-2 text-lg">📸</span>
                     <span className="font-bold text-luxury-gold">Action Required:</span> Please take a screenshot of this screen and share it with our concierge to complete your purchase. <span className="text-luxury-gold font-bold">( Courier Charge Applicable )</span>
                   </p>
@@ -481,18 +489,18 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
 
                 {/* Social Links */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
-                  <a 
-                    href="https://wa.me/message/ALWRUNUBV6L3A1" 
-                    target="_blank" 
+                  <a
+                    href="https://wa.me/message/ALWRUNUBV6L3A1"
+                    target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center justify-center gap-3 py-4 bg-[#25D366] hover:bg-[#20ba59] text-white rounded-xl font-bold uppercase tracking-widest text-[10px] transition-all shadow-lg shadow-green-500/10"
                   >
                     <MessageCircle size={18} />
                     WhatsApp
                   </a>
-                  <a 
-                    href="https://m.me/SufyraFragrance" 
-                    target="_blank" 
+                  <a
+                    href="https://m.me/SufyraFragrance"
+                    target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center justify-center gap-3 py-4 bg-[#0084FF] hover:bg-[#0077e6] text-white rounded-xl font-bold uppercase tracking-widest text-[10px] transition-all shadow-lg shadow-blue-500/10"
                   >
@@ -500,8 +508,8 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
                     Messenger
                   </a>
                 </div>
-                
-                <p className="text-[9px] uppercase tracking-widest text-white/20 font-bold">
+
+                <p className="text-[9px] uppercase tracking-widest text-[var(--foreground)]/20 font-bold">
                   Sufyra Fragrance — Artisanal Perfumery
                 </p>
               </div>

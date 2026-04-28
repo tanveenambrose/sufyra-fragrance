@@ -76,7 +76,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen pt-24 pb-12 px-4 flex items-center justify-center bg-[var(--background)] transition-colors duration-300">
+    <div className="min-h-screen pt-40 pb-12 px-4 flex items-center justify-center bg-[var(--background)] transition-colors duration-300">
       {/* Decorative Elements */}
       <div className="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none -z-10">
         <div className="absolute top-[-10%] right-[-10%] w-[40%] h-[40%] bg-luxury-gold/5 blur-[120px] rounded-full"></div>
@@ -84,9 +84,9 @@ const LoginPage = () => {
       </div>
 
       <div ref={formRef} className="w-full max-w-md luxury-card p-8 md:p-10 rounded-[30px] border border-luxury-gold/10">
-        <div className="text-center mb-10">
-          <h1 className="text-3xl md:text-4xl font-serif text-luxury-gold mb-3">Welcome Back</h1>
-          <p className="text-[var(--foreground)]/40 text-sm italic">Enter your credentials to access your luxury sanctuary.</p>
+        <div className="text-center mb-12">
+          <h1 className="text-4xl md:text-6xl font-serif text-[var(--foreground)] mb-4 tracking-tight leading-tight">Welcome <br /> <span className="font-normal italic">Back</span></h1>
+          <p className="text-luxury-gold text-[10px] uppercase tracking-[0.4em] font-bold">Access your sanctuary</p>
         </div>
 
         {error && (
@@ -125,12 +125,9 @@ const LoginPage = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full luxury-gradient py-4 rounded-xl flex items-center justify-center gap-2 group hover:shadow-[0_0_20px_rgba(197,160,89,0.3)] transition-all disabled:opacity-50"
+            className="w-full bg-luxury-charcoal text-white dark:bg-white dark:text-black py-4 sm:py-5 rounded-full font-bold uppercase tracking-[0.3em] text-[11px] sm:text-[12px] hover:bg-luxury-gold dark:hover:bg-luxury-gold transition-all shadow-lg disabled:opacity-50"
           >
-            <span className="text-sm font-bold uppercase tracking-widest text-luxury-charcoal">
-              {loading ? 'Entering Sanctuary...' : 'Sign In'}
-            </span>
-            {!loading && <LogIn className="w-4 h-4 text-luxury-charcoal group-hover:translate-x-1 transition-transform" />}
+            {loading ? 'Entering Sanctuary...' : 'Sign In'}
           </button>
         </form>
 

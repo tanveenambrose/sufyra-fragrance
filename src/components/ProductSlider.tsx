@@ -63,14 +63,14 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products, title, subtitle
 
         <div className="overflow-hidden" ref={emblaRef} suppressHydrationWarning>
           <div className="flex -ml-4 md:-ml-6" suppressHydrationWarning>
-            {products.map((product) => (
+            {products.map((product, index) => (
               <div 
                 key={product.id} 
                 className="flex-[0_0_80%] sm:flex-[0_0_45%] lg:flex-[0_0_25%] xl:flex-[0_0_20%] pl-4 md:pl-6 min-w-0"
                 suppressHydrationWarning
               >
                 <div className="h-full" suppressHydrationWarning>
-                  <ProductCard product={product} />
+                  <ProductCard product={product} priority={index < 4} />
                 </div>
               </div>
             ))}

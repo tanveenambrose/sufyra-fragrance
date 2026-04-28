@@ -106,19 +106,19 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="min-h-screen pt-24 pb-12 px-4 flex items-center justify-center bg-[var(--background)] transition-colors duration-300">
+    <div className="min-h-screen pt-40 pb-12 px-4 flex items-center justify-center bg-[var(--background)] transition-colors duration-300">
       {/* Decorative Gradient */}
       <div className="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none -z-10">
         <div className="absolute top-[-5%] left-[-5%] w-[50%] h-[50%] bg-luxury-gold/5 blur-[150px] rounded-full"></div>
       </div>
 
       <div ref={formRef} className="w-full max-w-lg luxury-card p-8 md:p-12 rounded-[30px] border border-luxury-gold/10">
-        <div className="mb-8">
-          <Link href="/login" className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-[var(--foreground)]/40 hover:text-luxury-gold transition-colors font-bold mb-6">
+        <div className="mb-10">
+          <Link href="/login" className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.4em] text-luxury-gold hover:text-luxury-gold/70 transition-colors font-bold mb-8">
             <ArrowLeft className="w-3 h-3" /> Back to Login
           </Link>
-          <h1 className="text-3xl md:text-4xl font-serif text-luxury-gold mb-2">Create Account</h1>
-          <p className="text-[var(--foreground)]/40 text-sm italic">Join the exclusive world of Sufyra fragrances.</p>
+          <h1 className="text-4xl md:text-6xl font-serif text-[var(--foreground)] mb-4 tracking-tight leading-tight">Join the <br /> <span className="font-normal italic">Exclusive</span></h1>
+          <p className="text-luxury-gold text-[10px] uppercase tracking-[0.4em] font-bold">The world of Sufyra fragrances</p>
         </div>
 
         {error && (
@@ -176,12 +176,9 @@ const RegisterPage = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full luxury-gradient py-4 rounded-xl flex items-center justify-center gap-2 group hover:shadow-[0_0_25px_rgba(197,160,89,0.3)] transition-all disabled:opacity-50"
+              className="w-full bg-luxury-charcoal text-white dark:bg-white dark:text-black py-4 sm:py-5 rounded-full font-bold uppercase tracking-[0.3em] text-[11px] sm:text-[12px] hover:bg-luxury-gold dark:hover:bg-luxury-gold transition-all shadow-lg disabled:opacity-50"
             >
-              <span className="text-sm font-bold uppercase tracking-widest text-luxury-charcoal">
-                {loading ? 'Creating Account...' : 'Join Sufyra'}
-              </span>
-              {!loading && <UserPlus className="w-4 h-4 text-luxury-charcoal group-hover:scale-110 transition-transform" />}
+              {loading ? 'Creating Account...' : 'Join Sufyra'}
             </button>
           </div>
         </form>
