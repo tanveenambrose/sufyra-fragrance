@@ -14,6 +14,7 @@ export async function POST(req: Request) {
       zone, 
       address, 
       whatsapp,
+      paymentMethod,
       customerEmail 
     } = body;
 
@@ -48,6 +49,7 @@ export async function POST(req: Request) {
             <p><strong>Size:</strong> ${size}</p>
             <p><strong>Quantity:</strong> ${quantity}</p>
             <p><strong>Zone:</strong> ${zone}</p>
+            <p><strong>Payment:</strong> ${paymentMethod || 'Cash on Delivery'}</p>
             <p style="font-size: 24px; color: #d4af37; margin-top: 10px;"><strong>Total: ৳${total}</strong></p>
           </div>
 
@@ -65,9 +67,14 @@ export async function POST(req: Request) {
 
     await transporter.sendMail(mailOptions);
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, emailSent: true });
   } catch (error: any) {
-    console.error('Email error:', error);
-    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+    console.error('Email notification failed (order saved):', error);
+    // Return 200 because the order was already saved to database successfully
+    return NextResponse.json({ 
+      success: true, 
+      emailSent: false, 
+      error: error.message 
+    });
   }
 }

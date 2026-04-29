@@ -22,6 +22,7 @@ export interface PurchaseFormData {
   zone: 'Inside Dhaka' | 'Outside Dhaka';
   address: string;
   whatsapp?: string;
+  paymentMethod: 'Cash on Delivery' | 'bKash (Manual)';
 }
 
 const PurchaseForm: React.FC<PurchaseFormProps> = ({
@@ -39,7 +40,8 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({
     name: '',
     zone: 'Inside Dhaka',
     address: '',
-    whatsapp: ''
+    whatsapp: '',
+    paymentMethod: 'Cash on Delivery'
   });
 
   if (!isOpen) return null;
@@ -133,17 +135,29 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({
                   </select>
                 </div>
                 <div className="space-y-1.5">
-                  <label className="text-[10px] uppercase tracking-widest text-[var(--foreground)]/40 font-bold ml-1">WhatsApp (Optional)</label>
-                  <div className="relative">
-                    <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-luxury-gold w-4 h-4" />
-                    <input
-                      type="tel"
-                      value={formData.whatsapp}
-                      onChange={(e) => setFormData({ ...formData, whatsapp: e.target.value })}
-                      placeholder="01XXX-XXXXXX"
-                      className="w-full bg-[var(--foreground)]/5 border border-white/10 rounded-xl py-3.5 pl-12 pr-4 text-sm text-[var(--foreground)] focus:outline-none focus:border-luxury-gold/50 transition-colors"
-                    />
-                  </div>
+                  <label className="text-[10px] uppercase tracking-widest text-[var(--foreground)]/40 font-bold ml-1">Payment Method</label>
+                  <select
+                    value={formData.paymentMethod}
+                    onChange={(e) => setFormData({ ...formData, paymentMethod: e.target.value as any })}
+                    className="w-full bg-[var(--foreground)]/5 border border-white/10 rounded-xl py-3.5 px-4 text-sm text-[var(--foreground)] focus:outline-none focus:border-luxury-gold/50 transition-colors appearance-none cursor-pointer"
+                  >
+                    <option value="Cash on Delivery" className="bg-black">Cash on Delivery</option>
+                    <option value="bKash (Manual)" className="bg-black">bKash (Manual)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-[10px] uppercase tracking-widest text-[var(--foreground)]/40 font-bold ml-1">WhatsApp (Optional)</label>
+                <div className="relative">
+                  <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-luxury-gold w-4 h-4" />
+                  <input
+                    type="tel"
+                    value={formData.whatsapp}
+                    onChange={(e) => setFormData({ ...formData, whatsapp: e.target.value })}
+                    placeholder="01XXX-XXXXXX"
+                    className="w-full bg-[var(--foreground)]/5 border border-white/10 rounded-xl py-3.5 pl-12 pr-4 text-sm text-[var(--foreground)] focus:outline-none focus:border-luxury-gold/50 transition-colors"
+                  />
                 </div>
               </div>
 

@@ -65,6 +65,7 @@ const PurchaseFlow: React.FC<PurchaseFlowProps> = ({
           delivery_zone: formData.zone,
           delivery_address: formData.address,
           whatsapp_number: formData.whatsapp,
+          payment_method: formData.paymentMethod,
           status: 'pending'
         })
         .select()
@@ -86,6 +87,7 @@ const PurchaseFlow: React.FC<PurchaseFlowProps> = ({
           zone: formData.zone,
           address: formData.address,
           whatsapp: formData.whatsapp,
+          paymentMethod: formData.paymentMethod,
           customerEmail: user.email
         }),
       });

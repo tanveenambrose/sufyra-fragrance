@@ -189,7 +189,7 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
                   fill
                   priority
                   quality={90}
-                  sizes="(max-width: 1024px) 100vw, 60vw"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   className="object-cover transition-transform duration-[1.5s] group-hover:scale-105 saturate-[1.1] contrast-[1.02] brightness-[1.05]"
                 />
               ) : (

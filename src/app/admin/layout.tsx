@@ -2,9 +2,9 @@
 
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { LayoutDashboard, ShoppingBag, PlusCircle, LogOut, ArrowLeft, Menu, X } from 'lucide-react';
+import { LayoutDashboard, ShoppingBag, PlusCircle, LogOut, ArrowLeft, Menu, X, ClipboardList } from 'lucide-react';
 
 export default function AdminLayout({
   children,
@@ -14,6 +14,7 @@ export default function AdminLayout({
   const { user, loading, isAdmin, signOut } = useAuth();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     if (!loading && !isAdmin) {
@@ -87,6 +88,7 @@ export default function AdminLayout({
             { href: '/admin', icon: LayoutDashboard, label: 'Dashboard' },
             { href: '/admin/products', icon: ShoppingBag, label: 'Products' },
             { href: '/admin/products/new', icon: PlusCircle, label: 'Add Product' },
+            { href: '/admin/orders', icon: ClipboardList, label: 'Orders' },
           ].map((item) => (
             <Link 
               key={item.href}
@@ -122,7 +124,7 @@ export default function AdminLayout({
 
       {/* Main Content */}
       <main className="lg:ml-64 p-4 sm:p-6 lg:p-10 min-h-screen">
-        <div className="max-w-6xl mx-auto">
+        <div key={pathname} className="max-w-6xl mx-auto animate-in fade-in duration-500">
           {children}
         </div>
       </main>
