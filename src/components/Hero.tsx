@@ -104,6 +104,7 @@ const Hero = () => {
               fill
               sizes="(max-width: 640px) 14rem, 18rem"
               priority
+              quality={100}
               className="object-cover"
             />
           </div>
@@ -116,6 +117,7 @@ const Hero = () => {
               fill
               sizes="(max-width: 640px) 9rem, 12rem"
               priority
+              quality={100}
               className="object-cover"
             />
           </div>

@@ -39,7 +39,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority = false }) 
               src={displayImage}
               alt={product.name}
               fill
-              quality={90}
+              quality={100}
               sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
               className="object-cover transition-transform duration-1000 group-hover:scale-110"
               priority={priority} 

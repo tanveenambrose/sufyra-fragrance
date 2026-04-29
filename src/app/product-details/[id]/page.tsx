@@ -188,7 +188,7 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
                   alt={product.name}
                   fill
                   priority
-                  quality={90}
+                  quality={100}
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   className="object-cover transition-transform duration-[1.5s] group-hover:scale-105 saturate-[1.1] contrast-[1.02] brightness-[1.05]"
                 />
@@ -413,7 +413,7 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
                 src={activeImage}
                 alt={product.name}
                 fill
-                quality={90}
+                quality={100}
                 priority
                 sizes="100vw"
                 className="object-contain"

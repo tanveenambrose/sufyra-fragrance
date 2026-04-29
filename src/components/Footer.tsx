@@ -96,6 +96,7 @@ const Footer: React.FC = () => {
                   alt="Sufyra Logo"
                   fill
                   sizes="(max-width: 768px) 150px, 180px"
+                  quality={100}
                   className="object-contain"
                 />
               </div>

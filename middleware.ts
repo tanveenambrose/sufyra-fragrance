@@ -54,7 +54,10 @@ export async function middleware(request: NextRequest) {
     }
   );
 
-  await supabase.auth.getUser();
+  // Only perform blocking auth check on admin routes to improve TTFB for public pages
+  if (request.nextUrl.pathname.startsWith('/admin')) {
+    await supabase.auth.getUser();
+  }
 
   return response;
 }
