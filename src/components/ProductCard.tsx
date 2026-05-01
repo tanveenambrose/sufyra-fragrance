@@ -33,7 +33,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority = false }) 
     <div className="group rounded-[2rem] overflow-hidden flex flex-col h-full reveal bg-[var(--foreground)]/[0.03] hover:bg-[var(--foreground)]/[0.05] border border-[var(--foreground)]/[0.05] transition-all duration-500 hover:shadow-xl hover:shadow-luxury-gold/5" suppressHydrationWarning>
       {/* Product Image */}
       <Link href={`/product-details/${product.id}`} className="relative aspect-square block overflow-hidden group-hover:cursor-pointer" suppressHydrationWarning>
-        <div className="relative w-full h-full bg-luxury-cream/5">
+        <div className="relative w-full h-full bg-luxury-cream/5" suppressHydrationWarning>
           {displayImage ? (
             <Image
               src={displayImage}
@@ -66,7 +66,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority = false }) 
           <Link href={`/product-details/${product.id}`} className="hover:text-luxury-gold transition-colors block mb-1">
             <h3 className="text-sm sm:text-lg font-serif text-[var(--foreground)] font-bold tracking-tight line-clamp-1 leading-tight">{product.name}</h3>
           </Link>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2" suppressHydrationWarning>
              <span className="text-luxury-gold font-bold text-sm sm:text-lg">{discountedPrice}৳</span>
              {discount > 0 && (
                <span className="text-[var(--foreground)]/30 line-through text-[10px] sm:text-[11px] font-medium">{currentPrice}৳</span>

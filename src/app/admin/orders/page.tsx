@@ -80,15 +80,17 @@ export default function AdminOrders() {
 
   const getStatusIcon = (status: string) => {
     switch (status.toLowerCase()) {
-      case 'received': return <Clock size={14} />;
-      case 'processing': return <RefreshCw size={14} className="animate-spin-slow" />;
-      case 'shipped': return <Truck size={14} />;
+      case 'pending': return <Clock size={14} className="text-amber-400" />;
+      case 'received': return <Clock size={14} className="text-blue-400" />;
+      case 'processing': return <RefreshCw size={14} className="animate-spin-slow text-luxury-gold" />;
+      case 'shipped': return <Truck size={14} className="text-emerald-400" />;
       default: return <AlertCircle size={14} />;
     }
   };
 
   const getStatusColor = (status: string) => {
     switch (status.toLowerCase()) {
+      case 'pending': return 'text-amber-400 bg-amber-400/10 border-amber-400/20';
       case 'received': return 'text-blue-400 bg-blue-400/10 border-blue-400/20';
       case 'processing': return 'text-luxury-gold bg-luxury-gold/10 border-luxury-gold/20';
       case 'shipped': return 'text-emerald-400 bg-emerald-400/10 border-emerald-400/20';
@@ -178,6 +180,7 @@ export default function AdminOrders() {
                             ${getStatusColor(order.status)}
                           `}
                         >
+                          <option value="Pending">Pending</option>
                           <option value="Received">Received</option>
                           <option value="Processing">Processing</option>
                           <option value="Shipped">Shipped</option>

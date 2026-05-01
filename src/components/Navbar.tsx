@@ -178,9 +178,9 @@ const Navbar: React.FC = () => {
               <div className="hidden lg:flex items-center gap-4">
                 {isMounted && user ? (
                   <>
-                    <span className="text-[10px] uppercase tracking-widest text-luxury-gold font-bold">
+                    <Link href="/orders" className="text-[10px] uppercase tracking-widest text-luxury-gold font-bold hover:text-white transition-colors">
                       {user.user_metadata?.full_name || user.email?.split('@')[0]}
-                    </span>
+                    </Link>
                     {isAdmin && (
                       <Link href="/admin" className="text-[10px] uppercase tracking-widest text-luxury-gold hover:text-white transition-colors font-bold whitespace-nowrap border border-luxury-gold/20 px-4 py-1.5 rounded-full bg-luxury-gold/5">
                         Admin Panel
@@ -208,9 +208,9 @@ const Navbar: React.FC = () => {
               {/* Mobile Auth Logic - Profile Icon if logged in, else Login button */}
               <div className="lg:hidden flex items-center h-10">
                 {isMounted && user ? (
-                  <button className="p-1 flex items-center justify-center">
+                  <Link href="/orders" className="p-1 flex items-center justify-center">
                     <UserIcon className="w-5 h-5 text-luxury-gold" />
-                  </button>
+                  </Link>
                 ) : (
                   <Link
                     href="/login"
@@ -321,6 +321,16 @@ const Navbar: React.FC = () => {
               >
                 Home
               </Link>
+
+              {user && (
+                <Link
+                  href="/orders"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="block text-2xl uppercase tracking-[0.1em] font-serif text-[var(--foreground)] hover:text-luxury-gold transition-colors font-medium"
+                >
+                  My Orders
+                </Link>
+              )}
 
               {isAdmin && (
                 <Link 

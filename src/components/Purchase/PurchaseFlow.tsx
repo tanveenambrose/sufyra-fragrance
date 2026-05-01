@@ -66,7 +66,7 @@ const PurchaseFlow: React.FC<PurchaseFlowProps> = ({
           delivery_address: formData.address,
           whatsapp_number: formData.whatsapp,
           payment_method: formData.paymentMethod,
-          status: 'pending'
+          status: 'Pending'
         })
         .select()
         .single();

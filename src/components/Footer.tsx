@@ -82,15 +82,15 @@ const Footer: React.FC = () => {
   return (
     <footer className="bg-[var(--background)] border-t border-[var(--foreground)]/10 pt-16 pb-8 relative overflow-hidden transition-colors duration-300">
       {/* Decorative Gradient Blob */}
-      <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-luxury-gold/5 rounded-full blur-[100px] pointer-events-none" />
-      <div className="absolute -top-24 -right-24 w-96 h-96 bg-luxury-bronze/5 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-luxury-gold/5 rounded-full blur-[100px] pointer-events-none" suppressHydrationWarning />
+      <div className="absolute -top-24 -right-24 w-96 h-96 bg-luxury-bronze/5 rounded-full blur-[100px] pointer-events-none" suppressHydrationWarning />
 
-      <div className="container mx-auto px-4 md:px-6 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+      <div className="container mx-auto px-4 md:px-6 relative z-10" suppressHydrationWarning>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16" suppressHydrationWarning>
           {/* Brand Section */}
-          <div className="space-y-6">
+          <div className="space-y-6" suppressHydrationWarning>
             <Link href="/" className="inline-block transition-transform hover:scale-105">
-              <div className="relative h-12 w-44">
+              <div className="relative h-12 w-44" suppressHydrationWarning>
                 <Image
                   src={mounted && theme === 'light' ? "/logo- dark.png" : "/logo.png"}
                   alt="Sufyra Logo"
@@ -104,7 +104,7 @@ const Footer: React.FC = () => {
             <p className="text-[var(--foreground)] font-medium text-sm leading-relaxed max-w-xs">
               Sufyra Fragrance brings you the finest handcrafted attar and perfume oils, blending tradition with modern luxury to create unforgettable scents.
             </p>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4" suppressHydrationWarning>
               <button 
                 onClick={scrollToTop}
                 className="w-10 h-10 rounded-full border border-[var(--foreground)]/10 flex items-center justify-center text-luxury-gold hover:bg-luxury-gold hover:text-luxury-charcoal transition-all duration-300 group"
@@ -116,7 +116,7 @@ const Footer: React.FC = () => {
           </div>
 
           {/* Quick Links */}
-          <div className="space-y-6">
+          <div className="space-y-6" suppressHydrationWarning>
             <h4 className="text-luxury-gold font-serif text-lg tracking-wider uppercase">Explore</h4>
             <ul className="space-y-4">
               <li>
@@ -147,7 +147,7 @@ const Footer: React.FC = () => {
           </div>
 
           {/* Contact Support */}
-          <div className="space-y-6">
+          <div className="space-y-6" suppressHydrationWarning>
             <h4 className="text-luxury-gold font-serif text-lg tracking-wider uppercase">Support</h4>
             <div className="space-y-4">
               <a 
@@ -180,7 +180,7 @@ const Footer: React.FC = () => {
           </div>
 
           {/* Social Links */}
-          <div className="space-y-6">
+          <div className="space-y-6" suppressHydrationWarning>
             <h4 className="text-luxury-gold font-serif text-lg tracking-wider uppercase">Socials</h4>
             <div className="space-y-4">
               <a 
@@ -218,9 +218,9 @@ const Footer: React.FC = () => {
         </div>
 
         {/* Footer Bottom */}
-        <div className="pt-8 border-t border-[var(--foreground)]/5 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-[10px] uppercase tracking-[0.3em] text-[var(--foreground)]/20 font-medium text-center md:text-left">
-            © {new Date().getFullYear()} Sufyra Fragrance. All Rights Reserved.
+        <div className="pt-8 border-t border-[var(--foreground)]/5 flex flex-col md:flex-row justify-between items-center gap-4" suppressHydrationWarning>
+          <p className="text-[10px] uppercase tracking-[0.3em] text-[var(--foreground)]/20 font-medium text-center md:text-left" suppressHydrationWarning>
+            © {mounted ? new Date().getFullYear() : '2026'} Sufyra Fragrance. All Rights Reserved.
           </p>
           <div className="flex items-center gap-6">
             <span className="text-[10px] uppercase tracking-[0.2em] text-[var(--foreground)]/20 hover:text-luxury-gold transition-colors cursor-pointer">Privacy Policy</span>

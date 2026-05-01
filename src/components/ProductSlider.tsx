@@ -33,10 +33,10 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products, title, subtitle
   }, [emblaApi]);
 
   return (
-    <div className="py-12 sm:py-16">
-      <div className="container mx-auto px-6">
-        <div className="flex flex-col md:flex-row justify-between items-center sm:items-end mb-8 sm:mb-12 gap-6 reveal">
-          <div className="text-center md:text-left">
+    <div className="py-12 sm:py-16" suppressHydrationWarning>
+      <div className="container mx-auto px-6" suppressHydrationWarning>
+        <div className="flex flex-col md:flex-row justify-between items-center sm:items-end mb-8 sm:mb-12 gap-6 reveal" suppressHydrationWarning>
+          <div className="text-center md:text-left" suppressHydrationWarning>
             {subtitle && (
               <h2 className="text-luxury-gold uppercase tracking-[0.2em] sm:tracking-[0.3em] text-[10px] sm:text-sm mb-2 sm:mb-4">
                 {subtitle}
@@ -45,7 +45,7 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products, title, subtitle
             <h3 className="text-3xl sm:text-5xl md:text-6xl font-serif text-[var(--foreground)]">{title}</h3>
           </div>
           
-          <div className="flex gap-3 sm:gap-4 scale-90 sm:scale-100">
+          <div className="flex gap-3 sm:gap-4 scale-90 sm:scale-100" suppressHydrationWarning>
             <button 
               onClick={scrollPrev}
               className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-[var(--foreground)]/10 flex items-center justify-center text-[var(--foreground)]/40 hover:border-luxury-gold hover:text-luxury-gold transition-all"
