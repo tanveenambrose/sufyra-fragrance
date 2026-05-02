@@ -94,9 +94,9 @@ const PurchaseFlow: React.FC<PurchaseFlowProps> = ({
 
       alert('Order placed successfully! Our concierge will contact you shortly.');
       onClose();
-    } catch (err: any) {
+    } catch (err) {
       console.error('Purchase error:', err);
-      alert('Failed to place order: ' + (err.message || 'Unknown error'));
+      alert('Failed to place order: ' + (err instanceof Error ? err.message : 'Unknown error'));
     } finally {
       setIsSubmitting(false);
     }

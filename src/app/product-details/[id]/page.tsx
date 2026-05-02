@@ -135,6 +135,7 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
   const maxPrice = Math.max(...product.variants.map(v => v.price));
 
   const handleAddToCart = () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const sizeType = selectedSize.includes('+') ? 'combo' : (selectedSize as any);
     addItem(product, sizeType);
     for (let i = 1; i < quantity; i++) {
@@ -188,7 +189,6 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
                   alt={product.name}
                   fill
                   priority
-                  quality={100}
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   className="object-cover transition-transform duration-[1.5s] group-hover:scale-105 saturate-[1.1] contrast-[1.02] brightness-[1.05]"
                 />
@@ -413,7 +413,6 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
                 src={activeImage}
                 alt={product.name}
                 fill
-                quality={100}
                 priority
                 sizes="100vw"
                 className="object-contain"

@@ -15,7 +15,7 @@ import { gsap } from 'gsap';
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isSearchExpanded, setIsSearchExpanded] = useState(false);
+  const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
   const [isProductsOpen, setIsProductsOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -33,7 +33,7 @@ const Navbar: React.FC = () => {
   const isAdminPage = pathname?.startsWith('/admin');
 
   useEffect(() => {
-    setIsMounted(true);
+    setTimeout(() => setIsMounted(true), 0);
   }, []);
 
   const handleSearch = (e?: React.FormEvent) => {
@@ -41,9 +41,7 @@ const Navbar: React.FC = () => {
     if (searchQuery.trim()) {
       router.push(`/products?search=${encodeURIComponent(searchQuery.trim())}`);
       setSearchQuery('');
-      setIsSearchExpanded(false);
-    } else if (isMounted && window.innerWidth < 640 && !isSearchExpanded) {
-      setIsSearchExpanded(true);
+      setIsMobileSearchOpen(false);
     } else {
       router.push('/products');
     }
@@ -112,8 +110,35 @@ const Navbar: React.FC = () => {
       >
         <div className="container mx-auto px-4 md:px-6" suppressHydrationWarning>
           <div className="flex items-center justify-between gap-2 md:gap-4 relative" suppressHydrationWarning>
+            
+            {/* Mobile Full-Width Search Overlay */}
+            {isMobileSearchOpen && (
+              <div className="absolute inset-0 bg-[var(--navbar)] flex items-center z-50 px-2 animate-in fade-in slide-in-from-top-2 duration-300">
+                <form onSubmit={handleSearch} className="flex-grow flex items-center gap-2">
+                  <div className="relative flex-grow">
+                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-luxury-gold w-4 h-4" />
+                    <input
+                      autoFocus
+                      type="text"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      placeholder="Search for scents..."
+                      className="w-full bg-[var(--foreground)]/5 border border-luxury-gold/30 rounded-full py-2.5 pl-11 pr-4 text-sm text-[var(--foreground)] focus:outline-none focus:border-luxury-gold transition-all"
+                    />
+                  </div>
+                  <button 
+                    type="button"
+                    onClick={() => setIsMobileSearchOpen(false)}
+                    className="p-2 text-[var(--foreground)]/60 hover:text-luxury-gold transition-colors"
+                  >
+                    <X size={20} />
+                  </button>
+                </form>
+              </div>
+            )}
+
             {/* Logo - Adjust size for mobile completeness */}
-            <Link href="/" className="items-center nav-item transition-transform hover:scale-105 h-8 w-24 md:h-12 md:w-44 grow-0 shrink-0 relative flex">
+            <Link href="/" className={`items-center nav-item transition-transform hover:scale-105 h-8 w-24 md:h-12 md:w-44 grow-0 shrink-0 relative flex ${isMobileSearchOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
               <Image
                 src={isMounted && theme === 'light' ? "/logo- dark.png" : "/logo.png"}
                 alt="Sufyra Logo"
@@ -152,15 +177,15 @@ const Navbar: React.FC = () => {
               </div>
             </div>
 
-            {/* Search Bar - Always Visible */}
-            <div className="flex-grow flex justify-center max-w-[150px] sm:max-w-xs md:max-w-md lg:max-w-lg mx-2 md:mx-4 nav-item">
+            {/* Desktop Search Bar */}
+            <div className="hidden lg:flex flex-grow justify-center max-w-md mx-4 nav-item">
               <form onSubmit={handleSearch} className="relative w-full group">
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search scents..."
-                  className={`w-full border rounded-full py-2 pl-4 md:pl-6 pr-10 focus:outline-none focus:border-luxury-gold text-[10px] md:text-sm transition-all font-bold shadow-sm bg-[var(--foreground)]/5 border-[var(--foreground)]/15 text-[var(--foreground)] placeholder:text-[var(--foreground)]/40`}
+                  className={`w-full border rounded-full py-2 pl-4 md:pl-6 pr-10 focus:outline-none focus:border-luxury-gold text-sm transition-all font-bold shadow-sm bg-[var(--foreground)]/5 border-[var(--foreground)]/15 text-[var(--foreground)] placeholder:text-[var(--foreground)]/40`}
                 />
                 <button
                   type="submit"
@@ -173,7 +198,15 @@ const Navbar: React.FC = () => {
 
 
             {/* Right side Actions */}
-            <div className="items-center gap-2 sm:gap-4 md:gap-6 nav-item flex-shrink-0 flex">
+            <div className={`items-center gap-2 sm:gap-4 md:gap-6 nav-item flex-shrink-0 flex ${isMobileSearchOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+              {/* Mobile Search Toggle Icon */}
+              <button 
+                onClick={() => setIsMobileSearchOpen(true)}
+                className="lg:hidden p-1.5 flex items-center justify-center text-[var(--foreground)] hover:text-luxury-gold transition-colors"
+              >
+                <Search className="w-5 h-5" />
+              </button>
+
               {/* Desktop Auth */}
               <div className="hidden lg:flex items-center gap-4">
                 {isMounted && user ? (
@@ -208,13 +241,13 @@ const Navbar: React.FC = () => {
               {/* Mobile Auth Logic - Profile Icon if logged in, else Login button */}
               <div className="lg:hidden flex items-center h-10">
                 {isMounted && user ? (
-                  <Link href="/orders" className="p-1 flex items-center justify-center">
+                  <Link href="/orders" className="p-1.5 flex items-center justify-center">
                     <UserIcon className="w-5 h-5 text-luxury-gold" />
                   </Link>
                 ) : (
                   <Link
                     href="/login"
-                    className="text-[10px] uppercase tracking-widest text-luxury-gold font-bold border border-luxury-gold/50 px-3 py-1.5 rounded-full whitespace-nowrap flex items-center justify-center bg-luxury-gold/5"
+                    className="text-[9px] uppercase tracking-[0.1em] text-luxury-gold font-bold border border-luxury-gold/30 px-3 py-1.5 rounded-full whitespace-nowrap flex items-center justify-center bg-luxury-gold/5 hover:bg-luxury-gold/10 transition-all"
                   >
                     Login
                   </Link>

@@ -4,6 +4,7 @@ import React from 'react';
 import { X, User, MapPin, Phone, CreditCard, Calendar, Package, Tag, Hash } from 'lucide-react';
 
 interface OrderDetailModalProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   order: any;
   isOpen: boolean;
   onClose: () => void;

@@ -142,6 +142,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
   };
 
   const handleVariantChange = (index: number, field: string, value: string | number) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const newVariants = [...formData.variants] as any[];
     newVariants[index][field] = value;
     setFormData({ ...formData, variants: newVariants });
@@ -449,7 +450,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                       : null;
 
                     return (
-                      <div key={index} className="flex gap-6 items-start bg-white/[0.01] p-6 rounded-xl border border-white/5 animate-in fade-in slide-in-from-right-4 duration-300 group relative">
+                      <div key={index} className="flex gap-4 sm:gap-6 items-start bg-white/[0.01] p-4 sm:p-6 rounded-xl border border-white/5 animate-in fade-in slide-in-from-right-4 duration-300 group relative">
                         {/* Variant Image Slot */}
                         <div 
                           className="w-24 aspect-[4/5] bg-white/[0.03] rounded-lg border border-white/10 overflow-hidden flex-shrink-0 cursor-pointer hover:border-luxury-gold/40 transition-all flex items-center justify-center relative"
@@ -475,7 +476,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                           </div>
                         </div>
 
-                        <div className="flex-grow grid grid-cols-2 gap-6">
+                        <div className="flex-grow grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 w-full">
                           <div className="space-y-2">
                             <label className="text-[8px] uppercase tracking-widest text-white/20 ml-1">Sizing (e.g. 3ml+3ml)</label>
                             <input 

@@ -93,13 +93,13 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
     await transporter.sendMail(mailOptions);
 
     return NextResponse.json({ success: true, emailSent: true });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Status update email notification failed (status updated):', error);
     // Return 200 because the status was already updated in database successfully
     return NextResponse.json({ 
       success: true, 
       emailSent: false, 
-      error: error.message 
+      error: error instanceof Error ? error.message : 'Unknown error' 
     });
   }
 }

@@ -15,7 +15,7 @@ const Hero = () => {
   const [mounted, setMounted] = React.useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    setTimeout(() => setMounted(true), 0);
   }, []);
 
   useEffect(() => {
@@ -102,9 +102,8 @@ const Hero = () => {
               src="/cluster-oud.png"
               alt="Luxury Oud"
               fill
-              sizes="(max-width: 640px) 14rem, 18rem"
+              sizes="(max-width: 640px) 224px, 288px"
               priority
-              quality={100}
               className="object-cover"
             />
           </div>
@@ -115,9 +114,7 @@ const Hero = () => {
               src="/cluster-floral.png"
               alt="Floral Essence"
               fill
-              sizes="(max-width: 640px) 9rem, 12rem"
-              priority
-              quality={100}
+              sizes="(max-width: 640px) 144px, 192px"
               className="object-cover"
             />
           </div>
@@ -137,7 +134,7 @@ const Hero = () => {
           {/* Decorative Review Quote Tag */}
           <div className="absolute top-[10%] left-0 z-40 bg-white/10 backdrop-blur-md border border-white/20 p-4 rounded-2xl shadow-lg max-w-[200px] floating-item-2 hidden sm:block">
             <p className="text-[10px] text-[var(--foreground)] font-bold italic leading-relaxed">
-              "The most captivating scent I have ever worn. Pure luxury in a bottle."
+              &quot;The most captivating scent I have ever worn. Pure luxury in a bottle.&quot;
             </p>
             <div className="mt-2 text-luxury-gold text-[8px] font-bold uppercase tracking-widest">- Sarah J.</div>
           </div>

@@ -68,13 +68,13 @@ export async function POST(req: Request) {
     await transporter.sendMail(mailOptions);
 
     return NextResponse.json({ success: true, emailSent: true });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Email notification failed (order saved):', error);
     // Return 200 because the order was already saved to database successfully
     return NextResponse.json({ 
       success: true, 
       emailSent: false, 
-      error: error.message 
+      error: error instanceof Error ? error.message : 'Unknown error' 
     });
   }
 }

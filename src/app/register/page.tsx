@@ -76,8 +76,8 @@ const RegisterPage = () => {
       }
 
       router.push('/');
-    } catch (err: any) {
-      setError(err.message || 'Failed to create an account.');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to create an account.');
     } finally {
       setLoading(false);
     }
@@ -99,8 +99,8 @@ const RegisterPage = () => {
       
       if (error) throw error;
       // Note: Redirect happens automatically for OAuth
-    } catch (err: any) {
-      setError(err.message || `Failed to register with ${provider}.`);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : `Failed to register with ${provider}.`);
       setLoading(false);
     }
   };

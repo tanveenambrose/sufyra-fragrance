@@ -27,7 +27,7 @@ export default function ProductsContent({ initialProducts }: ProductsContentProp
   useEffect(() => {
     const category = searchParams.get('category');
     if (category) {
-      setSelectedCategory(category);
+      setTimeout(() => setSelectedCategory(category), 0);
     }
   }, [searchParams]);
 

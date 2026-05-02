@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 import { Product } from '@/data/products';
-import { Edit2, Trash2, Plus, Search, Filter, ArrowLeft, MoreVertical, Image as ImageIcon } from 'lucide-react';
+import { Edit2, Trash2, Plus, Search, Filter, ArrowLeft, MoreVertical, Image as ImageIcon, ChevronDown } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -126,28 +126,29 @@ export default function AdminProductsPage() {
       </div>
 
       {/* Filters & Search */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="relative group md:col-span-2">
+      <div className="flex flex-col md:flex-row gap-4">
+        <div className="relative group flex-grow">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-luxury-gold transition-colors" size={18} />
           <input 
             type="text" 
             placeholder="Search by name or notes..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-[#0A0A0A] border border-white/5 rounded-xl py-4 pl-12 pr-6 focus:border-luxury-gold/50 focus:outline-none transition-all text-sm"
+            className="w-full bg-[#0A0A0A] border border-white/5 rounded-xl py-4 pl-12 pr-6 focus:border-luxury-gold/50 focus:outline-none transition-all text-sm text-ellipsis"
           />
         </div>
-        <div className="relative">
+        <div className="relative min-w-[200px]">
           <Filter className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20" size={18} />
           <select 
             value={categoryFilter}
-            onChange={(e) => setCategoryFilter(e.target.value as any)}
-            className="w-full bg-[#0A0A0A] border border-white/5 rounded-xl py-4 pl-12 pr-6 focus:border-luxury-gold/50 focus:outline-none transition-all text-sm appearance-none"
+            onChange={(e) => setCategoryFilter(e.target.value as 'all' | 'perfume-oil' | 'combo')}
+            className="w-full bg-[#0A0A0A] border border-white/5 rounded-xl py-4 pl-12 pr-10 focus:border-luxury-gold/50 focus:outline-none transition-all text-sm appearance-none overflow-hidden text-ellipsis whitespace-nowrap"
           >
             <option value="all">All Collections</option>
             <option value="perfume-oil">Regular Versions</option>
             <option value="combo">Combo Packs</option>
           </select>
+          <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-white/20 pointer-events-none" size={16} />
         </div>
       </div>
 
@@ -164,91 +165,156 @@ export default function AdminProductsPage() {
             <button onClick={() => {setSearchQuery(''); setCategoryFilter('all');}} className="text-luxury-gold text-xs hover:underline">Clear all filters</button>
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
-              <thead>
-                <tr className="bg-white/[0.02] text-[10px] uppercase tracking-[0.2em] text-white/40">
-                  <th className="px-8 py-5 font-bold">Product Details</th>
-                  <th className="px-8 py-5 font-bold text-center">Category</th>
-                  <th className="px-8 py-5 font-bold text-center">Variants</th>
-                  <th className="px-8 py-5 font-bold text-center">Status</th>
-                  <th className="px-8 py-5 font-bold text-right">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-white/5">
-                {filteredProducts.map((p) => (
-                  <tr key={p.id} className="hover:bg-white/[0.01] transition-colors group">
-                    <td className="px-8 py-6">
-                      <div className="flex items-center gap-6">
-                        <div className="w-16 h-20 rounded-lg bg-white/5 overflow-hidden flex-shrink-0 relative border border-white/10">
-                          {p.image_url ? (
-                            <img src={p.image_url} alt={p.name} className="w-full h-full object-cover" />
-                          ) : (
-                            <div className="w-full h-full bg-white/5 flex items-center justify-center">
-                              <ImageIcon size={18} className="text-white/20" />
-                            </div>
-                          )}
+          <div className="w-full">
+            {/* Desktop Table View */}
+            <div className="hidden md:block overflow-x-auto">
+              <table className="w-full text-left border-collapse min-w-[800px]">
+                <thead>
+                  <tr className="bg-white/[0.02] text-[10px] uppercase tracking-[0.2em] text-white/40">
+                    <th className="px-8 py-5 font-bold">Product Details</th>
+                    <th className="px-8 py-5 font-bold text-center">Category</th>
+                    <th className="px-8 py-5 font-bold text-center">Variants</th>
+                    <th className="px-8 py-5 font-bold text-center">Status</th>
+                    <th className="px-8 py-5 font-bold text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-white/5">
+                  {filteredProducts.map((p) => (
+                    <tr key={p.id} className="hover:bg-white/[0.01] transition-colors group">
+                      <td className="px-8 py-6">
+                        <div className="flex items-center gap-6">
+                          <div className="w-16 h-20 rounded-lg bg-white/5 overflow-hidden flex-shrink-0 relative border border-white/10">
+                            {p.image_url ? (
+                              <img src={p.image_url} alt={p.name} className="w-full h-full object-cover" />
+                            ) : (
+                              <div className="w-full h-full bg-white/5 flex items-center justify-center">
+                                <ImageIcon size={18} className="text-white/20" />
+                              </div>
+                            )}
+                          </div>
+                          <div className="space-y-1">
+                            <p className="text-base font-bold text-luxury-cream group-hover:text-luxury-gold transition-colors">{p.name}</p>
+                            <p className="text-[10px] text-white/40 line-clamp-1 max-w-[250px] uppercase tracking-wider">{p.description}</p>
+                          </div>
                         </div>
-                        <div className="space-y-1">
-                          <p className="text-base font-bold text-luxury-cream group-hover:text-luxury-gold transition-colors">{p.name}</p>
-                          <p className="text-[10px] text-white/40 line-clamp-1 max-w-[250px] uppercase tracking-wider">{p.description}</p>
+                      </td>
+                      <td className="px-8 py-6 text-center">
+                        <span className={`text-[9px] font-bold px-3 py-1 rounded-full uppercase tracking-widest ${
+                          p.category === 'combo' ? 'bg-purple-500/10 text-purple-400 border border-purple-500/20' : 'bg-blue-500/10 text-blue-400 border border-blue-500/20'
+                        }`}>
+                          {p.category === 'combo' ? 'Combo' : 'Regular'}
+                        </span>
+                      </td>
+                      <td className="px-8 py-6 text-center">
+                        <div className="flex flex-col gap-1 items-center">
+                          {p.variants.map((v, i) => (
+                            <span key={i} className="text-[10px] text-white/60 font-mono">{v.size}: {v.price}৳</span>
+                          ))}
                         </div>
+                      </td>
+                      <td className="px-8 py-6 text-center">
+                        {(p.discount_percent || 0) > 0 ? (
+                          <div className="flex flex-col items-center gap-1">
+                              <span className="text-red-400 text-[10px] font-bold bg-red-400/10 px-2 py-0.5 rounded border border-red-400/20">SALE</span>
+                              <span className="text-[9px] text-red-400/60 font-bold">-{p.discount_percent}%</span>
+                          </div>
+                        ) : (
+                          <span className="text-emerald-400 text-[9px] font-bold uppercase tracking-widest">Active</span>
+                        )}
+                      </td>
+                      <td className="px-8 py-6 text-right whitespace-nowrap">
+                        <div className="flex justify-end gap-3 opacity-100 lg:opacity-0 group-hover:opacity-100 transition-all duration-300 relative z-10 pointer-events-auto">
+                          <Link 
+                            href={`/admin/products/${p.id}/edit`}
+                            className="p-2.5 bg-white/5 hover:bg-luxury-gold/10 rounded-lg text-white/40 hover:text-luxury-gold transition-all flex items-center justify-center pointer-events-auto"
+                            title="Edit Scent"
+                          >
+                            <Edit2 size={16} />
+                          </Link>
+                          <button 
+                            type="button"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              setDeleteConfirm({id: p.id, name: p.name});
+                            }}
+                            className="p-2.5 bg-white/5 hover:bg-red-500/10 rounded-lg text-white/40 hover:text-red-400 transition-all flex items-center justify-center cursor-pointer pointer-events-auto"
+                            title="Delete Scent"
+                          >
+                            <Trash2 size={16} />
+                          </button>
+                        </div>
+                        <div className="hidden lg:flex group-hover:hidden transition-all justify-end">
+                           <MoreVertical size={16} className="text-white/20" />
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Mobile Card View */}
+            <div className="md:hidden flex flex-col divide-y divide-white/5">
+              {filteredProducts.map((p) => (
+                <div key={p.id} className="p-4 sm:p-6 flex flex-col gap-4">
+                  <div className="flex gap-4">
+                    <div className="w-20 h-24 rounded-lg bg-white/5 overflow-hidden flex-shrink-0 relative border border-white/10">
+                      {p.image_url ? (
+                        <img src={p.image_url} alt={p.name} className="w-full h-full object-cover" />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center">
+                          <ImageIcon size={20} className="text-white/20" />
+                        </div>
+                      )}
+                    </div>
+                    <div className="flex-grow flex flex-col justify-center space-y-2">
+                      <div>
+                        <p className="text-sm font-bold text-luxury-cream">{p.name}</p>
+                        <span className={`text-[8px] font-bold px-2 py-0.5 rounded-full uppercase tracking-widest inline-block mt-1 ${
+                          p.category === 'combo' ? 'bg-purple-500/10 text-purple-400 border border-purple-500/20' : 'bg-blue-500/10 text-blue-400 border border-blue-500/20'
+                        }`}>
+                          {p.category === 'combo' ? 'Combo' : 'Regular'}
+                        </span>
                       </div>
-                    </td>
-                    <td className="px-8 py-6 text-center">
-                      <span className={`text-[9px] font-bold px-3 py-1 rounded-full uppercase tracking-widest ${
-                        p.category === 'combo' ? 'bg-purple-500/10 text-purple-400 border border-purple-500/20' : 'bg-blue-500/10 text-blue-400 border border-blue-500/20'
-                      }`}>
-                        {p.category === 'combo' ? 'Combo' : 'Regular'}
-                      </span>
-                    </td>
-                    <td className="px-8 py-6 text-center">
-                      <div className="flex flex-col gap-1 items-center">
-                        {p.variants.map((v, i) => (
-                          <span key={i} className="text-[10px] text-white/60 font-mono">{v.size}: {v.price}৳</span>
+                      <div className="flex flex-wrap gap-2">
+                        {p.variants.slice(0, 2).map((v, i) => (
+                          <span key={i} className="text-[10px] text-white/60 font-mono bg-white/5 px-2 py-0.5 rounded">{v.size}: {v.price}৳</span>
                         ))}
+                        {p.variants.length > 2 && <span className="text-[10px] text-white/40">+{p.variants.length - 2} more</span>}
                       </div>
-                    </td>
-                    <td className="px-8 py-6 text-center">
+                    </div>
+                  </div>
+
+                  <div className="flex justify-between items-center pt-3 border-t border-white/5">
+                    <div>
                       {(p.discount_percent || 0) > 0 ? (
-                        <div className="flex flex-col items-center gap-1">
+                        <div className="flex items-center gap-2">
                             <span className="text-red-400 text-[10px] font-bold bg-red-400/10 px-2 py-0.5 rounded border border-red-400/20">SALE</span>
                             <span className="text-[9px] text-red-400/60 font-bold">-{p.discount_percent}%</span>
                         </div>
                       ) : (
                         <span className="text-emerald-400 text-[9px] font-bold uppercase tracking-widest">Active</span>
                       )}
-                    </td>
-                    <td className="px-8 py-6 text-right whitespace-nowrap">
-                      <div className="flex justify-end gap-3 opacity-0 group-hover:opacity-100 transition-all duration-300 relative z-10 pointer-events-none group-hover:pointer-events-auto">
-                        <Link 
-                          href={`/admin/products/${p.id}/edit`}
-                          className="p-2.5 bg-white/5 hover:bg-luxury-gold/10 rounded-lg text-white/40 hover:text-luxury-gold transition-all flex items-center justify-center pointer-events-auto"
-                          title="Edit Scent"
-                        >
-                          <Edit2 size={16} />
-                        </Link>
-                        <button 
-                          type="button"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            setDeleteConfirm({id: p.id, name: p.name});
-                          }}
-                          className="p-2.5 bg-white/5 hover:bg-red-500/10 rounded-lg text-white/40 hover:text-red-400 transition-all flex items-center justify-center cursor-pointer pointer-events-auto"
-                          title="Delete Scent"
-                        >
-                          <Trash2 size={16} />
-                        </button>
-                      </div>
-                      <div className="group-hover:hidden transition-all flex justify-end">
-                         <MoreVertical size={16} className="text-white/20" />
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                    </div>
+                    <div className="flex gap-2">
+                      <Link 
+                        href={`/admin/products/${p.id}/edit`}
+                        className="px-4 py-2 bg-white/5 hover:bg-luxury-gold/10 rounded-lg text-white/60 hover:text-luxury-gold transition-all text-[10px] font-bold uppercase tracking-widest border border-white/10"
+                      >
+                        Edit
+                      </Link>
+                      <button 
+                        onClick={() => setDeleteConfirm({id: p.id, name: p.name})}
+                        className="p-2 bg-red-500/10 hover:bg-red-500/20 rounded-lg text-red-400 transition-all border border-red-500/20"
+                      >
+                        <Trash2 size={16} />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         )}
       </div>

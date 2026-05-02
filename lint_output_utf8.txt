@@ -1,0 +1,167 @@
+﻿
+> sufyra-attar@0.1.0 lint
+> eslint
+
+
+D:\Business\sufyra-fragrance\src\app\admin\orders\page.tsx
+   6:3   warning  'ClipboardList' is defined but never used  @typescript-eslint/no-unused-vars
+  11:3   warning  'CheckCircle2' is defined but never used   @typescript-eslint/no-unused-vars
+  19:40  error    Unexpected any. Specify a different type   @typescript-eslint/no-explicit-any
+  22:54  error    Unexpected any. Specify a different type   @typescript-eslint/no-explicit-any
+
+D:\Business\sufyra-fragrance\src\app\admin\page.tsx
+    6:10  warning  'Edit2' is defined but never used                                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+    6:17  warning  'Trash2' is defined but never used                                                                                                                                                                                                                                                       @typescript-eslint/no-unused-vars
+   16:6   warning  React Hook useEffect has a missing dependency: 'fetchProducts'. Either include it or remove the dependency array                                                                                                                                                                         react-hooks/exhaustive-deps
+   53:17  warning  'id' is assigned a value but never used                                                                                                                                                                                                                                                  @typescript-eslint/no-unused-vars
+   71:9   warning  'handleDelete' is assigned a value but never used                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+  172:27  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\Business\sufyra-fragrance\src\app\admin\products\page.tsx
+    8:8   warning  'Image' is defined but never used                                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+  144:66  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  185:29  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\Business\sufyra-fragrance\src\app\api\orders\[id]\status\route.ts
+  96:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Business\sufyra-fragrance\src\app\api\send-order-email\route.ts
+  71:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Business\sufyra-fragrance\src\app\auth\callback\route.ts
+  3:10  warning  'getURL' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Business\sufyra-fragrance\src\app\login\page.tsx
+    5:22  warning  'LogIn' is defined but never used                                @typescript-eslint/no-unused-vars
+   50:19  error    Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+   72:19  error    Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+  147:16  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+D:\Business\sufyra-fragrance\src\app\orders\page.tsx
+   14:3   warning  'ExternalLink' is defined but never used                                                                        @typescript-eslint/no-unused-vars
+   69:6   warning  React Hook useEffect has a missing dependency: 'fetchOrders'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+  204:41  warning  'index' is defined but never used                                                                               @typescript-eslint/no-unused-vars
+
+D:\Business\sufyra-fragrance\src\app\product-details\[id]\page.tsx
+   14:3   warning  'Heart' is defined but never used              @typescript-eslint/no-unused-vars
+   21:3   warning  'Smartphone' is defined but never used         @typescript-eslint/no-unused-vars
+   22:3   warning  'Send' is defined but never used               @typescript-eslint/no-unused-vars
+   63:43  warning  'navError' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  138:78  error    Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+
+D:\Business\sufyra-fragrance\src\app\register\page.tsx
+    5:28  warning  'UserPlus' is defined but never used      @typescript-eslint/no-unused-vars
+   79:19  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  102:19  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Business\sufyra-fragrance\src\components\Admin\OrderDetailModal.tsx
+  4:65  warning  'Tag' is defined but never used           @typescript-eslint/no-unused-vars
+  4:70  warning  'Hash' is defined but never used          @typescript-eslint/no-unused-vars
+  7:10  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Business\sufyra-fragrance\src\components\Admin\ProductForm.tsx
+    6:18  warning  'X' is defined but never used                                                                                                                                                                                                                                                            @typescript-eslint/no-unused-vars
+    6:35  warning  'Save' is defined but never used                                                                                                                                                                                                                                                         @typescript-eslint/no-unused-vars
+  145:51  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  225:21  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  459:29  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\Business\sufyra-fragrance\src\components\Auth\LoginModal.tsx
+   4:25  warning  'LogIn' is defined but never used         @typescript-eslint/no-unused-vars
+   4:32  warning  'ArrowRight' is defined but never used    @typescript-eslint/no-unused-vars
+  46:19  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  64:19  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Business\sufyra-fragrance\src\components\CartDrawer.tsx
+  10:11  warning  'CartDrawerProps' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Business\sufyra-fragrance\src\components\Footer.tsx
+  10:3  warning  'Phone' is defined but never used          @typescript-eslint/no-unused-vars
+  13:3  warning  'MessageCircle' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Business\sufyra-fragrance\src\components\Hero.tsx
+   14:11  warning  'theme' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               @typescript-eslint/no-unused-vars
+   15:10  warning  'mounted' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             @typescript-eslint/no-unused-vars
+   18:5   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\Business\sufyra-fragrance\src\components\Hero.tsx:18:5
+  16 |
+  17 |   useEffect(() => {
+> 18 |     setMounted(true);
+     |     ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  19 |   }, []);
+  20 |
+  21 |   useEffect(() => {  react-hooks/set-state-in-effect
+  137:15  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          react/no-unescaped-entities
+  137:85  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          react/no-unescaped-entities
+
+D:\Business\sufyra-fragrance\src\components\Navbar.tsx
+  36:5  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\Business\sufyra-fragrance\src\components\Navbar.tsx:36:5
+  34 |
+  35 |   useEffect(() => {
+> 36 |     setIsMounted(true);
+     |     ^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  37 |   }, []);
+  38 |
+  39 |   const handleSearch = (e?: React.FormEvent) => {  react-hooks/set-state-in-effect
+
+D:\Business\sufyra-fragrance\src\components\ProductSlider.tsx
+  66:37  warning  'index' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Business\sufyra-fragrance\src\components\Products\ProductsContent.tsx
+  21:22  warning  'setDbProducts' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      @typescript-eslint/no-unused-vars
+  30:7   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\Business\sufyra-fragrance\src\components\Products\ProductsContent.tsx:30:7
+  28 |     const category = searchParams.get('category');
+  29 |     if (category) {
+> 30 |       setSelectedCategory(category);
+     |       ^^^^^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  31 |     }
+  32 |   }, [searchParams]);
+  33 |  react-hooks/set-state-in-effect
+
+D:\Business\sufyra-fragrance\src\components\Purchase\PurchaseFlow.tsx
+  97:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Business\sufyra-fragrance\src\components\Purchase\PurchaseForm.tsx
+    4:48  warning  'ChevronRight' is defined but never used  @typescript-eslint/no-unused-vars
+  130:89  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  141:98  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Business\sufyra-fragrance\src\components\ThemeProvider.tsx
+  6:55  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Business\sufyra-fragrance\src\lib\supabaseServer.ts
+  18:20  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+  25:20  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Business\sufyra-fragrance\src\utils\supabase\server.ts
+  18:20  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+  27:20  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Business\sufyra-fragrance\test_supabase.js
+  1:26  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+Ô£û 65 problems (25 errors, 40 warnings)
+

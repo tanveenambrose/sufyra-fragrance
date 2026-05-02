@@ -70,7 +70,7 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products, title, subtitle
                 suppressHydrationWarning
               >
                 <div className="h-full" suppressHydrationWarning>
-                  <ProductCard product={product} priority={index < 4} />
+                  <ProductCard product={product} />
                 </div>
               </div>
             ))}

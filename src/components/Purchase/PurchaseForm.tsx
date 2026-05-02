@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { X, MapPin, Phone, User, CheckCircle2, ChevronRight } from 'lucide-react';
+import { X, MapPin, Phone, User, CheckCircle2 } from 'lucide-react';
 import Image from 'next/image';
 import { Product } from '@/data/products';
 
@@ -127,7 +127,7 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({
                   <label className="text-[10px] uppercase tracking-widest text-[var(--foreground)]/40 font-bold ml-1">Delivery Zone</label>
                   <select
                     value={formData.zone}
-                    onChange={(e) => setFormData({ ...formData, zone: e.target.value as any })}
+                    onChange={(e) => setFormData({ ...formData, zone: e.target.value as 'Inside Dhaka' | 'Outside Dhaka' })}
                     className="w-full bg-[var(--foreground)]/5 border border-white/10 rounded-xl py-3.5 px-4 text-sm text-[var(--foreground)] focus:outline-none focus:border-luxury-gold/50 transition-colors appearance-none cursor-pointer"
                   >
                     <option value="Inside Dhaka" className="bg-black">Inside Dhaka</option>
@@ -138,7 +138,7 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({
                   <label className="text-[10px] uppercase tracking-widest text-[var(--foreground)]/40 font-bold ml-1">Payment Method</label>
                   <select
                     value={formData.paymentMethod}
-                    onChange={(e) => setFormData({ ...formData, paymentMethod: e.target.value as any })}
+                    onChange={(e) => setFormData({ ...formData, paymentMethod: e.target.value as 'Cash on Delivery' | 'bKash (Manual)' })}
                     className="w-full bg-[var(--foreground)]/5 border border-white/10 rounded-xl py-3.5 px-4 text-sm text-[var(--foreground)] focus:outline-none focus:border-luxury-gold/50 transition-colors appearance-none cursor-pointer"
                   >
                     <option value="Cash on Delivery" className="bg-black">Cash on Delivery</option>

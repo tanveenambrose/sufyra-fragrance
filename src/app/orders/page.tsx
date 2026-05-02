@@ -66,6 +66,7 @@ export default function MyOrders() {
         supabase.removeChannel(channel);
       };
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   const fetchOrders = async () => {
@@ -207,11 +208,11 @@ export default function MyOrders() {
                 <Reveal key={order.id}>
                   <div className="group bg-[var(--foreground)]/[0.02] border border-[var(--foreground)]/10 rounded-[2rem] sm:rounded-[2.5rem] overflow-hidden hover:bg-[var(--foreground)]/[0.04] transition-all duration-500 hover:border-luxury-gold/20 shadow-xl hover:shadow-luxury-gold/5">
                     <div className="p-5 sm:p-10">
-                      <div className="flex flex-col lg:flex-row justify-between gap-8 lg:gap-10">
+                      <div className="flex flex-col lg:flex-row justify-between gap-6 lg:gap-10">
                         {/* Order Identity */}
-                        <div className="flex-1">
-                          <div className="flex flex-wrap items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
-                            <span className="text-[9px] sm:text-[10px] font-mono text-luxury-gold px-2 sm:px-3 py-1 bg-luxury-gold/10 rounded-full border border-luxury-gold/20">
+                        <div className="flex-1 min-w-0">
+                          <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
+                            <span className="text-[9px] sm:text-[10px] font-mono text-luxury-gold px-2.5 py-1 bg-luxury-gold/10 rounded-full border border-luxury-gold/20 self-start">
                               #{order.id.slice(0, 8).toUpperCase()}
                             </span>
                             <span className="text-[9px] sm:text-[10px] text-[var(--foreground)]/30 uppercase tracking-widest font-bold">
@@ -223,30 +224,31 @@ export default function MyOrders() {
                             </span>
                           </div>
                           
-                          <h3 className="text-xl sm:text-2xl md:text-3xl font-serif text-[var(--foreground)] mb-2 group-hover:text-luxury-gold transition-colors duration-500">{order.product_name}</h3>
-                          <div className="flex items-center gap-4 text-[9px] sm:text-[10px] uppercase tracking-[0.2em] font-bold text-[var(--foreground)]/40">
-                            <span>Size: {order.variant_size}</span>
-                            <span className="w-1 h-1 rounded-full bg-[var(--foreground)]/10" />
-                            <span>Qty: {order.quantity}</span>
+                          <h3 className="text-lg sm:text-2xl md:text-3xl font-serif text-[var(--foreground)] mb-3 group-hover:text-luxury-gold transition-colors duration-500 line-clamp-2 leading-tight">{order.product_name}</h3>
+                          
+                          <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[9px] sm:text-[10px] uppercase tracking-[0.2em] font-bold text-[var(--foreground)]/40 mb-6 sm:mb-8">
+                            <span className="flex items-center gap-1.5"><ShoppingBag size={10} className="text-luxury-gold/40" /> Size: {order.variant_size}</span>
+                            <span className="hidden sm:block w-1 h-1 rounded-full bg-[var(--foreground)]/10" />
+                            <span className="flex items-center gap-1.5"><Package size={10} className="text-luxury-gold/40" /> Qty: {order.quantity}</span>
                           </div>
                           
-                          <div className="mt-6 sm:mt-8 flex items-center gap-3 text-[var(--foreground)]/60">
-                            <MapPin size={14} className="text-luxury-gold/50" />
-                            <span className="text-[9px] sm:text-[10px] uppercase tracking-widest font-medium truncate max-w-[200px] sm:max-w-[250px]">
+                          <div className="flex items-start gap-3 text-[var(--foreground)]/60 bg-[var(--foreground)]/[0.03] p-3 rounded-xl border border-[var(--foreground)]/5 sm:bg-transparent sm:p-0 sm:border-0">
+                            <MapPin size={14} className="text-luxury-gold/50 shrink-0 mt-0.5" />
+                            <span className="text-[9px] sm:text-[10px] uppercase tracking-widest font-medium leading-relaxed">
                               {order.delivery_address}, {order.delivery_zone}
                             </span>
                           </div>
                         </div>
 
                         {/* Order Economics & Status */}
-                        <div className="flex flex-col sm:flex-row lg:flex-col justify-between items-start sm:items-center lg:items-end gap-6 sm:gap-8 pt-6 sm:pt-8 lg:pt-0 border-t lg:border-t-0 lg:border-l border-[var(--foreground)]/5 lg:pl-10">
-                          <div className="text-left sm:text-right lg:text-right">
+                        <div className="flex flex-col sm:flex-row lg:flex-col justify-between items-start sm:items-center lg:items-end gap-6 sm:gap-8 pt-6 lg:pt-0 border-t lg:border-t-0 lg:border-l border-[var(--foreground)]/5 lg:pl-10">
+                          <div className="text-left sm:text-right lg:text-right w-full sm:w-auto">
                             <p className="text-[9px] sm:text-[10px] uppercase tracking-widest text-[var(--foreground)]/40 font-bold mb-1">Procurement Total</p>
                             <p className="text-2xl sm:text-3xl font-bold text-luxury-gold">৳{order.total_price}</p>
                           </div>
                           
                           <div className="flex flex-col items-start sm:items-end lg:items-end gap-3 sm:gap-4 w-full sm:w-auto">
-                            <div className={`flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border ${status.color} transition-all duration-500`}>
+                            <div className={`flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border ${status.color} transition-all duration-500 whitespace-nowrap`}>
                               {status.icon}
                               <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.2em]">{status.label}</span>
                             </div>

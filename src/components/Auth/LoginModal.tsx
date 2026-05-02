@@ -43,8 +43,8 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onSuccess }) =
         alert('Verification email sent! Please check your inbox.');
       }
       onSuccess();
-    } catch (err: any) {
-      setError(err.message || 'Authentication failed.');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Authentication failed.');
     } finally {
       setLoading(false);
     }
@@ -61,8 +61,8 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onSuccess }) =
         }
       });
       if (error) throw error;
-    } catch (err: any) {
-      setError(err.message || `Failed to sign in with ${provider}.`);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : `Failed to sign in with ${provider}.`);
       setLoading(false);
     }
   };

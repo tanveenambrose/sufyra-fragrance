@@ -47,8 +47,8 @@ const LoginPage = () => {
       });
       if (error) throw error;
       router.push('/');
-    } catch (err: any) {
-      setError(err.message || 'Failed to login. Please check your credentials.');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to login. Please check your credentials.');
     } finally {
       setLoading(false);
     }
@@ -69,8 +69,8 @@ const LoginPage = () => {
       });
       
       if (error) throw error;
-    } catch (err: any) {
-      setError(err.message || `Failed to sign in with ${provider}.`);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : `Failed to sign in with ${provider}.`);
       setLoading(false);
     }
   };
@@ -144,7 +144,7 @@ const LoginPage = () => {
 
         <div className="mt-10 text-center">
           <p className="text-sm text-[var(--foreground)]/40">
-            Don't have an account?{' '}
+            Don&apos;t have an account?{' '}
             <Link href="/register" className="text-luxury-gold font-bold hover:underline inline-flex items-center gap-1 group">
               Register Now <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
             </Link>

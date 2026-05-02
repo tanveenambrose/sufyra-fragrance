@@ -16,9 +16,11 @@ import {
 import OrderDetailModal from '@/components/Admin/OrderDetailModal';
 
 export default function AdminOrders() {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [orders, setOrders] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [selectedOrder, setSelectedOrder] = useState<any>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [updatingId, setUpdatingId] = useState<string | null>(null);
@@ -118,99 +120,179 @@ export default function AdminOrders() {
       </div>
 
       <div className="bg-[#0A0A0A] rounded-2xl border border-white/5 overflow-hidden shadow-2xl">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left">
-            <thead>
-              <tr className="border-b border-white/5 bg-white/[0.01]">
-                <th className="px-6 py-4 text-[9px] uppercase tracking-[0.2em] text-white/40 font-bold">Manifest ID</th>
-                <th className="px-6 py-4 text-[9px] uppercase tracking-[0.2em] text-white/40 font-bold">Consignee</th>
-                <th className="px-6 py-4 text-[9px] uppercase tracking-[0.2em] text-white/40 font-bold">Selection</th>
-                <th className="px-6 py-4 text-[9px] uppercase tracking-[0.2em] text-white/40 font-bold">Total</th>
-                <th className="px-6 py-4 text-[9px] uppercase tracking-[0.2em] text-white/40 font-bold">Status</th>
-                <th className="px-6 py-4 text-[9px] uppercase tracking-[0.2em] text-white/40 font-bold text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-white/5">
-              {isLoading ? (
-                <tr>
-                  <td colSpan={6} className="px-6 py-12 text-center text-white/20 uppercase tracking-widest text-[10px]">
-                    Optimizing Manifests...
-                  </td>
+        <div className="w-full">
+          {/* Desktop Table View */}
+          <div className="hidden md:block overflow-x-auto">
+            <table className="w-full text-left min-w-[800px]">
+              <thead>
+                <tr className="border-b border-white/5 bg-white/[0.01]">
+                  <th className="px-6 py-4 text-[9px] uppercase tracking-[0.2em] text-white/40 font-bold">Manifest ID</th>
+                  <th className="px-6 py-4 text-[9px] uppercase tracking-[0.2em] text-white/40 font-bold">Consignee</th>
+                  <th className="px-6 py-4 text-[9px] uppercase tracking-[0.2em] text-white/40 font-bold">Selection</th>
+                  <th className="px-6 py-4 text-[9px] uppercase tracking-[0.2em] text-white/40 font-bold">Total</th>
+                  <th className="px-6 py-4 text-[9px] uppercase tracking-[0.2em] text-white/40 font-bold">Status</th>
+                  <th className="px-6 py-4 text-[9px] uppercase tracking-[0.2em] text-white/40 font-bold text-right">Actions</th>
                 </tr>
-              ) : filteredOrders.length === 0 ? (
-                <tr>
-                  <td colSpan={6} className="px-6 py-12 text-center text-white/20 uppercase tracking-widest text-[10px]">
-                    No manifests found in current library
-                  </td>
-                </tr>
-              ) : (
-                filteredOrders.map((order) => (
-                  <tr key={order.id} className="group hover:bg-white/[0.01] transition-colors">
-                    <td className="px-6 py-4">
-                      <div className="flex flex-col">
-                        <span className="text-[10px] font-mono text-luxury-gold">#{order.id.slice(0, 8).toUpperCase()}</span>
-                        <span className="text-[8px] text-white/20 uppercase tracking-tighter mt-1">
-                          {new Date(order.created_at).toLocaleDateString()}
-                        </span>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="flex flex-col">
-                        <span className="text-xs font-bold text-luxury-cream">{order.delivery_name}</span>
-                        <span className="text-[9px] text-white/40 uppercase tracking-widest">{order.delivery_zone}</span>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="flex flex-col">
-                        <span className="text-xs text-white/60">{order.product_name}</span>
-                        <span className="text-[9px] text-luxury-gold/50 font-bold uppercase tracking-widest">{order.variant_size} x {order.quantity}</span>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <span className="text-sm font-bold text-luxury-cream">৳{order.total_price}</span>
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="relative inline-block">
-                        <select
-                          disabled={updatingId === order.id}
-                          value={order.status}
-                          onChange={(e) => handleStatusChange(order.id, e.target.value)}
-                          className={`
-                            appearance-none pl-8 pr-10 py-1.5 rounded-full text-[9px] font-bold uppercase tracking-widest border transition-all cursor-pointer outline-none
-                            ${getStatusColor(order.status)}
-                          `}
-                        >
-                          <option value="Pending">Pending</option>
-                          <option value="Received">Received</option>
-                          <option value="Processing">Processing</option>
-                          <option value="Shipped">Shipped</option>
-                        </select>
-                        <div className={`absolute left-3 top-1/2 -translate-y-1/2 ${getStatusColor(order.status).split(' ')[0]}`}>
-                          {updatingId === order.id ? (
-                            <RefreshCw size={12} className="animate-spin" />
-                          ) : (
-                            getStatusIcon(order.status)
-                          )}
-                        </div>
-                        <ChevronDown size={10} className="absolute right-3 top-1/2 -translate-y-1/2 opacity-40 pointer-events-none" />
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 text-right">
-                      <button
-                        onClick={() => {
-                          setSelectedOrder(order);
-                          setIsModalOpen(true);
-                        }}
-                        className="p-2 text-white/20 hover:text-luxury-gold transition-colors"
-                      >
-                        <Eye size={16} />
-                      </button>
+              </thead>
+              <tbody className="divide-y divide-white/5">
+                {isLoading ? (
+                  <tr>
+                    <td colSpan={6} className="px-6 py-12 text-center text-white/20 uppercase tracking-widest text-[10px]">
+                      Optimizing Manifests...
                     </td>
                   </tr>
-                ))
-              )}
-            </tbody>
-          </table>
+                ) : filteredOrders.length === 0 ? (
+                  <tr>
+                    <td colSpan={6} className="px-6 py-12 text-center text-white/20 uppercase tracking-widest text-[10px]">
+                      No manifests found in current library
+                    </td>
+                  </tr>
+                ) : (
+                  filteredOrders.map((order) => (
+                    <tr key={order.id} className="group hover:bg-white/[0.01] transition-colors">
+                      <td className="px-6 py-4">
+                        <div className="flex flex-col">
+                          <span className="text-[10px] font-mono text-luxury-gold">#{order.id.slice(0, 8).toUpperCase()}</span>
+                          <span className="text-[8px] text-white/20 uppercase tracking-tighter mt-1">
+                            {new Date(order.created_at).toLocaleDateString()}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="flex flex-col">
+                          <span className="text-xs font-bold text-luxury-cream">{order.delivery_name}</span>
+                          <span className="text-[9px] text-white/40 uppercase tracking-widest">{order.delivery_zone}</span>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="flex flex-col">
+                          <span className="text-xs text-white/60">{order.product_name}</span>
+                          <span className="text-[9px] text-luxury-gold/50 font-bold uppercase tracking-widest">{order.variant_size} x {order.quantity}</span>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4">
+                        <span className="text-sm font-bold text-luxury-cream">৳{order.total_price}</span>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="relative inline-block">
+                          <select
+                            disabled={updatingId === order.id}
+                            value={order.status}
+                            onChange={(e) => handleStatusChange(order.id, e.target.value)}
+                            className={`
+                              appearance-none pl-8 pr-10 py-1.5 rounded-full text-[9px] font-bold uppercase tracking-widest border transition-all cursor-pointer outline-none
+                              ${getStatusColor(order.status)}
+                            `}
+                          >
+                            <option value="Pending">Pending</option>
+                            <option value="Received">Received</option>
+                            <option value="Processing">Processing</option>
+                            <option value="Shipped">Shipped</option>
+                          </select>
+                          <div className={`absolute left-3 top-1/2 -translate-y-1/2 ${getStatusColor(order.status).split(' ')[0]}`}>
+                            {updatingId === order.id ? (
+                              <RefreshCw size={12} className="animate-spin" />
+                            ) : (
+                              getStatusIcon(order.status)
+                            )}
+                          </div>
+                          <ChevronDown size={10} className="absolute right-3 top-1/2 -translate-y-1/2 opacity-40 pointer-events-none" />
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 text-right">
+                        <button
+                          onClick={() => {
+                            setSelectedOrder(order);
+                            setIsModalOpen(true);
+                          }}
+                          className="p-2 text-white/20 hover:text-luxury-gold transition-colors"
+                        >
+                          <Eye size={16} />
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Mobile Card View */}
+          <div className="md:hidden flex flex-col divide-y divide-white/5">
+            {isLoading ? (
+              <div className="px-6 py-12 text-center text-white/20 uppercase tracking-widest text-[10px]">
+                Optimizing Manifests...
+              </div>
+            ) : filteredOrders.length === 0 ? (
+              <div className="px-6 py-12 text-center text-white/20 uppercase tracking-widest text-[10px]">
+                No manifests found in current library
+              </div>
+            ) : (
+              filteredOrders.map((order) => (
+                <div key={order.id} className="p-4 sm:p-6 flex flex-col gap-4">
+                  <div className="flex justify-between items-start">
+                    <div className="flex flex-col">
+                      <span className="text-[10px] font-mono text-luxury-gold">#{order.id.slice(0, 8).toUpperCase()}</span>
+                      <span className="text-[8px] text-white/20 uppercase tracking-tighter mt-1">
+                        {new Date(order.created_at).toLocaleDateString()}
+                      </span>
+                    </div>
+                    <span className="text-sm font-bold text-luxury-cream">৳{order.total_price}</span>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="flex flex-col">
+                      <span className="text-[8px] text-white/40 uppercase tracking-widest mb-1">Consignee</span>
+                      <span className="text-xs font-bold text-luxury-cream">{order.delivery_name}</span>
+                      <span className="text-[9px] text-white/40 uppercase tracking-widest">{order.delivery_zone}</span>
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-[8px] text-white/40 uppercase tracking-widest mb-1">Selection</span>
+                      <span className="text-xs text-white/60">{order.product_name}</span>
+                      <span className="text-[9px] text-luxury-gold/50 font-bold uppercase tracking-widest">{order.variant_size} x {order.quantity}</span>
+                    </div>
+                  </div>
+
+                  <div className="flex justify-between items-center pt-3 border-t border-white/5">
+                    <div className="relative inline-block">
+                      <select
+                        disabled={updatingId === order.id}
+                        value={order.status}
+                        onChange={(e) => handleStatusChange(order.id, e.target.value)}
+                        className={`
+                          appearance-none pl-8 pr-8 py-1.5 rounded-full text-[9px] font-bold uppercase tracking-widest border transition-all cursor-pointer outline-none
+                          ${getStatusColor(order.status)}
+                        `}
+                      >
+                        <option value="Pending">Pending</option>
+                        <option value="Received">Received</option>
+                        <option value="Processing">Processing</option>
+                        <option value="Shipped">Shipped</option>
+                      </select>
+                      <div className={`absolute left-3 top-1/2 -translate-y-1/2 ${getStatusColor(order.status).split(' ')[0]}`}>
+                        {updatingId === order.id ? (
+                          <RefreshCw size={12} className="animate-spin" />
+                        ) : (
+                          getStatusIcon(order.status)
+                        )}
+                      </div>
+                      <ChevronDown size={10} className="absolute right-2 top-1/2 -translate-y-1/2 opacity-40 pointer-events-none" />
+                    </div>
+
+                    <button
+                      onClick={() => {
+                        setSelectedOrder(order);
+                        setIsModalOpen(true);
+                      }}
+                      className="px-4 py-2 bg-white/5 hover:bg-luxury-gold/10 rounded-lg text-white/60 hover:text-luxury-gold transition-all text-[10px] font-bold uppercase tracking-widest border border-white/10 flex items-center gap-2"
+                    >
+                      <Eye size={14} /> View
+                    </button>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
         </div>
       </div>
 
