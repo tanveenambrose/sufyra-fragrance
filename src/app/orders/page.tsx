@@ -29,6 +29,7 @@ interface Order {
   status: string;
   delivery_address: string;
   delivery_zone: string;
+  product_id?: string;
 }
 
 export default function MyOrders() {
