@@ -5,7 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import ProductCard from '@/components/ProductCard';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
-import { SlidersHorizontal, ChevronDown } from 'lucide-react';
+import { SlidersHorizontal, ChevronDown, Droplets, Sparkles } from 'lucide-react';
 import { Product } from '@/data/products';
 
 if (typeof window !== 'undefined') {
@@ -82,11 +82,33 @@ export default function ProductsContent({ initialProducts }: ProductsContentProp
   return (
     <main className="min-h-screen bg-[var(--background)] pb-24 pt-32 lg:pt-44 transition-colors duration-300">
       <div className="container mx-auto px-6">
-        <div className="mb-12 sm:mb-16 text-center lg:text-left">
-          <h1 className="text-[var(--foreground)] font-serif text-5xl sm:text-7xl md:text-8xl lg:text-9xl mb-6 transition-colors duration-300 tracking-tight leading-[0.85]">
-            Sufyra <br /> <span className="font-normal italic">Boutique</span>
-          </h1>
-          <p className="text-luxury-gold text-[10px] sm:text-xs tracking-[0.6em] uppercase font-bold transition-colors duration-300 ml-1">Elegance in every drop</p>
+        <div className="mb-12 sm:mb-16 flex flex-col md:flex-row items-center justify-between gap-12 bg-gradient-to-r from-[var(--foreground)]/5 to-transparent p-8 sm:p-12 rounded-3xl border border-[var(--foreground)]/10 overflow-hidden relative">
+          <div className="text-center md:text-left relative z-10 w-full md:w-3/5">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-luxury-gold/30 bg-luxury-gold/10 mb-6">
+              <Sparkles className="w-3 h-3 text-luxury-gold" />
+              <span className="text-[10px] text-luxury-gold uppercase tracking-[0.2em] font-bold">Premium Scents</span>
+            </div>
+            <h1 className="text-[var(--foreground)] font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl mb-6 transition-colors duration-300 tracking-tight leading-[0.9]">
+              Discover Our <br /> <span className="font-normal italic text-luxury-gold">Collection</span>
+            </h1>
+            <p className="text-[var(--foreground)]/60 text-sm md:text-base max-w-md mx-auto md:mx-0">
+              Immerse yourself in a world of captivating aromas. Each bottle is a journey of elegance and sophistication, crafted to leave a lasting impression.
+            </p>
+          </div>
+          
+          <div className="relative z-10 flex-shrink-0 flex items-center justify-center group hidden md:flex w-full md:w-2/5">
+            <div className="relative w-40 h-40 lg:w-56 lg:h-56">
+              <div className="absolute inset-0 border-[1.5px] border-dashed border-[var(--foreground)]/20 rounded-full animate-[spin_30s_linear_infinite]" />
+              <div className="absolute inset-4 border border-luxury-gold/40 rounded-full animate-[spin_20s_linear_infinite_reverse]" />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-24 h-24 lg:w-32 lg:h-32 bg-[var(--background)] border border-[var(--foreground)]/10 rounded-full flex items-center justify-center backdrop-blur-md transition-shadow duration-500 hover:shadow-[0_0_30px_rgba(212,175,55,0.2)]">
+                  <Droplets className="w-10 h-10 lg:w-12 lg:h-12 text-luxury-gold opacity-90" strokeWidth={1.5} />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="absolute top-1/2 right-1/4 w-96 h-96 bg-luxury-gold/5 rounded-full blur-[100px] -translate-y-1/2 pointer-events-none" />
         </div>
 
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-start">
