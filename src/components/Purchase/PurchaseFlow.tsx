@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import LoginModal from '../Auth/LoginModal';
 import PurchaseForm, { PurchaseFormData } from './PurchaseForm';
+import OrderSuccess from './OrderSuccess';
 import { Product } from '@/data/products';
 import { supabase } from '@/lib/supabase';
 import { useCart } from '@/store/useCart';
@@ -22,6 +23,7 @@ const PurchaseFlow: React.FC<PurchaseFlowProps> = ({
   const { user, loading: authLoading } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showLogin, setShowLogin] = useState(!user);
+  const [successOrderId, setSuccessOrderId] = useState<string | null>(null);
   const { clearCart } = useCart();
 
   // If user state changes and they become logged in, hide login modal
@@ -102,12 +104,10 @@ const PurchaseFlow: React.FC<PurchaseFlowProps> = ({
 
       // Clear cart if it was a cart checkout
       if (items.length > 1 || items[0].id === undefined) {
-          // This is a bit hacky check but works if we pass cart items
           clearCart();
       }
 
-      alert('Order placed successfully! Our concierge will contact you shortly.');
-      onClose();
+      setSuccessOrderId(order.id);
     } catch (err) {
       console.error('Purchase error:', err);
       alert('Failed to place order: ' + (err instanceof Error ? err.message : 'Unknown error'));
@@ -129,13 +129,23 @@ const PurchaseFlow: React.FC<PurchaseFlowProps> = ({
   }
 
   return (
-    <PurchaseForm
-      isOpen={isOpen}
-      onClose={onClose}
-      items={items}
-      onSubmit={handleSubmit}
-      isSubmitting={isSubmitting}
-    />
+    <>
+      <PurchaseForm
+        isOpen={isOpen && !successOrderId}
+        onClose={onClose}
+        items={items}
+        onSubmit={handleSubmit}
+        isSubmitting={isSubmitting}
+      />
+      <OrderSuccess 
+        isOpen={!!successOrderId} 
+        onClose={() => {
+          setSuccessOrderId(null);
+          onClose();
+        }}
+        orderId={successOrderId || undefined}
+      />
+    </>
   );
 };
 
