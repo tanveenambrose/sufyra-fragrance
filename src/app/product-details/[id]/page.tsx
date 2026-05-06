@@ -431,11 +431,13 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
       <PurchaseFlow
         isOpen={isPurchaseModalOpen}
         onClose={() => setIsPurchaseModalOpen(false)}
-        product={product}
-        selectedSize={selectedSize}
-        quantity={quantity}
-        activeImage={activeImage}
-        currentPrice={currentVariant.price}
+        items={[{
+          ...product,
+          selectedSize,
+          quantity,
+          selectedPrice: currentVariant.price,
+          image_url: activeImage
+        }]}
       />
     </main>
   );

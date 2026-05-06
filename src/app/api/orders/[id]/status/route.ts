@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
-import nodemailer from 'nodemailer';
+import { Resend } from 'resend';
 import { supabase } from '@/lib/supabase';
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
@@ -17,16 +19,16 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
 
     if (fetchError || !order) throw new Error('Order not found');
 
-    // 2. Create transporter
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: process.env.GMAIL_USER || 'racoctanveen15@gmail.com',
-        pass: process.env.GMAIL_APP_PASSWORD,
-      },
-    });
+    if (!process.env.RESEND_API_KEY) {
+      console.warn('Status update email skipped: RESEND_API_KEY is not configured.');
+      return NextResponse.json({ 
+        success: true, 
+        emailSent: false, 
+        message: 'Status updated, but email notification was skipped due to missing API key.' 
+      });
+    }
 
-    // 3. Prepare email content
+    // 2. Prepare email content
     let statusMessage = '';
     let statusDetail = '';
 
@@ -48,10 +50,9 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
         statusDetail = 'The status of your order has been changed in our management system.';
     }
 
-    const mailOptions = {
-      from: '"Sufyra Mansion" <racoctanveen15@gmail.com>',
-      to: 'racoctanveen15@gmail.com', // For now, sending to the admin or customer if we have their email
-      // In a real app, you'd send to the user's email: to: order.customer_email || 'racoctanveen15@gmail.com'
+    await resend.emails.send({
+      from: 'Sufyra Mansion <onboarding@resend.dev>',
+      to: 'racoctanveen15@gmail.com', // Admin notification for now
       subject: `Update on your Sufyra Manifest #${order.id.slice(0, 8).toUpperCase()}`,
       html: `
         <div style="font-family: 'serif', 'Times New Roman', serif; background-color: #050505; color: #ffffff; padding: 40px; max-width: 600px; margin: auto; border: 1px solid #d4af37; border-radius: 20px;">
@@ -88,14 +89,11 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
           </div>
         </div>
       `,
-    };
-
-    await transporter.sendMail(mailOptions);
+    });
 
     return NextResponse.json({ success: true, emailSent: true });
   } catch (error) {
     console.error('Status update email notification failed (status updated):', error);
-    // Return 200 because the status was already updated in database successfully
     return NextResponse.json({ 
       success: true, 
       emailSent: false, 

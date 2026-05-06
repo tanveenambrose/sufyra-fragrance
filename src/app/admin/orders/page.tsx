@@ -166,7 +166,21 @@ export default function AdminOrders() {
                       </td>
                       <td className="px-6 py-4">
                         <div className="flex flex-col">
-                          <span className="text-xs text-white/60">{order.product_name}</span>
+                          <span className="text-xs text-white/60">
+                            {(() => {
+                              try {
+                                if (order.product_name.startsWith('[') && order.product_name.endsWith(']')) {
+                                  const items = JSON.parse(order.product_name);
+                                  return items.length > 1 
+                                    ? `${items[0].name} + ${items.length - 1} more`
+                                    : items[0].name;
+                                }
+                                return order.product_name;
+                              } catch (e) {
+                                return order.product_name;
+                              }
+                            })()}
+                          </span>
                           <span className="text-[9px] text-luxury-gold/50 font-bold uppercase tracking-widest">{order.variant_size} x {order.quantity}</span>
                         </div>
                       </td>
@@ -248,7 +262,21 @@ export default function AdminOrders() {
                     </div>
                     <div className="flex flex-col">
                       <span className="text-[8px] text-white/40 uppercase tracking-widest mb-1">Selection</span>
-                      <span className="text-xs text-white/60">{order.product_name}</span>
+                      <span className="text-xs text-white/60">
+                        {(() => {
+                          try {
+                            if (order.product_name.startsWith('[') && order.product_name.endsWith(']')) {
+                              const items = JSON.parse(order.product_name);
+                              return items.length > 1 
+                                ? `${items[0].name} + ${items.length - 1} more`
+                                : items[0].name;
+                            }
+                            return order.product_name;
+                          } catch (e) {
+                            return order.product_name;
+                          }
+                        })()}
+                      </span>
                       <span className="text-[9px] text-luxury-gold/50 font-bold uppercase tracking-widest">{order.variant_size} x {order.quantity}</span>
                     </div>
                   </div>

@@ -6,6 +6,7 @@ import { useCart } from '@/store/useCart';
 import Image from 'next/image';
 import { gsap } from 'gsap';
 import { useState } from 'react';
+import PurchaseFlow from './Purchase/PurchaseFlow';
 
 interface CartDrawerProps {
   isOpen: boolean;
@@ -154,96 +155,12 @@ const CartDrawer: React.FC = () => {
         )}
       </div>
 
-      {/* Purchase Modal */}
-      {isPurchaseModalOpen && (
-        <div className="fixed inset-0 z-[300] flex items-center justify-center p-4 sm:p-6 animate-in fade-in duration-300">
-          <div className="absolute inset-0 bg-black/90 backdrop-blur-xl" onClick={() => setIsPurchaseModalOpen(false)} />
-          
-          <div className="relative w-full max-w-lg bg-[var(--background)] border border-[var(--foreground)]/10 rounded-3xl overflow-hidden shadow-2xl animate-in zoom-in-95 duration-300">
-            {/* Close Button */}
-            <button
-              onClick={() => setIsPurchaseModalOpen(false)}
-              className="absolute top-4 right-4 z-10 p-2 bg-[var(--foreground)]/5 hover:bg-[var(--foreground)]/10 rounded-full text-[var(--foreground)]/40 hover:text-[var(--foreground)] transition-all"
-            >
-              <X size={20} />
-            </button>
-
-            <div className="p-8">
-              <div className="flex flex-col items-center text-center gap-6">
-                <div className="w-20 h-20 bg-luxury-gold/10 rounded-full flex items-center justify-center">
-                  <Smartphone size={32} className="text-luxury-gold" />
-                </div>
-                
-                <div>
-                  <h2 className="text-2xl font-serif text-[var(--foreground)] mb-2">Finalize Your Purchase</h2>
-                  <p className="text-[10px] uppercase tracking-[0.2em] text-[var(--foreground)]/40 font-bold">Your Exquisite Collection</p>
-                </div>
-
-                {/* Cart Summary for Screenshot */}
-                <div className="w-full bg-[var(--foreground)]/5 rounded-2xl p-6 border border-[var(--foreground)]/10 flex flex-col gap-4 text-left max-h-60 overflow-y-auto scrollbar-hide">
-                  {items.map((item, idx) => (
-                    <div key={idx} className="flex items-center gap-4">
-                      <div className="relative w-12 h-14 rounded-lg overflow-hidden flex-shrink-0">
-                        <Image 
-                          src={item.image_url} 
-                          alt={item.name} 
-                          fill 
-                          sizes="100px"
-                          className="object-cover" 
-                        />
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="text-sm font-serif text-[var(--foreground)]">{item.name}</h3>
-                        <p className="text-[8px] uppercase tracking-widest text-luxury-gold font-bold">Qty: {item.quantity} | {item.selectedSize}</p>
-                      </div>
-                      <span className="text-sm font-bold text-[var(--foreground)]">{item.selectedPrice * item.quantity}৳</span>
-                    </div>
-                  ))}
-                  <div className="pt-4 border-t border-[var(--foreground)]/10 flex justify-between items-center">
-                    <span className="text-[10px] uppercase tracking-widest text-[var(--foreground)]/40 font-bold">Total Amount</span>
-                    <span className="text-xl font-bold text-luxury-gold">{getTotalPrice()}৳</span>
-                  </div>
-                </div>
-
-                {/* The Noticeable Note */}
-                <div className="w-full bg-luxury-gold/10 border border-luxury-gold/30 rounded-2xl p-5 relative overflow-hidden text-left">
-                  <div className="absolute top-0 left-0 w-1 h-full bg-luxury-gold" />
-                  <p className="text-sm text-[var(--foreground)] leading-relaxed font-medium">
-                    <span className="text-luxury-gold mr-2 text-lg">📸</span>
-                    <span className="font-bold text-luxury-gold">Action Required:</span> Please take a screenshot of this screen and share it with our concierge to complete your purchase. <span className="text-luxury-gold font-bold">( Courier Charge Applicable )</span>
-                  </p>
-                </div>
-
-                {/* Social Links */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
-                  <a 
-                    href="https://wa.me/message/ALWRUNUBV6L3A1" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-3 py-4 bg-[#25D366] hover:bg-[#20ba59] text-white rounded-xl font-bold uppercase tracking-widest text-[10px] transition-all shadow-lg shadow-green-500/10"
-                  >
-                    <MessageCircle size={18} />
-                    WhatsApp
-                  </a>
-                  <a 
-                    href="https://m.me/SufyraFragrance" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-3 py-4 bg-[#0084FF] hover:bg-[#0077e6] text-white rounded-xl font-bold uppercase tracking-widest text-[10px] transition-all shadow-lg shadow-blue-500/10"
-                  >
-                    <Send size={18} />
-                    Messenger
-                  </a>
-                </div>
-                
-                <p className="text-[9px] uppercase tracking-widest text-[var(--foreground)]/20 font-bold">
-                  Sufyra Fragrance — Artisanal Perfumery
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Purchase Flow Integration */}
+      <PurchaseFlow 
+        isOpen={isPurchaseModalOpen}
+        onClose={() => setIsPurchaseModalOpen(false)}
+        items={items}
+      />
     </>
   );
 };

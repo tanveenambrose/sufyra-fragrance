@@ -6,29 +6,23 @@ import LoginModal from '../Auth/LoginModal';
 import PurchaseForm, { PurchaseFormData } from './PurchaseForm';
 import { Product } from '@/data/products';
 import { supabase } from '@/lib/supabase';
+import { useCart } from '@/store/useCart';
 
 interface PurchaseFlowProps {
   isOpen: boolean;
   onClose: () => void;
-  product: Product;
-  selectedSize: string;
-  quantity: number;
-  activeImage: string;
-  currentPrice: number;
+  items: any[]; // Changed from single product props to items array
 }
 
 const PurchaseFlow: React.FC<PurchaseFlowProps> = ({
   isOpen,
   onClose,
-  product,
-  selectedSize,
-  quantity,
-  activeImage,
-  currentPrice
+  items
 }) => {
   const { user, loading: authLoading } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showLogin, setShowLogin] = useState(!user);
+  const { clearCart } = useCart();
 
   // If user state changes and they become logged in, hide login modal
   React.useEffect(() => {
@@ -46,18 +40,34 @@ const PurchaseFlow: React.FC<PurchaseFlowProps> = ({
     setIsSubmitting(true);
     try {
       const deliveryCost = formData.zone === 'Inside Dhaka' ? 80 : 150;
-      const subtotal = currentPrice * quantity;
+      const subtotal = items.reduce((acc, item) => acc + (item.selectedPrice * item.quantity), 0);
       const totalPrice = subtotal + deliveryCost;
+
+      // Prepare order items for storage
+      const orderItems = items.map(item => ({
+        id: item.id,
+        name: item.name,
+        size: item.selectedSize,
+        quantity: item.quantity,
+        price: item.selectedPrice,
+        image: item.image_url || item.product_image
+      }));
+
+      // We store the full JSON in product_name for multi-item orders
+      // For single item, we keep it as is for backward compatibility or use JSON too
+      const productNameValue = items.length === 1 
+        ? items[0].name 
+        : JSON.stringify(orderItems);
 
       // 1. Insert into Supabase
       const { data: order, error: orderError } = await supabase
         .from('orders')
         .insert({
           user_id: user.id,
-          product_id: product.id,
-          product_name: product.name,
-          variant_size: selectedSize,
-          quantity: quantity,
+          product_id: items[0].id, // Use first item's ID as representative
+          product_name: productNameValue,
+          variant_size: items.length === 1 ? items[0].selectedSize : 'multiple',
+          quantity: items.reduce((acc, item) => acc + item.quantity, 0),
           subtotal: subtotal,
           delivery_cost: deliveryCost,
           total_price: totalPrice,
@@ -80,9 +90,7 @@ const PurchaseFlow: React.FC<PurchaseFlowProps> = ({
         body: JSON.stringify({
           orderId: order.id,
           customerName: formData.name,
-          productName: product.name,
-          size: selectedSize,
-          quantity: quantity,
+          items: orderItems,
           total: totalPrice,
           zone: formData.zone,
           address: formData.address,
@@ -91,6 +99,12 @@ const PurchaseFlow: React.FC<PurchaseFlowProps> = ({
           customerEmail: user.email
         }),
       });
+
+      // Clear cart if it was a cart checkout
+      if (items.length > 1 || items[0].id === undefined) {
+          // This is a bit hacky check but works if we pass cart items
+          clearCart();
+      }
 
       alert('Order placed successfully! Our concierge will contact you shortly.');
       onClose();
@@ -118,11 +132,7 @@ const PurchaseFlow: React.FC<PurchaseFlowProps> = ({
     <PurchaseForm
       isOpen={isOpen}
       onClose={onClose}
-      product={product}
-      selectedSize={selectedSize}
-      quantity={quantity}
-      activeImage={activeImage}
-      currentPrice={currentPrice}
+      items={items}
       onSubmit={handleSubmit}
       isSubmitting={isSubmitting}
     />

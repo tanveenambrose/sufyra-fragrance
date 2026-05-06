@@ -8,11 +8,7 @@ import { Product } from '@/data/products';
 interface PurchaseFormProps {
   isOpen: boolean;
   onClose: () => void;
-  product: Product;
-  selectedSize: string;
-  quantity: number;
-  activeImage: string;
-  currentPrice: number;
+  items: any[];
   onSubmit: (formData: PurchaseFormData) => Promise<void>;
   isSubmitting: boolean;
 }
@@ -28,11 +24,7 @@ export interface PurchaseFormData {
 const PurchaseForm: React.FC<PurchaseFormProps> = ({
   isOpen,
   onClose,
-  product,
-  selectedSize,
-  quantity,
-  activeImage,
-  currentPrice,
+  items,
   onSubmit,
   isSubmitting
 }) => {
@@ -47,7 +39,7 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({
   if (!isOpen) return null;
 
   const deliveryCost = formData.zone === 'Inside Dhaka' ? 80 : 150;
-  const totalSubtotal = currentPrice * quantity;
+  const totalSubtotal = items.reduce((acc, item) => acc + (item.selectedPrice * item.quantity), 0);
   const grandTotal = totalSubtotal + deliveryCost;
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -59,7 +51,7 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({
     <div className="fixed inset-0 z-[500] flex items-center justify-center p-4 sm:p-6 animate-in fade-in duration-300">
       <div className="absolute inset-0 bg-black/90 backdrop-blur-xl" onClick={onClose} />
 
-      <div className="relative w-full max-w-2xl bg-[var(--background)] border border-luxury-gold/20 rounded-[30px] overflow-hidden shadow-2xl animate-in zoom-in-95 duration-300">
+      <div className="relative w-full max-w-3xl bg-[var(--background)] border border-luxury-gold/20 rounded-[30px] overflow-hidden shadow-2xl animate-in zoom-in-95 duration-300 max-h-[90vh] flex flex-col">
         <button
           onClick={onClose}
           className="absolute top-6 right-6 z-20 p-2 bg-[var(--foreground)]/5 hover:bg-[var(--foreground)]/10 rounded-full text-[var(--foreground)]/40 hover:text-[var(--foreground)] transition-all"
@@ -67,46 +59,56 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({
           <X size={18} />
         </button>
 
-        <form onSubmit={handleSubmit} className="flex flex-col md:flex-row h-full max-h-[90vh]">
-          {/* Left Side: Order Summary (Visible on Desktop) */}
-          <div className="hidden md:flex md:w-[35%] bg-[var(--foreground)]/[0.02] border-r border-white/5 p-8 flex-col gap-6">
+        <form onSubmit={handleSubmit} className="flex flex-col md:flex-row h-full overflow-hidden">
+          {/* Left Side: Order Summary */}
+          <div className="hidden md:flex md:w-[40%] bg-[var(--foreground)]/[0.02] border-r border-white/5 p-8 flex-col gap-6 overflow-y-auto">
             <h3 className="text-[10px] uppercase tracking-[0.3em] text-luxury-gold font-bold">Curated Selection</h3>
             
-            <div className="relative aspect-[4/5] w-full rounded-2xl overflow-hidden border border-white/10">
-              <Image src={activeImage} alt={product.name} fill className="object-cover" />
+            <div className="space-y-6">
+              {items.map((item, idx) => (
+                <div key={idx} className="flex gap-4">
+                  <div className="relative w-16 h-20 rounded-xl overflow-hidden border border-white/10 flex-shrink-0">
+                    <Image 
+                      src={item.image_url || item.product_image || ''} 
+                      alt={item.name} 
+                      fill 
+                      sizes="64px"
+                      className="object-cover" 
+                    />
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-serif text-[var(--foreground)] leading-tight">{item.name}</h4>
+                    <p className="text-[8px] uppercase tracking-widest text-luxury-gold mt-1">Size: {item.selectedSize} | Qty: {item.quantity}</p>
+                    <p className="text-xs font-bold text-[var(--foreground)] mt-1">৳{item.selectedPrice * item.quantity}</p>
+                  </div>
+                </div>
+              ))}
             </div>
 
-            <div className="space-y-4">
-              <div>
-                <h4 className="text-xl font-serif text-[var(--foreground)] leading-tight">{product.name}</h4>
-                <p className="text-[9px] uppercase tracking-widest text-luxury-gold mt-1">Size: {selectedSize}</p>
+            <div className="pt-6 border-t border-white/5 mt-auto space-y-2">
+              <div className="flex justify-between text-[10px] uppercase tracking-widest text-[var(--foreground)]/40">
+                <span>Subtotal</span>
+                <span className="text-[var(--foreground)]">৳{totalSubtotal}</span>
               </div>
-
-              <div className="pt-4 border-t border-white/5 space-y-2">
-                <div className="flex justify-between text-[10px] uppercase tracking-widest text-[var(--foreground)]/40">
-                  <span>Subtotal</span>
-                  <span className="text-[var(--foreground)]">৳{totalSubtotal}</span>
-                </div>
-                <div className="flex justify-between text-[10px] uppercase tracking-widest text-[var(--foreground)]/40">
-                  <span>Delivery</span>
-                  <span className="text-[var(--foreground)]">৳{deliveryCost}</span>
-                </div>
-                <div className="flex justify-between items-center pt-2 mt-2 border-t border-white/10">
-                  <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-luxury-gold">Total</span>
-                  <span className="text-2xl font-bold text-[var(--foreground)]">৳{grandTotal}</span>
-                </div>
+              <div className="flex justify-between text-[10px] uppercase tracking-widest text-[var(--foreground)]/40">
+                <span>Delivery</span>
+                <span className="text-[var(--foreground)]">৳{deliveryCost}</span>
+              </div>
+              <div className="flex justify-between items-center pt-4 mt-2 border-t border-white/10">
+                <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-luxury-gold">Grand Total</span>
+                <span className="text-2xl font-bold text-[var(--foreground)]">৳{grandTotal}</span>
               </div>
             </div>
           </div>
 
           {/* Right Side: Shipping Form */}
-          <div className="flex-grow p-8 md:p-10 flex flex-col">
+          <div className="flex-grow p-8 md:p-10 flex flex-col overflow-y-auto">
             <div className="mb-8">
               <h2 className="text-2xl font-serif text-[var(--foreground)] mb-1">Procurement Details</h2>
               <p className="text-[9px] uppercase tracking-[0.2em] text-[var(--foreground)]/40 font-bold">Please specify your delivery coordinates</p>
             </div>
 
-            <div className="space-y-5 flex-grow">
+            <div className="space-y-5">
               <div className="space-y-1.5">
                 <label className="text-[10px] uppercase tracking-widest text-[var(--foreground)]/40 font-bold ml-1">Full Name</label>
                 <div className="relative">
@@ -122,7 +124,7 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
                   <label className="text-[10px] uppercase tracking-widest text-[var(--foreground)]/40 font-bold ml-1">Delivery Zone</label>
                   <select
@@ -178,8 +180,16 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({
             </div>
 
             {/* Mobile-only Summary */}
-            <div className="md:hidden mt-6 mb-6 pt-4 border-t border-white/5">
-              <div className="flex justify-between items-center">
+            <div className="md:hidden mt-6 mb-6 pt-4 border-t border-white/5 space-y-4">
+              <div className="max-h-32 overflow-y-auto space-y-3">
+                {items.map((item, idx) => (
+                  <div key={idx} className="flex justify-between items-center text-[10px] uppercase tracking-widest">
+                    <span className="text-[var(--foreground)]/60">{item.name} x{item.quantity}</span>
+                    <span className="text-[var(--foreground)] font-bold">৳{item.selectedPrice * item.quantity}</span>
+                  </div>
+                ))}
+              </div>
+              <div className="flex justify-between items-center pt-3 border-t border-white/10">
                 <div>
                   <p className="text-[8px] uppercase tracking-[0.2em] text-luxury-gold font-bold">Grand Total</p>
                   <p className="text-xl font-bold text-[var(--foreground)]">৳{grandTotal}</p>
@@ -191,24 +201,20 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="mt-4 w-full luxury-gradient text-luxury-charcoal py-4.5 rounded-xl font-bold uppercase tracking-[0.2em] text-[11px] hover:brightness-110 active:scale-[0.99] transition-all flex items-center justify-center gap-3 shadow-2xl shadow-luxury-gold/10 disabled:opacity-50"
+              className="mt-6 w-full luxury-gradient text-luxury-charcoal py-4 rounded-xl font-bold uppercase tracking-[0.2em] text-[11px] hover:brightness-110 active:scale-[0.99] transition-all flex items-center justify-center gap-3 shadow-2xl shadow-luxury-gold/10 disabled:opacity-50"
             >
               {isSubmitting ? (
                 <>
                   <div className="w-4 h-4 border-2 border-luxury-charcoal border-t-transparent rounded-full animate-spin" />
-                  Processing Order...
+                  Processing...
                 </>
               ) : (
                 <>
-                  Confirm Selection
+                  Confirm Order
                   <CheckCircle2 size={16} />
                 </>
               )}
             </button>
-
-            <p className="mt-4 text-[8px] text-center uppercase tracking-[0.3em] text-[var(--foreground)]/20 font-bold italic">
-              * Secure Order Submission to the Admin Mansion
-            </p>
           </div>
         </form>
       </div>
