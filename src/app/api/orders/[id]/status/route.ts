@@ -29,65 +29,101 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
     }
 
     // 2. Prepare email content
-    let statusMessage = '';
-    let statusDetail = '';
+    let statusTitle = '';
+    let statusDescription = '';
+    let statusIcon = '';
+    let statusColor = '#d4af37';
 
     switch (status.toLowerCase()) {
+      case 'received':
+        statusTitle = 'Manifest Received';
+        statusDescription = 'Your procurement request has been successfully recorded in our central ledger. Our artisans will begin preparation shortly.';
+        statusIcon = 'https://img.icons8.com/ios/100/d4af37/document--v1.png';
+        break;
       case 'processing':
-        statusMessage = 'Your scent is being prepared';
-        statusDetail = 'Our artisans are currently curating and packaging your selection with meticulous care.';
+        statusTitle = 'Artisanal Preparation';
+        statusDescription = 'Your selection is currently being curated and packaged with the meticulous care it deserves. Every detail is being perfected.';
+        statusIcon = 'https://img.icons8.com/ios/100/d4af37/perfume-bottle.png';
         break;
       case 'shipped':
-        statusMessage = 'Your selection is en route';
-        statusDetail = 'Your procurement manifest has been handed over to our courier partners. It should arrive at your sanctuary shortly.';
-        break;
-      case 'received':
-        statusMessage = 'Order Manifest Received';
-        statusDetail = 'We have successfully received your order request in our system.';
+        statusTitle = 'Selection En Route';
+        statusDescription = 'Your manifest has been handed over to our elite courier partners. Your sanctuary will soon be graced by your selected scent.';
+        statusIcon = 'https://img.icons8.com/ios/100/d4af37/delivery-truck.png';
+        statusColor = '#25D366';
         break;
       default:
-        statusMessage = `Order status updated to ${status}`;
-        statusDetail = 'The status of your order has been changed in our management system.';
+        statusTitle = `Status Update: ${status}`;
+        statusDescription = `The status of your procurement manifest #${order.id.slice(0, 8).toUpperCase()} has been updated.`;
+        statusIcon = 'https://img.icons8.com/ios/100/d4af37/info--v1.png';
     }
+
+    const customerEmail = order.delivery_email || 'rs80359@gmail.com'; // Fallback to provided admin email for testing
 
     await resend.emails.send({
       from: 'Sufyra Mansion <onboarding@resend.dev>',
-      to: 'racoctanveen15@gmail.com', // Admin notification for now
-      subject: `Update on your Sufyra Manifest #${order.id.slice(0, 8).toUpperCase()}`,
+      to: customerEmail,
+      subject: `${statusTitle} - Sufyra Manifest #${order.id.slice(0, 8).toUpperCase()}`,
       html: `
-        <div style="font-family: 'serif', 'Times New Roman', serif; background-color: #050505; color: #ffffff; padding: 40px; max-width: 600px; margin: auto; border: 1px solid #d4af37; border-radius: 20px;">
-          <div style="text-align: center; margin-bottom: 30px;">
-             <h2 style="color: #d4af37; font-size: 10px; text-transform: uppercase; letter-spacing: 5px; font-weight: bold;">Sufyra Fragrance</h2>
-             <h1 style="color: #ffffff; margin-top: 10px; font-size: 24px; font-weight: normal; font-style: italic;">${statusMessage}</h1>
-          </div>
-          
-          <div style="background-color: rgba(255,255,255,0.02); border: 1px solid rgba(212, 175, 55, 0.1); padding: 30px; border-radius: 15px; margin-bottom: 30px;">
-            <p style="color: #ffffff; line-height: 1.6; margin-bottom: 20px;">Dear ${order.delivery_name},</p>
-            <p style="color: rgba(255,255,255,0.7); line-height: 1.6; margin-bottom: 30px;">${statusDetail}</p>
-            
-            <div style="border-top: 1px solid rgba(212, 175, 55, 0.1); pt-20px;">
-              <p style="font-size: 10px; text-transform: uppercase; color: #d4af37; letter-spacing: 2px; margin-bottom: 10px;">Manifest Details</p>
-              <table style="width: 100%; font-size: 13px;">
-                <tr>
-                  <td style="color: rgba(255,255,255,0.4); padding: 5px 0;">Product:</td>
-                  <td style="text-align: right; color: #ffffff;">${order.product_name} (${order.variant_size})</td>
-                </tr>
-                <tr>
-                  <td style="color: rgba(255,255,255,0.4); padding: 5px 0;">Manifest ID:</td>
-                  <td style="text-align: right; color: #d4af37; font-family: monospace;">#${order.id.slice(0, 8).toUpperCase()}</td>
-                </tr>
-                <tr>
-                  <td style="color: rgba(255,255,255,0.4); padding: 5px 0;">Current Status:</td>
-                  <td style="text-align: right; color: #d4af37; font-weight: bold; text-transform: uppercase;">${status}</td>
-                </tr>
-              </table>
-            </div>
-          </div>
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        </head>
+        <body style="margin: 0; padding: 0; background-color: #050505; font-family: 'serif', 'Times New Roman', serif;">
+          <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #050505;">
+            <tr>
+              <td style="padding: 40px 0;">
+                <table align="center" border="0" cellpadding="0" cellspacing="0" width="600" style="background-color: #0a0a0a; border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 30px; overflow: hidden;">
+                  <!-- Header -->
+                  <tr>
+                    <td style="padding: 50px 40px; text-align: center; border-bottom: 1px solid rgba(212, 175, 55, 0.1);">
+                      <img src="${statusIcon}" alt="Status" style="width: 60px; margin-bottom: 20px;">
+                      <h1 style="color: #ffffff; margin: 0; font-size: 24px; font-weight: normal; font-style: italic; letter-spacing: 1px;">${statusTitle}</h1>
+                      <p style="color: #d4af37; margin-top: 10px; text-transform: uppercase; letter-spacing: 4px; font-size: 10px; font-weight: bold;">Order Update</p>
+                    </td>
+                  </tr>
+                  
+                  <!-- Body -->
+                  <tr>
+                    <td style="padding: 50px 40px;">
+                      <p style="font-size: 16px; color: rgba(255,255,255,0.8); line-height: 1.8; text-align: center;">Dear ${order.delivery_name},</p>
+                      <p style="font-size: 16px; color: rgba(255,255,255,0.6); line-height: 1.8; text-align: center; margin-bottom: 40px;">${statusDescription}</p>
+                      
+                      <div style="background-color: rgba(212, 175, 55, 0.05); border: 1px solid rgba(212, 175, 55, 0.1); padding: 30px; border-radius: 20px;">
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                          <tr>
+                            <td style="padding: 5px 0; color: rgba(255,255,255,0.4); font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">Manifest ID</td>
+                            <td style="padding: 5px 0; text-align: right; color: #d4af37; font-family: monospace; font-weight: bold;">#${order.id.slice(0, 8).toUpperCase()}</td>
+                          </tr>
+                          <tr>
+                            <td style="padding: 5px 0; color: rgba(255,255,255,0.4); font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">Selection</td>
+                            <td style="padding: 5px 0; text-align: right; color: #ffffff; font-size: 14px;">${order.product_name}</td>
+                          </tr>
+                          <tr>
+                            <td style="padding: 5px 0; color: rgba(255,255,255,0.4); font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">Current Status</td>
+                            <td style="padding: 5px 0; text-align: right; color: ${statusColor}; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; font-size: 12px;">${status}</td>
+                          </tr>
+                        </table>
+                      </div>
 
-          <div style="text-align: center; font-size: 10px; color: rgba(255,255,255,0.2); text-transform: uppercase; letter-spacing: 2px;">
-            <p>Artisanal Perfumery Control System — Sufyra Mansion</p>
-          </div>
-        </div>
+                      <div style="text-align: center; margin-top: 50px;">
+                        <a href="https://wa.me/8801700000000" style="display: inline-block; border: 1px solid #d4af37; color: #d4af37; padding: 12px 30px; border-radius: 50px; text-decoration: none; font-size: 12px; text-transform: uppercase; letter-spacing: 2px; font-weight: bold;">WhatsApp Support</a>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- Footer -->
+                  <tr>
+                    <td style="padding: 30px; text-align: center; background-color: rgba(255,255,255,0.02); color: rgba(255,255,255,0.2); font-size: 9px; text-transform: uppercase; letter-spacing: 3px; border-top: 1px solid rgba(212, 175, 55, 0.05);">
+                      Sufyra Mansion — Artisanal Perfumery Control System
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </body>
+        </html>
       `,
     });
 

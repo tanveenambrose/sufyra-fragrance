@@ -60,30 +60,30 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority = false }) 
       </Link>
 
       {/* Product Info */}
-      <div className="p-5 sm:p-6 flex flex-col flex-1" suppressHydrationWarning>
-        <div className="mb-4" suppressHydrationWarning>
+      <div className="p-4 sm:p-6 flex flex-col flex-1" suppressHydrationWarning>
+        <div className="mb-2 sm:mb-4" suppressHydrationWarning>
           <Link href={`/product-details/${product.id}`} className="hover:text-luxury-gold transition-colors block mb-1">
-            <h3 className="text-sm sm:text-lg font-serif text-[var(--foreground)] font-bold tracking-tight line-clamp-1 leading-tight">{product.name}</h3>
+            <h3 className="text-[13px] sm:text-lg font-serif text-[var(--foreground)] font-bold tracking-tight line-clamp-1 leading-tight">{product.name}</h3>
           </Link>
-          <div className="flex items-center gap-2" suppressHydrationWarning>
-             <span className="text-luxury-gold font-bold text-sm sm:text-lg">{discountedPrice}৳</span>
+          <div className="flex items-center gap-1.5 sm:gap-2" suppressHydrationWarning>
+             <span className="text-luxury-gold font-bold text-[13px] sm:text-lg">{discountedPrice}৳</span>
              {discount > 0 && (
-               <span className="text-[var(--foreground)]/30 line-through text-[10px] sm:text-[11px] font-medium">{currentPrice}৳</span>
+               <span className="text-[var(--foreground)]/30 line-through text-[9px] sm:text-[11px] font-medium">{currentPrice}৳</span>
              )}
           </div>
         </div>
         
-        <p className="text-[var(--foreground)]/50 text-[10px] sm:text-[11px] mb-5 line-clamp-2 leading-relaxed font-medium" suppressHydrationWarning>
+        <p className="text-[var(--foreground)]/50 text-[9px] sm:text-[11px] mb-3 sm:mb-5 line-clamp-2 leading-relaxed font-medium" suppressHydrationWarning>
           {product.description}
         </p>
         
         {/* Size Selection */}
-        <div className="flex flex-wrap gap-2 mb-6 mt-auto" suppressHydrationWarning>
+        <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-4 sm:mb-6 mt-auto" suppressHydrationWarning>
           {product.variants.map((variant) => (
             <button
               key={variant.size}
               onClick={() => setSelectedSize(variant.size)}
-              className={`px-3 py-1 rounded-full transition-all text-[9px] font-bold border ${
+              className={`px-2.5 py-1 rounded-full transition-all text-[8px] sm:text-[9px] font-bold border ${
                 selectedSize === variant.size
                   ? 'border-luxury-gold bg-luxury-gold text-white'
                   : 'border-[var(--foreground)]/10 text-[var(--foreground)]/40 hover:border-luxury-gold hover:text-luxury-gold'
@@ -96,10 +96,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority = false }) 
 
         <button 
           onClick={handleAddItem}
-          className="w-full bg-luxury-charcoal text-white dark:bg-white dark:text-black py-3 sm:py-4 rounded-xl font-bold text-[10px] sm:text-[11px] uppercase tracking-[0.2em] flex items-center justify-center gap-2 hover:bg-luxury-gold dark:hover:bg-luxury-gold transition-all shadow-md active:scale-[0.98]"
+          className="w-full bg-luxury-charcoal text-white dark:bg-white dark:text-black py-2.5 sm:py-4 rounded-xl font-bold text-[9px] sm:text-[11px] uppercase tracking-[0.2em] flex items-center justify-center gap-2 hover:bg-luxury-gold dark:hover:bg-luxury-gold transition-all shadow-md active:scale-[0.98]"
           suppressHydrationWarning
         >
-          <Plus className="w-4 h-4" />
+          <Plus className="w-3 h-3 sm:w-4 sm:h-4" />
           Add to Bag
         </button>
       </div>

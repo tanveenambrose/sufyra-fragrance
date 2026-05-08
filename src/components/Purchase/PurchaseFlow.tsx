@@ -74,6 +74,7 @@ const PurchaseFlow: React.FC<PurchaseFlowProps> = ({
           delivery_cost: deliveryCost,
           total_price: totalPrice,
           delivery_name: formData.name,
+          delivery_email: user.email,
           delivery_zone: formData.zone,
           delivery_address: formData.address,
           whatsapp_number: formData.whatsapp,

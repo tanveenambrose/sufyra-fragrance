@@ -96,13 +96,78 @@ export default function ProductsContent({ initialProducts }: ProductsContentProp
             </p>
           </div>
           
-          <div className="relative z-10 flex-shrink-0 flex items-center justify-center group hidden md:flex w-full md:w-2/5">
-            <div className="relative w-40 h-40 lg:w-56 lg:h-56">
+          <div className="relative z-10 flex-shrink-0 flex items-center justify-center group w-full md:w-2/5 mt-8 md:mt-0">
+            <div className="relative w-48 h-48 lg:w-64 lg:h-64">
+              {/* Spinning rings */}
               <div className="absolute inset-0 border-[1.5px] border-dashed border-[var(--foreground)]/20 rounded-full animate-[spin_30s_linear_infinite]" />
               <div className="absolute inset-4 border border-luxury-gold/40 rounded-full animate-[spin_20s_linear_infinite_reverse]" />
+              
+              {/* Water Drop Container */}
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-24 h-24 lg:w-32 lg:h-32 bg-[var(--background)] border border-[var(--foreground)]/10 rounded-full flex items-center justify-center backdrop-blur-md transition-shadow duration-500 hover:shadow-[0_0_30px_rgba(212,175,55,0.2)]">
-                  <Droplets className="w-10 h-10 lg:w-12 lg:h-12 text-luxury-gold opacity-90" strokeWidth={1.5} />
+                <div className="relative w-28 h-28 lg:w-36 lg:h-36 bg-[var(--background)] border border-[var(--foreground)]/10 rounded-full flex items-center justify-center backdrop-blur-md transition-all duration-500 hover:shadow-[0_0_40px_rgba(212,175,55,0.3)] group/drop cursor-pointer overflow-hidden">
+                  
+                  {/* The Main Water Drop SVG */}
+                  <svg 
+                    viewBox="0 0 100 100" 
+                    className="w-16 h-16 lg:w-20 lg:h-20 drop-shadow-[0_0_8px_rgba(212,175,55,0.4)]"
+                  >
+                    <defs>
+                      <linearGradient id="dropGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#D4AF37" stopOpacity="0.8" />
+                        <stop offset="100%" stopColor="#AA8E2E" stopOpacity="1" />
+                      </linearGradient>
+                      
+                      <filter id="goo">
+                        <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur" />
+                        <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" />
+                      </filter>
+                    </defs>
+
+                    {/* Liquid Animation Layer */}
+                    <g filter="url(#goo)">
+                      {/* Main Drop Shape with Wobble */}
+                      <path 
+                        d="M50 5 C50 5 20 40 20 65 A30 30 0 1 0 80 65 C80 40 50 5 50 5Z" 
+                        fill="url(#dropGradient)"
+                        className="animate-[wobble_4s_ease-in-out_infinite] origin-bottom"
+                      />
+
+                      {/* Falling Inner Drop */}
+                      <circle 
+                        cx="50" 
+                        cy="20" 
+                        r="4" 
+                        fill="white" 
+                        className="animate-[fall_3s_infinite_ease-in]"
+                      />
+                    </g>
+
+                    {/* Ripple Effect (Outside goo filter to keep sharp) */}
+                    <ellipse 
+                      cx="50" 
+                      cy="75" 
+                      rx="0" 
+                      ry="0" 
+                      fill="none" 
+                      stroke="white" 
+                      strokeWidth="0.5" 
+                      className="animate-[ripple_3s_infinite_ease-out]"
+                    />
+
+                    {/* Inner Logo / Luxury Element */}
+                    <g className="animate-[morph_8s_infinite_linear] origin-center">
+                      <path 
+                        d="M50 35 L53 47 L65 50 L53 53 L50 65 L47 53 L35 50 L47 47 Z" 
+                        className="animate-[color-shift_4s_infinite_ease-in-out]"
+                        fill="white"
+                        fillOpacity="0.9"
+                      />
+                      <circle cx="50" cy="50" r="2" fill="white" className="animate-pulse" />
+                    </g>
+                  </svg>
+
+                  {/* Reflection / Shine */}
+                  <div className="absolute top-1/4 left-1/3 w-2 h-4 bg-white/20 rounded-full rotate-[30deg] blur-[1px]" />
                 </div>
               </div>
             </div>

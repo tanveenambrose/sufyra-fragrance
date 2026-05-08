@@ -14,8 +14,10 @@ import {
   AlertCircle
 } from 'lucide-react';
 import OrderDetailModal from '@/components/Admin/OrderDetailModal';
+import { useAuth } from '@/hooks/useAuth';
 
 export default function AdminOrders() {
+  const { user: adminUser } = useAuth();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [orders, setOrders] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -56,13 +58,18 @@ export default function AdminOrders() {
         .eq('id', id);
 
       if (error) throw error;
+      
+      const authorizedAdmins = ['rs80359@gmail.com', 'racoctanveen15@gmail.com'];
+      const isAuthorized = adminUser && authorizedAdmins.includes(adminUser.email || '');
 
-      // 2. Trigger email notification via API
-      await fetch(`/api/orders/${id}/status`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status: newStatus }),
-      });
+      // 2. Trigger email notification via API (only if authorized)
+      if (isAuthorized) {
+        await fetch(`/api/orders/${id}/status`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ status: newStatus }),
+        });
+      }
 
       // Update local state
       setOrders(orders.map(o => o.id === id ? { ...o, status: newStatus } : o));
