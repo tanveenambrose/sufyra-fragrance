@@ -33,7 +33,7 @@ const Navbar: React.FC = () => {
   const isAdminPage = pathname?.startsWith('/admin');
 
   useEffect(() => {
-    setTimeout(() => setIsMounted(true), 0);
+    setIsMounted(true);
   }, []);
 
   const handleSearch = (e?: React.FormEvent) => {

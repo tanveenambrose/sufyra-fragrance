@@ -115,30 +115,30 @@ const Footer: React.FC = () => {
           </div>
 
           {/* Quick Links */}
-          <div className="space-y-6" suppressHydrationWarning>
+          <div className="space-y-6">
             <h4 className="text-luxury-gold font-serif text-lg tracking-wider uppercase">Explore</h4>
             <ul className="space-y-4">
               <li>
                 <Link href="/" className="text-[var(--foreground)] hover:text-luxury-gold transition-colors text-sm font-bold flex items-center gap-2 group">
-                  <div className="w-1 h-1 rounded-full bg-luxury-gold opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="w-1 h-1 rounded-full bg-luxury-gold opacity-0 group-hover:opacity-100 transition-opacity" suppressHydrationWarning />
                   Home
                 </Link>
               </li>
               <li>
                 <Link href="/products" className="text-[var(--foreground)] hover:text-luxury-gold transition-colors text-sm font-bold flex items-center gap-2 group">
-                  <div className="w-1 h-1 rounded-full bg-luxury-gold opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="w-1 h-1 rounded-full bg-luxury-gold opacity-0 group-hover:opacity-100 transition-opacity" suppressHydrationWarning />
                   All Products
                 </Link>
               </li>
               <li>
                 <Link href="/products?category=perfume-oil" className="text-[var(--foreground)] hover:text-luxury-gold transition-colors text-sm font-bold flex items-center gap-2 group">
-                  <div className="w-1 h-1 rounded-full bg-luxury-gold opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="w-1 h-1 rounded-full bg-luxury-gold opacity-0 group-hover:opacity-100 transition-opacity" suppressHydrationWarning />
                   Regular Versions
                 </Link>
               </li>
               <li>
                 <Link href="/products?category=combo" className="text-[var(--foreground)] hover:text-luxury-gold transition-colors text-sm font-bold flex items-center gap-2 group">
-                  <div className="w-1 h-1 rounded-full bg-luxury-gold opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="w-1 h-1 rounded-full bg-luxury-gold opacity-0 group-hover:opacity-100 transition-opacity" suppressHydrationWarning />
                   Combo Packs
                 </Link>
               </li>
@@ -146,17 +146,17 @@ const Footer: React.FC = () => {
           </div>
 
           {/* Contact Support */}
-          <div className="space-y-6" suppressHydrationWarning>
+          <div className="space-y-6">
             <h4 className="text-luxury-gold font-serif text-lg tracking-wider uppercase">Support</h4>
-            <div className="space-y-4">
+            <div className="space-y-4" suppressHydrationWarning>
               <a 
                 href="mailto:sufyrafragrance@gmail.com" 
                 className="flex items-center gap-3 text-[var(--foreground)] hover:text-luxury-gold transition-all group"
               >
-                <div className="w-12 h-12 rounded-2xl bg-[var(--foreground)]/5 flex items-center justify-center group-hover:bg-luxury-gold/20 border border-[var(--foreground)]/10 transition-all duration-300 shadow-sm">
+                <div className="w-12 h-12 rounded-2xl bg-[var(--foreground)]/5 flex items-center justify-center group-hover:bg-luxury-gold/20 border border-[var(--foreground)]/10 transition-all duration-300 shadow-sm" suppressHydrationWarning>
                   <Mail size={20} className="text-luxury-gold" />
                 </div>
-                <div className="flex flex-col">
+                <div className="flex flex-col" suppressHydrationWarning>
                   <span className="text-[10px] uppercase tracking-[0.2em] text-[var(--foreground)]/40 font-bold">Email Us</span>
                   <span className="text-sm font-bold">sufyrafragrance@gmail.com</span>
                 </div>
@@ -167,10 +167,10 @@ const Footer: React.FC = () => {
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 text-[var(--foreground)] hover:text-luxury-gold transition-all group"
               >
-                <div className="w-12 h-12 rounded-2xl bg-[var(--foreground)]/5 flex items-center justify-center group-hover:bg-luxury-gold/20 border border-[var(--foreground)]/10 transition-all duration-300 shadow-sm">
+                <div className="w-12 h-12 rounded-2xl bg-[var(--foreground)]/5 flex items-center justify-center group-hover:bg-luxury-gold/20 border border-[var(--foreground)]/10 transition-all duration-300 shadow-sm" suppressHydrationWarning>
                   <WhatsAppIcon size={20} className="text-luxury-gold" />
                 </div>
-                <div className="flex flex-col">
+                <div className="flex flex-col" suppressHydrationWarning>
                   <span className="text-[10px] uppercase tracking-[0.2em] text-[var(--foreground)]/40 font-bold">WhatsApp</span>
                   <span className="text-sm font-bold">+880 1886-141861</span>
                 </div>
@@ -179,19 +179,19 @@ const Footer: React.FC = () => {
           </div>
 
           {/* Social Links */}
-          <div className="space-y-6" suppressHydrationWarning>
+          <div className="space-y-6">
             <h4 className="text-luxury-gold font-serif text-lg tracking-wider uppercase">Socials</h4>
-            <div className="space-y-4">
+            <div className="space-y-4" suppressHydrationWarning>
               <a 
                 href="https://www.facebook.com/SufyraFragrance/" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 text-[var(--foreground)] hover:text-luxury-gold transition-all group"
               >
-                <div className="w-12 h-12 rounded-2xl bg-[var(--foreground)]/5 flex items-center justify-center group-hover:bg-luxury-gold/20 border border-[var(--foreground)]/10 transition-all duration-300 shadow-sm">
+                <div className="w-12 h-12 rounded-2xl bg-[var(--foreground)]/5 flex items-center justify-center group-hover:bg-luxury-gold/20 border border-[var(--foreground)]/10 transition-all duration-300 shadow-sm" suppressHydrationWarning>
                   <FacebookIcon size={20} className="text-luxury-gold" />
                 </div>
-                <div className="flex flex-col">
+                <div className="flex flex-col" suppressHydrationWarning>
                   <span className="text-[10px] uppercase tracking-[0.2em] text-[var(--foreground)]/40 font-bold">Facebook</span>
                   <span className="text-sm font-bold">Syfura Fragrance</span>
                 </div>
@@ -203,10 +203,10 @@ const Footer: React.FC = () => {
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 text-[var(--foreground)] hover:text-luxury-gold transition-all group"
               >
-                <div className="w-12 h-12 rounded-2xl bg-[var(--foreground)]/5 flex items-center justify-center group-hover:bg-luxury-gold/20 border border-[var(--foreground)]/10 transition-all duration-300 shadow-sm">
+                <div className="w-12 h-12 rounded-2xl bg-[var(--foreground)]/5 flex items-center justify-center group-hover:bg-luxury-gold/20 border border-[var(--foreground)]/10 transition-all duration-300 shadow-sm" suppressHydrationWarning>
                   <InstagramIcon size={20} className="text-luxury-gold" />
                 </div>
-                <div className="flex flex-col">
+                <div className="flex flex-col" suppressHydrationWarning>
                   <span className="text-[10px] uppercase tracking-[0.2em] text-[var(--foreground)]/40 font-bold">Instagram</span>
                   <span className="text-sm font-bold">Sufyra Fragrance</span>
                 </div>
@@ -221,7 +221,7 @@ const Footer: React.FC = () => {
           <p className="text-[10px] uppercase tracking-[0.3em] text-[var(--foreground)]/20 font-medium text-center md:text-left" suppressHydrationWarning>
             © {mounted ? new Date().getFullYear() : '2026'} Sufyra Fragrance. All Rights Reserved.
           </p>
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-6" suppressHydrationWarning>
             <span className="text-[10px] uppercase tracking-[0.2em] text-[var(--foreground)]/20 hover:text-luxury-gold transition-colors cursor-pointer">Privacy Policy</span>
             <span className="text-[10px] uppercase tracking-[0.2em] text-[var(--foreground)]/20 hover:text-luxury-gold transition-colors cursor-pointer">Terms of Service</span>
           </div>

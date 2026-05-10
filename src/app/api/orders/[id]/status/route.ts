@@ -57,7 +57,8 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
         statusIcon = 'https://img.icons8.com/ios/100/d4af37/info--v1.png';
     }
 
-    const customerEmail = order.delivery_email || 'rs80359@gmail.com'; // Fallback to provided admin email for testing
+    // Use a fallback email as the delivery_email column is not present in the orders table
+    const customerEmail = 'rs80359@gmail.com'; // Defaulting to admin/test email as customer email is not stored in orders table
 
     await resend.emails.send({
       from: 'Sufyra Mansion <onboarding@resend.dev>',
