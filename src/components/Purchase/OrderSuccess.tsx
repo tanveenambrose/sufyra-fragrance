@@ -1,7 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
+import React, { useEffect, useState } from 'react';
 import { Check, ShoppingBag, ArrowRight, Sparkles } from 'lucide-react';
 import Link from 'next/link';
 
@@ -12,49 +11,25 @@ interface OrderSuccessProps {
 }
 
 export default function OrderSuccess({ isOpen, onClose, orderId }: OrderSuccessProps) {
-  const overlayRef = useRef<HTMLDivElement>(null);
-  const modalRef = useRef<HTMLDivElement>(null);
-  const checkRef = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     if (isOpen) {
-      const ctx = gsap.context(() => {
-        // Entrance animation
-        gsap.fromTo(overlayRef.current, 
-          { opacity: 0 }, 
-          { opacity: 1, duration: 0.5, ease: 'power2.out' }
-        );
-        
-        gsap.fromTo(modalRef.current,
-          { scale: 0.8, opacity: 0, y: 20 },
-          { scale: 1, opacity: 1, y: 0, duration: 0.6, delay: 0.1, ease: 'back.out(1.7)' }
-        );
-
-        gsap.fromTo(checkRef.current,
-          { scale: 0, rotate: -45 },
-          { scale: 1, rotate: 0, duration: 0.8, delay: 0.4, ease: 'elastic.out(1, 0.75)' }
-        );
-
-        gsap.fromTo(contentRef.current?.children || [],
-          { y: 20, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.5, delay: 0.6, stagger: 0.1, ease: 'power2.out' }
-        );
-      });
-      return () => ctx.revert();
+      setMounted(true);
+    } else {
+      const timer = setTimeout(() => setMounted(false), 300); // match transition duration
+      return () => clearTimeout(timer);
     }
   }, [isOpen]);
 
-  if (!isOpen) return null;
+  if (!isOpen && !mounted) return null;
 
   return (
     <div 
-      ref={overlayRef}
-      className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md"
+      className={`fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md transition-opacity duration-500 ${isOpen ? 'opacity-100' : 'opacity-0'}`}
     >
       <div 
-        ref={modalRef}
-        className="relative w-full max-w-lg bg-[#0A0A0A] border border-luxury-gold/20 rounded-[2.5rem] p-8 sm:p-12 overflow-hidden shadow-[0_0_100px_rgba(212,175,55,0.1)]"
+        className={`relative w-full max-w-lg bg-[#0A0A0A] border border-luxury-gold/20 rounded-[2.5rem] p-8 sm:p-12 overflow-hidden shadow-[0_0_100px_rgba(212,175,55,0.1)] transition-all duration-500 transform ${isOpen ? 'scale-100 translate-y-0 opacity-100' : 'scale-90 translate-y-8 opacity-0'}`}
       >
         {/* Decorative Background Elements */}
         <div className="absolute top-0 right-0 w-64 h-64 bg-luxury-gold/5 rounded-full blur-[100px] -mr-32 -mt-32" />
@@ -63,13 +38,12 @@ export default function OrderSuccess({ isOpen, onClose, orderId }: OrderSuccessP
         <div className="relative z-10 flex flex-col items-center text-center">
           {/* Animated Check Icon */}
           <div 
-            ref={checkRef}
-            className="w-20 h-20 sm:w-24 h-24 rounded-full bg-luxury-gold flex items-center justify-center mb-8 shadow-[0_0_40px_rgba(212,175,55,0.3)]"
+            className={`w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-luxury-gold flex items-center justify-center mb-8 shadow-[0_0_40px_rgba(212,175,55,0.3)] transition-all duration-700 delay-200 transform ${isOpen ? 'scale-100 rotate-0' : 'scale-0 -rotate-45'}`}
           >
             <Check size={40} className="text-luxury-charcoal" strokeWidth={3} />
           </div>
 
-          <div ref={contentRef} className="space-y-4">
+          <div className={`space-y-4 transition-all duration-500 delay-300 transform ${isOpen ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-luxury-gold/30 bg-luxury-gold/10 mb-2">
               <Sparkles size={12} className="text-luxury-gold" />
               <span className="text-[10px] text-luxury-gold uppercase tracking-[0.2em] font-bold">Procurement Successful</span>
@@ -97,7 +71,7 @@ export default function OrderSuccess({ isOpen, onClose, orderId }: OrderSuccessP
               </button>
               
               <Link 
-                href="/orders" 
+                href="/admin/orders" 
                 onClick={onClose}
                 className="px-12 py-4 rounded-xl text-white/40 hover:text-white font-bold uppercase tracking-[0.2em] text-[10px] transition-all flex items-center justify-center gap-2"
               >
