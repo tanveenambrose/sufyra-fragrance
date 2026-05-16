@@ -51,90 +51,132 @@ export async function POST(req: Request) {
           <td style="padding: 15px 0; text-align: right; font-weight: bold; color: #d4af37;">৳${total}</td>
          </tr>`;
 
-    const whatsAppLink = `https://wa.me/8801886141861`;
+    // Calculate pricing for the receipt
+    const deliveryCharge = zone === 'Inside Dhaka' ? 80 : 150;
+    const subtotal = total - deliveryCharge;
 
-    // 1. Send Confirmation Email to Customer
+    const whatsAppLink = `https://wa.me/8801886141861`;
+    const facebookLink = "https://www.facebook.com/SufyraFragrance/";
+    const instagramLink = "https://www.instagram.com/sufyra_fragrance";
+    const logoUrl = "https://sufyra-fragrance.vercel.app/logo.png";
+
+    // 1. Send Confirmation Email to Customer (New Premium Design)
     await resend.emails.send({
-      from: 'Sufyra Mansion <onboarding@resend.dev>',
+      from: 'Sufyra Fragrance <onboarding@resend.dev>',
       to: customerEmail,
-      subject: `Thank You for Your Order - #${orderId?.slice(0, 8).toUpperCase()}`,
+      subject: `Your Sufyra Fragrance Order - #${orderId?.slice(0, 8).toUpperCase()}`,
       html: `
         <!DOCTYPE html>
-        <html>
+        <html lang="en">
         <head>
+          <meta charset="UTF-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Order Confirmation</title>
           <style>
-            @media only screen and (max-width: 600px) {
-              .container { width: 100% !important; border-radius: 0 !important; }
-              .header { padding: 30px 20px !important; }
-              .header h1 { font-size: 24px !important; }
-              .body-content { padding: 30px 20px !important; }
-              .manifest-box { padding: 20px !important; }
-            }
+            body { margin: 0; padding: 0; background-color: #f9f9f9; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+            .wrapper { width: 100%; table-layout: fixed; background-color: #f9f9f9; padding-bottom: 40px; }
+            .container { max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+            .header { background-color: #0a0a0a; padding: 40px 20px; text-align: center; }
+            .content { padding: 40px 30px; }
+            .greeting { font-size: 24px; color: #1a1a1a; margin-bottom: 15px; font-weight: 700; }
+            .message { font-size: 16px; color: #4a4a4a; line-height: 1.6; margin-bottom: 30px; }
+            .receipt-table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+            .receipt-header { border-bottom: 2px solid #f0f0f0; }
+            .receipt-header th { text-align: left; padding: 12px 0; font-size: 12px; text-transform: uppercase; color: #888; letter-spacing: 1px; }
+            .receipt-item td { padding: 15px 0; border-bottom: 1px solid #f0f0f0; }
+            .item-name { font-weight: 600; color: #1a1a1a; font-size: 15px; }
+            .item-variant { font-size: 13px; color: #888; margin-top: 4px; }
+            .item-price { text-align: right; font-weight: 600; color: #d4af37; }
+            .summary-row td { padding: 10px 0; font-size: 14px; color: #4a4a4a; }
+            .summary-label { text-align: left; }
+            .summary-value { text-align: right; font-weight: 600; }
+            .total-row td { padding: 20px 0; border-top: 2px solid #f0f0f0; margin-top: 10px; }
+            .total-label { font-size: 18px; font-weight: 700; color: #1a1a1a; }
+            .total-value { font-size: 24px; font-weight: 800; color: #d4af37; text-align: right; }
+            .whatsapp-section { background-color: #065f46; border-radius: 12px; padding: 40px 25px; text-align: center; margin-bottom: 40px; }
+            .whatsapp-title { color: #ffffff; font-size: 24px; font-weight: 700; margin-bottom: 15px; }
+            .whatsapp-text { color: #d1fae5; font-size: 15px; margin-bottom: 25px; line-height: 1.6; max-width: 400px; margin-left: auto; margin-right: auto; }
+            .whatsapp-btn { display: inline-block; background-color: #22c55e; color: #064e3b; padding: 16px 35px; border-radius: 50px; text-decoration: none; font-weight: 800; font-size: 16px; transition: all 0.2s; }
+            .footer { padding: 40px 20px; text-align: center; background-color: #fdfdfd; border-top: 1px solid #f0f0f0; }
+            .social-links { margin-bottom: 20px; }
+            .social-icon { display: inline-block; margin: 0 10px; text-decoration: none; color: #d4af37; font-weight: 600; font-size: 14px; }
+            .footer-text { font-size: 12px; color: #aaa; margin-bottom: 5px; }
           </style>
         </head>
-        <body style="margin: 0; padding: 0; background-color: #f4f4f4; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">
-          <table border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;">
-            <tr>
-              <td align="center" style="padding: 40px 10px;">
-                <table align="center" border="0" cellpadding="0" cellspacing="0" width="600" class="container" style="background-color: #ffffff; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); width: 100%; max-width: 600px;">
-                  <!-- Header -->
-                  <tr>
-                    <td class="header" style="background-color: #050505; padding: 40px; text-align: center;">
-                      <img src="https://pcgqfuvgmzusypmaiawy.supabase.co/storage/v1/object/public/products/logo.png" alt="Sufyra" style="width: 150px; margin-bottom: 20px; display: inline-block;">
-                      <h1 style="color: #ffffff; margin: 0; font-size: 28px; font-weight: 300; letter-spacing: 2px;">Thank You for Your Selection</h1>
-                      <p style="color: #d4af37; margin-top: 10px; text-transform: uppercase; letter-spacing: 3px; font-size: 10px; font-weight: bold;">Order Confirmed</p>
-                    </td>
+        <body>
+          <div class="wrapper">
+            <div class="container">
+              <div class="header">
+                <img src="${logoUrl}" alt="Sufyra Fragrance" width="160" style="display: block; margin: 0 auto;">
+              </div>
+              <div class="content">
+                <h1 class="greeting">Thank You, ${customerName}!</h1>
+                <p class="message">We've received your order and our team is already preparing it with the finest care. Your journey into luxury fragrances has begun.</p>
+                
+                <table class="receipt-table">
+                  <tr class="receipt-header">
+                    <th width="70%">Item Details</th>
+                    <th width="30%" style="text-align: right;">Price</th>
                   </tr>
-                  
-                  <!-- Body -->
-                  <tr>
-                    <td class="body-content" style="padding: 40px;">
-                      <p style="font-size: 16px; color: #444444; line-height: 1.6; margin-top: 0;">Dear <strong>${customerName}</strong>,</p>
-                      <p style="font-size: 16px; color: #666666; line-height: 1.6;">Your journey into luxury has begun. We have received your order and our artisans are preparing your manifest with the utmost care.</p>
-                      
-                      <div class="manifest-box" style="margin: 40px 0; padding: 30px; background-color: #fafafa; border-radius: 15px; border: 1px solid #eeeeee;">
-                        <h2 style="font-size: 12px; text-transform: uppercase; letter-spacing: 2px; color: #d4af37; margin-bottom: 20px;">Procurement Manifest</h2>
-                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
-                          ${customerItemsHtml}
-                          <tr>
-                            <td style="padding: 20px 0 0 0; font-weight: bold; color: #333333; font-size: 16px;">Total Amount</td>
-                            <td style="padding: 20px 0 0 0; text-align: right; font-size: 22px; font-weight: bold; color: #d4af37;">৳${total}</td>
-                          </tr>
-                        </table>
-                      </div>
-
-                      <!-- WhatsApp Support - Highly Highlighted -->
-                      <div style="text-align: center; margin-top: 40px; margin-bottom: 40px; padding: 35px 20px; background: linear-gradient(135deg, #128C7E 0%, #075E54 100%); border-radius: 15px; box-shadow: 0 10px 20px rgba(18,140,126,0.2);">
-                        <h2 style="color: #ffffff; margin: 0 0 10px 0; font-size: 20px; font-weight: bold;">Need assistance?</h2>
-                        <p style="color: #e5ffe5; margin: 0 0 25px 0; font-size: 14px; line-height: 1.5;">Our support team is available on WhatsApp to help you with your order.</p>
-                        <a href="${whatsAppLink}" style="display: inline-block; background-color: #25D366; color: #ffffff; padding: 16px 35px; border-radius: 50px; text-decoration: none; font-weight: bold; font-size: 16px; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
-                          Contact via WhatsApp
-                        </a>
-                      </div>
-
-                      <div style="margin: 40px 0 0 0; border-top: 1px solid #eeeeee; padding-top: 30px;">
-                        <h2 style="font-size: 12px; text-transform: uppercase; letter-spacing: 2px; color: #d4af37; margin-bottom: 15px;">Delivery Coordinates</h2>
-                        <p style="font-size: 15px; color: #444444; margin: 0; line-height: 1.5;">${address}</p>
-                        <p style="font-size: 13px; color: #888888; margin-top: 5px; text-transform: uppercase;">Zone: <span style="color: #444;">${zone}</span></p>
-                      </div>
-                    </td>
+                  ${items && Array.isArray(items) ? items.map(item => `
+                    <tr class="receipt-item">
+                      <td>
+                        <div class="item-name">${item.name}</div>
+                        <div class="item-variant">Size: ${item.size} | Qty: ${item.quantity}</div>
+                      </td>
+                      <td class="item-price">৳${item.price * item.quantity}</td>
+                    </tr>
+                  `).join('') : `
+                    <tr class="receipt-item">
+                      <td>
+                        <div class="item-name">${productName}</div>
+                        <div class="item-variant">Size: ${size} | Qty: ${quantity}</div>
+                      </td>
+                      <td class="item-price">৳${total - deliveryCharge}</td>
+                    </tr>
+                  `}
+                  <tr class="summary-row" style="padding-top: 20px;">
+                    <td class="summary-label" style="padding-top: 20px;">Subtotal</td>
+                    <td class="summary-value" style="padding-top: 20px;">৳${subtotal}</td>
                   </tr>
-
-                  <!-- Footer -->
-                  <tr>
-                    <td style="padding: 30px; text-align: center; background-color: #fafafa; color: #999999; font-size: 10px; text-transform: uppercase; letter-spacing: 2px; border-top: 1px solid #eeeeee;">
-                      Sufyra Fragrance &copy; 2026 — Artisanal Perfumery
-                    </td>
+                  <tr class="summary-row">
+                    <td class="summary-label">Delivery Charge</td>
+                    <td class="summary-value">৳${deliveryCharge}</td>
+                  </tr>
+                  <tr class="total-row">
+                    <td class="total-label">Grand Total</td>
+                    <td class="total-value">৳${total}</td>
                   </tr>
                 </table>
-              </td>
-            </tr>
-          </table>
+
+                <div class="whatsapp-section">
+                  <div class="whatsapp-title">Need Instant Updates?</div>
+                  <p class="whatsapp-text">Click below to chat with our support team on WhatsApp for delivery arrangements or any queries.</p>
+                  <a href="${whatsAppLink}" class="whatsapp-btn">Chat on WhatsApp</a>
+                </div>
+
+                <div style="margin-top: 30px; border-top: 1px solid #f0f0f0; padding-top: 20px;">
+                  <p style="font-size: 12px; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;">Shipping Address</p>
+                  <p style="font-size: 14px; color: #4a4a4a; line-height: 1.5; margin: 0;">${address}</p>
+                  <p style="font-size: 12px; color: #aaa; margin-top: 5px;">Zone: ${zone}</p>
+                </div>
+              </div>
+              
+              <div class="footer">
+                <div class="social-links">
+                  <a href="${facebookLink}" class="social-icon">Facebook</a>
+                  <a href="${instagramLink}" class="social-icon">Instagram</a>
+                </div>
+                <p class="footer-text">Sufyra Fragrance &copy; 2026. All Rights Reserved.</p>
+                <p class="footer-text">Artisanal Perfumery | Handcrafted in Bangladesh</p>
+              </div>
+            </div>
+          </div>
         </body>
         </html>
       `,
     });
+
 
     // 2. Send Notification to Admin
     await resend.emails.send({
