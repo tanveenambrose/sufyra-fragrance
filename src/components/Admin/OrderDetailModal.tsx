@@ -2,10 +2,17 @@
 
 import React from 'react';
 import { X, User, MapPin, Phone, CreditCard, Calendar, Package, Tag, Hash } from 'lucide-react';
+import { Order } from '@/app/admin/orders/page';
+
+interface OrderItem {
+  name: string;
+  size: string;
+  quantity: number;
+  price: number;
+}
 
 interface OrderDetailModalProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  order: any;
+  order: Order;
   isOpen: boolean;
   onClose: () => void;
 }
@@ -105,46 +112,41 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({ order, isOpen, onCl
                 </h3>
                 <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-4 space-y-4">
                   {(() => {
+                    let parsedItems: OrderItem[] | null = null;
                     try {
-                      // Check if product_name is a JSON array of items
                       if (order.product_name.startsWith('[') && order.product_name.endsWith(']')) {
-                        const items = JSON.parse(order.product_name);
-                        return (
-                          <div className="space-y-4">
-                            {items.map((item: any, idx: number) => (
-                              <div key={idx} className="flex justify-between items-start pb-4 border-b border-white/5 last:border-0 last:pb-0">
-                                <div>
-                                  <p className="text-sm font-bold text-luxury-cream">{item.name}</p>
-                                  <p className="text-[9px] uppercase tracking-widest text-luxury-gold mt-1">Size: {item.size} | Qty: {item.quantity}</p>
-                                </div>
-                                <span className="text-sm font-bold text-luxury-cream">৳{item.price * item.quantity}</span>
-                              </div>
-                            ))}
-                          </div>
-                        );
+                        parsedItems = JSON.parse(order.product_name);
                       }
-                      // Fallback for single product
+                    } catch {
+                      parsedItems = null;
+                    }
+
+                    if (parsedItems) {
                       return (
-                        <div className="flex justify-between items-start">
-                          <div>
-                            <p className="text-sm font-bold text-luxury-cream">{order.product_name}</p>
-                            <p className="text-[9px] uppercase tracking-widest text-luxury-gold mt-1">Size: {order.variant_size} | Qty: {order.quantity}</p>
-                          </div>
-                          <span className="text-sm font-bold text-luxury-cream">৳{order.subtotal}</span>
-                        </div>
-                      );
-                    } catch (e) {
-                      // Fallback if parsing fails
-                      return (
-                        <div className="flex justify-between items-start">
-                          <div>
-                            <p className="text-sm font-bold text-luxury-cream">{order.product_name}</p>
-                            <p className="text-[9px] uppercase tracking-widest text-luxury-gold mt-1">Size: {order.variant_size} | Qty: {order.quantity}</p>
-                          </div>
-                          <span className="text-sm font-bold text-luxury-cream">৳{order.subtotal}</span>
+                        <div className="space-y-4">
+                          {parsedItems.map((item: OrderItem, idx: number) => (
+                            <div key={idx} className="flex justify-between items-start pb-4 border-b border-white/5 last:border-0 last:pb-0">
+                              <div>
+                                <p className="text-sm font-bold text-luxury-cream">{item.name}</p>
+                                <p className="text-[9px] uppercase tracking-widest text-luxury-gold mt-1">Size: {item.size} | Qty: {item.quantity}</p>
+                              </div>
+                              <span className="text-sm font-bold text-luxury-cream">৳{item.price * item.quantity}</span>
+                            </div>
+                          ))}
                         </div>
                       );
                     }
+
+                    // Fallback for single product
+                    return (
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <p className="text-sm font-bold text-luxury-cream">{order.product_name}</p>
+                          <p className="text-[9px] uppercase tracking-widest text-luxury-gold mt-1">Size: {order.variant_size} | Qty: {order.quantity}</p>
+                        </div>
+                        <span className="text-sm font-bold text-luxury-cream">৳{order.subtotal}</span>
+                      </div>
+                    );
                   })()}
                   <div className="pt-4 border-t border-white/5 space-y-2">
                     <div className="flex justify-between text-[10px] uppercase tracking-widest text-white/40">

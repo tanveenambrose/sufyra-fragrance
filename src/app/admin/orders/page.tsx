@@ -16,14 +16,30 @@ import {
 import OrderDetailModal from '@/components/Admin/OrderDetailModal';
 import { useAuth } from '@/hooks/useAuth';
 
+export interface Order {
+  id: string;
+  created_at: string;
+  delivery_name: string;
+  delivery_zone: string;
+  delivery_address: string;
+  whatsapp_number: string;
+  payment_method: string;
+  product_name: string;
+  variant_size: string;
+  quantity: number;
+  total_price: number;
+  status: string;
+  user_id?: string;
+  subtotal?: number;
+  delivery_cost?: number;
+}
+
 export default function AdminOrders() {
   const { user: adminUser } = useAuth();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [orders, setOrders] = useState<any[]>([]);
+  const [orders, setOrders] = useState<Order[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [selectedOrder, setSelectedOrder] = useState<any>(null);
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [updatingId, setUpdatingId] = useState<string | null>(null);
 
@@ -331,11 +347,13 @@ export default function AdminOrders() {
         </div>
       </div>
 
-      <OrderDetailModal 
-        order={selectedOrder} 
-        isOpen={isModalOpen} 
-        onClose={() => setIsModalOpen(false)} 
-      />
+      {selectedOrder && (
+        <OrderDetailModal 
+          order={selectedOrder} 
+          isOpen={isModalOpen} 
+          onClose={() => setIsModalOpen(false)} 
+        />
+      )}
     </div>
   );
 }

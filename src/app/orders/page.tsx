@@ -389,7 +389,7 @@ export default function MyOrders() {
                               </div>
                               
                               <div className="p-6 rounded-2xl bg-luxury-gold/[0.03] border border-luxury-gold/10">
-                                <p className="text-[8px] uppercase tracking-[0.3em] text-luxury-gold/40 font-bold mb-3 italic">Curator's Note</p>
+                                <p className="text-[8px] uppercase tracking-[0.3em] text-luxury-gold/40 font-bold mb-3 italic">Curator&apos;s Note</p>
                                 <p className="text-[10px] text-[var(--foreground)]/50 leading-relaxed tracking-wider uppercase">
                                   This procurement manifest is verified. Our concierge team will reach out via WhatsApp to synchronize the delivery timeline.
                                 </p>

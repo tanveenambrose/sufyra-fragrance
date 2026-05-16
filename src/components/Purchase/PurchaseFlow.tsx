@@ -3,16 +3,15 @@
 import React, { useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import LoginModal from '../Auth/LoginModal';
-import PurchaseForm, { PurchaseFormData } from './PurchaseForm';
+import PurchaseForm, { PurchaseFormData, CartItem } from './PurchaseForm';
 import OrderSuccess from './OrderSuccess';
-import { Product } from '@/data/products';
 import { supabase } from '@/lib/supabase';
 import { useCart } from '@/store/useCart';
 
 interface PurchaseFlowProps {
   isOpen: boolean;
   onClose: () => void;
-  items: any[]; // Changed from single product props to items array
+  items: CartItem[]; // Changed from any[] to CartItem[]
 }
 
 const PurchaseFlow: React.FC<PurchaseFlowProps> = ({

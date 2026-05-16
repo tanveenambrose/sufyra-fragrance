@@ -15,7 +15,9 @@ export default function OrderSuccess({ isOpen, onClose, orderId }: OrderSuccessP
 
   useEffect(() => {
     if (isOpen) {
-      setMounted(true);
+      // Use setTimeout to avoid synchronous setState in effect warning
+      const timer = setTimeout(() => setMounted(true), 0);
+      return () => clearTimeout(timer);
     } else {
       const timer = setTimeout(() => setMounted(false), 300); // match transition duration
       return () => clearTimeout(timer);

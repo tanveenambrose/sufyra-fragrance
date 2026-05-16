@@ -141,10 +141,19 @@ export default function ProductForm({ initialData }: ProductFormProps) {
     setFormData({ ...formData, variants: newVariants });
   };
 
-  const handleVariantChange = (index: number, field: string, value: string | number) => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const newVariants = [...formData.variants] as any[];
-    newVariants[index][field] = value;
+  const handleVariantChange = (index: number, field: keyof Variant, value: string | number) => {
+    const newVariants = [...formData.variants];
+    const targetVariant = { ...newVariants[index] };
+    
+    if (field === 'price') {
+      targetVariant.price = value as number;
+    } else if (field === 'size') {
+      targetVariant.size = value as string;
+    } else if (field === 'image_url') {
+      targetVariant.image_url = value as string;
+    }
+    
+    newVariants[index] = targetVariant;
     setFormData({ ...formData, variants: newVariants });
   };
 

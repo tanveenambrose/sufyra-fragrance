@@ -1,11 +1,27 @@
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
+import nodemailer from 'nodemailer';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.COMPANY_EMAIL,
+    pass: process.env.COMPANY_PASSWORD,
+  },
+});
+
+interface OrderItem {
+  name: string;
+  productId?: string | number;
+  size: string;
+  quantity: number;
+  price: number;
+}
+
 export async function POST(req: Request) {
   try {
-    const body = await req.json();
     const { 
       orderId, 
       customerName, 
@@ -19,7 +35,20 @@ export async function POST(req: Request) {
       whatsapp,
       paymentMethod,
       customerEmail 
-    } = body;
+    } = await req.json() as {
+      orderId: string;
+      customerName: string;
+      productName: string;
+      size: string;
+      quantity: number;
+      items?: OrderItem[];
+      total: number;
+      zone: string;
+      address: string;
+      whatsapp: string;
+      paymentMethod: string;
+      customerEmail: string;
+    };
 
     if (!process.env.RESEND_API_KEY) {
       console.warn('Email notification skipped: RESEND_API_KEY is not configured.');
@@ -31,8 +60,8 @@ export async function POST(req: Request) {
     }
 
     // Generate items HTML for Customer and Admin
-    let customerItemsHtml = items && Array.isArray(items) 
-      ? items.map(item => `
+    const customerItemsHtml = items && Array.isArray(items) 
+      ? items.map((item: OrderItem) => `
           <tr style="border-bottom: 1px solid #eeeeee;">
             <td style="padding: 15px 0;">
               <p style="margin: 0; font-weight: bold; color: #333333;">${item.name} ${item.productId ? `(#${item.productId.toString().slice(0, 6)})` : ''}</p>
@@ -137,10 +166,10 @@ export async function POST(req: Request) {
       `,
     });
 
-    // 2. Send Confirmation Email to Customer (New Premium Design - Fixed dynamic Routing)
+    // 2. Send Confirmation Email to Customer via Nodemailer (Using Gmail)
     if (customerEmail && customerEmail.includes('@')) {
-      await resend.emails.send({
-        from: 'Sufyra Fragrance <onboarding@resend.dev>',
+      await transporter.sendMail({
+        from: `"Sufyra Fragrance" <${process.env.COMPANY_EMAIL}>`,
         to: customerEmail,
         subject: `Your Sufyra Fragrance Order - #${orderId?.slice(0, 8).toUpperCase()}`,
         html: `
@@ -196,7 +225,7 @@ export async function POST(req: Request) {
                       <th width="70%">Item Details</th>
                       <th width="30%" style="text-align: right;">Price</th>
                     </tr>
-                    ${items && Array.isArray(items) ? items.map(item => `
+                    ${items && Array.isArray(items) ? items.map((item: OrderItem) => `
                       <tr class="receipt-item">
                         <td>
                           <div class="item-name">${item.name}</div>

@@ -3,12 +3,22 @@
 import React, { useState } from 'react';
 import { X, MapPin, Phone, User, CheckCircle2 } from 'lucide-react';
 import Image from 'next/image';
-import { Product } from '@/data/products';
+
+export interface CartItem {
+  id: string;
+  name: string;
+  selectedSize: string;
+  selectedPrice: number;
+  quantity: number;
+  image_url?: string;
+  product_image?: string;
+  image?: string;
+}
 
 interface PurchaseFormProps {
   isOpen: boolean;
   onClose: () => void;
-  items: any[];
+  items: CartItem[];
   onSubmit: (formData: PurchaseFormData) => Promise<void>;
   isSubmitting: boolean;
 }
