@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import nodemailer from 'nodemailer';
+import fs from 'fs';
+import path from 'path';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -87,7 +89,24 @@ export async function POST(req: Request) {
     const whatsAppLink = `https://wa.me/8801886141861`;
     const facebookLink = "https://www.facebook.com/SufyraFragrance/";
     const instagramLink = "https://www.instagram.com/sufyra_fragrance";
-    const logoUrl = "https://sufyra-fragrance.vercel.app/logo.png";
+    
+    // Use the custom logo if available, otherwise fallback
+    const logoUrl = "https://sufyra-fragrance.vercel.app/email-logo.jpeg";
+    
+    // Read local logo for CID attachment (Nodemailer)
+    let logoAttachment = null;
+    try {
+      const logoPath = path.join(process.cwd(), 'public', 'email-logo.jpeg');
+      if (fs.existsSync(logoPath)) {
+        logoAttachment = {
+          filename: 'logo.jpeg',
+          path: logoPath,
+          cid: 'logo' // same cid value as in the html img src
+        };
+      }
+    } catch (err) {
+      console.error('Error loading email logo:', err);
+    }
 
     // 1. Send Notification to Admin (Preserved exactly)
     await resend.emails.send({
@@ -172,6 +191,7 @@ export async function POST(req: Request) {
         from: `"Sufyra Fragrance" <${process.env.COMPANY_EMAIL}>`,
         to: customerEmail,
         subject: `Your Sufyra Fragrance Order - #${orderId?.slice(0, 8).toUpperCase()}`,
+        attachments: logoAttachment ? [logoAttachment] : [],
         html: `
           <!DOCTYPE html>
           <html lang="en">
@@ -214,7 +234,7 @@ export async function POST(req: Request) {
             <div class="wrapper">
               <div class="container">
                 <div class="header">
-                  <img src="${logoUrl}" alt="Sufyra Fragrance" width="160" style="display: block; margin: 0 auto;">
+                  <img src="${logoAttachment ? 'cid:logo' : logoUrl}" alt="Sufyra Fragrance" width="160" style="display: block; margin: 0 auto;">
                 </div>
                 <div class="content">
                   <h1 class="greeting">Thank You, ${customerName}!</h1>
