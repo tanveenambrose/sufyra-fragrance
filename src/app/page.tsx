@@ -1,15 +1,13 @@
 import React from 'react';
 import Hero from '@/components/Hero';
 import ProductSlider from '@/components/ProductSlider';
-import { createClient } from '@/utils/supabase/server';
+import { supabaseStatic } from '@/utils/supabase/static';
 import Reveal from '@/components/Reveal';
 
 export const revalidate = 3600; // Revalidate every hour
 
 export default async function Home() {
-  const supabase = await createClient();
-  
-  const { data: dbProducts, error } = await supabase
+  const { data: dbProducts, error } = await supabaseStatic
     .from('products')
     .select('*')
     .order('created_at', { ascending: false });

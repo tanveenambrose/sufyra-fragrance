@@ -1,13 +1,11 @@
 import React, { Suspense } from 'react';
 import ProductsContent from '@/components/Products/ProductsContent';
-import { createClient } from '@/utils/supabase/server';
+import { supabaseStatic } from '@/utils/supabase/static';
 
 export const revalidate = 3600; // Revalidate every hour
 
 export default async function ProductsPage() {
-  const supabase = await createClient();
-  
-  const { data: dbProducts, error } = await supabase
+  const { data: dbProducts, error } = await supabaseStatic
     .from('products')
     .select('*')
     .order('created_at', { ascending: false });
