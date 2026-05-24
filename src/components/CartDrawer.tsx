@@ -1,53 +1,36 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { X, Plus, Minus, Trash2, Smartphone, Send, MessageCircle, ChevronDown, ChevronUp } from 'lucide-react';
 import { useCart } from '@/store/useCart';
 import Image from 'next/image';
-import { gsap } from 'gsap';
 import { useState } from 'react';
 import PurchaseFlow from './Purchase/PurchaseFlow';
-
-interface CartDrawerProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
 
 const CartDrawer: React.FC = () => {
   const { items, removeItem, updateQuantity, getTotalPrice, isCartOpen, setIsCartOpen } = useCart();
   const [isExpanded, setIsExpanded] = useState(false);
   const [isPurchaseModalOpen, setIsPurchaseModalOpen] = useState(false);
-  const drawerRef = useRef(null);
-  const overlayRef = useRef(null);
 
   const isOpen = isCartOpen;
   const onClose = () => setIsCartOpen(false);
 
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-      gsap.to(overlayRef.current, { opacity: 1, display: 'block', duration: 0.3 });
-      gsap.to(drawerRef.current, { x: 0, duration: 0.5, ease: 'power3.out' });
-    } else {
-      document.body.style.overflow = 'unset';
-      gsap.to(overlayRef.current, { opacity: 0, display: 'none', duration: 0.3 });
-      gsap.to(drawerRef.current, { x: '100%', duration: 0.5, ease: 'power3.in' });
-    }
+    document.body.style.overflow = isOpen ? 'hidden' : 'unset';
+    return () => { document.body.style.overflow = 'unset'; };
   }, [isOpen]);
 
   return (
     <>
       {/* Overlay */}
       <div
-        ref={overlayRef}
-        className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] hidden"
+        className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] transition-opacity duration-300 ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
         onClick={onClose}
       />
 
       {/* Drawer */}
       <div
-        ref={drawerRef}
-        className="fixed top-0 right-0 h-full w-full max-w-md bg-[var(--background)] z-[101] translate-x-full cart-drawer flex flex-col transition-colors duration-300"
+        className={`fixed top-0 right-0 h-full w-full max-w-md bg-[var(--background)] z-[101] cart-drawer flex flex-col transition-colors duration-300 transition-transform duration-500 ease-[cubic-bezier(0.04,0.56,0.4,1)] ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
       >
         {/* Header */}
         <div className="p-6 border-b border-[var(--foreground)]/10 flex items-center justify-between">

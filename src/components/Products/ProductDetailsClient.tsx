@@ -18,11 +18,7 @@ import {
   LayoutGrid
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { gsap } from 'gsap';
-import { useGSAP } from '@gsap/react';
 import PurchaseFlow from '@/components/Purchase/PurchaseFlow';
-
-gsap.registerPlugin(useGSAP);
 
 interface ProductDetailsClientProps {
   product: Product;
@@ -53,21 +49,6 @@ export default function ProductDetailsClient({ product, adjacentIds }: ProductDe
       }
     }
   }, [selectedSize, product]);
-
-  useGSAP(() => {
-    const tl = gsap.timeline();
-
-    tl.fromTo('.reveal-text',
-      { y: 30, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.8, stagger: 0.1, ease: 'power3.out' }
-    );
-
-    tl.fromTo('.reveal-img',
-      { x: -50, opacity: 0 },
-      { x: 0, opacity: 1, duration: 1.2, ease: 'power4.out' },
-      '-=0.6'
-    );
-  }, { dependencies: [product] });
 
   const currentVariant = product.variants.find(v => v.size === selectedSize) || product.variants[0];
   const discount = product.discount_percent || 0;
@@ -123,7 +104,7 @@ export default function ProductDetailsClient({ product, adjacentIds }: ProductDe
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 xl:gap-20 items-start">
           {/* Left: Product Image */}
-          <div className="reveal-img relative w-full flex flex-col items-center lg:items-end">
+          <div className="reveal-img relative w-full flex flex-col items-center lg:items-end animate-[reveal-img_1.2s_cubic-bezier(0.18,0.89,0.32,1.28)_0.3s_both]">
             <div className="relative aspect-[4/5] bg-[var(--foreground)]/5 rounded-2xl overflow-hidden shadow-2xl group border border-[var(--foreground)]/10 w-[85%] md:w-[70%] lg:w-full lg:max-w-[480px]">
               {activeImage ? (
                 <Image
@@ -181,7 +162,7 @@ export default function ProductDetailsClient({ product, adjacentIds }: ProductDe
 
           {/* Right: Product Details */}
           <div className="flex flex-col pt-4 lg:pt-0">
-            <div className="reveal-text opacity-0">
+            <div className="reveal-text animate-[reveal-text_0.8s_cubic-bezier(0.04,0.56,0.4,1)_0.05s_both]">
               <h1 className="text-4xl md:text-6xl xl:text-8xl font-serif text-[var(--foreground)] mb-6 leading-[0.9] tracking-tight">{product.name}</h1>
               <div className="flex items-center gap-4 mb-8">
                 <div className="flex items-center gap-2">
@@ -192,7 +173,7 @@ export default function ProductDetailsClient({ product, adjacentIds }: ProductDe
               </div>
             </div>
 
-            <div className="reveal-text space-y-8">
+            <div className="reveal-text animate-[reveal-text_0.8s_cubic-bezier(0.04,0.56,0.4,1)_0.15s_both]">
               {/* Size Selection */}
               <div className="space-y-4">
                 <label className="text-[10px] uppercase tracking-[0.2em] text-[var(--foreground)]/60 font-bold flex items-center gap-2">

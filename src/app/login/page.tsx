@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Mail, Lock, LogIn, ArrowRight } from 'lucide-react';
 import AuthInput from '@/components/Auth/AuthInput';
@@ -8,7 +8,6 @@ import SocialButton from '@/components/Auth/SocialButton';
 import { supabase } from '@/lib/supabase';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
-import { gsap } from 'gsap';
 import { getURL } from '@/lib/utils';
 
 const LoginPage = () => {
@@ -18,23 +17,12 @@ const LoginPage = () => {
   const [loading, setLoading] = useState(false);
   const { user, loading: authLoading } = useAuth();
   const router = useRouter();
-  const formRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!authLoading && user) {
       router.push('/');
     }
   }, [user, authLoading, router]);
-
-  useEffect(() => {
-    if (formRef.current) {
-      gsap.fromTo(
-        formRef.current,
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 1, ease: 'power4.out', delay: 0.2 }
-      );
-    }
-  }, []);
 
   const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -83,7 +71,7 @@ const LoginPage = () => {
         <div className="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] bg-luxury-gold/5 blur-[120px] rounded-full"></div>
       </div>
 
-      <div ref={formRef} className="w-full max-w-md luxury-card p-8 md:p-10 rounded-[30px] border border-luxury-gold/10">
+      <div className="w-full max-w-md luxury-card p-8 md:p-10 rounded-[30px] border border-luxury-gold/10 animate-[fade-in-up_1s_cubic-bezier(0.18,0.89,0.32,1.28)_0.2s_both]">
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-6xl font-serif text-[var(--foreground)] mb-4 tracking-tight leading-tight">Welcome <br /> <span className="font-normal italic">Back</span></h1>
           <p className="text-luxury-gold text-[10px] uppercase tracking-[0.4em] font-bold">Access your sanctuary</p>

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Mail, Lock, User, UserPlus, ArrowLeft, CheckCircle2 } from 'lucide-react';
 import AuthInput from '@/components/Auth/AuthInput';
@@ -8,7 +8,6 @@ import SocialButton from '@/components/Auth/SocialButton';
 import { supabase } from '@/lib/supabase';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
-import { gsap } from 'gsap';
 import { getURL } from '@/lib/utils';
 
 const RegisterPage = () => {
@@ -20,23 +19,12 @@ const RegisterPage = () => {
   const [loading, setLoading] = useState(false);
   const { user, loading: authLoading } = useAuth();
   const router = useRouter();
-  const formRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!authLoading && user) {
       router.push('/');
     }
   }, [user, authLoading, router]);
-
-  useEffect(() => {
-    if (formRef.current) {
-      gsap.fromTo(
-        formRef.current,
-        { opacity: 0, scale: 0.95 },
-        { opacity: 1, scale: 1, duration: 1, ease: 'back.out(1.7)', delay: 0.1 }
-      );
-    }
-  }, []);
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -112,7 +100,7 @@ const RegisterPage = () => {
         <div className="absolute top-[-5%] left-[-5%] w-[50%] h-[50%] bg-luxury-gold/5 blur-[150px] rounded-full"></div>
       </div>
 
-      <div ref={formRef} className="w-full max-w-lg luxury-card p-8 md:p-12 rounded-[30px] border border-luxury-gold/10">
+      <div className="w-full max-w-lg luxury-card p-8 md:p-12 rounded-[30px] border border-luxury-gold/10 animate-[fade-in-up_1s_cubic-bezier(0.68,-0.55,0.265,1.55)_0.1s_both]">
         <div className="mb-10">
           <Link href="/login" className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.4em] text-luxury-gold hover:text-luxury-gold/70 transition-colors font-bold mb-8">
             <ArrowLeft className="w-3 h-3" /> Back to Login

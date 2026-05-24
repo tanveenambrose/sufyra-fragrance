@@ -3,14 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import ProductCard from '@/components/ProductCard';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import { SlidersHorizontal, ChevronDown, Droplets, Sparkles } from 'lucide-react';
 import { Product } from '@/data/products';
-
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger);
-}
 
 interface ProductsContentProps {
   initialProducts: Product[];
@@ -31,29 +25,25 @@ export default function ProductsContent({ initialProducts }: ProductsContentProp
     }
   }, [searchParams]);
 
+  // Scroll reveal for product cards
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      const cards = gsap.utils.toArray('.reveal');
+    const cards = document.querySelectorAll('.reveal');
+    if (!cards.length) return;
 
-      cards.forEach((card) => {
-        gsap.fromTo(card as HTMLElement,
-          { y: 30, opacity: 0 },
-          {
-            scrollTrigger: {
-              trigger: card as HTMLElement,
-              start: 'top 90%',
-              toggleActions: 'play none none none',
-            },
-            y: 0,
-            opacity: 1,
-            duration: 0.6,
-            ease: 'power2.out',
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('reveal-visible');
+            observer.unobserve(entry.target);
           }
-        );
-      });
-    });
+        });
+      },
+      { threshold: 0.1 }
+    );
 
-    return () => ctx.revert();
+    cards.forEach((card) => observer.observe(card));
+    return () => observer.disconnect();
   }, [selectedCategory, minPrice, maxPrice, dbProducts]);
 
   const filteredProducts = dbProducts.filter(product => {
@@ -257,7 +247,9 @@ export default function ProductsContent({ initialProducts }: ProductsContentProp
             {filteredProducts.length > 0 ? (
               <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-3 sm:gap-x-6 gap-y-10 sm:gap-y-16">
                 {filteredProducts.map((product, index) => (
-                  <ProductCard key={product.id} product={product} priority={index < 4} />
+                  <div key={product.id} className="reveal reveal-fast">
+                    <ProductCard product={product} priority={index < 4} />
+                  </div>
                 ))}
               </div>
             ) : (

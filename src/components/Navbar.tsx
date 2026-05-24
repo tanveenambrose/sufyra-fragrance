@@ -10,7 +10,6 @@ import { useCart } from '@/store/useCart';
 import { useAuth } from '@/hooks/useAuth';
 import { useTheme } from 'next-themes';
 import { ThemeToggle } from './ThemeToggle';
-import { gsap } from 'gsap';
 
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -57,46 +56,25 @@ const Navbar: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isAdminPage]);
 
+  // Stagger entrance for navbar items
   useEffect(() => {
     if (isAdminPage || !navRef.current) return;
-
-    const ctx = gsap.context(() => {
-      // Elegant entrance for navbar elements
-      const navItems = navRef.current?.querySelectorAll('.nav-item');
-      if (navItems && navItems.length > 0) {
-        gsap.from(navItems, {
-          y: -10,
-          opacity: 0,
-          duration: 0.8,
-          stagger: 0.05,
-          ease: 'power2.out',
-        });
-      }
-    }, navRef); // Scope selector to navRef
-
-    return () => ctx.revert();
+    const items = navRef.current.querySelectorAll('.nav-item');
+    items.forEach((item, i) => {
+      (item as HTMLElement).style.animation = `nav-item-in 0.8s cubic-bezier(0.33, 0.72, 0.37, 1) ${i * 0.05}s both`;
+    });
+    return () => {
+      items.forEach((item) => {
+        (item as HTMLElement).style.animation = '';
+      });
+    };
   }, [isAdminPage]);
 
-  // Handle mobile menu opening/closing with GSAP for smoother transition
+  // Handle mobile menu body scroll lock
   useEffect(() => {
-    if (isAdminPage || !isMounted || !mobileMenuRef.current) return;
-    
-    if (isMenuOpen) {
-      gsap.to(mobileMenuRef.current, {
-        x: 0,
-        duration: 0.5,
-        ease: 'power3.out'
-      });
-      // Prevent body scroll when menu is open
-      document.body.style.overflow = 'hidden';
-    } else {
-      gsap.to(mobileMenuRef.current, {
-        x: '100%',
-        duration: 0.4,
-        ease: 'power3.in'
-      });
-      document.body.style.overflow = 'unset';
-    }
+    if (isAdminPage) return;
+    document.body.style.overflow = isMenuOpen && isMounted ? 'hidden' : 'unset';
+    return () => { document.body.style.overflow = 'unset'; };
   }, [isMenuOpen, isMounted, isAdminPage]);
 
   if (isAdminPage) return null;
@@ -139,7 +117,7 @@ const Navbar: React.FC = () => {
             )}
 
             {/* Logo - Adjust size for mobile completeness */}
-            <Link href="/" className={`items-center nav-item transition-transform hover:scale-105 h-8 w-24 md:h-12 md:w-44 grow-0 shrink-0 relative flex ${isMobileSearchOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+            <Link href="/" className={`items-center nav-item opacity-0 transition-transform hover:scale-105 h-8 w-24 md:h-12 md:w-44 grow-0 shrink-0 relative flex ${isMobileSearchOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
               <Image
                 src={isMounted && theme === 'light' ? "/logo- dark.png" : "/logo.png"}
                 alt="Sufyra Logo"
@@ -151,7 +129,7 @@ const Navbar: React.FC = () => {
             </Link>
 
             {/* Desktop Products Dropdown */}
-            <div className="hidden lg:block relative group nav-item">
+            <div className="hidden lg:block relative group nav-item opacity-0">
               <Link
                 href="/products"
                 className={`text-[10px] uppercase tracking-widest hover:text-luxury-gold transition-colors font-bold flex items-center gap-1.5 py-4 text-[var(--foreground)]`}
@@ -179,7 +157,7 @@ const Navbar: React.FC = () => {
             </div>
 
             {/* Desktop Search Bar */}
-            <div className="hidden lg:flex flex-grow justify-center max-w-md mx-4 nav-item">
+            <div className="hidden lg:flex flex-grow justify-center max-w-md mx-4 nav-item opacity-0">
               <form onSubmit={handleSearch} className="relative w-full group">
                 <input
                   type="text"
@@ -199,7 +177,7 @@ const Navbar: React.FC = () => {
 
 
             {/* Right side Actions */}
-            <div className={`items-center gap-2 sm:gap-4 md:gap-6 nav-item flex-shrink-0 flex ${isMobileSearchOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+            <div className={`items-center gap-2 sm:gap-4 md:gap-6 nav-item opacity-0 flex-shrink-0 flex ${isMobileSearchOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
               {/* Mobile Search Toggle Icon */}
               <button 
                 onClick={() => setIsMobileSearchOpen(true)}
