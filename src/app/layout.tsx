@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Montserrat } from "next/font/google";
 import "./globals.css";
+import dynamic from "next/dynamic";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -14,8 +15,9 @@ const montserrat = Montserrat({
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import CartDrawer from "@/components/CartDrawer";
-import AuthInitializer from "@/components/Auth/AuthInitializer";
+
+const CartDrawer = dynamic(() => import("@/components/CartDrawer"));
+const AuthInitializer = dynamic(() => import("@/components/Auth/AuthInitializer"));
 
 export const metadata: Metadata = {
   title: "Sufyra | Premium Attar & Perfume Oils",
