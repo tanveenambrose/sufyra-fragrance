@@ -318,22 +318,22 @@ const Navbar: React.FC = () => {
           </div>
 
           {/* Links and Cart Summary */}
-          <div className="flex-grow overflow-y-auto py-8 px-6 space-y-10">
+          <div className="flex-grow overflow-y-auto py-6 px-5 space-y-6">
             {/* Bag Section inside Sidebar (Mobile only) */}
-            <div className="bg-[var(--foreground)]/[0.03] rounded-2xl p-6 border border-[var(--foreground)]/10 shadow-lg space-y-5">
+            <div className="bg-[var(--foreground)]/[0.03] rounded-xl p-4 border border-[var(--foreground)]/10 shadow-lg space-y-4">
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-luxury-gold/10 flex items-center justify-center border border-luxury-gold/30">
-                    <ShoppingBag size={20} className="text-luxury-gold" />
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-lg bg-luxury-gold/10 flex items-center justify-center border border-luxury-gold/30">
+                    <ShoppingBag size={16} className="text-luxury-gold" />
                   </div>
                   <div>
-                    <p className="text-[10px] uppercase tracking-[0.2em] text-luxury-gold/60 font-bold mb-1">My Bag</p>
-                    <p className="text-base text-[var(--foreground)] font-bold">{itemCount} Items</p>
+                    <p className="text-[9px] uppercase tracking-[0.2em] text-luxury-gold/60 font-bold mb-0.5">My Bag</p>
+                    <p className="text-sm text-[var(--foreground)] font-bold">{itemCount} Items</p>
                   </div>
                 </div>
                 <div className="text-right">
-                  <p className="text-[10px] uppercase tracking-[0.2em] text-luxury-gold/60 font-bold mb-1">Total</p>
-                  <p className="text-base text-luxury-gold font-bold">{totalPrice}৳</p>
+                  <p className="text-[9px] uppercase tracking-[0.2em] text-luxury-gold/60 font-bold mb-0.5">Total</p>
+                  <p className="text-sm text-luxury-gold font-bold">{totalPrice}৳</p>
                 </div>
               </div>
               <button
@@ -341,17 +341,17 @@ const Navbar: React.FC = () => {
                   setIsMenuOpen(false);
                   setIsCartOpen(true);
                 }}
-                className="w-full py-4 luxury-gradient text-luxury-charcoal rounded-xl font-bold text-[10px] uppercase tracking-[0.2em] shadow-lg shadow-luxury-gold/10 hover:brightness-110 active:scale-[0.98] transition-all"
+                className="w-full py-3 luxury-gradient text-luxury-charcoal rounded-lg font-bold text-[9px] uppercase tracking-[0.2em] shadow-lg shadow-luxury-gold/10 hover:brightness-110 active:scale-[0.98] transition-all"
               >
                 View Bag & Checkout
               </button>
             </div>
 
-            <div className="space-y-8 pt-4">
+            <div className="space-y-4 pt-2">
               <Link
                 href="/"
                 onClick={() => setIsMenuOpen(false)}
-                className="block text-2xl uppercase tracking-[0.1em] font-serif text-[var(--foreground)] hover:text-luxury-gold transition-colors font-medium"
+                className="block text-sm uppercase tracking-[0.25em] font-sans font-bold text-[var(--foreground)] hover:text-luxury-gold transition-colors border-b border-[var(--foreground)]/5 pb-2"
               >
                 Home
               </Link>
@@ -360,7 +360,7 @@ const Navbar: React.FC = () => {
                 <Link
                   href="/orders"
                   onClick={() => setIsMenuOpen(false)}
-                  className="block text-2xl uppercase tracking-[0.1em] font-serif text-[var(--foreground)] hover:text-luxury-gold transition-colors font-medium"
+                  className="block text-sm uppercase tracking-[0.25em] font-sans font-bold text-[var(--foreground)] hover:text-luxury-gold transition-colors border-b border-[var(--foreground)]/5 pb-2"
                 >
                   My Orders
                 </Link>
@@ -370,27 +370,27 @@ const Navbar: React.FC = () => {
                 <Link 
                   href="/admin" 
                   onClick={() => setIsMenuOpen(false)} 
-                  className="block text-2xl uppercase tracking-[0.1em] font-serif text-luxury-gold hover:text-white transition-colors font-medium border-b border-luxury-gold/10 pb-2"
+                  className="block text-sm uppercase tracking-[0.25em] font-sans font-bold text-luxury-gold hover:text-white transition-colors border-b border-luxury-gold/20 pb-2"
                 >
                   Admin Panel
                 </Link>
               )}
 
               {/* Products with Sub-menu */}
-              <div className="space-y-6">
+              <div className="space-y-4">
                 <button
                   onClick={() => setIsProductsOpen(!isProductsOpen)}
-                  className="flex items-center justify-between w-full text-2xl uppercase tracking-[0.1em] font-serif text-[var(--foreground)] hover:text-luxury-gold transition-colors font-medium border-b border-[var(--foreground)]/5 pb-2"
+                  className="flex items-center justify-between w-full text-sm uppercase tracking-[0.25em] font-sans font-bold text-[var(--foreground)] hover:text-luxury-gold transition-colors border-b border-[var(--foreground)]/5 pb-2"
                 >
                   <span>Products</span>
-                  <ChevronDown className={`w-6 h-6 transition-transform duration-300 text-luxury-gold/50 ${isProductsOpen ? 'rotate-180' : ''}`} />
+                  <ChevronDown className={`w-4 h-4 transition-transform duration-300 text-luxury-gold/50 ${isProductsOpen ? 'rotate-180' : ''}`} />
                 </button>
 
-                <div className={`pl-4 space-y-5 overflow-hidden transition-all duration-300 ${isProductsOpen ? 'max-h-52 opacity-100 mt-4' : 'max-h-0 opacity-0'}`}>
+                <div className={`pl-4 space-y-3 overflow-hidden transition-all duration-300 ${isProductsOpen ? 'max-h-52 opacity-100 mt-2' : 'max-h-0 opacity-0'}`}>
                   <Link
                     href="/products?category=perfume-oil"
                     onClick={() => setIsMenuOpen(false)}
-                    className="flex items-center gap-3 text-sm uppercase tracking-[0.25em] text-[var(--foreground)]/70 hover:text-luxury-gold font-bold transition-colors"
+                    className="flex items-center gap-2.5 text-xs uppercase tracking-[0.2em] text-[var(--foreground)]/60 hover:text-luxury-gold font-semibold transition-colors"
                   >
                     <div className="w-1.5 h-1.5 rounded-full bg-luxury-gold shadow-[0_0_8px_rgba(212,175,55,0.4)]" />
                     Regular Versions
@@ -398,7 +398,7 @@ const Navbar: React.FC = () => {
                   <Link
                     href="/products?category=combo"
                     onClick={() => setIsMenuOpen(false)}
-                    className="flex items-center gap-3 text-sm uppercase tracking-[0.25em] text-[var(--foreground)]/70 hover:text-luxury-gold font-bold transition-colors"
+                    className="flex items-center gap-2.5 text-xs uppercase tracking-[0.2em] text-[var(--foreground)]/60 hover:text-luxury-gold font-semibold transition-colors"
                   >
                     <div className="w-1.5 h-1.5 rounded-full bg-luxury-gold shadow-[0_0_8px_rgba(212,175,55,0.4)]" />
                     Combo Packs
@@ -408,14 +408,14 @@ const Navbar: React.FC = () => {
             </div>
 
             {isMounted && user ? (
-              <div className="pt-10 border-t border-white/10 space-y-7">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-full bg-luxury-gold/10 flex items-center justify-center border border-luxury-gold/40">
-                    <UserIcon size={22} className="text-luxury-gold" />
+              <div className="pt-6 border-t border-[var(--foreground)]/10 space-y-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-full bg-luxury-gold/10 flex items-center justify-center border border-luxury-gold/40">
+                    <UserIcon size={18} className="text-luxury-gold" />
                   </div>
                   <div className="flex flex-col">
-                    <span className="text-[10px] uppercase tracking-[0.2em] text-[var(--foreground)]/40 font-bold mb-1">Logged In As</span>
-                    <span className="text-base text-[var(--foreground)] font-bold truncate max-w-[150px]">
+                    <span className="text-[9px] uppercase tracking-[0.2em] text-[var(--foreground)]/40 font-bold">Logged In As</span>
+                    <span className="text-sm text-[var(--foreground)] font-bold truncate max-w-[150px]">
                       {user.user_metadata?.full_name || user.email?.split('@')[0]}
                     </span>
                   </div>
@@ -425,18 +425,18 @@ const Navbar: React.FC = () => {
                     signOut();
                     setIsMenuOpen(false);
                   }}
-                  className="w-full py-4 rounded-xl border-2 border-red-500/30 text-red-400 font-bold uppercase tracking-[0.2em] text-[10px] flex items-center justify-center gap-2 hover:bg-red-500/10 transition-all bg-red-500/5 shadow-lg shadow-red-500/5"
+                  className="w-full py-3 rounded-lg border border-red-500/20 text-red-400 font-bold uppercase tracking-[0.2em] text-[9px] flex items-center justify-center gap-2 hover:bg-red-500/10 transition-all bg-red-500/5 shadow-lg shadow-red-500/5"
                 >
-                  <LogOut size={16} />
+                  <LogOut size={14} />
                   Sign Out
                 </button>
               </div>
             ) : (
-              <div className="pt-10 border-t border-white/10">
+              <div className="pt-6 border-t border-[var(--foreground)]/10">
                 <Link
                   href="/login"
                   onClick={() => setIsMenuOpen(false)}
-                  className="block w-full luxury-gradient py-4 rounded-xl text-center text-luxury-charcoal font-bold uppercase tracking-[0.2em] text-[11px] shadow-lg shadow-luxury-gold/20"
+                  className="block w-full luxury-gradient py-3 rounded-lg text-center text-luxury-charcoal font-bold uppercase tracking-[0.2em] text-[9px] shadow-lg shadow-luxury-gold/20"
                 >
                   Login / Register
                 </Link>
