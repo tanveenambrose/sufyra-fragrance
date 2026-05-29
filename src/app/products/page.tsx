@@ -2,7 +2,8 @@ import React, { Suspense } from 'react';
 import ProductsContent from '@/components/Products/ProductsContent';
 import { supabaseStatic } from '@/utils/supabase/static';
 
-export const revalidate = 3600; // Revalidate every hour
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export default async function ProductsPage() {
   const { data: dbProducts, error } = await supabaseStatic

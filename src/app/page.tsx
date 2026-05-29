@@ -4,7 +4,8 @@ import ProductSlider from '@/components/ProductSlider';
 import { supabaseStatic } from '@/utils/supabase/static';
 import Reveal from '@/components/Reveal';
 
-export const revalidate = 3600; // Revalidate every hour
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export default async function Home() {
   const { data: dbProducts, error } = await supabaseStatic

@@ -67,7 +67,7 @@ export default function ProductDetailsClient({ product, adjacentIds }: ProductDe
   };
 
   return (
-    <main className="min-h-screen bg-[var(--background)] pt-40 lg:pt-32 pb-24 transition-colors duration-500">
+    <main className="min-h-screen bg-[var(--background)] pt-24 lg:pt-32 pb-24 transition-colors duration-500">
       <div className="container mx-auto px-6">
         {/* Top Navigation & Breadcrumbs */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-6">

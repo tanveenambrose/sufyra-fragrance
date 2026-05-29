@@ -4,7 +4,8 @@ import ProductDetailsClient from '@/components/Products/ProductDetailsClient';
 import { notFound } from 'next/navigation';
 import { Product } from '@/data/products';
 
-export const revalidate = 3600; // Revalidate every hour
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 interface PageProps {
   params: Promise<{ id: string }>;

@@ -281,7 +281,9 @@ const Navbar: React.FC = () => {
         {/* Slider - Consistent with main site background (Luxury Charcoal) */}
         <div
           ref={mobileMenuRef}
-          className="absolute top-0 right-0 bottom-0 w-[75%] bg-[var(--background)] border-l border-[var(--foreground)]/10 shadow-[-20px_0_50px_rgba(0,0,0,0.2)] pointer-events-auto translate-x-full flex flex-col opacity-100"
+          className={`absolute top-0 right-0 bottom-0 w-[75%] bg-[var(--background)] border-l border-[var(--foreground)]/10 shadow-[-20px_0_50px_rgba(0,0,0,0.2)] pointer-events-auto transition-transform duration-500 flex flex-col opacity-100 ${
+            isMenuOpen ? 'translate-x-0' : 'translate-x-full'
+          }`}
           suppressHydrationWarning
         >
           {/* Header of mobile menu */}
