@@ -64,17 +64,17 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen pt-40 pb-12 px-4 flex items-center justify-center bg-[var(--background)] transition-colors duration-300">
+    <div className="min-h-screen pt-24 sm:pt-32 md:pt-40 pb-12 px-4 flex items-center justify-center bg-[var(--background)] transition-colors duration-300">
       {/* Decorative Elements */}
       <div className="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none -z-10">
         <div className="absolute top-[-10%] right-[-10%] w-[40%] h-[40%] bg-luxury-gold/5 blur-[120px] rounded-full"></div>
         <div className="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] bg-luxury-gold/5 blur-[120px] rounded-full"></div>
       </div>
 
-      <div className="w-full max-w-md luxury-card p-8 md:p-10 rounded-[30px] border border-luxury-gold/10 animate-[fade-in-up_1s_cubic-bezier(0.18,0.89,0.32,1.28)_0.2s_both]">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-6xl font-serif text-[var(--foreground)] mb-4 tracking-tight leading-tight">Welcome <br /> <span className="font-normal italic">Back</span></h1>
-          <p className="text-luxury-gold text-[10px] uppercase tracking-[0.4em] font-bold">Access your sanctuary</p>
+      <div className="w-full max-w-md luxury-card p-6 sm:p-8 md:p-10 rounded-[24px] sm:rounded-[30px] border border-luxury-gold/10 animate-[fade-in-up_1s_cubic-bezier(0.18,0.89,0.32,1.28)_0.2s_both]">
+        <div className="text-center mb-6 sm:mb-8 md:mb-12">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-[var(--foreground)] mb-3 sm:mb-4 tracking-tight leading-tight">Welcome <br /> <span className="font-normal italic">Back</span></h1>
+          <p className="text-luxury-gold text-[9px] sm:text-[10px] uppercase tracking-[0.3em] sm:tracking-[0.4em] font-bold">Access your sanctuary</p>
         </div>
 
         {error && (
@@ -83,7 +83,7 @@ const LoginPage = () => {
           </div>
         )}
 
-        <form onSubmit={handleEmailLogin} className="space-y-6">
+        <form onSubmit={handleEmailLogin} className="space-y-4 sm:space-y-6">
           <AuthInput
             label="Email Address"
             type="email"
@@ -105,7 +105,7 @@ const LoginPage = () => {
           />
 
           <div className="flex justify-end">
-            <button type="button" className="text-[10px] uppercase tracking-widest text-luxury-gold hover:text-luxury-gold/70 transition-colors font-bold">
+            <button type="button" className="text-[9px] sm:text-[10px] uppercase tracking-widest text-luxury-gold hover:text-luxury-gold/70 transition-colors font-bold">
               Forgot Password?
             </button>
           </div>
@@ -113,25 +113,25 @@ const LoginPage = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-luxury-charcoal text-white dark:bg-white dark:text-black py-4 sm:py-5 rounded-full font-bold uppercase tracking-[0.3em] text-[11px] sm:text-[12px] hover:bg-luxury-gold dark:hover:bg-luxury-gold transition-all shadow-lg disabled:opacity-50"
+            className="w-full bg-luxury-charcoal text-white dark:bg-white dark:text-black py-3.5 sm:py-5 rounded-full font-bold uppercase tracking-[0.3em] text-[10px] sm:text-[12px] hover:bg-luxury-gold dark:hover:bg-luxury-gold transition-all shadow-lg disabled:opacity-50"
           >
             {loading ? 'Entering Sanctuary...' : 'Sign In'}
           </button>
         </form>
 
-        <div className="my-8 flex items-center gap-4">
+        <div className="my-6 sm:my-8 flex items-center gap-4">
           <div className="h-px bg-[var(--foreground)]/5 flex-grow"></div>
-          <span className="text-[10px] uppercase tracking-widest text-[var(--foreground)]/20 font-bold whitespace-nowrap">Or continue with</span>
+          <span className="text-[8px] sm:text-[10px] uppercase tracking-widest text-[var(--foreground)]/20 font-bold whitespace-nowrap">Or continue with</span>
           <div className="h-px bg-[var(--foreground)]/5 flex-grow"></div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-3 sm:gap-4">
           <SocialButton provider="google" onClick={() => handleSocialLogin('google')} isLoading={loading} />
           <SocialButton provider="facebook" onClick={() => handleSocialLogin('facebook')} isLoading={loading} />
         </div>
 
-        <div className="mt-10 text-center">
-          <p className="text-sm text-[var(--foreground)]/40">
+        <div className="mt-6 sm:mt-8 md:mt-10 text-center">
+          <p className="text-xs sm:text-sm text-[var(--foreground)]/40">
             Don&apos;t have an account?{' '}
             <Link href="/register" className="text-luxury-gold font-bold hover:underline inline-flex items-center gap-1 group">
               Register Now <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
