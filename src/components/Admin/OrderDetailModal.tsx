@@ -92,6 +92,10 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({ order, isOpen, onCl
                 </h3>
                 <div className="space-y-2">
                   <p className="text-xs text-white/60 flex items-center gap-2">
+                    <span className="text-[10px] uppercase tracking-widest w-16">Email:</span>
+                    <span className="text-luxury-gold font-medium truncate">{order.delivery_email || 'Not Provided'}</span>
+                  </p>
+                  <p className="text-xs text-white/60 flex items-center gap-2">
                     <span className="text-[10px] uppercase tracking-widest w-16">WhatsApp:</span>
                     <span className="text-luxury-cream font-mono">{order.whatsapp_number || 'Not Provided'}</span>
                   </p>

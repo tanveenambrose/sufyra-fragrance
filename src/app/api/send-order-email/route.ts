@@ -6,10 +6,13 @@ import path from 'path';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
+const FROM_EMAIL = 'sufyrafragrance@gmail.com';
+const FROM_SENDER = `"Sufyra Fragrance" <${FROM_EMAIL}>`;
+
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: process.env.COMPANY_EMAIL,
+    user: process.env.COMPANY_EMAIL || FROM_EMAIL,
     pass: process.env.COMPANY_PASSWORD,
   },
 });
@@ -194,7 +197,7 @@ export async function POST(req: Request) {
     if (hasGmail) {
       try {
         await transporter.sendMail({
-          from: `"Sufyra Fragrance" <${process.env.COMPANY_EMAIL}>`,
+          from: FROM_SENDER,
           to: adminRecipient,
           subject: adminEmailSubject,
           html: adminHtml,
@@ -340,7 +343,7 @@ export async function POST(req: Request) {
       if (hasGmail) {
         try {
           await transporter.sendMail({
-            from: `"Sufyra Fragrance" <${process.env.COMPANY_EMAIL}>`,
+            from: FROM_SENDER,
             to: customerEmail,
             subject: customerEmailSubject,
             attachments: logoAttachment ? [logoAttachment] : [],
@@ -368,6 +371,8 @@ export async function POST(req: Request) {
           customerError = (customerError ? customerError + ' | ' : '') + (resendErr instanceof Error ? resendErr.message : 'Resend failed');
         }
       }
+    } else {
+      customerError = 'Customer confirmation email skipped: No valid customer email address provided.';
     }
 
     return NextResponse.json({ 

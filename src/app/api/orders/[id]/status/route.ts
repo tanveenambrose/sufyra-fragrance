@@ -5,10 +5,13 @@ import { supabase } from '@/lib/supabase';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
+const FROM_EMAIL = 'sufyrafragrance@gmail.com';
+const FROM_SENDER = `"Sufyra Fragrance" <${FROM_EMAIL}>`;
+
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: process.env.COMPANY_EMAIL,
+    user: process.env.COMPANY_EMAIL || FROM_EMAIL,
     pass: process.env.COMPANY_PASSWORD,
   },
 });
@@ -149,14 +152,22 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
     let provider = 'none';
     let emailError: string | null = null;
 
-    const recipient = customerEmail || 'racoctanveen15@gmail.com';
+    // Must be sent to the dynamic customer who placed the order
+    if (!customerEmail || !customerEmail.includes('@')) {
+      console.warn(`Cannot send status email: No customer email address associated with order #${order.id}`);
+      return NextResponse.json({ 
+        success: true, 
+        emailSent: false, 
+        error: `Order status updated in database, but customer email notification could not be sent: No customer email address on record for order #${order.id.slice(0, 8).toUpperCase()}` 
+      });
+    }
 
     // Try Gmail SMTP (Nodemailer) first
-    if (process.env.COMPANY_EMAIL && process.env.COMPANY_PASSWORD) {
+    if (process.env.COMPANY_PASSWORD) {
       try {
         await transporter.sendMail({
-          from: `"Sufyra Fragrance" <${process.env.COMPANY_EMAIL}>`,
-          to: recipient,
+          from: FROM_SENDER,
+          to: customerEmail,
           subject: `${statusTitle} - Sufyra Manifest #${order.id.slice(0, 8).toUpperCase()}`,
           html: emailHtml,
         });
@@ -173,7 +184,7 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
       try {
         await resend.emails.send({
           from: 'Sufyra Mansion <onboarding@resend.dev>',
-          to: recipient,
+          to: customerEmail,
           subject: `${statusTitle} - Sufyra Manifest #${order.id.slice(0, 8).toUpperCase()}`,
           html: emailHtml,
         });
@@ -189,7 +200,7 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
       success: true, 
       emailSent, 
       provider, 
-      recipient, 
+      recipient: customerEmail, 
       error: emailError 
     });
   } catch (error) {
