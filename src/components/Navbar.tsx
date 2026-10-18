@@ -133,7 +133,7 @@ const Navbar: React.FC = () => {
             {/* Logo - Adjust size for mobile completeness */}
             <Link href="/" className={`items-center nav-item opacity-0 transition-transform hover:scale-105 h-8 w-24 md:h-12 md:w-44 grow-0 shrink-0 relative flex ${isMobileSearchOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
               <Image
-                src={isMounted && theme === 'light' ? "/logo- dark.png" : "/logo.png"}
+                src={isMounted && theme === 'light' ? "/logo-dark.png" : "/logo.png"}
                 alt="Sufyra Logo"
                 fill
                 sizes="(max-width: 768px) 100px, 180px"

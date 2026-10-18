@@ -91,7 +91,7 @@ const Footer: React.FC = () => {
             <Link href="/" className="inline-block transition-transform hover:scale-105">
               <div className="relative h-12 w-44" suppressHydrationWarning>
                 <Image
-                  src={mounted && theme === 'light' ? "/logo- dark.png" : "/logo.png"}
+                  src={mounted && theme === 'light' ? "/logo-dark.png" : "/logo.png"}
                   alt="Sufyra Logo"
                   fill
                   sizes="(max-width: 768px) 150px, 180px"

@@ -24,11 +24,11 @@ export const metadata: Metadata = {
   description: "Experience the essence of luxury with Sufyra's handcrafted attar and perfume oils.",
   icons: {
     icon: [
-      { url: "/logo-%20dark.png", type: "image/png" },
       { url: "/logo-dark.png", type: "image/png" },
+      { url: "/favicon.ico", sizes: "any" },
     ],
-    shortcut: "/logo-%20dark.png",
-    apple: "/logo-%20dark.png",
+    shortcut: "/logo-dark.png",
+    apple: "/logo-dark.png",
   },
 };
 
@@ -42,10 +42,9 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
-        <link rel="icon" type="image/png" href="/logo-%20dark.png" />
         <link rel="icon" type="image/png" href="/logo-dark.png" />
-        <link rel="shortcut icon" type="image/png" href="/logo-%20dark.png" />
-        <link rel="apple-touch-icon" type="image/png" href="/logo-%20dark.png" />
+        <link rel="shortcut icon" type="image/png" href="/logo-dark.png" />
+        <link rel="apple-touch-icon" type="image/png" href="/logo-dark.png" />
       </head>
       <body
         className={`${playfair.variable} ${montserrat.variable} antialiased selection:bg-luxury-gold selection:text-luxury-charcoal transition-colors duration-300`}
