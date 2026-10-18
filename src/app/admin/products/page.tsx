@@ -75,12 +75,12 @@ export default function AdminProductsPage() {
   };
 
   return (
-    <div className="space-y-10 relative min-h-[600px]">
+    <div className="space-y-10 relative min-h-150">
       {/* Custom Deletion Modal */}
       {deleteConfirm && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-100 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/80 backdrop-blur-md animate-in fade-in duration-300" onClick={() => setDeleteConfirm(null)} />
-          <div className="bg-[#0A0A0A] border border-white/10 rounded-3xl p-8 max-w-sm w-full space-y-8 animate-in zoom-in-95 duration-300 relative shadow-[0_0_50px_rgba(0,0,0,1)]">
+          <div className="bg-luxury-charcoal border border-white/10 rounded-3xl p-8 max-w-sm w-full space-y-8 animate-in zoom-in-95 duration-300 relative shadow-[0_0_50px_rgba(0,0,0,1)]">
             <div className="w-20 h-20 rounded-full bg-red-500/10 flex items-center justify-center mx-auto border border-red-500/20">
               <Trash2 size={32} className="text-red-500" />
             </div>
@@ -127,22 +127,22 @@ export default function AdminProductsPage() {
 
       {/* Filters & Search */}
       <div className="flex flex-col md:flex-row gap-4">
-        <div className="relative group flex-grow">
+        <div className="relative group grow">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-luxury-gold transition-colors" size={18} />
           <input 
             type="text" 
             placeholder="Search by name or notes..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-[#0A0A0A] border border-white/5 rounded-xl py-4 pl-12 pr-6 focus:border-luxury-gold/50 focus:outline-none transition-all text-sm text-ellipsis"
+            className="w-full bg-luxury-charcoal border border-white/5 rounded-xl py-4 pl-12 pr-6 focus:border-luxury-gold/50 focus:outline-none transition-all text-sm text-ellipsis"
           />
         </div>
-        <div className="relative min-w-[200px]">
+        <div className="relative min-w-50">
           <Filter className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20" size={18} />
           <select 
             value={categoryFilter}
             onChange={(e) => setCategoryFilter(e.target.value as 'all' | 'perfume-oil' | 'combo')}
-            className="w-full bg-[#0A0A0A] border border-white/5 rounded-xl py-4 pl-12 pr-10 focus:border-luxury-gold/50 focus:outline-none transition-all text-sm appearance-none overflow-hidden text-ellipsis whitespace-nowrap"
+            className="w-full bg-luxury-charcoal border border-white/5 rounded-xl py-4 pl-12 pr-10 focus:border-luxury-gold/50 focus:outline-none transition-all text-sm appearance-none overflow-hidden text-ellipsis whitespace-nowrap"
           >
             <option value="all">All Collections</option>
             <option value="perfume-oil">Regular Versions</option>
@@ -153,7 +153,7 @@ export default function AdminProductsPage() {
       </div>
 
       {/* Products Table */}
-      <div className="bg-[#0A0A0A] rounded-2xl border border-white/5 overflow-hidden">
+      <div className="bg-luxury-charcoal rounded-2xl border border-white/5 overflow-hidden">
         {isLoading && products.length === 0 ? (
           <div className="px-6 py-24 text-center">
             <div className="w-12 h-12 border-4 border-luxury-gold border-t-transparent rounded-full animate-spin mx-auto mb-4" />
@@ -168,9 +168,9 @@ export default function AdminProductsPage() {
           <div className="w-full">
             {/* Desktop Table View */}
             <div className="hidden md:block overflow-x-auto">
-              <table className="w-full text-left border-collapse min-w-[800px]">
+              <table className="w-full text-left border-collapse min-w-200">
                 <thead>
-                  <tr className="bg-white/[0.02] text-[10px] uppercase tracking-[0.2em] text-white/40">
+                  <tr className="bg-white/2 text-[10px] uppercase tracking-[0.2em] text-white/40">
                     <th className="px-8 py-5 font-bold">Product Details</th>
                     <th className="px-8 py-5 font-bold text-center">Category</th>
                     <th className="px-8 py-5 font-bold text-center">Variants</th>
@@ -180,12 +180,12 @@ export default function AdminProductsPage() {
                 </thead>
                 <tbody className="divide-y divide-white/5">
                   {filteredProducts.map((p) => (
-                    <tr key={p.id} className="hover:bg-white/[0.01] transition-colors group">
+                    <tr key={p.id} className="hover:bg-white/1 transition-colors group">
                       <td className="px-8 py-6">
                         <div className="flex items-center gap-6">
-                          <div className="w-16 h-20 rounded-lg bg-white/5 overflow-hidden flex-shrink-0 relative border border-white/10">
+                          <div className="w-16 h-20 rounded-lg bg-white/5 overflow-hidden shrink-0 relative border border-white/10">
                             {p.image_url ? (
-                              <img src={p.image_url} alt={p.name} className="w-full h-full object-cover" />
+                              <Image src={p.image_url} alt={p.name} width={64} height={80} className="w-full h-full object-cover" unoptimized />
                             ) : (
                               <div className="w-full h-full bg-white/5 flex items-center justify-center">
                                 <ImageIcon size={18} className="text-white/20" />
@@ -194,7 +194,7 @@ export default function AdminProductsPage() {
                           </div>
                           <div className="space-y-1">
                             <p className="text-base font-bold text-luxury-cream group-hover:text-luxury-gold transition-colors">{p.name}</p>
-                            <p className="text-[10px] text-white/40 line-clamp-1 max-w-[250px] uppercase tracking-wider">{p.description}</p>
+                            <p className="text-[10px] text-white/40 line-clamp-1 max-w-62.5 uppercase tracking-wider">{p.description}</p>
                           </div>
                         </div>
                       </td>
@@ -259,16 +259,16 @@ export default function AdminProductsPage() {
               {filteredProducts.map((p) => (
                 <div key={p.id} className="p-4 sm:p-6 flex flex-col gap-4">
                   <div className="flex gap-4">
-                    <div className="w-20 h-24 rounded-lg bg-white/5 overflow-hidden flex-shrink-0 relative border border-white/10">
+                    <div className="w-20 h-24 rounded-lg bg-white/5 overflow-hidden shrink-0 relative border border-white/10">
                       {p.image_url ? (
-                        <img src={p.image_url} alt={p.name} className="w-full h-full object-cover" />
+                        <Image src={p.image_url} alt={p.name} width={80} height={96} className="w-full h-full object-cover" unoptimized />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center">
                           <ImageIcon size={20} className="text-white/20" />
                         </div>
                       )}
                     </div>
-                    <div className="flex-grow flex flex-col justify-center space-y-2">
+                    <div className="grow flex flex-col justify-center space-y-2">
                       <div>
                         <p className="text-sm font-bold text-luxury-cream">{p.name}</p>
                         <span className={`text-[8px] font-bold px-2 py-0.5 rounded-full uppercase tracking-widest inline-block mt-1 ${

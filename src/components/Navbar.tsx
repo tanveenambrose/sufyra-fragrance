@@ -42,9 +42,12 @@ const Navbar: React.FC = () => {
 
   useEffect(() => {
     if (!lastAddedTimestamp) return;
-    setIsSparking(true);
-    const timer = setTimeout(() => setIsSparking(false), 1200);
-    return () => clearTimeout(timer);
+    const startTimer = setTimeout(() => setIsSparking(true), 0);
+    const endTimer = setTimeout(() => setIsSparking(false), 1200);
+    return () => {
+      clearTimeout(startTimer);
+      clearTimeout(endTimer);
+    };
   }, [lastAddedTimestamp]);
 
   const handleSearch = (e?: React.FormEvent) => {
@@ -94,7 +97,7 @@ const Navbar: React.FC = () => {
     <>
       <nav
         ref={navRef}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled ? 'bg-[var(--navbar)] backdrop-blur-md py-2 shadow-2xl' : 'bg-transparent py-3 md:py-6'
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled ? 'bg-(--navbar) backdrop-blur-md py-2 shadow-2xl' : 'bg-transparent py-3 md:py-6'
           }`}
         suppressHydrationWarning
       >
@@ -103,9 +106,9 @@ const Navbar: React.FC = () => {
             
             {/* Mobile Full-Width Search Overlay */}
             {isMobileSearchOpen && (
-              <div className="absolute inset-0 bg-[var(--navbar)] flex items-center z-50 px-2 animate-in fade-in slide-in-from-top-2 duration-300">
-                <form onSubmit={handleSearch} className="flex-grow flex items-center gap-2">
-                  <div className="relative flex-grow">
+              <div className="absolute inset-0 bg-(--navbar) flex items-center z-50 px-2 animate-in fade-in slide-in-from-top-2 duration-300">
+                <form onSubmit={handleSearch} className="grow flex items-center gap-2">
+                  <div className="relative grow">
                     <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-luxury-gold w-4 h-4" />
                     <input
                       autoFocus
@@ -113,13 +116,13 @@ const Navbar: React.FC = () => {
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       placeholder="Search for scents..."
-                      className="w-full bg-[var(--foreground)]/5 border border-luxury-gold/30 rounded-full py-2.5 pl-11 pr-4 text-sm text-[var(--foreground)] focus:outline-none focus:border-luxury-gold transition-all"
+                      className="w-full bg-(--foreground)/5 border border-luxury-gold/30 rounded-full py-2.5 pl-11 pr-4 text-sm text-(--foreground) focus:outline-none focus:border-luxury-gold transition-all"
                     />
                   </div>
                   <button 
                     type="button"
                     onClick={() => setIsMobileSearchOpen(false)}
-                    className="p-2 text-[var(--foreground)]/60 hover:text-luxury-gold transition-colors"
+                    className="p-2 text-(--foreground)/60 hover:text-luxury-gold transition-colors"
                   >
                     <X size={20} />
                   </button>
@@ -143,23 +146,23 @@ const Navbar: React.FC = () => {
             <div className="hidden lg:block relative group nav-item opacity-0">
               <Link
                 href="/products"
-                className={`text-[10px] uppercase tracking-widest hover:text-luxury-gold transition-colors font-bold flex items-center gap-1.5 py-4 text-[var(--foreground)]`}
+                className={`text-[10px] uppercase tracking-widest hover:text-luxury-gold transition-colors font-bold flex items-center gap-1.5 py-4 text-(--foreground)`}
               >
                 Products
-                <div className="w-1.5 h-1.5 border-r border-b border-current translate-y-[-20%] rotate-45 group-hover:rotate-[225deg] transition-transform duration-300" />
+                <div className="w-1.5 h-1.5 border-r border-b border-current translate-y-[-20%] rotate-45 group-hover:rotate-225 transition-transform duration-300" />
               </Link>
 
               <div className="absolute top-full left-0 w-48 pt-2 opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-300">
-                <div className="bg-[var(--background)] border border-luxury-gold/20 rounded-xl overflow-hidden shadow-2xl backdrop-blur-md">
+                <div className="bg-(--background) border border-luxury-gold/20 rounded-xl overflow-hidden shadow-2xl backdrop-blur-md">
                   <Link
                     href="/products?category=perfume-oil"
-                    className="block px-6 py-4 text-[10px] uppercase tracking-widest text-[var(--foreground)] hover:text-luxury-gold hover:bg-luxury-gold/5 transition-all border-b border-luxury-gold/10"
+                    className="block px-6 py-4 text-[10px] uppercase tracking-widest text-(--foreground) hover:text-luxury-gold hover:bg-luxury-gold/5 transition-all border-b border-luxury-gold/10"
                   >
                     Regular
                   </Link>
                   <Link
                     href="/products?category=combo"
-                    className="block px-6 py-4 text-[10px] uppercase tracking-widest text-[var(--foreground)] hover:text-luxury-gold hover:bg-luxury-gold/5 transition-all"
+                    className="block px-6 py-4 text-[10px] uppercase tracking-widest text-(--foreground) hover:text-luxury-gold hover:bg-luxury-gold/5 transition-all"
                   >
                     Combo
                   </Link>
@@ -168,18 +171,18 @@ const Navbar: React.FC = () => {
             </div>
 
             {/* Desktop Search Bar */}
-            <div className="hidden lg:flex flex-grow justify-center max-w-md mx-4 nav-item opacity-0">
+            <div className="hidden lg:flex grow justify-center max-w-md mx-4 nav-item opacity-0">
               <form onSubmit={handleSearch} className="relative w-full group">
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search scents..."
-                  className={`w-full border rounded-full py-2 pl-4 md:pl-6 pr-10 focus:outline-none focus:border-luxury-gold text-sm transition-all font-bold shadow-sm bg-[var(--foreground)]/5 border-[var(--foreground)]/15 text-[var(--foreground)] placeholder:text-[var(--foreground)]/40`}
+                  className={`w-full border rounded-full py-2 pl-4 md:pl-6 pr-10 focus:outline-none focus:border-luxury-gold text-sm transition-all font-bold shadow-sm bg-(--foreground)/5 border-(--foreground)/15 text-(--foreground) placeholder:text-(--foreground)/40`}
                 />
                 <button
                   type="submit"
-                  className={`absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8 transition-colors flex items-center justify-center shrink-0 text-[var(--foreground)] hover:text-luxury-gold`}
+                  className={`absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8 transition-colors flex items-center justify-center shrink-0 text-(--foreground) hover:text-luxury-gold`}
                 >
                   <Search className="w-4 h-4" />
                 </button>
@@ -188,11 +191,11 @@ const Navbar: React.FC = () => {
 
 
             {/* Right side Actions */}
-            <div className={`items-center gap-2 sm:gap-4 md:gap-6 nav-item opacity-0 flex-shrink-0 flex ${isMobileSearchOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+            <div className={`items-center gap-2 sm:gap-4 md:gap-6 nav-item opacity-0 shrink-0 flex ${isMobileSearchOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
               {/* Mobile Search Toggle Icon */}
               <button 
                 onClick={() => setIsMobileSearchOpen(true)}
-                className="lg:hidden p-1.5 flex items-center justify-center text-[var(--foreground)] hover:text-luxury-gold transition-colors"
+                className="lg:hidden p-1.5 flex items-center justify-center text-(--foreground) hover:text-luxury-gold transition-colors"
               >
                 <Search className="w-5 h-5" />
               </button>
@@ -211,7 +214,7 @@ const Navbar: React.FC = () => {
                     )}
                     <button
                       onClick={() => signOut()}
-                      className="text-[var(--foreground)]/60 hover:text-red-500 transition-colors p-1"
+                      className="text-(--foreground)/60 hover:text-red-500 transition-colors p-1"
                       title="Sign Out"
                     >
                       <LogOut size={16} />
@@ -220,8 +223,8 @@ const Navbar: React.FC = () => {
                 ) : (
                   <Link href="/login" className={`text-[10px] uppercase tracking-widest hover:text-white hover:bg-luxury-gold transition-all duration-300 font-bold whitespace-nowrap border px-6 py-2 rounded-full ${
                     isScrolled 
-                      ? 'border-luxury-gold/30 text-[var(--foreground)] bg-[var(--foreground)]/5' 
-                      : 'border-[var(--foreground)]/20 text-[var(--foreground)] bg-[var(--foreground)]/5'
+                      ? 'border-luxury-gold/30 text-(--foreground) bg-(--foreground)/5' 
+                      : 'border-(--foreground)/20 text-(--foreground) bg-(--foreground)/5'
                   }`}>
                     Login
                   </Link>
@@ -237,7 +240,7 @@ const Navbar: React.FC = () => {
                 ) : (
                   <Link
                     href="/login"
-                    className="text-[9px] uppercase tracking-[0.1em] text-luxury-gold font-bold border border-luxury-gold/30 px-3 py-1.5 rounded-full whitespace-nowrap flex items-center justify-center bg-luxury-gold/5 hover:bg-luxury-gold/10 transition-all"
+                    className="text-[9px] uppercase tracking-widest text-luxury-gold font-bold border border-luxury-gold/30 px-3 py-1.5 rounded-full whitespace-nowrap flex items-center justify-center bg-luxury-gold/5 hover:bg-luxury-gold/10 transition-all"
                   >
                     Login
                   </Link>
@@ -259,11 +262,11 @@ const Navbar: React.FC = () => {
                     className={`w-5 h-5 transition-all duration-300 ${
                       isSparking
                         ? 'animate-cart-bounce text-luxury-gold drop-shadow-[0_0_8px_rgba(212,175,55,0.8)]'
-                        : 'group-hover:text-luxury-gold text-[var(--foreground)]'
+                        : 'group-hover:text-luxury-gold text-(--foreground)'
                     }`}
                   />
                   {/* Desktop Cart Summary */}
-                  <div className={`hidden lg:flex flex-col items-start leading-none text-[10px] uppercase tracking-tighter w-16 font-bold text-[var(--foreground)] transition-colors duration-300 ${isSparking ? 'text-luxury-gold' : ''}`}>
+                  <div className={`hidden lg:flex flex-col items-start leading-none text-[10px] uppercase tracking-tighter w-16 font-bold text-(--foreground) transition-colors duration-300 ${isSparking ? 'text-luxury-gold' : ''}`}>
                     {isMounted ? (
                       <>
                         <span className={isSparking ? 'animate-pulse font-extrabold' : ''}>{itemCount} items</span>
@@ -275,14 +278,14 @@ const Navbar: React.FC = () => {
                   </div>
                   {/* Mobile Badge Only */}
                   {isMounted && itemCount > 0 && (
-                    <span className={`lg:hidden absolute -top-1 -right-1 bg-luxury-gold text-luxury-charcoal text-[8px] font-bold px-1 rounded-full min-w-[14px] h-[14px] flex items-center justify-center transition-all ${isSparking ? 'scale-125 ring-2 ring-luxury-gold/60' : ''}`}>
+                    <span className={`lg:hidden absolute -top-1 -right-1 bg-luxury-gold text-luxury-charcoal text-[8px] font-bold px-1 rounded-full min-w-3.5 h-3.5 flex items-center justify-center transition-all ${isSparking ? 'scale-125 ring-2 ring-luxury-gold/60' : ''}`}>
                       {itemCount}
                     </span>
                   )}
                 </div>
               </button>
 
-              <button className="lg:hidden p-1 h-10 flex items-center justify-center text-[var(--foreground)] hover:text-luxury-gold transition-colors" onClick={() => setIsMenuOpen(true)}>
+              <button className="lg:hidden p-1 h-10 flex items-center justify-center text-(--foreground) hover:text-luxury-gold transition-colors" onClick={() => setIsMenuOpen(true)}>
                 <Menu size={24} />
               </button>
             </div>
@@ -305,26 +308,26 @@ const Navbar: React.FC = () => {
         {/* Slider - Consistent with main site background (Luxury Charcoal) */}
         <div
           ref={mobileMenuRef}
-          className={`absolute top-0 right-0 bottom-0 w-[75%] bg-[var(--background)] border-l border-[var(--foreground)]/10 shadow-[-20px_0_50px_rgba(0,0,0,0.2)] pointer-events-auto transition-transform duration-500 flex flex-col opacity-100 ${
+          className={`absolute top-0 right-0 bottom-0 w-[75%] bg-(--background) border-l border-(--foreground)/10 shadow-[-20px_0_50px_rgba(0,0,0,0.2)] pointer-events-auto transition-transform duration-500 flex flex-col opacity-100 ${
             isMenuOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
           suppressHydrationWarning
         >
           {/* Header of mobile menu */}
-          <div className="flex items-center justify-between p-6 border-b border-[var(--foreground)]/10 bg-[var(--foreground)]/[0.02]">
+          <div className="flex items-center justify-between p-6 border-b border-(--foreground)/10 bg-(--foreground)/2">
             <span className="font-serif text-luxury-gold text-lg tracking-[0.2em] uppercase font-bold">Navigation</span>
             <button
               onClick={() => setIsMenuOpen(false)}
-              className="p-2 text-[var(--foreground)]/60 hover:text-luxury-gold transition-colors"
+              className="p-2 text-(--foreground)/60 hover:text-luxury-gold transition-colors"
             >
               <X size={24} />
             </button>
           </div>
 
           {/* Links and Cart Summary */}
-          <div className="flex-grow overflow-y-auto py-6 px-5 space-y-6">
+          <div className="grow overflow-y-auto py-6 px-5 space-y-6">
             {/* Bag Section inside Sidebar (Mobile only) */}
-            <div className="bg-[var(--foreground)]/[0.03] rounded-xl p-4 border border-[var(--foreground)]/10 shadow-lg space-y-4">
+            <div className="bg-(--foreground)/3 rounded-xl p-4 border border-(--foreground)/10 shadow-lg space-y-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="w-9 h-9 rounded-lg bg-luxury-gold/10 flex items-center justify-center border border-luxury-gold/30">
@@ -332,7 +335,7 @@ const Navbar: React.FC = () => {
                   </div>
                   <div>
                     <p className="text-[9px] uppercase tracking-[0.2em] text-luxury-gold/60 font-bold mb-0.5">My Bag</p>
-                    <p className="text-sm text-[var(--foreground)] font-bold">{itemCount} Items</p>
+                    <p className="text-sm text-(--foreground) font-bold">{itemCount} Items</p>
                   </div>
                 </div>
                 <div className="text-right">
@@ -355,7 +358,7 @@ const Navbar: React.FC = () => {
               <Link
                 href="/"
                 onClick={() => setIsMenuOpen(false)}
-                className="block text-sm uppercase tracking-[0.25em] font-sans font-bold text-[var(--foreground)] hover:text-luxury-gold transition-colors border-b border-[var(--foreground)]/5 pb-2"
+                className="block text-sm uppercase tracking-[0.25em] font-sans font-bold text-(--foreground) hover:text-luxury-gold transition-colors border-b border-(--foreground)/5 pb-2"
               >
                 Home
               </Link>
@@ -364,7 +367,7 @@ const Navbar: React.FC = () => {
                 <Link
                   href="/orders"
                   onClick={() => setIsMenuOpen(false)}
-                  className="block text-sm uppercase tracking-[0.25em] font-sans font-bold text-[var(--foreground)] hover:text-luxury-gold transition-colors border-b border-[var(--foreground)]/5 pb-2"
+                  className="block text-sm uppercase tracking-[0.25em] font-sans font-bold text-(--foreground) hover:text-luxury-gold transition-colors border-b border-(--foreground)/5 pb-2"
                 >
                   My Orders
                 </Link>
@@ -384,7 +387,7 @@ const Navbar: React.FC = () => {
               <div className="space-y-4">
                 <button
                   onClick={() => setIsProductsOpen(!isProductsOpen)}
-                  className="flex items-center justify-between w-full text-sm uppercase tracking-[0.25em] font-sans font-bold text-[var(--foreground)] hover:text-luxury-gold transition-colors border-b border-[var(--foreground)]/5 pb-2"
+                  className="flex items-center justify-between w-full text-sm uppercase tracking-[0.25em] font-sans font-bold text-(--foreground) hover:text-luxury-gold transition-colors border-b border-(--foreground)/5 pb-2"
                 >
                   <span>Products</span>
                   <ChevronDown className={`w-4 h-4 transition-transform duration-300 text-luxury-gold/50 ${isProductsOpen ? 'rotate-180' : ''}`} />
@@ -394,7 +397,7 @@ const Navbar: React.FC = () => {
                   <Link
                     href="/products?category=perfume-oil"
                     onClick={() => setIsMenuOpen(false)}
-                    className="flex items-center gap-2.5 text-xs uppercase tracking-[0.2em] text-[var(--foreground)]/60 hover:text-luxury-gold font-semibold transition-colors"
+                    className="flex items-center gap-2.5 text-xs uppercase tracking-[0.2em] text-(--foreground)/60 hover:text-luxury-gold font-semibold transition-colors"
                   >
                     <div className="w-1.5 h-1.5 rounded-full bg-luxury-gold shadow-[0_0_8px_rgba(212,175,55,0.4)]" />
                     Regular Versions
@@ -402,7 +405,7 @@ const Navbar: React.FC = () => {
                   <Link
                     href="/products?category=combo"
                     onClick={() => setIsMenuOpen(false)}
-                    className="flex items-center gap-2.5 text-xs uppercase tracking-[0.2em] text-[var(--foreground)]/60 hover:text-luxury-gold font-semibold transition-colors"
+                    className="flex items-center gap-2.5 text-xs uppercase tracking-[0.2em] text-(--foreground)/60 hover:text-luxury-gold font-semibold transition-colors"
                   >
                     <div className="w-1.5 h-1.5 rounded-full bg-luxury-gold shadow-[0_0_8px_rgba(212,175,55,0.4)]" />
                     Combo Packs
@@ -412,14 +415,14 @@ const Navbar: React.FC = () => {
             </div>
 
             {isMounted && user ? (
-              <div className="pt-6 border-t border-[var(--foreground)]/10 space-y-4">
+              <div className="pt-6 border-t border-(--foreground)/10 space-y-4">
                 <div className="flex items-center gap-3">
                   <div className="w-9 h-9 rounded-full bg-luxury-gold/10 flex items-center justify-center border border-luxury-gold/40">
                     <UserIcon size={18} className="text-luxury-gold" />
                   </div>
                   <div className="flex flex-col">
-                    <span className="text-[9px] uppercase tracking-[0.2em] text-[var(--foreground)]/40 font-bold">Logged In As</span>
-                    <span className="text-sm text-[var(--foreground)] font-bold truncate max-w-[150px]">
+                    <span className="text-[9px] uppercase tracking-[0.2em] text-(--foreground)/40 font-bold">Logged In As</span>
+                    <span className="text-sm text-(--foreground) font-bold truncate max-w-37.5">
                       {user.user_metadata?.full_name || user.email?.split('@')[0]}
                     </span>
                   </div>
@@ -436,7 +439,7 @@ const Navbar: React.FC = () => {
                 </button>
               </div>
             ) : (
-              <div className="pt-6 border-t border-[var(--foreground)]/10">
+              <div className="pt-6 border-t border-(--foreground)/10">
                 <Link
                   href="/login"
                   onClick={() => setIsMenuOpen(false)}
@@ -448,8 +451,8 @@ const Navbar: React.FC = () => {
             )}
           </div>
 
-          <div className="p-8 border-t border-[var(--foreground)]/10 text-center bg-[var(--foreground)]/[0.01]">
-            <p className="text-[9px] uppercase tracking-[0.5em] text-[var(--foreground)]/20 font-medium">Sufyra Signature Fragrances</p>
+          <div className="p-8 border-t border-(--foreground)/10 text-center bg-(--foreground)/1">
+            <p className="text-[9px] uppercase tracking-[0.5em] text-(--foreground)/20 font-medium">Sufyra Signature Fragrances</p>
           </div>
         </div>
       </div>

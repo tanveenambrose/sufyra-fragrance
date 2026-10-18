@@ -42,19 +42,19 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products, title, subtitle
                 {subtitle}
               </h2>
             )}
-            <h3 className="text-3xl sm:text-5xl md:text-6xl font-serif text-[var(--foreground)]">{title}</h3>
+            <h3 className="text-3xl sm:text-5xl md:text-6xl font-serif text-(--foreground)">{title}</h3>
           </div>
           
           <div className="flex gap-3 sm:gap-4 scale-90 sm:scale-100" suppressHydrationWarning>
             <button 
               onClick={scrollPrev}
-              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-[var(--foreground)]/10 flex items-center justify-center text-[var(--foreground)]/40 hover:border-luxury-gold hover:text-luxury-gold transition-all"
+              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-(--foreground)/10 flex items-center justify-center text-(--foreground)/40 hover:border-luxury-gold hover:text-luxury-gold transition-all"
             >
               <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
             </button>
             <button 
               onClick={scrollNext}
-              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-[var(--foreground)]/10 flex items-center justify-center text-[var(--foreground)]/40 hover:border-luxury-gold hover:text-luxury-gold transition-all"
+              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-(--foreground)/10 flex items-center justify-center text-(--foreground)/40 hover:border-luxury-gold hover:text-luxury-gold transition-all"
             >
               <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
             </button>
@@ -63,7 +63,7 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products, title, subtitle
 
         <div className="overflow-hidden" ref={emblaRef} suppressHydrationWarning>
           <div className="flex -ml-4 md:-ml-6" suppressHydrationWarning>
-            {products.map((product, index) => (
+            {products.map((product) => (
               <div 
                 key={product.id} 
                 className="flex-[0_0_80%] sm:flex-[0_0_45%] lg:flex-[0_0_25%] xl:flex-[0_0_20%] pl-4 md:pl-6 min-w-0"

@@ -11,12 +11,12 @@ import {
   ChevronRight, 
   MapPin, 
   ShoppingBag,
-  ExternalLink,
   Search,
   CheckCircle2,
   AlertCircle
 } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import Reveal from '@/components/Reveal';
 
 interface OrderItem {
@@ -63,7 +63,7 @@ export default function MyOrders() {
         return JSON.parse(productName);
       }
       return null;
-    } catch (e) {
+    } catch {
       return null;
     }
   };
@@ -165,19 +165,19 @@ export default function MyOrders() {
   );
 
   if (authLoading) return (
-    <div className="min-h-screen bg-[var(--background)] flex items-center justify-center">
+    <div className="min-h-screen bg-(--background) flex items-center justify-center">
       <RefreshCw className="w-8 h-8 text-luxury-gold animate-spin" />
     </div>
   );
 
   if (!user) return (
-    <div className="min-h-screen bg-[var(--background)] flex flex-col items-center justify-center p-6 text-center">
+    <div className="min-h-screen bg-(--background) flex flex-col items-center justify-center p-6 text-center">
       <Reveal>
         <div className="w-20 h-20 rounded-full bg-luxury-gold/10 flex items-center justify-center mb-8 mx-auto">
           <ShoppingBag className="w-10 h-10 text-luxury-gold" />
         </div>
-        <h1 className="text-3xl sm:text-5xl font-serif text-[var(--foreground)] mb-4 italic">Exclusive Access</h1>
-        <p className="text-[var(--foreground)]/40 max-w-md mx-auto mb-10 tracking-widest uppercase text-[10px] leading-relaxed">
+        <h1 className="text-3xl sm:text-5xl font-serif text-(--foreground) mb-4 italic">Exclusive Access</h1>
+        <p className="text-(--foreground)/40 max-w-md mx-auto mb-10 tracking-widest uppercase text-[10px] leading-relaxed">
           Please enter your credentials to access your procurement manifest and tracking details.
         </p>
         <Link 
@@ -191,24 +191,24 @@ export default function MyOrders() {
   );
 
   return (
-    <div className="min-h-screen bg-[var(--background)] pt-32 pb-20 px-4 md:px-8">
+    <div className="min-h-screen bg-(--background) pt-32 pb-20 px-4 md:px-8">
       <div className="max-w-6xl mx-auto">
         <Reveal>
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 mb-12 sm:mb-16 border-b border-[var(--foreground)]/5 pb-12">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 mb-12 sm:mb-16 border-b border-(--foreground)/5 pb-12">
             <div>
               <span className="text-luxury-gold uppercase tracking-[0.4em] text-[10px] font-bold mb-4 block">Concierge Desk</span>
-              <h1 className="text-3xl sm:text-4xl md:text-6xl font-serif text-[var(--foreground)] italic leading-tight">My Procurement Manifest</h1>
-              <p className="text-[var(--foreground)]/30 text-[9px] sm:text-xs mt-4 tracking-widest uppercase font-medium">Tracking your artisanal scent journey</p>
+              <h1 className="text-3xl sm:text-4xl md:text-6xl font-serif text-(--foreground) italic leading-tight">My Procurement Manifest</h1>
+              <p className="text-(--foreground)/30 text-[9px] sm:text-xs mt-4 tracking-widest uppercase font-medium">Tracking your artisanal scent journey</p>
             </div>
             
             <div className="relative w-full md:w-80">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--foreground)]/20" size={18} />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-(--foreground)/20" size={18} />
               <input
                 type="text"
                 placeholder="Find Manifest..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full bg-[var(--foreground)]/[0.03] border border-[var(--foreground)]/10 rounded-2xl py-3 sm:py-4 pl-12 pr-4 text-xs text-[var(--foreground)] focus:outline-none focus:border-luxury-gold/40 transition-all placeholder:text-[var(--foreground)]/30 font-bold"
+                className="w-full bg-(--foreground)/3 border border-(--foreground)/10 rounded-2xl py-3 sm:py-4 pl-12 pr-4 text-xs text-(--foreground) focus:outline-none focus:border-luxury-gold/40 transition-all placeholder:text-(--foreground)/30 font-bold"
               />
             </div>
           </div>
@@ -217,13 +217,13 @@ export default function MyOrders() {
         {isLoading ? (
           <div className="flex flex-col items-center justify-center py-40 gap-6">
             <RefreshCw className="w-10 h-10 text-luxury-gold animate-spin" strokeWidth={1} />
-            <p className="text-[10px] uppercase tracking-[0.3em] text-[var(--foreground)]/20 font-bold">Synchronizing Archives...</p>
+            <p className="text-[10px] uppercase tracking-[0.3em] text-(--foreground)/20 font-bold">Synchronizing Archives...</p>
           </div>
         ) : filteredOrders.length === 0 ? (
-          <div className="text-center py-20 sm:py-32 border border-dashed border-[var(--foreground)]/5 rounded-[2rem] sm:rounded-[3rem] bg-[var(--foreground)]/[0.01]">
-            <Package className="w-12 h-12 sm:w-16 h-16 text-[var(--foreground)]/10 mx-auto mb-8" strokeWidth={1} />
-            <h3 className="text-lg sm:text-xl font-serif text-[var(--foreground)]/40 mb-2">No Manifests Found</h3>
-            <p className="text-[10px] uppercase tracking-widest text-[var(--foreground)]/20 mb-10">Your procurement history is currently empty.</p>
+          <div className="text-center py-20 sm:py-32 border border-dashed border-(--foreground)/5 rounded-4xl sm:rounded-[3rem] bg-(--foreground)/1">
+            <Package className="w-12 h-12 sm:w-16 sm:h-16 text-(--foreground)/10 mx-auto mb-8" strokeWidth={1} />
+            <h3 className="text-lg sm:text-xl font-serif text-(--foreground)/40 mb-2">No Manifests Found</h3>
+            <p className="text-[10px] uppercase tracking-widest text-(--foreground)/20 mb-10">Your procurement history is currently empty.</p>
             <Link 
               href="/products" 
               className="text-luxury-gold border border-luxury-gold/30 px-8 py-3 rounded-full text-[10px] uppercase tracking-widest font-bold hover:bg-luxury-gold/10 transition-all"
@@ -244,7 +244,7 @@ export default function MyOrders() {
 
               return (
                 <Reveal key={order.id}>
-                  <div className={`group bg-[var(--foreground)]/[0.02] border border-[var(--foreground)]/10 rounded-[2rem] sm:rounded-[2.5rem] overflow-hidden hover:bg-[var(--foreground)]/[0.03] transition-all duration-500 hover:border-luxury-gold/20 shadow-xl ${isExpanded ? 'ring-1 ring-luxury-gold/20 bg-[var(--foreground)]/[0.04]' : ''}`}>
+                  <div className={`group bg-(--foreground)/2 border border-(--foreground)/10 rounded-4xl sm:rounded-[2.5rem] overflow-hidden hover:bg-(--foreground)/3 transition-all duration-500 hover:border-luxury-gold/20 shadow-xl ${isExpanded ? 'ring-1 ring-luxury-gold/20 bg-(--foreground)/4' : ''}`}>
                     <div className="p-5 sm:p-10">
                       <div className="flex flex-col lg:flex-row justify-between gap-6 lg:gap-10">
                         {/* Order Identity */}
@@ -253,7 +253,7 @@ export default function MyOrders() {
                             <span className="text-[9px] sm:text-[10px] font-mono text-luxury-gold px-2.5 py-1 bg-luxury-gold/10 rounded-full border border-luxury-gold/20 self-start">
                               #{order.id.slice(0, 8).toUpperCase()}
                             </span>
-                            <span className="text-[9px] sm:text-[10px] text-[var(--foreground)]/30 uppercase tracking-widest font-bold">
+                            <span className="text-[9px] sm:text-[10px] text-(--foreground)/30 uppercase tracking-widest font-bold">
                               {new Date(order.created_at).toLocaleDateString(undefined, { 
                                 year: 'numeric', 
                                 month: 'long', 
@@ -262,13 +262,13 @@ export default function MyOrders() {
                             </span>
                           </div>
                           
-                          <h3 className="text-xl sm:text-2xl md:text-3xl font-serif text-[var(--foreground)] mb-4 group-hover:text-luxury-gold transition-colors duration-500 line-clamp-2 leading-tight">
+                          <h3 className="text-xl sm:text-2xl md:text-3xl font-serif text-(--foreground) mb-4 group-hover:text-luxury-gold transition-colors duration-500 line-clamp-2 leading-tight">
                             {displayName}
                           </h3>
                           
-                          <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[9px] sm:text-[10px] uppercase tracking-[0.2em] font-bold text-[var(--foreground)]/40 mb-6">
+                          <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[9px] sm:text-[10px] uppercase tracking-[0.2em] font-bold text-(--foreground)/40 mb-6">
                             <span className="flex items-center gap-1.5"><ShoppingBag size={10} className="text-luxury-gold/40" /> {items ? 'Bundle Selection' : `Size: ${order.variant_size}`}</span>
-                            <span className="hidden sm:block w-1 h-1 rounded-full bg-[var(--foreground)]/10" />
+                            <span className="hidden sm:block w-1 h-1 rounded-full bg-(--foreground)/10" />
                             <span className="flex items-center gap-1.5"><Package size={10} className="text-luxury-gold/40" /> Total Qty: {order.quantity}</span>
                           </div>
                           
@@ -284,9 +284,9 @@ export default function MyOrders() {
                         </div>
 
                         {/* Order Economics & Status */}
-                        <div className="flex flex-col sm:flex-row lg:flex-col justify-between items-start sm:items-center lg:items-end gap-6 sm:gap-8 pt-6 lg:pt-0 border-t lg:border-t-0 lg:border-l border-[var(--foreground)]/5 lg:pl-10">
+                        <div className="flex flex-col sm:flex-row lg:flex-col justify-between items-start sm:items-center lg:items-end gap-6 sm:gap-8 pt-6 lg:pt-0 border-t lg:border-t-0 lg:border-l border-(--foreground)/5 lg:pl-10">
                           <div className="text-left sm:text-right lg:text-right w-full sm:w-auto">
-                            <p className="text-[9px] sm:text-[10px] uppercase tracking-widest text-[var(--foreground)]/40 font-bold mb-1">Manifest Total</p>
+                            <p className="text-[9px] sm:text-[10px] uppercase tracking-widest text-(--foreground)/40 font-bold mb-1">Manifest Total</p>
                             <p className="text-2xl sm:text-3xl font-bold text-luxury-gold">৳{order.total_price}</p>
                           </div>
                           
@@ -301,7 +301,7 @@ export default function MyOrders() {
 
                       {/* Expandable Details Section */}
                       {isExpanded && (
-                        <div className="mt-10 pt-10 border-t border-[var(--foreground)]/10 animate-in fade-in slide-in-from-top-4 duration-500">
+                        <div className="mt-10 pt-10 border-t border-(--foreground)/10 animate-in fade-in slide-in-from-top-4 duration-500">
                           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
                             {/* Left: Items Breakdown */}
                             <div className="space-y-6">
@@ -309,13 +309,13 @@ export default function MyOrders() {
                               {items ? (
                                 <div className="space-y-4">
                                   {items.map((item, idx) => (
-                                    <div key={idx} className="flex gap-4 p-4 rounded-2xl bg-[var(--foreground)]/[0.02] border border-[var(--foreground)]/5 items-center">
-                                      <div className="w-16 h-20 bg-white/[0.03] rounded-lg border border-white/10 overflow-hidden shrink-0 relative">
-                                        {item.image && <img src={item.image} alt={item.name} className="w-full h-full object-cover" />}
+                                    <div key={idx} className="flex gap-4 p-4 rounded-2xl bg-(--foreground)/2 border border-(--foreground)/5 items-center">
+                                      <div className="w-16 h-20 bg-white/3 rounded-lg border border-white/10 overflow-hidden shrink-0 relative">
+                                        {item.image && <Image src={item.image} alt={item.name} width={64} height={80} className="w-full h-full object-cover" unoptimized />}
                                       </div>
-                                      <div className="flex-grow">
-                                        <p className="text-sm font-serif text-[var(--foreground)] mb-1">{item.name}</p>
-                                        <p className="text-[9px] uppercase tracking-widest text-[var(--foreground)]/40 font-bold">
+                                      <div className="grow">
+                                        <p className="text-sm font-serif text-(--foreground) mb-1">{item.name}</p>
+                                        <p className="text-[9px] uppercase tracking-widest text-(--foreground)/40 font-bold">
                                           Size: {item.size} | Qty: {item.quantity}
                                         </p>
                                       </div>
@@ -326,13 +326,13 @@ export default function MyOrders() {
                                   ))}
                                 </div>
                               ) : (
-                                <div className="flex gap-4 p-4 rounded-2xl bg-[var(--foreground)]/[0.02] border border-[var(--foreground)]/5 items-center">
-                                  <div className="w-16 h-20 bg-white/[0.03] rounded-lg border border-white/10 flex items-center justify-center shrink-0">
+                                <div className="flex gap-4 p-4 rounded-2xl bg-(--foreground)/2 border border-(--foreground)/5 items-center">
+                                  <div className="w-16 h-20 bg-white/3 rounded-lg border border-white/10 flex items-center justify-center shrink-0">
                                     <ShoppingBag size={20} className="text-white/10" />
                                   </div>
-                                  <div className="flex-grow">
-                                    <p className="text-sm font-serif text-[var(--foreground)] mb-1">{order.product_name}</p>
-                                    <p className="text-[9px] uppercase tracking-widest text-[var(--foreground)]/40 font-bold">
+                                  <div className="grow">
+                                    <p className="text-sm font-serif text-(--foreground) mb-1">{order.product_name}</p>
+                                    <p className="text-[9px] uppercase tracking-widest text-(--foreground)/40 font-bold">
                                       Size: {order.variant_size} | Qty: {order.quantity}
                                     </p>
                                   </div>
@@ -342,16 +342,16 @@ export default function MyOrders() {
                                 </div>
                               )}
                               
-                              <div className="pt-6 space-y-3 border-t border-[var(--foreground)]/5">
-                                <div className="flex justify-between text-[10px] uppercase tracking-widest text-[var(--foreground)]/40 font-bold">
+                              <div className="pt-6 space-y-3 border-t border-(--foreground)/5">
+                                <div className="flex justify-between text-[10px] uppercase tracking-widest text-(--foreground)/40 font-bold">
                                   <span>Subtotal</span>
-                                  <span className="text-[var(--foreground)]">৳{order.subtotal || (order.total_price - (order.delivery_cost || 0))}</span>
+                                  <span className="text-(--foreground)">৳{order.subtotal || (order.total_price - (order.delivery_cost || 0))}</span>
                                 </div>
-                                <div className="flex justify-between text-[10px] uppercase tracking-widest text-[var(--foreground)]/40 font-bold">
+                                <div className="flex justify-between text-[10px] uppercase tracking-widest text-(--foreground)/40 font-bold">
                                   <span>Concierge Delivery</span>
-                                  <span className="text-[var(--foreground)]">৳{order.delivery_cost || 0}</span>
+                                  <span className="text-(--foreground)">৳{order.delivery_cost || 0}</span>
                                 </div>
-                                <div className="flex justify-between text-xs uppercase tracking-widest font-bold pt-2 border-t border-[var(--foreground)]/5">
+                                <div className="flex justify-between text-xs uppercase tracking-widest font-bold pt-2 border-t border-(--foreground)/5">
                                   <span className="text-luxury-gold">Grand Total</span>
                                   <span className="text-luxury-gold">৳{order.total_price}</span>
                                 </div>
@@ -368,9 +368,9 @@ export default function MyOrders() {
                                       <MapPin size={14} className="text-luxury-gold" />
                                     </div>
                                     <div>
-                                      <p className="text-[8px] uppercase tracking-[0.2em] text-[var(--foreground)]/30 font-bold mb-1">Destination Sanctuary</p>
-                                      <p className="text-[11px] font-bold text-[var(--foreground)] leading-relaxed">{order.delivery_name}</p>
-                                      <p className="text-[10px] text-[var(--foreground)]/60 leading-relaxed italic">{order.delivery_address}</p>
+                                      <p className="text-[8px] uppercase tracking-[0.2em] text-(--foreground)/30 font-bold mb-1">Destination Sanctuary</p>
+                                      <p className="text-[11px] font-bold text-(--foreground) leading-relaxed">{order.delivery_name}</p>
+                                      <p className="text-[10px] text-(--foreground)/60 leading-relaxed italic">{order.delivery_address}</p>
                                       <p className="text-[9px] uppercase tracking-widest text-luxury-gold mt-1">{order.delivery_zone}</p>
                                     </div>
                                   </div>
@@ -380,17 +380,17 @@ export default function MyOrders() {
                                       <ShoppingBag size={14} className="text-luxury-gold" />
                                     </div>
                                     <div>
-                                      <p className="text-[8px] uppercase tracking-[0.2em] text-[var(--foreground)]/30 font-bold mb-1">Payment & Contact</p>
-                                      <p className="text-[10px] font-bold text-[var(--foreground)] uppercase tracking-widest">{order.payment_method || 'Cash on Delivery'}</p>
+                                      <p className="text-[8px] uppercase tracking-[0.2em] text-(--foreground)/30 font-bold mb-1">Payment & Contact</p>
+                                      <p className="text-[10px] font-bold text-(--foreground) uppercase tracking-widest">{order.payment_method || 'Cash on Delivery'}</p>
                                       <p className="text-[10px] text-luxury-gold/70 mt-1 font-mono tracking-tighter">WhatsApp: {order.whatsapp_number}</p>
                                     </div>
                                   </div>
                                 </div>
                               </div>
                               
-                              <div className="p-6 rounded-2xl bg-luxury-gold/[0.03] border border-luxury-gold/10">
+                              <div className="p-6 rounded-2xl bg-luxury-gold/3 border border-luxury-gold/10">
                                 <p className="text-[8px] uppercase tracking-[0.3em] text-luxury-gold/40 font-bold mb-3 italic">Curator&apos;s Note</p>
-                                <p className="text-[10px] text-[var(--foreground)]/50 leading-relaxed tracking-wider uppercase">
+                                <p className="text-[10px] text-(--foreground)/50 leading-relaxed tracking-wider uppercase">
                                   This procurement manifest is verified. Our concierge team will reach out via WhatsApp to synchronize the delivery timeline.
                                 </p>
                               </div>
@@ -403,10 +403,10 @@ export default function MyOrders() {
                     {/* Footer Link */}
                     <Link 
                       href="/products"
-                      className="bg-[var(--foreground)]/[0.01] border-t border-[var(--foreground)]/5 p-4 flex items-center justify-center gap-2 group/link hover:bg-luxury-gold/5 transition-all"
+                      className="bg-(--foreground)/1 border-t border-(--foreground)/5 p-4 flex items-center justify-center gap-2 group/link hover:bg-luxury-gold/5 transition-all"
                     >
-                      <span className="text-[8px] sm:text-[9px] uppercase tracking-[0.3em] text-[var(--foreground)]/20 font-bold group-hover/link:text-luxury-gold transition-colors">Expand Your Collection</span>
-                      <ChevronRight size={12} className="text-[var(--foreground)]/10 group-hover/link:text-luxury-gold transition-all transform group-hover/link:translate-x-1" />
+                      <span className="text-[8px] sm:text-[9px] uppercase tracking-[0.3em] text-(--foreground)/20 font-bold group-hover/link:text-luxury-gold transition-colors">Expand Your Collection</span>
+                      <ChevronRight size={12} className="text-(--foreground)/10 group-hover/link:text-luxury-gold transition-all transform group-hover/link:translate-x-1" />
                     </Link>
                   </div>
                 </Reveal>

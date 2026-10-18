@@ -94,7 +94,7 @@ function LoginFormContent() {
   };
 
   return (
-    <div className="min-h-screen lg:h-screen lg:max-h-screen w-full flex flex-col lg:flex-row bg-[var(--background)] transition-colors duration-300 relative overflow-x-hidden lg:overflow-hidden select-none">
+    <div className="min-h-screen lg:h-screen lg:max-h-screen w-full flex flex-col lg:flex-row bg-(--background) transition-colors duration-300 relative overflow-x-hidden lg:overflow-hidden select-none">
       {/* Decorative ambient gradients for mobile/tablet background */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none -z-10 lg:hidden">
         <div className="absolute -top-24 -right-24 w-72 h-72 bg-luxury-gold/5 blur-[100px] rounded-full" />
@@ -118,7 +118,7 @@ function LoginFormContent() {
             <ThemeToggle />
             <Link
               href="/"
-              className="inline-flex items-center gap-1.5 text-[10px] sm:text-xs uppercase tracking-widest font-bold text-[var(--foreground)]/60 hover:text-luxury-gold transition-colors py-1.5 px-3 rounded-full hover:bg-[var(--foreground)]/5 border border-transparent hover:border-luxury-gold/20"
+              className="inline-flex items-center gap-1.5 text-[10px] sm:text-xs uppercase tracking-widest font-bold text-(--foreground)/60 hover:text-luxury-gold transition-colors py-1.5 px-3 rounded-full hover:bg-(--foreground)/5 border border-transparent hover:border-luxury-gold/20"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
               <span className="hidden sm:inline">Store</span>
@@ -133,10 +133,10 @@ function LoginFormContent() {
               <Sparkles className="w-2.5 h-2.5" />
               Sufyra Privé
             </div>
-            <h1 className="text-2xl sm:text-3xl lg:text-3xl font-serif text-[var(--foreground)] tracking-tight leading-snug">
+            <h1 className="text-2xl sm:text-3xl lg:text-3xl font-serif text-(--foreground) tracking-tight leading-snug">
               Welcome <span className="font-normal italic">Back</span>
             </h1>
-            <p className="text-[11px] sm:text-xs text-[var(--foreground)]/50 tracking-wider mt-1">
+            <p className="text-[11px] sm:text-xs text-(--foreground)/50 tracking-wider mt-1">
               Sign in to manage your collection &amp; sanctuary
             </p>
           </div>
@@ -187,11 +187,11 @@ function LoginFormContent() {
           </form>
 
           <div className="my-3 sm:my-4 flex items-center gap-3">
-            <div className="h-px bg-[var(--foreground)]/10 flex-grow" />
-            <span className="text-[9px] sm:text-[10px] uppercase tracking-widest text-[var(--foreground)]/30 font-bold whitespace-nowrap">
+            <div className="h-px bg-(--foreground)/10 grow" />
+            <span className="text-[9px] sm:text-[10px] uppercase tracking-widest text-(--foreground)/30 font-bold whitespace-nowrap">
               Or continue with
             </span>
-            <div className="h-px bg-[var(--foreground)]/10 flex-grow" />
+            <div className="h-px bg-(--foreground)/10 grow" />
           </div>
 
           <div className="grid grid-cols-2 gap-2.5 sm:gap-3">
@@ -200,7 +200,7 @@ function LoginFormContent() {
           </div>
 
           <div className="mt-4 sm:mt-5 text-center">
-            <p className="text-xs text-[var(--foreground)]/50">
+            <p className="text-xs text-(--foreground)/50">
               Don&apos;t have an account?{' '}
               <Link href="/register" className="text-luxury-gold font-bold hover:underline inline-flex items-center gap-1 group">
                 Register Now <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
@@ -210,7 +210,7 @@ function LoginFormContent() {
         </div>
 
         {/* Footer Note */}
-        <footer className="pt-3 pb-1 text-center text-[10px] sm:text-[11px] text-[var(--foreground)]/30 tracking-wider shrink-0">
+        <footer className="pt-3 pb-1 text-center text-[10px] sm:text-[11px] text-(--foreground)/30 tracking-wider shrink-0">
           © 2026 Sufyra Fragrance • All Rights Reserved
         </footer>
       </div>
@@ -228,8 +228,8 @@ function LoginFormContent() {
         />
 
         {/* Atmospheric overlays */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-black/20" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[var(--background)]/30 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/35 to-black/20" />
+        <div className="absolute inset-0 bg-linear-to-r from-(--background)/30 via-transparent to-transparent" />
         <div className="absolute top-1/4 -right-10 w-80 h-80 bg-luxury-gold/15 rounded-full blur-[140px] pointer-events-none" />
 
         {/* Glassmorphic Brand Accent Card */}
@@ -258,7 +258,7 @@ function LoginFormContent() {
 
 export default function LoginPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-[var(--background)] flex items-center justify-center" />}>
+    <Suspense fallback={<div className="min-h-screen bg-(--background) flex items-center justify-center" />}>
       <LoginFormContent />
     </Suspense>
   );

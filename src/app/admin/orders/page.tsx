@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 import { 
-  ClipboardList, 
   Search, 
   Eye, 
   RefreshCw, 
@@ -192,18 +191,18 @@ export default function AdminOrders() {
             placeholder="Search name, email, manifest..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full bg-white/[0.02] border border-white/10 rounded-xl py-3 pl-12 pr-4 text-xs text-luxury-cream focus:outline-none focus:border-luxury-gold/50 transition-all placeholder:text-white/20"
+            className="w-full bg-white/2 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-xs text-luxury-cream focus:outline-none focus:border-luxury-gold/50 transition-all placeholder:text-white/20"
           />
         </div>
       </div>
 
-      <div className="bg-[#0A0A0A] rounded-2xl border border-white/5 overflow-hidden shadow-2xl">
+      <div className="bg-luxury-charcoal rounded-2xl border border-white/5 overflow-hidden shadow-2xl">
         <div className="w-full">
           {/* Desktop Table View */}
           <div className="hidden md:block overflow-x-auto">
-            <table className="w-full text-left min-w-[850px]">
+            <table className="w-full text-left min-w-212.5">
               <thead>
-                <tr className="border-b border-white/5 bg-white/[0.01]">
+                <tr className="border-b border-white/5 bg-white/1">
                   <th className="px-6 py-4 text-[9px] uppercase tracking-[0.2em] text-white/40 font-bold">Manifest ID</th>
                   <th className="px-6 py-4 text-[9px] uppercase tracking-[0.2em] text-white/40 font-bold">Consignee &amp; Email</th>
                   <th className="px-6 py-4 text-[9px] uppercase tracking-[0.2em] text-white/40 font-bold">Selection</th>
@@ -233,8 +232,8 @@ export default function AdminOrders() {
                         key={order.id} 
                         className={`group transition-all ${
                           isNew 
-                            ? 'bg-luxury-gold/[0.06] border-l-4 border-luxury-gold animate-in fade-in duration-500' 
-                            : 'hover:bg-white/[0.01]'
+                            ? 'bg-luxury-gold/6 border-l-4 border-luxury-gold animate-in fade-in duration-500' 
+                            : 'hover:bg-white/1'
                         }`}
                       >
                         <td className="px-6 py-4">
@@ -347,7 +346,7 @@ export default function AdminOrders() {
                 <div 
                   key={order.id} 
                   className={`p-4 sm:p-6 flex flex-col gap-4 ${
-                    isNew ? 'bg-luxury-gold/[0.06] border-l-4 border-luxury-gold' : ''
+                    isNew ? 'bg-luxury-gold/6 border-l-4 border-luxury-gold' : ''
                   }`}
                 >
                   <div className="flex justify-between items-start">

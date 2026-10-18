@@ -34,7 +34,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority = false }) 
   const discountedPrice = discount > 0 ? Math.round(currentPrice * (1 - discount / 100)) : currentPrice;
 
   return (
-    <div className="group rounded-[2rem] overflow-hidden flex flex-col h-full reveal bg-[var(--foreground)]/[0.03] hover:bg-[var(--foreground)]/[0.05] border border-[var(--foreground)]/[0.05] transition-all duration-500 hover:shadow-xl hover:shadow-luxury-gold/5" suppressHydrationWarning>
+    <div className="group rounded-4xl overflow-hidden flex flex-col h-full reveal bg-(--foreground)/3 hover:bg-(--foreground)/5 border border-(--foreground)/5 transition-all duration-500 hover:shadow-xl hover:shadow-luxury-gold/5" suppressHydrationWarning>
       {/* Product Image */}
       <Link href={`/product-details/${product.id}`} className="relative aspect-square block overflow-hidden group-hover:cursor-pointer" suppressHydrationWarning>
         <div className="relative w-full h-full bg-luxury-cream/5" suppressHydrationWarning>
@@ -48,7 +48,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority = false }) 
               priority={priority} 
             />
           ) : (
-            <div className="w-full h-full flex flex-col items-center justify-center bg-[var(--foreground)]/[0.02] text-[var(--foreground)]/10 gap-2">
+            <div className="w-full h-full flex flex-col items-center justify-center bg-(--foreground)/2 text-(--foreground)/10 gap-2">
               <Plus className="w-8 h-8 opacity-20" strokeWidth={1} />
               <span className="text-[10px] uppercase tracking-widest font-bold opacity-20">No Image</span>
             </div>
@@ -67,17 +67,17 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority = false }) 
       <div className="p-4 sm:p-6 flex flex-col flex-1" suppressHydrationWarning>
         <div className="mb-2 sm:mb-4" suppressHydrationWarning>
           <Link href={`/product-details/${product.id}`} className="hover:text-luxury-gold transition-colors block mb-1">
-            <h3 className="text-[13px] sm:text-lg font-serif text-[var(--foreground)] font-bold tracking-tight line-clamp-1 leading-tight">{product.name}</h3>
+            <h3 className="text-[13px] sm:text-lg font-serif text-(--foreground) font-bold tracking-tight line-clamp-1 leading-tight">{product.name}</h3>
           </Link>
           <div className="flex items-center gap-1.5 sm:gap-2" suppressHydrationWarning>
              <span className="text-luxury-gold font-bold text-[13px] sm:text-lg">{discountedPrice}৳</span>
              {discount > 0 && (
-               <span className="text-[var(--foreground)]/30 line-through text-[9px] sm:text-[11px] font-medium">{currentPrice}৳</span>
+               <span className="text-(--foreground)/30 line-through text-[9px] sm:text-[11px] font-medium">{currentPrice}৳</span>
              )}
           </div>
         </div>
         
-        <p className="text-[var(--foreground)]/50 text-[9px] sm:text-[11px] mb-3 sm:mb-5 line-clamp-2 leading-relaxed font-medium" suppressHydrationWarning>
+        <p className="text-(--foreground)/50 text-[9px] sm:text-[11px] mb-3 sm:mb-5 line-clamp-2 leading-relaxed font-medium" suppressHydrationWarning>
           {product.description}
         </p>
         
@@ -90,7 +90,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority = false }) 
               className={`px-2.5 py-1 rounded-full transition-all text-[8px] sm:text-[9px] font-bold border ${
                 selectedSize === variant.size
                   ? 'border-luxury-gold bg-luxury-gold text-white'
-                  : 'border-[var(--foreground)]/10 text-[var(--foreground)]/40 hover:border-luxury-gold hover:text-luxury-gold'
+                  : 'border-(--foreground)/10 text-(--foreground)/40 hover:border-luxury-gold hover:text-luxury-gold'
               }`}
             >
               {variant.size}

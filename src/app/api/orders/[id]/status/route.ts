@@ -55,36 +55,30 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
     // 3. Prepare email content
     let statusTitle = '';
     let statusDescription = '';
-    let statusIcon = '';
     let statusColor = '#d4af37';
 
     switch (status.toLowerCase()) {
       case 'received':
         statusTitle = 'Manifest Received';
         statusDescription = 'Your procurement request has been successfully recorded in our central ledger. Our artisans will begin preparation shortly.';
-        statusIcon = 'https://img.icons8.com/ios/100/d4af37/document--v1.png';
         break;
       case 'processing':
         statusTitle = 'Artisanal Preparation';
         statusDescription = 'Your selection is currently being curated and packaged with the meticulous care it deserves. Every detail is being perfected.';
-        statusIcon = 'https://img.icons8.com/ios/100/d4af37/perfume-bottle.png';
         break;
       case 'shipped':
         statusTitle = 'Selection En Route';
         statusDescription = 'Your manifest has been handed over to our elite courier partners. Your sanctuary will soon be graced by your selected scent.';
-        statusIcon = 'https://img.icons8.com/ios/100/d4af37/delivery-truck.png';
         statusColor = '#25D366';
         break;
       case 'delivered':
         statusTitle = 'Delivered to Sanctuary';
         statusDescription = 'Your Sufyra fragrance has arrived. May it bring timeless elegance and captivating scents to your presence.';
-        statusIcon = 'https://img.icons8.com/ios/100/d4af37/ok--v1.png';
         statusColor = '#10B981';
         break;
       default:
         statusTitle = `Status Update: ${status}`;
         statusDescription = `The status of your procurement manifest #${order.id.slice(0, 8).toUpperCase()} has been updated.`;
-        statusIcon = 'https://img.icons8.com/ios/100/d4af37/info--v1.png';
     }
 
     // Resolve email logo

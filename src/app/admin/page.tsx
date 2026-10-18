@@ -12,10 +12,10 @@ import {
   Image as ImageIcon,
   ClipboardList,
   Sparkles,
-  Clock,
   Mail
 } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface DashboardOrder {
   id: string;
@@ -118,9 +118,10 @@ export default function AdminDashboard() {
     
     try {
       const productsToSeed = hardcodedProducts.map(p => {
-        const { id, ...rest } = p;
+        const productData = { ...p };
+        delete (productData as { id?: string }).id;
         return {
-          ...rest,
+          ...productData,
           discount_percent: 0,
         };
       });
@@ -166,7 +167,7 @@ export default function AdminDashboard() {
           <Link 
             key={i} 
             href={stat.href}
-            className="bg-[#0A0A0A] p-4 sm:p-6 rounded-2xl border border-white/5 hover:border-luxury-gold/20 transition-all space-y-3 sm:space-y-4 shadow-xl group block"
+            className="bg-luxury-charcoal p-4 sm:p-6 rounded-2xl border border-white/5 hover:border-luxury-gold/20 transition-all space-y-3 sm:space-y-4 shadow-xl group block"
           >
             <div className="flex justify-between items-center">
               <stat.icon size={16} className={stat.color} />
@@ -188,7 +189,7 @@ export default function AdminDashboard() {
         {/* Left 2 Cols: Live Orders Stream & Quick Actions */}
         <div className="lg:col-span-2 space-y-8">
           {/* Live Orders Panel */}
-          <div className="bg-[#0A0A0A] rounded-2xl border border-white/5 p-6 shadow-xl space-y-5">
+          <div className="bg-luxury-charcoal rounded-2xl border border-white/5 p-6 shadow-xl space-y-5">
             <div className="flex justify-between items-center border-b border-white/5 pb-4">
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
@@ -213,7 +214,7 @@ export default function AdminDashboard() {
               ) : (
                 recentOrders.map((order) => (
                   <div key={order.id} className="py-3.5 flex items-center justify-between gap-4 group">
-                    <div className="min-w-0 flex-grow">
+                    <div className="min-w-0 grow">
                       <div className="flex items-center gap-2">
                         <span className="text-xs font-bold text-luxury-cream truncate">{order.delivery_name}</span>
                         <span className="text-[9px] font-mono text-luxury-gold/70">#{order.id.slice(0, 8).toUpperCase()}</span>
@@ -224,7 +225,7 @@ export default function AdminDashboard() {
                           {order.delivery_email || 'No email'}
                         </span>
                         <span>•</span>
-                        <span className="truncate max-w-[200px]">
+                        <span className="truncate max-w-50">
                           {(() => {
                             try {
                               if (order.product_name?.startsWith('[') && order.product_name?.endsWith(']')) {
@@ -262,7 +263,7 @@ export default function AdminDashboard() {
           <div className="space-y-4">
             <h3 className="text-xs font-bold uppercase tracking-[0.3em] text-white/40">Quick Operations</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Link href="/admin/products/new" className="group p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-luxury-gold/30 transition-all space-y-3">
+              <Link href="/admin/products/new" className="group p-6 rounded-2xl bg-white/2 border border-white/5 hover:border-luxury-gold/30 transition-all space-y-3">
                 <div className="w-10 h-10 rounded-xl bg-luxury-gold/10 flex items-center justify-center text-luxury-gold group-hover:scale-110 transition-transform">
                   <Plus size={20} />
                 </div>
@@ -272,7 +273,7 @@ export default function AdminDashboard() {
                 </div>
               </Link>
 
-              <Link href="/admin/orders" className="group p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-luxury-gold/30 transition-all space-y-3">
+              <Link href="/admin/orders" className="group p-6 rounded-2xl bg-white/2 border border-white/5 hover:border-luxury-gold/30 transition-all space-y-3">
                 <div className="w-10 h-10 rounded-xl bg-luxury-gold/10 flex items-center justify-center text-luxury-gold group-hover:scale-110 transition-transform">
                   <ClipboardList size={20} />
                 </div>
@@ -292,7 +293,7 @@ export default function AdminDashboard() {
               <Link href="/admin/products" className="text-[9px] uppercase tracking-widest text-luxury-gold hover:underline">View All</Link>
            </div>
            
-           <div className="bg-[#0A0A0A] rounded-2xl border border-white/5 overflow-hidden shadow-xl">
+           <div className="bg-luxury-charcoal rounded-2xl border border-white/5 overflow-hidden shadow-xl">
              <div className="divide-y divide-white/5">
                 {isLoading ? (
                   <div className="p-8 text-center text-white/20 uppercase tracking-widest text-[9px]">Optimizing...</div>
@@ -301,16 +302,16 @@ export default function AdminDashboard() {
                 ) : (
                   products.slice(0, 5).map((p) => (
                     <div key={p.id} className="p-4 flex items-center gap-4 group">
-                      <div className="w-12 h-14 rounded-lg bg-white/5 overflow-hidden flex-shrink-0 border border-white/10 group-hover:border-luxury-gold/30 transition-colors">
+                      <div className="w-12 h-14 rounded-lg bg-white/5 overflow-hidden shrink-0 border border-white/10 group-hover:border-luxury-gold/30 transition-colors">
                         {p.image_url ? (
-                          <img src={p.image_url} alt={p.name} className="w-full h-full object-cover" />
+                          <Image src={p.image_url} alt={p.name} width={48} height={56} className="w-full h-full object-cover" unoptimized />
                         ) : (
                           <div className="w-full h-full bg-white/5 flex items-center justify-center">
                             <ImageIcon size={14} className="text-white/20" />
                           </div>
                         )}
                       </div>
-                      <div className="flex-grow min-w-0">
+                      <div className="grow min-w-0">
                         <p className="text-sm font-bold text-luxury-cream truncate">{p.name}</p>
                         <p className="text-[8px] uppercase tracking-widest text-white/20">{p.category === 'combo' ? 'Combo' : 'Regular'}</p>
                       </div>

@@ -90,7 +90,8 @@ export default function AdminLayout({
   // Reset count when admin visits orders page
   useEffect(() => {
     if (pathname === '/admin/orders') {
-      setNewOrdersCount(0);
+      const timer = setTimeout(() => setNewOrdersCount(0), 0);
+      return () => clearTimeout(timer);
     }
   }, [pathname]);
 
@@ -137,7 +138,7 @@ export default function AdminLayout({
     <div className="min-h-screen bg-[#050505] text-luxury-cream relative">
       {/* Real-time Order Alert Toast (Top-Right Floating) */}
       {latestAlert && (
-        <div className="fixed top-5 right-5 z-[9999] max-w-sm w-full bg-[#0F0F0F]/95 backdrop-blur-2xl border border-luxury-gold/40 rounded-2xl p-4 sm:p-5 shadow-2xl shadow-luxury-gold/25 animate-in slide-in-from-top-4 duration-300">
+        <div className="fixed top-5 right-5 z-9999 max-w-sm w-full bg-[#0F0F0F]/95 backdrop-blur-2xl border border-luxury-gold/40 rounded-2xl p-4 sm:p-5 shadow-2xl shadow-luxury-gold/25 animate-in slide-in-from-top-4 duration-300">
           <div className="flex items-start justify-between gap-3">
             <div className="flex items-center gap-2 text-luxury-gold">
               <span className="relative flex h-3 w-3">
@@ -198,7 +199,7 @@ export default function AdminLayout({
       )}
 
       {/* Mobile Header */}
-      <div className="lg:hidden bg-[#0A0A0A] border-b border-white/5 p-4 flex items-center justify-between sticky top-0 z-50">
+      <div className="lg:hidden bg-luxury-charcoal border-b border-white/5 p-4 flex items-center justify-between sticky top-0 z-50">
         <div className="flex items-center gap-3">
           <button 
             onClick={() => setIsSidebarOpen(true)}
@@ -227,14 +228,14 @@ export default function AdminLayout({
       {/* Sidebar Overlay */}
       {isSidebarOpen && (
         <div 
-          className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[60] lg:hidden"
+          className="fixed inset-0 bg-black/80 backdrop-blur-sm z-60 lg:hidden"
           onClick={() => setIsSidebarOpen(false)}
         />
       )}
 
       {/* Sidebar */}
       <aside className={`
-        fixed inset-y-0 left-0 z-[70] w-64 bg-[#0A0A0A] border-r border-white/5 flex flex-col transition-transform duration-300
+        fixed inset-y-0 left-0 z-70 w-64 bg-luxury-charcoal border-r border-white/5 flex flex-col transition-transform duration-300
         ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
         lg:translate-x-0
       `}>
@@ -272,7 +273,7 @@ export default function AdminLayout({
           </button>
         </div>
 
-        <nav className="flex-grow p-6 space-y-2">
+        <nav className="flex grow p-6 space-y-2">
           {[
             { href: '/admin', icon: LayoutDashboard, label: 'Dashboard' },
             { href: '/admin/products', icon: ShoppingBag, label: 'Products' },
@@ -287,7 +288,7 @@ export default function AdminLayout({
                 if (item.href === '/admin/orders') setNewOrdersCount(0);
               }}
               className={`flex items-center justify-between px-4 py-3 rounded-xl hover:bg-white/5 transition-all text-sm group ${
-                pathname === item.href ? 'bg-white/[0.04] border border-luxury-gold/20' : ''
+                pathname === item.href ? 'bg-white/4 border border-luxury-gold/20' : ''
               }`}
             >
               <div className="flex items-center gap-3">
@@ -305,7 +306,7 @@ export default function AdminLayout({
 
         <div className="p-6 border-t border-white/5 space-y-4">
           <div className="flex items-center gap-3 px-4 py-3">
-             <div className="w-8 h-8 rounded-full bg-luxury-gold/10 flex items-center justify-center border border-luxury-gold/20 flex-shrink-0">
+             <div className="w-8 h-8 rounded-full bg-luxury-gold/10 flex items-center justify-center border border-luxury-gold/20 shrink-0">
                 <span className="text-[10px] font-bold text-luxury-gold">{user?.email?.charAt(0).toUpperCase()}</span>
              </div>
              <div className="flex flex-col min-w-0">

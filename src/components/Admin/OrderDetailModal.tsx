@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { X, User, MapPin, Phone, CreditCard, Calendar, Package, Tag, Hash } from 'lucide-react';
+import { X, User, MapPin, Phone, CreditCard, Calendar, Package } from 'lucide-react';
 import { Order } from '@/app/admin/orders/page';
 
 interface OrderItem {
@@ -40,10 +40,10 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({ order, isOpen, onCl
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 animate-in fade-in duration-300">
+    <div className="fixed inset-0 z-100 flex items-center justify-center p-4 sm:p-6 animate-in fade-in duration-300">
       <div className="absolute inset-0 bg-black/90 backdrop-blur-xl" onClick={onClose} />
       
-      <div className="relative w-full max-w-2xl bg-[#0A0A0A] border border-white/10 rounded-[30px] overflow-hidden shadow-2xl animate-in zoom-in-95 duration-300">
+      <div className="relative w-full max-w-2xl bg-luxury-charcoal border border-white/10 rounded-[30px] overflow-hidden shadow-2xl animate-in zoom-in-95 duration-300">
         <div className="p-8 md:p-10">
           <div className="flex justify-between items-start mb-10">
             <div>
@@ -78,7 +78,7 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({ order, isOpen, onCl
                 <div className="space-y-3">
                   <p className="text-sm font-bold text-luxury-cream">{order.delivery_name}</p>
                   <div className="flex items-start gap-2 text-xs text-white/60">
-                    <MapPin size={14} className="text-luxury-gold flex-shrink-0 mt-0.5" />
+                    <MapPin size={14} className="text-luxury-gold shrink-0 mt-0.5" />
                     <p className="leading-relaxed">{order.delivery_address}</p>
                   </div>
                   <p className="text-[10px] uppercase tracking-widest text-white/40 ml-5">{order.delivery_zone}</p>
@@ -114,7 +114,7 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({ order, isOpen, onCl
                   <Package size={12} className="text-luxury-gold" />
                   Procurement Content
                 </h3>
-                <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-4 space-y-4">
+                <div className="bg-white/2 border border-white/5 rounded-2xl p-4 space-y-4">
                   {(() => {
                     let parsedItems: OrderItem[] | null = null;
                     try {

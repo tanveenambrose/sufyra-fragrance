@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { X, Mail, Lock, LogIn, ArrowRight } from 'lucide-react';
+import { X, Mail, Lock } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import AuthInput from './AuthInput';
 import SocialButton from './SocialButton';
@@ -68,20 +68,20 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onSuccess }) =
   };
 
   return (
-    <div className="fixed inset-0 z-[500] flex items-center justify-center p-4 sm:p-6 animate-in fade-in duration-300">
+    <div className="fixed inset-0 z-500 flex items-center justify-center p-4 sm:p-6 animate-in fade-in duration-300">
       <div className="absolute inset-0 bg-black/80 backdrop-blur-md" onClick={onClose} />
       
-      <div className="relative w-full max-w-md bg-[var(--background)] border border-luxury-gold/20 rounded-[30px] overflow-hidden shadow-2xl animate-in zoom-in-95 duration-300">
+      <div className="relative w-full max-w-md bg-(--background) border border-luxury-gold/20 rounded-[30px] overflow-hidden shadow-2xl animate-in zoom-in-95 duration-300">
         <button
           onClick={onClose}
-          className="absolute top-6 right-6 z-10 p-2 bg-[var(--foreground)]/5 hover:bg-[var(--foreground)]/10 rounded-full text-[var(--foreground)]/40 hover:text-[var(--foreground)] transition-all"
+          className="absolute top-6 right-6 z-10 p-2 bg-(--foreground)/5 hover:bg-(--foreground)/10 rounded-full text-(--foreground)/40 hover:text-(--foreground) transition-all"
         >
           <X size={20} />
         </button>
 
         <div className="p-8 md:p-10">
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-serif text-[var(--foreground)] mb-2 tracking-tight">
+            <h2 className="text-3xl font-serif text-(--foreground) mb-2 tracking-tight">
               {mode === 'login' ? 'Welcome Back' : 'Join the Mansion'}
             </h2>
             <p className="text-luxury-gold text-[10px] uppercase tracking-[0.3em] font-bold">
@@ -126,9 +126,9 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onSuccess }) =
           </form>
 
           <div className="my-6 flex items-center gap-4">
-            <div className="h-px bg-[var(--foreground)]/5 flex-grow"></div>
-            <span className="text-[8px] uppercase tracking-widest text-[var(--foreground)]/20 font-bold whitespace-nowrap">Identity Verification</span>
-            <div className="h-px bg-[var(--foreground)]/5 flex-grow"></div>
+            <div className="h-px bg-(--foreground)/5 grow"></div>
+            <span className="text-[8px] uppercase tracking-widest text-(--foreground)/20 font-bold whitespace-nowrap">Identity Verification</span>
+            <div className="h-px bg-(--foreground)/5 grow"></div>
           </div>
 
           <div className="grid grid-cols-2 gap-3">
@@ -139,7 +139,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onSuccess }) =
           <div className="mt-8 text-center">
             <button 
               onClick={() => setMode(mode === 'login' ? 'register' : 'login')}
-              className="text-xs text-[var(--foreground)]/40 hover:text-luxury-gold transition-colors"
+              className="text-xs text-(--foreground)/40 hover:text-luxury-gold transition-colors"
             >
               {mode === 'login' ? "Don't have an account? " : "Already have an account? "}
               <span className="text-luxury-gold font-bold hover:underline">

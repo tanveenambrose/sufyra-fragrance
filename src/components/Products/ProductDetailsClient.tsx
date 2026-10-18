@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Product } from '@/data/products';
 import { useCart } from '@/store/useCart';
 import Image from 'next/image';
@@ -68,21 +68,21 @@ export default function ProductDetailsClient({ product, adjacentIds }: ProductDe
   };
 
   return (
-    <main className="min-h-screen bg-[var(--background)] pt-24 lg:pt-32 pb-24 transition-colors duration-500">
+    <main className="min-h-screen bg-(--background) pt-24 lg:pt-32 pb-24 transition-colors duration-500">
       <div className="container mx-auto px-6">
         {/* Top Navigation & Breadcrumbs */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-6">
           <nav className="flex items-center gap-3 text-[10px] uppercase tracking-[0.2em] font-bold">
-            <Link href="/" className="text-[var(--foreground)]/40 hover:text-[var(--foreground)] transition-colors">Home</Link>
-            <ChevronRight size={10} className="text-[var(--foreground)]/20" />
-            <Link href="/products" className="text-[var(--foreground)]/40 hover:text-[var(--foreground)] transition-colors">
+            <Link href="/" className="text-(--foreground)/40 hover:text-(--foreground) transition-colors">Home</Link>
+            <ChevronRight size={10} className="text-(--foreground)/20" />
+            <Link href="/products" className="text-(--foreground)/40 hover:text-(--foreground) transition-colors">
               {product.category === 'combo' ? 'Bundle Collection' : 'Perfume Oil'}
             </Link>
-            <ChevronRight size={10} className="text-[var(--foreground)]/20" />
+            <ChevronRight size={10} className="text-(--foreground)/20" />
             <span className="text-luxury-gold">{product.name}</span>
           </nav>
 
-          <div className="flex items-center gap-6 text-[var(--foreground)]/40">
+          <div className="flex items-center gap-6 text-(--foreground)/40">
             <button
               onClick={() => adjacentIds.prev && router.push(`/product-details/${adjacentIds.prev}`)}
               disabled={!adjacentIds.prev}
@@ -106,7 +106,7 @@ export default function ProductDetailsClient({ product, adjacentIds }: ProductDe
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 xl:gap-20 items-start">
           {/* Left: Product Image */}
           <div className="reveal-img relative w-full flex flex-col items-center lg:items-end animate-[reveal-img_1.2s_cubic-bezier(0.18,0.89,0.32,1.28)_0.3s_both]">
-            <div className="relative aspect-[4/5] bg-[var(--foreground)]/5 rounded-2xl overflow-hidden shadow-2xl group border border-[var(--foreground)]/10 w-[85%] md:w-[70%] lg:w-full lg:max-w-[480px]">
+            <div className="relative aspect-4/5 bg-(--foreground)/5 rounded-2xl overflow-hidden shadow-2xl group border border-(--foreground)/10 w-[85%] md:w-[70%] lg:w-full lg:max-w-120">
               {activeImage ? (
                 <Image
                   src={activeImage}
@@ -117,13 +117,13 @@ export default function ProductDetailsClient({ product, adjacentIds }: ProductDe
                   className="object-cover transition-transform duration-[1.5s] group-hover:scale-105 saturate-[1.1] contrast-[1.02] brightness-[1.05]"
                 />
               ) : (
-                <div className="w-full h-full flex items-center justify-center text-[var(--foreground)]/10 uppercase tracking-widest text-[10px]">No Portrait Available</div>
+                <div className="w-full h-full flex items-center justify-center text-(--foreground)/10 uppercase tracking-widest text-[10px]">No Portrait Available</div>
               )}
 
               {/* Expand Icon - Bottom Left per reference */}
               <button
                 onClick={() => setIsLightboxOpen(true)}
-                className="absolute bottom-6 left-6 p-3.5 bg-[var(--background)]/90 backdrop-blur-md rounded-full text-luxury-charcoal dark:text-[var(--foreground)] hover:bg-[var(--background)] transition-all opacity-0 group-hover:opacity-100 border border-[var(--foreground)]/20 shadow-xl z-10 hover:scale-110 active:scale-95"
+                className="absolute bottom-6 left-6 p-3.5 bg-(--background)/90 backdrop-blur-md rounded-full text-luxury-charcoal dark:text-(--foreground) hover:bg-(--background) transition-all opacity-0 group-hover:opacity-100 border border-(--foreground)/20 shadow-xl z-10 hover:scale-110 active:scale-95"
               >
                 <Maximize2 size={18} />
               </button>
@@ -140,7 +140,7 @@ export default function ProductDetailsClient({ product, adjacentIds }: ProductDe
             <div className="flex gap-4 mt-6 justify-center lg:justify-start overflow-x-auto pb-2 scrollbar-hide">
               <button
                 onClick={() => setActiveImage(product.image_url)}
-                className={`relative w-20 aspect-[4/5] rounded-lg overflow-hidden border-2 transition-all flex-shrink-0 ${activeImage === product.image_url ? 'border-luxury-gold shadow-lg shadow-luxury-gold/20' : 'border-[var(--foreground)]/15 hover:border-[var(--foreground)]/40'
+                className={`relative w-20 aspect-4/5 rounded-lg overflow-hidden border-2 transition-all shrink-0 ${activeImage === product.image_url ? 'border-luxury-gold shadow-lg shadow-luxury-gold/20' : 'border-(--foreground)/15 hover:border-(--foreground)/40'
                   }`}
               >
                 <Image src={product.image_url} alt={product.name} fill sizes="80px" className="object-cover" />
@@ -152,7 +152,7 @@ export default function ProductDetailsClient({ product, adjacentIds }: ProductDe
                     setActiveImage(v.image_url!);
                     setSelectedSize(v.size);
                   }}
-                  className={`relative w-20 aspect-[4/5] rounded-lg overflow-hidden border-2 transition-all flex-shrink-0 ${activeImage === v.image_url ? 'border-luxury-gold shadow-lg shadow-luxury-gold/20' : 'border-[var(--foreground)]/15 hover:border-[var(--foreground)]/40'
+                  className={`relative w-20 aspect-4/5 rounded-lg overflow-hidden border-2 transition-all shrink-0 ${activeImage === v.image_url ? 'border-luxury-gold shadow-lg shadow-luxury-gold/20' : 'border-(--foreground)/15 hover:border-(--foreground)/40'
                     }`}
                 >
                   <Image src={v.image_url} alt={`${product.name} - ${v.size}`} fill sizes="80px" className="object-cover" />
@@ -164,21 +164,21 @@ export default function ProductDetailsClient({ product, adjacentIds }: ProductDe
           {/* Right: Product Details */}
           <div className="flex flex-col pt-4 lg:pt-0">
             <div className="reveal-text animate-[reveal-text_0.8s_cubic-bezier(0.04,0.56,0.4,1)_0.05s_both]">
-              <h1 className="text-4xl md:text-6xl xl:text-8xl font-serif text-[var(--foreground)] mb-6 leading-[0.9] tracking-tight">{product.name}</h1>
+              <h1 className="text-4xl md:text-6xl xl:text-8xl font-serif text-(--foreground) mb-6 leading-[0.9] tracking-tight">{product.name}</h1>
               <div className="flex items-center gap-4 mb-8">
                 <div className="flex items-center gap-2">
                   <span className="text-xl md:text-3xl text-luxury-gold font-bold">৳{minPrice} — ৳{maxPrice}</span>
                 </div>
-                <div className="h-4 w-px bg-[var(--foreground)]/20" />
-                <span className="text-[10px] uppercase tracking-[0.2em] text-[var(--foreground)]/60 font-bold">{product.category === 'combo' ? 'Bundle Collection' : 'Pure Scent Profile'}</span>
+                <div className="h-4 w-px bg-(--foreground)/20" />
+                <span className="text-[10px] uppercase tracking-[0.2em] text-(--foreground)/60 font-bold">{product.category === 'combo' ? 'Bundle Collection' : 'Pure Scent Profile'}</span>
               </div>
             </div>
 
             <div className="reveal-text animate-[reveal-text_0.8s_cubic-bezier(0.04,0.56,0.4,1)_0.15s_both]">
               {/* Size Selection */}
               <div className="space-y-4">
-                <label className="text-[10px] uppercase tracking-[0.2em] text-[var(--foreground)]/60 font-bold flex items-center gap-2">
-                  Size Selection: <span className="text-[var(--foreground)]">{selectedSize}</span>
+                <label className="text-[10px] uppercase tracking-[0.2em] text-(--foreground)/60 font-bold flex items-center gap-2">
+                  Size Selection: <span className="text-(--foreground)">{selectedSize}</span>
                 </label>
                 <div className="flex flex-wrap gap-3">
                   {product.variants.map((v) => (
@@ -187,7 +187,7 @@ export default function ProductDetailsClient({ product, adjacentIds }: ProductDe
                       onClick={() => handleSelectSize(v.size)}
                       className={`px-6 py-3 rounded-2xl text-[10px] font-bold uppercase tracking-widest border transition-all ${selectedSize === v.size
                         ? 'bg-luxury-gold border-luxury-gold text-white shadow-lg shadow-luxury-gold/20'
-                        : 'bg-[var(--foreground)]/10 border-[var(--foreground)]/30 text-[var(--foreground)] hover:border-luxury-gold hover:text-luxury-gold'
+                        : 'bg-(--foreground)/10 border-(--foreground)/30 text-(--foreground) hover:border-luxury-gold hover:text-luxury-gold'
                         }`}
                     >
                       {v.size}
@@ -198,25 +198,25 @@ export default function ProductDetailsClient({ product, adjacentIds }: ProductDe
 
               {/* Aromatic Structure (Notes) */}
               {(product.top_notes || product.middle_notes || product.base_notes) && (
-                <div className="space-y-4 py-8 border-y border-[var(--foreground)]/15">
+                <div className="space-y-4 py-8 border-y border-(--foreground)/15">
                   <h3 className="text-[10px] uppercase tracking-[0.3em] text-luxury-gold font-bold">Aromatic Structure</h3>
                   <ul className="space-y-2">
                     {product.top_notes && (
                       <li className="flex items-start gap-3 text-xs leading-relaxed">
-                        <span className="text-[var(--foreground)]/60 font-bold uppercase tracking-widest w-24 flex-shrink-0">Top:</span>
-                        <span className="text-[var(--foreground)]/70 italic">{product.top_notes}</span>
+                        <span className="text-(--foreground)/60 font-bold uppercase tracking-widest w-24 shrink-0">Top:</span>
+                        <span className="text-(--foreground)/70 italic">{product.top_notes}</span>
                       </li>
                     )}
                     {product.middle_notes && (
                       <li className="flex items-start gap-3 text-xs leading-relaxed">
-                        <span className="text-[var(--foreground)]/60 font-bold uppercase tracking-widest w-24 flex-shrink-0">Middle:</span>
-                        <span className="text-[var(--foreground)]/70 italic">{product.middle_notes}</span>
+                        <span className="text-(--foreground)/60 font-bold uppercase tracking-widest w-24 shrink-0">Middle:</span>
+                        <span className="text-(--foreground)/70 italic">{product.middle_notes}</span>
                       </li>
                     )}
                     {product.base_notes && (
                       <li className="flex items-start gap-3 text-xs leading-relaxed">
-                        <span className="text-[var(--foreground)]/60 font-bold uppercase tracking-widest w-24 flex-shrink-0">Base:</span>
-                        <span className="text-[var(--foreground)]/70 italic">{product.base_notes}</span>
+                        <span className="text-(--foreground)/60 font-bold uppercase tracking-widest w-24 shrink-0">Base:</span>
+                        <span className="text-(--foreground)/70 italic">{product.base_notes}</span>
                       </li>
                     )}
                   </ul>
@@ -225,7 +225,7 @@ export default function ProductDetailsClient({ product, adjacentIds }: ProductDe
 
               {/* Description */}
               <div className="space-y-4">
-                <p className="text-[var(--foreground)]/70 text-sm leading-relaxed font-light italic">
+                <p className="text-(--foreground)/70 text-sm leading-relaxed font-light italic">
                   {product.description}
                 </p>
                 <div className="flex items-center gap-2">
@@ -237,32 +237,32 @@ export default function ProductDetailsClient({ product, adjacentIds }: ProductDe
               {/* Pricing & Add to Cart */}
               <div className="space-y-8 pt-8">
                 <div className="flex items-baseline gap-4">
-                  <span className="text-4xl sm:text-6xl font-serif text-[var(--foreground)]">৳{currentVariant.price * quantity}</span>
+                  <span className="text-4xl sm:text-6xl font-serif text-(--foreground)">৳{currentVariant.price * quantity}</span>
                   {originalPrice && (
-                    <span className="text-xl sm:text-2xl text-[var(--foreground)]/50 line-through">৳{originalPrice * quantity}</span>
+                    <span className="text-xl sm:text-2xl text-(--foreground)/50 line-through">৳{originalPrice * quantity}</span>
                   )}
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-4 sm:h-14">
                   {/* Quantity */}
-                  <div className="flex items-center justify-between bg-[var(--foreground)]/5 rounded-xl border border-[var(--foreground)]/20 h-14 sm:h-full px-4 w-full sm:w-32">
+                  <div className="flex items-center justify-between bg-(--foreground)/5 rounded-xl border border-(--foreground)/20 h-14 sm:h-full px-4 w-full sm:w-32">
                     <button
                       onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                      className="p-2 text-[var(--foreground)]/90 hover:text-luxury-gold transition-colors"
+                      className="p-2 text-(--foreground)/90 hover:text-luxury-gold transition-colors"
                     >
                       <Minus size={14} />
                     </button>
-                    <span className="text-sm font-bold text-[var(--foreground)] font-mono">{quantity}</span>
+                    <span className="text-sm font-bold text-(--foreground) font-mono">{quantity}</span>
                     <button
                       onClick={() => setQuantity(quantity + 1)}
-                      className="p-2 text-[var(--foreground)]/90 hover:text-luxury-gold transition-colors"
+                      className="p-2 text-(--foreground)/90 hover:text-luxury-gold transition-colors"
                     >
                       <Plus size={14} />
                     </button>
                   </div>
 
                   {/* ATC Button */}
-                  <div className="relative flex-grow h-14 sm:h-full">
+                  <div className="relative grow h-14 sm:h-full">
                     <CartSparkBurst active={isSparking} />
                     <button
                       onClick={handleAddToCart}
@@ -284,7 +284,7 @@ export default function ProductDetailsClient({ product, adjacentIds }: ProductDe
                   {/* Buy Now Button */}
                   <button
                     onClick={() => setIsPurchaseModalOpen(true)}
-                    className="flex-grow sm:flex-none sm:px-8 h-14 sm:h-full bg-luxury-gold text-luxury-charcoal font-bold uppercase tracking-[0.2em] text-[10px] hover:bg-luxury-gold/90 transition-all text-center rounded-xl shadow-xl shadow-luxury-gold/20"
+                    className="grow sm:flex-none sm:px-8 h-14 sm:h-full bg-luxury-gold text-luxury-charcoal font-bold uppercase tracking-[0.2em] text-[10px] hover:bg-luxury-gold/90 transition-all text-center rounded-xl shadow-xl shadow-luxury-gold/20"
                   >
                     Purchase Now
                   </button>
@@ -292,12 +292,12 @@ export default function ProductDetailsClient({ product, adjacentIds }: ProductDe
               </div>
 
               {/* Order Support */}
-              <div className="p-6 bg-[var(--foreground)]/[0.02] border border-dashed border-[var(--foreground)]/10 rounded-2xl flex items-start gap-4">
-                <div className="w-10 h-10 rounded-full bg-emerald-500/10 flex items-center justify-center flex-shrink-0">
+              <div className="p-6 bg-(--foreground)/2 border border-dashed border-(--foreground)/10 rounded-2xl flex items-start gap-4">
+                <div className="w-10 h-10 rounded-full bg-emerald-500/10 flex items-center justify-center shrink-0">
                   <MessageCircle size={18} className="text-emerald-500" />
                 </div>
                 <div>
-                  <p className="text-xs text-[var(--foreground)]/70 mb-1">Need assistance with your procurement?</p>
+                  <p className="text-xs text-(--foreground)/70 mb-1">Need assistance with your procurement?</p>
                   <p className="text-[10px] uppercase tracking-widest text-emerald-500 font-bold cursor-pointer hover:underline">
                     Contact our Concierge via WhatsApp
                   </p>
@@ -305,21 +305,21 @@ export default function ProductDetailsClient({ product, adjacentIds }: ProductDe
               </div>
 
               {/* Metadata & Social */}
-              <div className="space-y-4 pt-8 border-t border-[var(--foreground)]/5">
+              <div className="space-y-4 pt-8 border-t border-(--foreground)/5">
                 <div className="flex flex-col gap-2">
                   <div className="flex items-center gap-4 text-[10px] uppercase tracking-widest">
-                    <span className="text-[var(--foreground)]/20 font-bold w-20">Art Code:</span>
-                    <span className="text-[var(--foreground)]/60">SF-00{product.id}</span>
+                    <span className="text-(--foreground)/20 font-bold w-20">Art Code:</span>
+                    <span className="text-(--foreground)/60">SF-00{product.id}</span>
                   </div>
                   <div className="flex items-center gap-4 text-[10px] uppercase tracking-widest">
-                    <span className="text-[var(--foreground)]/20 font-bold w-20">Category:</span>
-                    <span className="text-[var(--foreground)]/60">{product.category === 'combo' ? 'Bundle Selection' : 'Premium Oil'}</span>
+                    <span className="text-(--foreground)/20 font-bold w-20">Category:</span>
+                    <span className="text-(--foreground)/60">{product.category === 'combo' ? 'Bundle Selection' : 'Premium Oil'}</span>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-6 pt-2">
-                  <span className="text-[10px] uppercase tracking-widest text-[var(--foreground)]/20 font-bold">Transmit:</span>
-                  <div className="flex items-center gap-4 text-[var(--foreground)]/40">
+                  <span className="text-[10px] uppercase tracking-widest text-(--foreground)/20 font-bold">Transmit:</span>
+                  <div className="flex items-center gap-4 text-(--foreground)/40">
                     <Share2 size={14} className="hover:text-luxury-gold cursor-pointer transition-colors" />
                     <Share2 size={14} className="hover:text-luxury-gold cursor-pointer transition-colors" />
                     <Share2 size={14} className="hover:text-luxury-gold cursor-pointer transition-colors" />
@@ -333,12 +333,12 @@ export default function ProductDetailsClient({ product, adjacentIds }: ProductDe
       </div>
       {/* Image Lightbox Portal */}
       {isLightboxOpen && (
-        <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 sm:p-12 animate-in fade-in duration-300">
+        <div className="fixed inset-0 z-200 flex items-center justify-center p-4 sm:p-12 animate-in fade-in duration-300">
           <div className="absolute inset-0 bg-black/95 backdrop-blur-2xl" onClick={() => setIsLightboxOpen(false)} />
 
           <button
             onClick={() => setIsLightboxOpen(false)}
-            className="absolute top-8 right-8 z-[210] p-4 bg-[var(--foreground)]/5 hover:bg-[var(--foreground)]/10 rounded-full text-[var(--foreground)]/40 hover:text-[var(--foreground)] transition-all border border-[var(--foreground)]/10"
+            className="absolute top-8 right-8 z-210 p-4 bg-(--foreground)/5 hover:bg-(--foreground)/10 rounded-full text-(--foreground)/40 hover:text-(--foreground) transition-all border border-(--foreground)/10"
           >
             <X size={24} />
           </button>
@@ -357,7 +357,7 @@ export default function ProductDetailsClient({ product, adjacentIds }: ProductDe
           </div>
 
           {/* Aromatic Preview Label */}
-          <div className="absolute bottom-12 left-1/2 -translate-x-1/2 text-[10px] uppercase tracking-[0.4em] text-[var(--foreground)]/20 font-bold pointer-events-none">
+          <div className="absolute bottom-12 left-1/2 -translate-x-1/2 text-[10px] uppercase tracking-[0.4em] text-(--foreground)/20 font-bold pointer-events-none">
             High Fidelity Scent Portrait
           </div>
         </div>

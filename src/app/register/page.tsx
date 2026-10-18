@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Mail, Lock, User, UserPlus, ArrowLeft, CheckCircle2 } from 'lucide-react';
+import { Mail, Lock, User, ArrowLeft, CheckCircle2 } from 'lucide-react';
 import AuthInput from '@/components/Auth/AuthInput';
 import SocialButton from '@/components/Auth/SocialButton';
 import { supabase } from '@/lib/supabase';
@@ -94,18 +94,18 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="min-h-screen pt-24 sm:pt-32 md:pt-40 pb-12 px-4 flex items-center justify-center bg-[var(--background)] transition-colors duration-300">
+    <div className="min-h-screen pt-24 sm:pt-32 md:pt-40 pb-12 px-4 flex items-center justify-center bg-(--background) transition-colors duration-300">
       {/* Decorative Gradient */}
       <div className="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none -z-10">
         <div className="absolute top-[-5%] left-[-5%] w-[50%] h-[50%] bg-luxury-gold/5 blur-[150px] rounded-full"></div>
       </div>
 
-      <div className="w-full max-w-lg luxury-card p-6 sm:p-8 md:p-12 rounded-[24px] sm:rounded-[30px] border border-luxury-gold/10 animate-[fade-in-up_1s_cubic-bezier(0.68,-0.55,0.265,1.55)_0.1s_both]">
+      <div className="w-full max-w-lg luxury-card p-6 sm:p-8 md:p-12 rounded-3xl sm:rounded-[30px] border border-luxury-gold/10 animate-[fade-in-up_1s_cubic-bezier(0.68,-0.55,0.265,1.55)_0.1s_both]">
         <div className="mb-6 sm:mb-8 md:mb-10">
           <Link href="/login" className="inline-flex items-center gap-2 text-[9px] sm:text-[10px] uppercase tracking-[0.3em] sm:tracking-[0.4em] text-luxury-gold hover:text-luxury-gold/70 transition-colors font-bold mb-4 sm:mb-6 md:mb-8">
             <ArrowLeft className="w-3 h-3" /> Back to Login
           </Link>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-[var(--foreground)] mb-3 sm:mb-4 tracking-tight leading-tight">Join the <br /> <span className="font-normal italic">Exclusive</span></h1>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-(--foreground) mb-3 sm:mb-4 tracking-tight leading-tight">Join the <br /> <span className="font-normal italic">Exclusive</span></h1>
           <p className="text-luxury-gold text-[9px] sm:text-[10px] uppercase tracking-[0.3em] sm:tracking-[0.4em] font-bold">The world of Sufyra fragrances</p>
         </div>
 
@@ -172,9 +172,9 @@ const RegisterPage = () => {
         </form>
 
         <div className="my-6 sm:my-8 flex items-center gap-4">
-          <div className="h-px bg-[var(--foreground)]/5 flex-grow"></div>
-          <span className="text-[8px] sm:text-[10px] uppercase tracking-widest text-[var(--foreground)]/20 font-bold whitespace-nowrap">Registration via Social</span>
-          <div className="h-px bg-[var(--foreground)]/5 flex-grow"></div>
+          <div className="h-px bg-(--foreground)/5 grow"></div>
+          <span className="text-[8px] sm:text-[10px] uppercase tracking-widest text-(--foreground)/20 font-bold whitespace-nowrap">Registration via Social</span>
+          <div className="h-px bg-(--foreground)/5 grow"></div>
         </div>
 
         <div className="grid grid-cols-2 gap-3 sm:gap-4">
@@ -182,7 +182,7 @@ const RegisterPage = () => {
           <SocialButton provider="facebook" onClick={() => handleSocialRegister('facebook')} isLoading={loading} />
         </div>
 
-        <p className="mt-6 sm:mt-8 text-center text-[10px] sm:text-[11px] text-[var(--foreground)]/30 leading-relaxed uppercase tracking-tighter font-medium">
+        <p className="mt-6 sm:mt-8 text-center text-[10px] sm:text-[11px] text-(--foreground)/30 leading-relaxed uppercase tracking-tighter font-medium">
           By joining, you agree to our <span className="text-luxury-gold cursor-pointer hover:underline">Terms of Service</span> and <span className="text-luxury-gold cursor-pointer hover:underline">Privacy Policy</span>.
         </p>
       </div>

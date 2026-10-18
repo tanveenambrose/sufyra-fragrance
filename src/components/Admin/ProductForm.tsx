@@ -2,9 +2,10 @@
 
 import React, { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
-import { Product } from '@/data/products';
-import { Upload, X, Plus, Trash2, Save, Image as ImageIcon, Sparkles, Layers, Box } from 'lucide-react';
+import { Upload, Plus, Trash2, Image as ImageIcon, Sparkles, Layers, Box } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
+import { Product } from '@/data/products';
 
 interface ProductFormProps {
   initialData?: Product;
@@ -222,25 +223,25 @@ export default function ProductForm({ initialData }: ProductFormProps) {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
         {/* Left: Image Upload */}
         <div className="space-y-6">
-           <div className="bg-[#0A0A0A] rounded-2xl border border-white/5 p-6 sm:p-8 text-center space-y-6 shadow-2xl">
+           <div className="bg-luxury-charcoal rounded-2xl border border-white/5 p-6 sm:p-8 text-center space-y-6 shadow-2xl">
               <div className="flex items-center justify-between">
                 <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/40">Visual Identity</h3>
                 <ImageIcon size={14} className="text-luxury-gold/40" />
               </div>
               <div 
-                className="relative aspect-[4/5] bg-white/[0.02] rounded-xl border-2 border-dashed border-white/10 overflow-hidden group cursor-pointer hover:border-luxury-gold/50 transition-all flex items-center justify-center shadow-inner"
+                className="relative aspect-4/5 bg-white/2 rounded-xl border-2 border-dashed border-white/10 overflow-hidden group cursor-pointer hover:border-luxury-gold/50 transition-all flex items-center justify-center shadow-inner"
                 onClick={() => document.getElementById('imageInput')?.click()}
               >
                 {previewUrl ? (
                   <>
-                    <img src={previewUrl} className="w-full h-full object-cover" alt="Preview" />
+                    <Image src={previewUrl} fill className="object-cover" alt="Preview" unoptimized />
                     <div className="absolute inset-0 bg-black/60 opacity-0 lg:group-hover:opacity-100 transition-opacity flex items-center justify-center">
                       <Upload className="text-white scale-110" />
                     </div>
                   </>
                 ) : (
                   <div className="flex flex-col items-center gap-4 text-white/10">
-                    <div className="w-16 h-16 rounded-full bg-white/[0.02] flex items-center justify-center border border-white/5">
+                    <div className="w-16 h-16 rounded-full bg-white/2 flex items-center justify-center border border-white/5">
                         <ImageIcon size={32} strokeWidth={1} />
                     </div>
                     <span className="text-[9px] uppercase tracking-widest font-bold">Upload Portrait Image</span>
@@ -264,7 +265,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
         {/* Right: Product Details */}
         <div className="lg:col-span-2 space-y-8">
            {/* Section 1: Core Identity */}
-           <div className="bg-[#0A0A0A] rounded-2xl border border-white/5 p-6 sm:p-10 space-y-10 shadow-2xl relative overflow-hidden">
+           <div className="bg-luxury-charcoal rounded-2xl border border-white/5 p-6 sm:p-10 space-y-10 shadow-2xl relative overflow-hidden">
               <div className="absolute top-0 right-0 w-32 h-32 bg-luxury-gold/5 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none" />
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 relative">
@@ -279,7 +280,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                     value={formData.name}
                     onChange={(e) => setFormData({...formData, name: e.target.value})}
                     placeholder="e.g. Royal Oud"
-                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-6 py-4 focus:border-luxury-gold focus:outline-none transition-all text-sm font-medium placeholder:text-white/10"
+                    className="w-full bg-white/3 border border-white/10 rounded-xl px-6 py-4 focus:border-luxury-gold focus:outline-none transition-all text-sm font-medium placeholder:text-white/10"
                   />
                 </div>
                 <div className="space-y-3">
@@ -287,7 +288,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                     <Layers size={12} className="text-luxury-gold" />
                     Collection Type
                   </label>
-                  <div className="flex bg-white/[0.03] p-1 rounded-xl border border-white/10">
+                  <div className="flex bg-white/3 p-1 rounded-xl border border-white/10">
                     <button 
                         type="button"
                         onClick={() => setFormData({...formData, category: 'perfume-oil'})}
@@ -313,7 +314,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                   onChange={(e) => setFormData({...formData, description: e.target.value})}
                   rows={4}
                   placeholder="Describe the top, heart, and base notes..."
-                  className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-6 py-4 focus:border-luxury-gold focus:outline-none transition-all resize-none text-sm font-medium leading-relaxed"
+                  className="w-full bg-white/3 border border-white/10 rounded-xl px-6 py-4 focus:border-luxury-gold focus:outline-none transition-all resize-none text-sm font-medium leading-relaxed"
                 />
               </div>
 
@@ -326,7 +327,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                     value={formData.top_notes}
                     onChange={(e) => setFormData({...formData, top_notes: e.target.value})}
                     placeholder="e.g. Citrus, Bergamot"
-                    className="w-full bg-white/[0.02] border border-white/10 rounded-lg px-4 py-3 focus:border-luxury-gold outline-none text-xs"
+                    className="w-full bg-white/2 border border-white/10 rounded-lg px-4 py-3 focus:border-luxury-gold outline-none text-xs"
                   />
                 </div>
                 <div className="space-y-3">
@@ -336,7 +337,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                     value={formData.middle_notes}
                     onChange={(e) => setFormData({...formData, middle_notes: e.target.value})}
                     placeholder="e.g. Jasmine, Rose"
-                    className="w-full bg-white/[0.02] border border-white/10 rounded-lg px-4 py-3 focus:border-luxury-gold outline-none text-xs"
+                    className="w-full bg-white/2 border border-white/10 rounded-lg px-4 py-3 focus:border-luxury-gold outline-none text-xs"
                   />
                 </div>
                 <div className="space-y-3">
@@ -346,7 +347,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                     value={formData.base_notes}
                     onChange={(e) => setFormData({...formData, base_notes: e.target.value})}
                     placeholder="e.g. Musk, Amber, Wood"
-                    className="w-full bg-white/[0.02] border border-white/10 rounded-lg px-4 py-3 focus:border-luxury-gold outline-none text-xs"
+                    className="w-full bg-white/2 border border-white/10 rounded-lg px-4 py-3 focus:border-luxury-gold outline-none text-xs"
                   />
                 </div>
               </div>
@@ -364,7 +365,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                     step="5"
                     value={formData.discount_percent}
                     onChange={(e) => setFormData({...formData, discount_percent: parseInt(e.target.value) || 0})}
-                    className="flex-grow h-1.5 bg-white/5 rounded-full appearance-none cursor-pointer accent-red-500"
+                    className="flex grow h-1.5 bg-white/5 rounded-full appearance-none cursor-pointer accent-red-500"
                   />
                   <input 
                     type="number" 
@@ -372,14 +373,14 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                     max="99"
                     value={formData.discount_percent}
                     onChange={(e) => setFormData({...formData, discount_percent: parseInt(e.target.value) || 0})}
-                    className="w-20 bg-white/[0.02] border border-white/10 rounded-lg px-3 py-3 text-center text-sm font-bold focus:border-red-500/50 outline-none"
+                    className="w-20 bg-white/2 border border-white/10 rounded-lg px-3 py-3 text-center text-sm font-bold focus:border-red-500/50 outline-none"
                   />
                 </div>
               </div>
            </div>
 
            {/* Section 2: Pricing & Variants */}
-           <div className="bg-[#0A0A0A] rounded-2xl border border-white/5 p-6 sm:p-10 space-y-10 shadow-2xl">
+           <div className="bg-luxury-charcoal rounded-2xl border border-white/5 p-6 sm:p-10 space-y-10 shadow-2xl">
               <div className="flex justify-between items-center">
                 <div className="space-y-1">
                     <h3 className="text-xs font-bold uppercase tracking-[0.3em] text-luxury-gold">Pricing Strategy</h3>
@@ -460,14 +461,14 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                       : null;
 
                     return (
-                      <div key={index} className="flex gap-4 sm:gap-6 items-start bg-white/[0.01] p-4 sm:p-6 rounded-xl border border-white/5 animate-in fade-in slide-in-from-right-4 duration-300 group relative">
+                      <div key={index} className="flex gap-4 sm:gap-6 items-start bg-white/1 p-4 sm:p-6 rounded-xl border border-white/5 animate-in fade-in slide-in-from-right-4 duration-300 group relative">
                         {/* Variant Image Slot */}
                         <div 
-                          className="w-24 aspect-[4/5] bg-white/[0.03] rounded-lg border border-white/10 overflow-hidden flex-shrink-0 cursor-pointer hover:border-luxury-gold/40 transition-all flex items-center justify-center relative"
+                          className="w-24 aspect-4/5 bg-white/3 rounded-lg border border-white/10 overflow-hidden shrink-0 cursor-pointer hover:border-luxury-gold/40 transition-all flex items-center justify-center relative"
                           onClick={() => document.getElementById(`variant-image-${index}`)?.click()}
                         >
                           {variant.image_url ? (
-                            <img src={variant.image_url} className="w-full h-full object-cover" alt={`Variant ${variant.size}`} />
+                            <Image src={variant.image_url} width={96} height={120} className="w-full h-full object-cover" alt={`Variant ${variant.size}`} unoptimized />
                           ) : (
                             <ImageIcon size={20} className="text-white/10" />
                           )}
@@ -486,7 +487,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                           </div>
                         </div>
 
-                        <div className="flex-grow grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 w-full">
+                        <div className="grow grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 w-full">
                           <div className="space-y-2">
                             <label className="text-[8px] uppercase tracking-widest text-white/20 ml-1">Sizing (e.g. 3ml+3ml)</label>
                             <input 
@@ -495,7 +496,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                               placeholder="3ml"
                               value={variant.size}
                               onChange={(e) => handleVariantChange(index, 'size', e.target.value)}
-                              className="w-full bg-white/[0.02] border border-white/10 rounded-lg px-4 py-3 focus:border-luxury-gold transition-all text-sm font-bold disabled:opacity-50 disabled:cursor-not-allowed"
+                              className="w-full bg-white/2 border border-white/10 rounded-lg px-4 py-3 focus:border-luxury-gold transition-all text-sm font-bold disabled:opacity-50 disabled:cursor-not-allowed"
                             />
                           </div>
                           <div className="space-y-2">
@@ -511,7 +512,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                                   placeholder="0"
                                   value={variant.price === 0 ? '' : variant.price}
                                   onChange={(e) => handleVariantChange(index, 'price', parseInt(e.target.value) || 0)}
-                                  className="w-full bg-white/[0.02] border border-white/10 rounded-lg pl-4 pr-10 py-3 focus:border-luxury-gold transition-all text-sm font-bold [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                                  className="w-full bg-white/2 border border-white/10 rounded-lg pl-4 pr-10 py-3 focus:border-luxury-gold transition-all text-sm font-bold [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                               />
                               <span className="absolute right-4 top-1/2 -translate-y-1/2 text-white/20 text-xs font-bold">৳</span>
                             </div>
@@ -521,7 +522,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
                           <button 
                             type="button"
                             onClick={() => removeVariant(index)}
-                            className="p-3 text-white/10 hover:text-red-500 hover:bg-red-500/5 rounded-lg transition-all absolute -top-2 -right-2 bg-[#0A0A0A] border border-white/5"
+                            className="p-3 text-white/10 hover:text-red-500 hover:bg-red-500/5 rounded-lg transition-all absolute -top-2 -right-2 bg-luxury-charcoal border border-white/5"
                           >
                             <Trash2 size={16} />
                           </button>
