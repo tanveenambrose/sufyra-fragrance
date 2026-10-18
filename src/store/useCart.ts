@@ -10,6 +10,8 @@ interface CartItem extends Product {
 interface CartStore {
   items: CartItem[];
   isCartOpen: boolean;
+  lastAddedTimestamp: number;
+  triggerSpark: () => void;
   setIsCartOpen: (isOpen: boolean) => void;
   addItem: (product: Product, size: string) => void;
   removeItem: (productId: string, size: string) => void;
@@ -22,6 +24,8 @@ interface CartStore {
 export const useCart = create<CartStore>((set, get) => ({
   items: [],
   isCartOpen: false,
+  lastAddedTimestamp: 0,
+  triggerSpark: () => set({ lastAddedTimestamp: Date.now() }),
   setIsCartOpen: (isOpen) => set({ isCartOpen: isOpen }),
   addItem: (product, size) => {
     const variant = product.variants.find((v) => v.size === size);
@@ -32,10 +36,11 @@ export const useCart = create<CartStore>((set, get) => ({
       (item) => item.id === product.id && item.selectedSize === size
     );
 
+    const now = Date.now();
     if (existingItemIndex > -1) {
       const updatedItems = [...currentItems];
       updatedItems[existingItemIndex].quantity += 1;
-      set({ items: updatedItems });
+      set({ items: updatedItems, lastAddedTimestamp: now });
     } else {
       const discount = product.discount_percent || 0;
       const discountedPrice = discount > 0 ? Math.round(variant.price * (1 - discount / 100)) : variant.price;
@@ -50,6 +55,7 @@ export const useCart = create<CartStore>((set, get) => ({
             quantity: 1,
           },
         ],
+        lastAddedTimestamp: now,
       });
     }
   },

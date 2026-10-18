@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { Plus } from 'lucide-react';
 import { Product } from '@/data/products';
 import { useCart } from '@/store/useCart';
+import CartSparkBurst, { SparkleStar } from '@/components/CartSparkEffect';
 
 interface ProductCardProps {
   product: Product;
@@ -14,6 +15,7 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, priority = false }) => {
   const [selectedSize, setSelectedSize] = useState<string>(product.variants[0].size);
+  const [isSparking, setIsSparking] = useState(false);
   const addItem = useCart((state) => state.addItem);
 
   const currentVariant = product.variants.find(v => v.size === selectedSize) || product.variants[0];
@@ -24,6 +26,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority = false }) 
     // Determine the correct size type for the cart store
     const size = selectedSize as '3ml' | '6ml' | 'set';
     addItem(product, size);
+    setIsSparking(true);
+    setTimeout(() => setIsSparking(false), 1000);
   };
 
   const discount = product.discount_percent || 0;
@@ -94,14 +98,30 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority = false }) 
           ))}
         </div>
 
-        <button 
-          onClick={handleAddItem}
-          className="w-full bg-luxury-charcoal text-white dark:bg-white dark:text-black py-2.5 sm:py-4 rounded-xl font-bold text-[9px] sm:text-[11px] uppercase tracking-[0.2em] flex items-center justify-center gap-2 hover:bg-luxury-gold dark:hover:bg-luxury-gold transition-all shadow-md active:scale-[0.98]"
-          suppressHydrationWarning
-        >
-          <Plus className="w-3 h-3 sm:w-4 sm:h-4" />
-          Add to Bag
-        </button>
+        <div className="relative w-full">
+          <CartSparkBurst active={isSparking} />
+          <button 
+            onClick={handleAddItem}
+            className={`w-full py-2.5 sm:py-4 rounded-xl font-bold text-[9px] sm:text-[11px] uppercase tracking-[0.2em] flex items-center justify-center gap-2 transition-all shadow-md active:scale-[0.98] ${
+              isSparking 
+                ? 'bg-luxury-gold text-white scale-[1.02] shadow-luxury-gold/30' 
+                : 'bg-luxury-charcoal text-white dark:bg-white dark:text-black hover:bg-luxury-gold dark:hover:bg-luxury-gold dark:hover:text-white'
+            }`}
+            suppressHydrationWarning
+          >
+            {isSparking ? (
+              <>
+                <SparkleStar size={14} className="text-white animate-spin" />
+                <span>Added to Bag ✨</span>
+              </>
+            ) : (
+              <>
+                <Plus className="w-3 h-3 sm:w-4 sm:h-4" />
+                <span>Add to Bag</span>
+              </>
+            )}
+          </button>
+        </div>
       </div>
     </div>
   );

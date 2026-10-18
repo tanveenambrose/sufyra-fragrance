@@ -10,6 +10,7 @@ import { useCart } from '@/store/useCart';
 import { useAuth } from '@/hooks/useAuth';
 import { useTheme } from 'next-themes';
 import { ThemeToggle } from './ThemeToggle';
+import CartSparkBurst from '@/components/CartSparkEffect';
 
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -17,12 +18,14 @@ const Navbar: React.FC = () => {
   const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
   const [isProductsOpen, setIsProductsOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const [isSparking, setIsSparking] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const { user, signOut, isAdmin } = useAuth();
   const router = useRouter();
   const itemCount = useCart((state) => state.getItemCount());
   const totalPrice = useCart((state) => state.getTotalPrice());
   const setIsCartOpen = useCart((state) => state.setIsCartOpen);
+  const lastAddedTimestamp = useCart((state) => state.lastAddedTimestamp);
   const navRef = useRef<HTMLDivElement>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
 
@@ -36,6 +39,13 @@ const Navbar: React.FC = () => {
     const timer = setTimeout(() => setIsMounted(true), 0);
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    if (!lastAddedTimestamp) return;
+    setIsSparking(true);
+    const timer = setTimeout(() => setIsSparking(false), 1200);
+    return () => clearTimeout(timer);
+  }, [lastAddedTimestamp]);
 
   const handleSearch = (e?: React.FormEvent) => {
     if (e) e.preventDefault();
@@ -236,14 +246,27 @@ const Navbar: React.FC = () => {
 
               <ThemeToggle />
 
-              <button className="relative group p-1 h-10 flex items-center justify-center" onClick={() => setIsCartOpen(true)}>
-                <div className="flex items-center gap-1 md:gap-2">
-                  <ShoppingBag className={`w-5 h-5 group-hover:text-luxury-gold transition-colors text-[var(--foreground)]`} />
+              <button
+                className={`relative group p-1 h-10 flex items-center justify-center transition-transform ${isSparking ? 'scale-105' : ''}`}
+                onClick={() => setIsCartOpen(true)}
+                aria-label="View Shopping Bag"
+              >
+                {/* Sparkle burst animation around cart icon */}
+                <CartSparkBurst active={isSparking} />
+
+                <div className="flex items-center gap-1 md:gap-2 relative">
+                  <ShoppingBag
+                    className={`w-5 h-5 transition-all duration-300 ${
+                      isSparking
+                        ? 'animate-cart-bounce text-luxury-gold drop-shadow-[0_0_8px_rgba(212,175,55,0.8)]'
+                        : 'group-hover:text-luxury-gold text-[var(--foreground)]'
+                    }`}
+                  />
                   {/* Desktop Cart Summary */}
-                  <div className={`hidden lg:flex flex-col items-start leading-none text-[10px] uppercase tracking-tighter w-16 font-bold text-[var(--foreground)]`}>
+                  <div className={`hidden lg:flex flex-col items-start leading-none text-[10px] uppercase tracking-tighter w-16 font-bold text-[var(--foreground)] transition-colors duration-300 ${isSparking ? 'text-luxury-gold' : ''}`}>
                     {isMounted ? (
                       <>
-                        <span>{itemCount} items</span>
+                        <span className={isSparking ? 'animate-pulse font-extrabold' : ''}>{itemCount} items</span>
                         <span className="text-luxury-gold">{totalPrice}৳</span>
                       </>
                     ) : (
@@ -252,7 +275,7 @@ const Navbar: React.FC = () => {
                   </div>
                   {/* Mobile Badge Only */}
                   {isMounted && itemCount > 0 && (
-                    <span className="lg:hidden absolute -top-1 -right-1 bg-luxury-gold text-luxury-charcoal text-[8px] font-bold px-1 rounded-full min-w-[14px] h-[14px] flex items-center justify-center">
+                    <span className={`lg:hidden absolute -top-1 -right-1 bg-luxury-gold text-luxury-charcoal text-[8px] font-bold px-1 rounded-full min-w-[14px] h-[14px] flex items-center justify-center transition-all ${isSparking ? 'scale-125 ring-2 ring-luxury-gold/60' : ''}`}>
                       {itemCount}
                     </span>
                   )}

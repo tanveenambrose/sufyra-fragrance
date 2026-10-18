@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import PurchaseFlow from '@/components/Purchase/PurchaseFlow';
+import CartSparkBurst, { SparkleStar } from '@/components/CartSparkEffect';
 
 interface ProductDetailsClientProps {
   product: Product;
@@ -36,6 +37,7 @@ export default function ProductDetailsClient({ product, adjacentIds }: ProductDe
   );
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [isPurchaseModalOpen, setIsPurchaseModalOpen] = useState(false);
+  const [isSparking, setIsSparking] = useState(false);
   const addItem = useCart((state) => state.addItem);
   const router = useRouter();
 
@@ -61,6 +63,8 @@ export default function ProductDetailsClient({ product, adjacentIds }: ProductDe
     for (let i = 1; i < quantity; i++) {
       addItem(product, selectedSize);
     }
+    setIsSparking(true);
+    setTimeout(() => setIsSparking(false), 1200);
   };
 
   return (
@@ -258,12 +262,24 @@ export default function ProductDetailsClient({ product, adjacentIds }: ProductDe
                   </div>
 
                   {/* ATC Button */}
-                  <button
-                    onClick={handleAddToCart}
-                    className="flex-grow h-14 sm:h-full luxury-gradient rounded-xl text-luxury-charcoal font-bold uppercase tracking-[0.2em] text-[10px] hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-2xl shadow-luxury-gold/10"
-                  >
-                    Add to Cart Portfolio
-                  </button>
+                  <div className="relative flex-grow h-14 sm:h-full">
+                    <CartSparkBurst active={isSparking} />
+                    <button
+                      onClick={handleAddToCart}
+                      className={`w-full h-full luxury-gradient rounded-xl text-luxury-charcoal font-bold uppercase tracking-[0.2em] text-[10px] hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-2xl shadow-luxury-gold/10 ${
+                        isSparking ? 'brightness-125 ring-2 ring-luxury-gold/60 scale-[1.01]' : ''
+                      }`}
+                    >
+                      {isSparking ? (
+                        <>
+                          <SparkleStar size={14} className="text-luxury-charcoal animate-spin" />
+                          <span>Added to Cart Portfolio ✨</span>
+                        </>
+                      ) : (
+                        <span>Add to Cart Portfolio</span>
+                      )}
+                    </button>
+                  </div>
 
                   {/* Buy Now Button */}
                   <button

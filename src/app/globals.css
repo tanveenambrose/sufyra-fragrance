@@ -202,3 +202,42 @@ h1, h2, h3, h4, h5, h6 {
   100% { opacity: 1; transform: translateX(0); }
 }
 
+@keyframes spark-burst {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0) rotate(0deg);
+  }
+  35% {
+    opacity: 1;
+    transform: translate(var(--tx, 0), var(--ty, 0)) scale(1.25) rotate(45deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(var(--tx, 0) * 1.6), calc(var(--ty, 0) * 1.6)) scale(0) rotate(90deg);
+  }
+}
+
+@keyframes cart-bounce {
+  0%, 100% { transform: scale(1); }
+  25% { transform: scale(1.32) rotate(-10deg); }
+  50% { transform: scale(0.92) rotate(6deg); }
+  75% { transform: scale(1.12) rotate(-3deg); }
+}
+
+@keyframes gold-halo {
+  0% { transform: scale(0.7); opacity: 0.95; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+.animate-spark-pop {
+  animation: spark-burst 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-cart-bounce {
+  animation: cart-bounce 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.animate-gold-halo {
+  animation: gold-halo 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+

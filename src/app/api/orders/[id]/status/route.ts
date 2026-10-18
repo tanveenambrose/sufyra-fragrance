@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import nodemailer from 'nodemailer';
+import fs from 'fs';
+import path from 'path';
 import { supabase } from '@/lib/supabase';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -85,6 +87,22 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
         statusIcon = 'https://img.icons8.com/ios/100/d4af37/info--v1.png';
     }
 
+    // Resolve email logo
+    const logoUrl = "https://sufyra-fragrance.vercel.app/email-logo.jpeg";
+    let logoAttachment: { filename: string; path: string; cid: string } | null = null;
+    try {
+      const logoPath = path.join(process.cwd(), 'public', 'email-logo.jpeg');
+      if (fs.existsSync(logoPath)) {
+        logoAttachment = {
+          filename: 'email-logo.jpeg',
+          path: logoPath,
+          cid: 'email-logo'
+        };
+      }
+    } catch (err) {
+      console.error('Error loading email logo:', err);
+    }
+
     const emailHtml = `
       <!DOCTYPE html>
       <html>
@@ -98,10 +116,15 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
               <table align="center" border="0" cellpadding="0" cellspacing="0" width="600" style="background-color: #0a0a0a; border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 30px; overflow: hidden;">
                 <!-- Header -->
                 <tr>
-                  <td style="padding: 50px 40px; text-align: center; border-bottom: 1px solid rgba(212, 175, 55, 0.1);">
-                    <img src="${statusIcon}" alt="Status" style="width: 60px; margin-bottom: 20px;">
+                  <td style="padding: 45px 40px 35px 40px; text-align: center; border-bottom: 1px solid rgba(212, 175, 55, 0.1);">
+                    <div style="margin-bottom: 25px;">
+                      <img src="${logoAttachment ? 'cid:email-logo' : logoUrl}" alt="Sufyra Fragrance" width="170" style="display: block; margin: 0 auto; max-width: 170px; height: auto;">
+                    </div>
+                    <div style="display: inline-block; padding: 6px 18px; border-radius: 50px; background-color: rgba(212, 175, 55, 0.1); border: 1px solid rgba(212, 175, 55, 0.3); color: ${statusColor}; font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 16px;">
+                      ● ${status}
+                    </div>
                     <h1 style="color: #ffffff; margin: 0; font-size: 24px; font-weight: normal; font-style: italic; letter-spacing: 1px;">${statusTitle}</h1>
-                    <p style="color: #d4af37; margin-top: 10px; text-transform: uppercase; letter-spacing: 4px; font-size: 10px; font-weight: bold;">Order Update</p>
+                    <p style="color: #d4af37; margin-top: 8px; margin-bottom: 0; text-transform: uppercase; letter-spacing: 4px; font-size: 10px; font-weight: bold;">Order Update</p>
                   </td>
                 </tr>
                 
@@ -169,6 +192,7 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
           from: FROM_SENDER,
           to: customerEmail,
           subject: `${statusTitle} - Sufyra Manifest #${order.id.slice(0, 8).toUpperCase()}`,
+          attachments: logoAttachment ? [logoAttachment] : [],
           html: emailHtml,
         });
         emailSent = true;
