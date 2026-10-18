@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { ChevronRight } from 'lucide-react';
 
 const Hero = () => {
@@ -22,10 +23,14 @@ const Hero = () => {
           Fragrance That <br /> <span className="font-normal italic">Suits you</span>
         </h1>
         <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 sm:gap-6 mt-2 md:mt-8 animate-[hero-cta_0.8s_cubic-bezier(0.68,-0.55,0.265,1.55)_0.8s_both]">
-          <button className="luxury-gradient px-10 sm:px-14 py-3 sm:py-4 rounded-full text-luxury-charcoal font-bold uppercase tracking-[0.2em] text-[10px] sm:text-xs hover:scale-[1.03] active:scale-95 transition-all flex items-center justify-center gap-3 min-w-[180px] sm:min-w-[200px] shadow-2xl shadow-luxury-gold/10" suppressHydrationWarning>
+          <Link
+            href="/products"
+            className="luxury-gradient px-10 sm:px-14 py-3 sm:py-4 rounded-full text-luxury-charcoal font-bold uppercase tracking-[0.2em] text-[10px] sm:text-xs hover:scale-[1.03] active:scale-95 transition-all flex items-center justify-center gap-3 min-w-[180px] sm:min-w-[200px] shadow-2xl shadow-luxury-gold/10"
+            suppressHydrationWarning
+          >
             Discover Collection
             <ChevronRight className="w-4 h-4" />
-          </button>
+          </Link>
         </div>
       </div>
 

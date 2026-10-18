@@ -30,6 +30,7 @@ const Navbar: React.FC = () => {
   const { theme } = useTheme();
 
   const isAdminPage = pathname?.startsWith('/admin');
+  const isAuthPage = pathname === '/login' || pathname === '/register';
 
   useEffect(() => {
     const timer = setTimeout(() => setIsMounted(true), 0);
@@ -48,17 +49,17 @@ const Navbar: React.FC = () => {
   };
 
   useEffect(() => {
-    if (isAdminPage) return;
+    if (isAdminPage || isAuthPage) return;
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [isAdminPage]);
+  }, [isAdminPage, isAuthPage]);
 
   // Stagger entrance for navbar items
   useEffect(() => {
-    if (isAdminPage || !navRef.current) return;
+    if (isAdminPage || isAuthPage || !navRef.current) return;
     const items = navRef.current.querySelectorAll('.nav-item');
     items.forEach((item, i) => {
       (item as HTMLElement).style.animation = `nav-item-in 0.8s cubic-bezier(0.33, 0.72, 0.37, 1) ${i * 0.05}s both`;
@@ -68,16 +69,16 @@ const Navbar: React.FC = () => {
         (item as HTMLElement).style.animation = '';
       });
     };
-  }, [isAdminPage]);
+  }, [isAdminPage, isAuthPage]);
 
   // Handle mobile menu body scroll lock
   useEffect(() => {
-    if (isAdminPage) return;
+    if (isAdminPage || isAuthPage) return;
     document.body.style.overflow = isMenuOpen && isMounted ? 'hidden' : 'unset';
     return () => { document.body.style.overflow = 'unset'; };
-  }, [isMenuOpen, isMounted, isAdminPage]);
+  }, [isMenuOpen, isMounted, isAdminPage, isAuthPage]);
 
-  if (isAdminPage) return null;
+  if (isAdminPage || isAuthPage) return null;
 
   return (
     <>

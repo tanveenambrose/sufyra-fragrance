@@ -66,6 +66,7 @@ const WhatsAppIcon = ({ size = 18, className = "" }: { size?: number, className?
 const Footer: React.FC = () => {
   const pathname = usePathname();
   const isAdminPage = pathname?.startsWith('/admin');
+  const isAuthPage = pathname === '/login' || pathname === '/register';
   const { theme } = useTheme();
   const [mounted, setMounted] = React.useState(false);
 
@@ -73,7 +74,7 @@ const Footer: React.FC = () => {
     setMounted(true);
   }, []);
 
-  if (isAdminPage) return null;
+  if (isAdminPage || isAuthPage) return null;
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
