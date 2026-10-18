@@ -108,22 +108,23 @@ export default function ProductForm({ initialData }: ProductFormProps) {
     }
   };
 
-  const uploadImage = async (file: File) => {
-    const fileExt = file.name.split('.').pop();
-    const fileName = `${Math.random().toString(36).substring(2)}.${fileExt}`;
-    const filePath = `products/${fileName}`;
+  const uploadImage = async (file: File, section: 'product' | 'variant' = 'product') => {
+    const uploadData = new FormData();
+    uploadData.append('file', file);
+    uploadData.append('section', section);
+    uploadData.append('category', formData.category);
 
-    const { error: uploadError } = await supabase.storage
-      .from('product-images')
-      .upload(filePath, file);
+    const res = await fetch('/api/upload', {
+      method: 'POST',
+      body: uploadData,
+    });
 
-    if (uploadError) throw uploadError;
+    const data = await res.json();
+    if (!res.ok) {
+      throw new Error(data.error || 'Failed to upload image to Cloudinary');
+    }
 
-    const { data: { publicUrl } } = supabase.storage
-      .from('product-images')
-      .getPublicUrl(filePath);
-
-    return publicUrl;
+    return data.url as string;
   };
 
   const addVariant = () => {
@@ -166,14 +167,14 @@ export default function ProductForm({ initialData }: ProductFormProps) {
 
       // Upload main image
       if (imageFile) {
-        finalImageUrl = await uploadImage(imageFile);
+        finalImageUrl = await uploadImage(imageFile, 'product');
       }
 
       // Upload variant images
       const finalVariants = await Promise.all(formData.variants.map(async (v, i) => {
         let vImageUrl = v.image_url;
         if (variantImageFiles[i]) {
-          vImageUrl = await uploadImage(variantImageFiles[i]!);
+          vImageUrl = await uploadImage(variantImageFiles[i]!, 'variant');
         } else if (vImageUrl?.startsWith('blob:')) {
           // This case shouldn't happen if logic is correct, but let's be safe
           vImageUrl = '';

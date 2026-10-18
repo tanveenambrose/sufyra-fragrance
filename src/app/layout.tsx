@@ -22,6 +22,11 @@ const AuthInitializer = dynamic(() => import("@/components/Auth/AuthInitializer"
 export const metadata: Metadata = {
   title: "Sufyra | Premium Attar & Perfume Oils",
   description: "Experience the essence of luxury with Sufyra's handcrafted attar and perfume oils.",
+  icons: {
+    icon: "/logo.png",
+    shortcut: "/logo.png",
+    apple: "/logo.png",
+  },
 };
 
 import { ThemeProvider } from "@/components/ThemeProvider";
