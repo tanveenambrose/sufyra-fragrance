@@ -33,7 +33,8 @@ export const useAuth = () => {
     await supabase.auth.signOut();
   };
 
-  const isAdmin = user?.email === 'racoctanveen15@gmail.com';
+  const authorizedAdmins = ['racoctanveen15@gmail.com', 'rs80359@gmail.com'];
+  const isAdmin = !!user?.email && authorizedAdmins.includes(user.email);
 
   return { user, loading, signOut, isAdmin };
 };

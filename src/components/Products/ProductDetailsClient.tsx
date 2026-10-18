@@ -39,16 +39,15 @@ export default function ProductDetailsClient({ product, adjacentIds }: ProductDe
   const addItem = useCart((state) => state.addItem);
   const router = useRouter();
 
-  useEffect(() => {
-    if (product) {
-      const variant = product.variants.find(v => v.size === selectedSize);
-      if (variant?.image_url) {
-        setActiveImage(variant.image_url);
-      } else {
-        setActiveImage(product.image_url);
-      }
+  const handleSelectSize = (size: string) => {
+    setSelectedSize(size);
+    const variant = product.variants.find(v => v.size === size);
+    if (variant?.image_url) {
+      setActiveImage(variant.image_url);
+    } else {
+      setActiveImage(product.image_url);
     }
-  }, [selectedSize, product]);
+  };
 
   const currentVariant = product.variants.find(v => v.size === selectedSize) || product.variants[0];
   const discount = product.discount_percent || 0;
@@ -58,11 +57,9 @@ export default function ProductDetailsClient({ product, adjacentIds }: ProductDe
   const maxPrice = Math.max(...product.variants.map(v => v.price));
 
   const handleAddToCart = () => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const sizeType = selectedSize.includes('+') ? 'combo' : (selectedSize as any);
-    addItem(product, sizeType);
+    addItem(product, selectedSize);
     for (let i = 1; i < quantity; i++) {
-      addItem(product, sizeType);
+      addItem(product, selectedSize);
     }
   };
 
@@ -183,7 +180,7 @@ export default function ProductDetailsClient({ product, adjacentIds }: ProductDe
                   {product.variants.map((v) => (
                     <button
                       key={v.size}
-                      onClick={() => setSelectedSize(v.size)}
+                      onClick={() => handleSelectSize(v.size)}
                       className={`px-6 py-3 rounded-2xl text-[10px] font-bold uppercase tracking-widest border transition-all ${selectedSize === v.size
                         ? 'bg-luxury-gold border-luxury-gold text-white shadow-lg shadow-luxury-gold/20'
                         : 'bg-[var(--foreground)]/10 border-[var(--foreground)]/30 text-[var(--foreground)] hover:border-luxury-gold hover:text-luxury-gold'

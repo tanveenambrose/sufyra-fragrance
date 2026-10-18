@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { Product } from '@/data/products';
 
 interface CartItem extends Product {
-  selectedSize: '3ml' | '6ml' | 'set';
+  selectedSize: string;
   selectedPrice: number;
   quantity: number;
 }
@@ -11,9 +11,9 @@ interface CartStore {
   items: CartItem[];
   isCartOpen: boolean;
   setIsCartOpen: (isOpen: boolean) => void;
-  addItem: (product: Product, size: '3ml' | '6ml' | 'set') => void;
-  removeItem: (productId: string, size: '3ml' | '6ml' | 'set') => void;
-  updateQuantity: (productId: string, size: '3ml' | '6ml' | 'set', quantity: number) => void;
+  addItem: (product: Product, size: string) => void;
+  removeItem: (productId: string, size: string) => void;
+  updateQuantity: (productId: string, size: string, quantity: number) => void;
   clearCart: () => void;
   getTotalPrice: () => number;
   getItemCount: () => number;

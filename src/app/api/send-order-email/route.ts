@@ -108,12 +108,18 @@ export async function POST(req: Request) {
       console.error('Error loading email logo:', err);
     }
 
-    // 1. Send Notification to Admin (Preserved exactly)
-    await resend.emails.send({
-      from: 'Sufyra Mansion <onboarding@resend.dev>',
-      to: 'racoctanveen15@gmail.com',
-      subject: `NEW ORDER ALERT - ${customerName} - #${orderId?.slice(0, 8).toUpperCase()}`,
-      html: `
+    let adminEmailSent = false;
+    let customerEmailSent = false;
+    let adminError: string | null = null;
+    let customerError: string | null = null;
+
+    // 1. Send Notification to Admin
+    try {
+      await resend.emails.send({
+        from: 'Sufyra Mansion <onboarding@resend.dev>',
+        to: 'racoctanveen15@gmail.com',
+        subject: `NEW ORDER ALERT - ${customerName} - #${orderId?.slice(0, 8).toUpperCase()}`,
+        html: `
         <!DOCTYPE html>
         <html>
         <head>
@@ -182,12 +188,18 @@ export async function POST(req: Request) {
           </table>
         </body>
         </html>
-      `,
-    });
+        `,
+      });
+      adminEmailSent = true;
+    } catch (err) {
+      console.error('Admin alert email failed:', err);
+      adminError = err instanceof Error ? err.message : 'Failed to send admin email';
+    }
 
     // 2. Send Confirmation Email to Customer via Nodemailer (Using Gmail)
     if (customerEmail && customerEmail.includes('@')) {
-      await transporter.sendMail({
+      try {
+        await transporter.sendMail({
         from: `"Sufyra Fragrance" <${process.env.COMPANY_EMAIL}>`,
         to: customerEmail,
         subject: `Your Sufyra Fragrance Order - #${orderId?.slice(0, 8).toUpperCase()}`,
@@ -302,10 +314,22 @@ export async function POST(req: Request) {
           </body>
           </html>
         `,
-      });
+        });
+        customerEmailSent = true;
+      } catch (err) {
+        console.error('Customer confirmation email failed:', err);
+        customerError = err instanceof Error ? err.message : 'Failed to send customer email';
+      }
     }
 
-    return NextResponse.json({ success: true, emailSent: true });
+    return NextResponse.json({ 
+      success: true, 
+      emailSent: adminEmailSent || customerEmailSent,
+      adminEmailSent,
+      customerEmailSent,
+      adminError,
+      customerError
+    });
   } catch (error) {
     console.error('Email notification failed (order saved):', error);
     return NextResponse.json({ 
