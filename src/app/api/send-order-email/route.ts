@@ -52,12 +52,15 @@ export async function POST(req: Request) {
       customerEmail: string;
     };
 
-    if (!process.env.RESEND_API_KEY) {
-      console.warn('Email notification skipped: RESEND_API_KEY is not configured.');
+    const hasGmail = !!(process.env.COMPANY_EMAIL && process.env.COMPANY_PASSWORD);
+    const hasResend = !!process.env.RESEND_API_KEY;
+
+    if (!hasGmail && !hasResend) {
+      console.warn('Email notification skipped: No email provider configured.');
       return NextResponse.json({ 
         success: true, 
         emailSent: false, 
-        message: 'Order saved, but email notification was skipped due to missing API key.' 
+        message: 'Order saved, but email notification was skipped: missing email credentials.' 
       });
     }
 
@@ -114,12 +117,9 @@ export async function POST(req: Request) {
     let customerError: string | null = null;
 
     // 1. Send Notification to Admin
-    try {
-      await resend.emails.send({
-        from: 'Sufyra Mansion <onboarding@resend.dev>',
-        to: 'racoctanveen15@gmail.com',
-        subject: `NEW ORDER ALERT - ${customerName} - #${orderId?.slice(0, 8).toUpperCase()}`,
-        html: `
+    const adminEmailSubject = `NEW ORDER ALERT - ${customerName} - #${orderId?.slice(0, 8).toUpperCase()}`;
+    const adminRecipient = 'racoctanveen15@gmail.com';
+    const adminHtml = `
         <!DOCTYPE html>
         <html>
         <head>
@@ -188,23 +188,45 @@ export async function POST(req: Request) {
           </table>
         </body>
         </html>
-        `,
-      });
-      adminEmailSent = true;
-    } catch (err) {
-      console.error('Admin alert email failed:', err);
-      adminError = err instanceof Error ? err.message : 'Failed to send admin email';
-    }
+    `;
 
-    // 2. Send Confirmation Email to Customer via Nodemailer (Using Gmail)
-    if (customerEmail && customerEmail.includes('@')) {
+    // Try Gmail SMTP first for admin notification
+    if (hasGmail) {
       try {
         await transporter.sendMail({
-        from: `"Sufyra Fragrance" <${process.env.COMPANY_EMAIL}>`,
-        to: customerEmail,
-        subject: `Your Sufyra Fragrance Order - #${orderId?.slice(0, 8).toUpperCase()}`,
-        attachments: logoAttachment ? [logoAttachment] : [],
-        html: `
+          from: `"Sufyra Fragrance" <${process.env.COMPANY_EMAIL}>`,
+          to: adminRecipient,
+          subject: adminEmailSubject,
+          html: adminHtml,
+        });
+        adminEmailSent = true;
+      } catch (err) {
+        console.error('Admin alert Gmail SMTP failed:', err);
+        adminError = err instanceof Error ? err.message : 'Admin Gmail SMTP failed';
+      }
+    }
+
+    // Fallback to Resend if Gmail didn't send
+    if (!adminEmailSent && hasResend) {
+      try {
+        await resend.emails.send({
+          from: 'Sufyra Mansion <onboarding@resend.dev>',
+          to: adminRecipient,
+          subject: adminEmailSubject,
+          html: adminHtml,
+        });
+        adminEmailSent = true;
+        adminError = null;
+      } catch (err) {
+        console.error('Admin alert Resend fallback failed:', err);
+        adminError = (adminError ? adminError + ' | ' : '') + (err instanceof Error ? err.message : 'Resend failed');
+      }
+    }
+
+    // 2. Send Confirmation Email to Customer
+    if (customerEmail && customerEmail.includes('@')) {
+      const customerEmailSubject = `Your Sufyra Fragrance Order - #${orderId?.slice(0, 8).toUpperCase()}`;
+      const customerHtml = `
           <!DOCTYPE html>
           <html lang="en">
           <head>
@@ -313,12 +335,38 @@ export async function POST(req: Request) {
             </div>
           </body>
           </html>
-        `,
-        });
-        customerEmailSent = true;
-      } catch (err) {
-        console.error('Customer confirmation email failed:', err);
-        customerError = err instanceof Error ? err.message : 'Failed to send customer email';
+      `;
+
+      if (hasGmail) {
+        try {
+          await transporter.sendMail({
+            from: `"Sufyra Fragrance" <${process.env.COMPANY_EMAIL}>`,
+            to: customerEmail,
+            subject: customerEmailSubject,
+            attachments: logoAttachment ? [logoAttachment] : [],
+            html: customerHtml,
+          });
+          customerEmailSent = true;
+        } catch (err) {
+          console.error('Customer Gmail SMTP failed:', err);
+          customerError = err instanceof Error ? err.message : 'Customer Gmail SMTP failed';
+        }
+      }
+
+      if (!customerEmailSent && hasResend) {
+        try {
+          await resend.emails.send({
+            from: 'Sufyra Mansion <onboarding@resend.dev>',
+            to: customerEmail,
+            subject: customerEmailSubject,
+            html: customerHtml,
+          });
+          customerEmailSent = true;
+          customerError = null;
+        } catch (resendErr) {
+          console.error('Customer Resend fallback failed:', resendErr);
+          customerError = (customerError ? customerError + ' | ' : '') + (resendErr instanceof Error ? resendErr.message : 'Resend failed');
+        }
       }
     }
 

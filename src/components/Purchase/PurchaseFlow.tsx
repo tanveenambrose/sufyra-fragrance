@@ -65,6 +65,7 @@ const PurchaseFlow: React.FC<PurchaseFlowProps> = ({
         .from('orders')
         .insert({
           user_id: user.id,
+          delivery_email: user.email,
           product_id: items[0].id, // Use first item's ID as representative
           product_name: productNameValue,
           product_image: items[0].image_url || items[0].product_image,
