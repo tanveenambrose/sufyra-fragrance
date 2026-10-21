@@ -234,7 +234,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
               >
                 {previewUrl ? (
                   <>
-                    <Image src={previewUrl} fill className="object-cover" alt="Preview" unoptimized />
+                    <Image src={previewUrl} fill sizes="350px" className="object-cover" alt="Preview" unoptimized />
                     <div className="absolute inset-0 bg-black/60 opacity-0 lg:group-hover:opacity-100 transition-opacity flex items-center justify-center">
                       <Upload className="text-white scale-110" />
                     </div>

@@ -107,9 +107,10 @@ function LoginFormContent() {
         <header className="flex items-center justify-between w-full pb-4 shrink-0">
           <Link href="/" className="relative h-8 w-28 sm:h-9 sm:w-32 transition-transform hover:scale-105">
             <Image
-              src={mounted && theme === 'light' ? '/logo- dark.png' : '/logo.png'}
+              src={mounted && theme === 'light' ? '/logo-dark.png' : '/logo.png'}
               alt="Sufyra"
               fill
+              sizes="(max-width: 640px) 112px, 128px"
               className="object-contain object-left"
               priority
             />
