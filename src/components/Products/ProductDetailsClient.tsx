@@ -25,7 +25,6 @@ import {
 import { useRouter } from 'next/navigation';
 import PurchaseFlow from '@/components/Purchase/PurchaseFlow';
 import CartSparkBurst, { SparkleStar } from '@/components/CartSparkEffect';
-import ProductCard from '@/components/ProductCard';
 
 interface ProductDetailsClientProps {
   product: Product;
@@ -568,22 +567,77 @@ export default function ProductDetailsClient({
           </div>
         </div>
 
-        {/* Curated Recommendations Shelf - Balanced & Proportionate */}
+        {/* Curated Recommendations Shelf - 70% Compact Refined Sizing */}
         {relatedProducts && relatedProducts.length > 0 && (
-          <div className="mt-12 pt-8 border-t border-(--foreground)/10">
-            <div className="text-center space-y-1 mb-6">
-              <span className="text-[8px] uppercase tracking-[0.25em] text-luxury-gold font-bold">
-                Complementary Olfactory Works
-              </span>
-              <h2 className="text-xl sm:text-2xl font-serif text-(--foreground)">
-                You May Also Admire
-              </h2>
+          <div className="mt-6 pt-4 border-t border-(--foreground)/10">
+            <div className="flex items-center justify-between mb-3 px-1">
+              <div>
+                <span className="text-[8px] uppercase tracking-[0.25em] text-luxury-gold font-bold block">
+                  Complementary Olfactory Works
+                </span>
+                <h2 className="text-sm sm:text-base font-serif font-bold text-(--foreground)">
+                  You May Also Admire
+                </h2>
+              </div>
+              <Link 
+                href="/products" 
+                className="text-[9px] uppercase tracking-wider text-(--foreground)/50 hover:text-luxury-gold transition-colors font-medium flex items-center gap-1"
+              >
+                Catalog <ChevronRight size={11} />
+              </Link>
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4.5">
-              {relatedProducts.map((rel) => (
-                <ProductCard key={rel.id} product={rel} />
-              ))}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-3">
+              {relatedProducts.map((rel) => {
+                const minPrice = Math.min(...rel.variants.map((v) => v.price));
+                return (
+                  <Link
+                    key={rel.id}
+                    href={`/product-details/${rel.id}`}
+                    className="group rounded-xl p-2 bg-(--foreground)/3 hover:bg-(--foreground)/6 border border-(--foreground)/10 hover:border-luxury-gold/40 transition-all duration-300 flex flex-col"
+                  >
+                    {/* Compact Scent Thumbnail */}
+                    <div className="relative aspect-4/5 w-full rounded-lg overflow-hidden bg-black/40 border border-white/5 mb-1.5">
+                      {rel.image_url ? (
+                        <Image
+                          src={rel.image_url}
+                          alt={rel.name}
+                          fill
+                          sizes="(max-width: 640px) 45vw, (max-width: 1024px) 25vw, 180px"
+                          className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center text-(--foreground)/20 text-[9px] uppercase font-bold">
+                          Sufyra
+                        </div>
+                      )}
+                      {rel.discount_percent && rel.discount_percent > 0 && (
+                        <span className="absolute top-1.5 right-1.5 bg-red-500 text-white text-[7px] font-bold px-1.5 py-0.5 rounded-full shadow">
+                          -{rel.discount_percent}%
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Scent Info */}
+                    <div className="flex flex-col grow">
+                      <span className="text-[7.5px] uppercase tracking-wider text-luxury-gold/80 font-semibold truncate">
+                        {rel.category === 'combo' ? 'Curated Set' : 'Pure Attar'}
+                      </span>
+                      <h3 className="text-xs font-serif font-bold text-(--foreground) truncate group-hover:text-luxury-gold transition-colors">
+                        {rel.name}
+                      </h3>
+                      <div className="mt-1 flex items-center justify-between">
+                        <span className="text-xs font-serif font-bold text-luxury-gold">
+                          ৳{minPrice}
+                        </span>
+                        <span className="text-[8px] text-(--foreground)/40 uppercase tracking-wider group-hover:text-(--foreground)/80 transition-colors">
+                          Explore →
+                        </span>
+                      </div>
+                    </div>
+                  </Link>
+                );
+              })}
             </div>
           </div>
         )}

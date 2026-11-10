@@ -11,9 +11,10 @@ import CartSparkBurst, { SparkleStar } from '@/components/CartSparkEffect';
 interface ProductCardProps {
   product: Product;
   priority?: boolean;
+  reveal?: boolean;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product, priority = false }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ product, priority = false, reveal = false }) => {
   const [selectedSize, setSelectedSize] = useState<string>(product.variants[0].size);
   const [isSparking, setIsSparking] = useState(false);
   const addItem = useCart((state) => state.addItem);
@@ -34,7 +35,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority = false }) 
   const discountedPrice = discount > 0 ? Math.round(currentPrice * (1 - discount / 100)) : currentPrice;
 
   return (
-    <div className="group rounded-4xl overflow-hidden flex flex-col h-full reveal bg-(--foreground)/3 hover:bg-(--foreground)/5 border border-(--foreground)/5 transition-all duration-500 hover:shadow-xl hover:shadow-luxury-gold/5" suppressHydrationWarning>
+    <div className={`group rounded-4xl overflow-hidden flex flex-col h-full ${reveal ? 'reveal' : ''} bg-(--foreground)/3 hover:bg-(--foreground)/5 border border-(--foreground)/5 transition-all duration-500 hover:shadow-xl hover:shadow-luxury-gold/5`} suppressHydrationWarning>
       {/* Product Image */}
       <Link href={`/product-details/${product.id}`} className="relative aspect-square block overflow-hidden group-hover:cursor-pointer" suppressHydrationWarning>
         <div className="relative w-full h-full bg-luxury-cream/5" suppressHydrationWarning>
