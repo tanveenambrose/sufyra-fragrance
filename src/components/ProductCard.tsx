@@ -78,17 +78,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority = false, re
           </div>
         </div>
         
-        <p className="text-(--foreground)/50 text-[10px] sm:text-[11px] mb-3 line-clamp-2 leading-relaxed font-medium hidden sm:block" suppressHydrationWarning>
-          {product.description}
-        </p>
-        
         {/* Size Selection */}
-        <div className="flex flex-wrap gap-1 sm:gap-1.5 mb-2.5 sm:mb-4 mt-auto" suppressHydrationWarning>
+        <div className="flex flex-wrap gap-1 sm:gap-1.5 mb-2.5 sm:mb-4 mt-auto pt-2" suppressHydrationWarning>
           {product.variants.map((variant) => (
             <button
               key={variant.size}
               onClick={() => setSelectedSize(variant.size)}
-              className={`px-2 py-0.5 rounded-md sm:rounded-full transition-all text-[8px] sm:text-[9px] font-bold border ${
+              className={`px-2.5 py-0.5 rounded-md sm:rounded-full transition-all text-[8px] sm:text-[9px] font-bold border ${
                 selectedSize === variant.size
                   ? 'border-luxury-gold bg-luxury-gold text-white'
                   : 'border-(--foreground)/15 text-(--foreground)/50 hover:border-luxury-gold hover:text-luxury-gold'
