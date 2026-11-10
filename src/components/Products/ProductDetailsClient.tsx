@@ -92,7 +92,7 @@ export default function ProductDetailsClient({
   )}`;
 
   return (
-    <main className="min-h-screen bg-(--background) pt-12 sm:pt-16 pb-16 transition-colors duration-500">
+    <main className="min-h-screen bg-(--background) pt-24 sm:pt-28 lg:pt-32 pb-16 transition-colors duration-500">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Top Navigation & Breadcrumbs */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 sm:mb-5 gap-3 border-b border-(--foreground)/10 pb-2.5">

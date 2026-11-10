@@ -20,7 +20,7 @@ export default async function Home() {
   const products = dbProducts || [];
 
   return (
-    <main className="min-h-screen bg-[var(--background)] transition-colors duration-300">
+    <main className="min-h-screen bg-(--background) transition-colors duration-300">
       <Hero />
 
       <Reveal>
@@ -38,10 +38,10 @@ export default async function Home() {
         />
 
         {/* Luxury Quote Section */}
-        <section className="py-20 sm:py-32 bg-[var(--accent-soft)] border-y border-[var(--foreground)]/5 relative overflow-hidden reveal">
+        <section className="py-20 sm:py-32 bg-(--accent-soft) border-y border-(--foreground)/5 relative overflow-hidden reveal">
           <div className="container mx-auto px-6 text-center" suppressHydrationWarning>
             <span className="text-6xl sm:text-8xl text-luxury-gold/10 font-serif absolute top-[-20px] left-1/2 -translate-x-1/2 select-none">&quot;</span>
-            <p className="text-lg sm:text-2xl md:text-4xl font-serif text-[var(--foreground)]/80 max-w-3xl mx-auto italic leading-snug sm:leading-normal transition-colors duration-300">
+            <p className="text-lg sm:text-2xl md:text-4xl font-serif text-(--foreground)/80 max-w-3xl mx-auto italic leading-snug sm:leading-normal transition-colors duration-300">
               Perfume is the most intense form of memory. <br className="hidden sm:block" />
               It is the key to our heart, and the soul of our identity.
             </p>

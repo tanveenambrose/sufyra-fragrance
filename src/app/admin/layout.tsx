@@ -212,7 +212,7 @@ export default function AdminLayout({
       )}
 
       {/* Mobile Top Bar */}
-      <header className="lg:hidden sticky top-0 z-50 bg-[#0a0a0a]/90 backdrop-blur-xl border-b border-luxury-gold/15 px-4 py-3 flex items-center justify-between">
+      <header className="lg:hidden sticky top-0 z-50 bg-luxury-charcoal/90 backdrop-blur-xl border-b border-luxury-gold/15 px-4 py-3 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <button 
             onClick={() => setIsSidebarOpen(true)}

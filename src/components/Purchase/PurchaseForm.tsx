@@ -58,20 +58,20 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-[500] flex items-center justify-center p-4 sm:p-6 animate-in fade-in duration-300">
+    <div className="fixed inset-0 z-500 flex items-center justify-center p-4 sm:p-6 animate-in fade-in duration-300">
       <div className="absolute inset-0 bg-black/90 backdrop-blur-xl" onClick={onClose} />
 
-      <div className="relative w-full max-w-3xl bg-[var(--background)] border border-luxury-gold/20 rounded-[30px] overflow-hidden shadow-2xl animate-in zoom-in-95 duration-300 max-h-[90vh] flex flex-col">
+      <div className="relative w-full max-w-3xl bg-(--background) border border-luxury-gold/20 rounded-[30px] overflow-hidden shadow-2xl animate-in zoom-in-95 duration-300 max-h-[90vh] flex flex-col">
         <button
           onClick={onClose}
-          className="absolute top-6 right-6 z-20 p-2 bg-[var(--foreground)]/5 hover:bg-[var(--foreground)]/10 rounded-full text-[var(--foreground)]/40 hover:text-[var(--foreground)] transition-all"
+          className="absolute top-6 right-6 z-20 p-2 bg-(--foreground)/5 hover:bg-(--foreground)/10 rounded-full text-(--foreground)/40 hover:text-(--foreground) transition-all"
         >
           <X size={18} />
         </button>
 
         <form onSubmit={handleSubmit} className="flex flex-col md:flex-row h-full overflow-hidden">
           {/* Left Side: Order Summary */}
-          <div className="hidden md:flex md:w-[40%] bg-[var(--foreground)]/[0.02] border-r border-white/5 p-8 flex-col gap-6 overflow-y-auto">
+          <div className="hidden md:flex md:w-[40%] bg-(--foreground)/[0.02] border-r border-white/5 p-8 flex-col gap-6 overflow-y-auto">
             <h3 className="text-[10px] uppercase tracking-[0.3em] text-luxury-gold font-bold">Curated Selection</h3>
             
             <div className="space-y-6">
@@ -87,26 +87,26 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({
                     />
                   </div>
                   <div>
-                    <h4 className="text-sm font-serif text-[var(--foreground)] leading-tight">{item.name}</h4>
+                    <h4 className="text-sm font-serif text-(--foreground) leading-tight">{item.name}</h4>
                     <p className="text-[8px] uppercase tracking-widest text-luxury-gold mt-1">Size: {item.selectedSize} | Qty: {item.quantity}</p>
-                    <p className="text-xs font-bold text-[var(--foreground)] mt-1">৳{item.selectedPrice * item.quantity}</p>
+                    <p className="text-xs font-bold text-(--foreground) mt-1">৳{item.selectedPrice * item.quantity}</p>
                   </div>
                 </div>
               ))}
             </div>
 
             <div className="pt-6 border-t border-white/5 mt-auto space-y-2">
-              <div className="flex justify-between text-[10px] uppercase tracking-widest text-[var(--foreground)]/40">
+              <div className="flex justify-between text-[10px] uppercase tracking-widest text-(--foreground)/40">
                 <span>Subtotal</span>
-                <span className="text-[var(--foreground)]">৳{totalSubtotal}</span>
+                <span className="text-(--foreground)">৳{totalSubtotal}</span>
               </div>
-              <div className="flex justify-between text-[10px] uppercase tracking-widest text-[var(--foreground)]/40">
+              <div className="flex justify-between text-[10px] uppercase tracking-widest text-(--foreground)/40">
                 <span>Delivery</span>
-                <span className="text-[var(--foreground)]">৳{deliveryCost}</span>
+                <span className="text-(--foreground)">৳{deliveryCost}</span>
               </div>
               <div className="flex justify-between items-center pt-4 mt-2 border-t border-white/10">
                 <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-luxury-gold">Grand Total</span>
-                <span className="text-2xl font-bold text-[var(--foreground)]">৳{grandTotal}</span>
+                <span className="text-2xl font-bold text-(--foreground)">৳{grandTotal}</span>
               </div>
             </div>
           </div>
@@ -114,13 +114,13 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({
           {/* Right Side: Shipping Form */}
           <div className="flex-grow p-8 md:p-10 flex flex-col overflow-y-auto">
             <div className="mb-8">
-              <h2 className="text-2xl font-serif text-[var(--foreground)] mb-1">Procurement Details</h2>
-              <p className="text-[9px] uppercase tracking-[0.2em] text-[var(--foreground)]/40 font-bold">Please specify your delivery coordinates</p>
+              <h2 className="text-2xl font-serif text-(--foreground) mb-1">Procurement Details</h2>
+              <p className="text-[9px] uppercase tracking-[0.2em] text-(--foreground)/40 font-bold">Please specify your delivery coordinates</p>
             </div>
 
             <div className="space-y-5">
               <div className="space-y-1.5">
-                <label className="text-[10px] uppercase tracking-widest text-[var(--foreground)]/40 font-bold ml-1">Full Name</label>
+                <label className="text-[10px] uppercase tracking-widest text-(--foreground)/40 font-bold ml-1">Full Name</label>
                 <div className="relative">
                   <User className="absolute left-4 top-1/2 -translate-y-1/2 text-luxury-gold w-4 h-4" />
                   <input
@@ -129,29 +129,29 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     placeholder="e.g. Tanveen Ambrose"
-                    className="w-full bg-[var(--foreground)]/5 border border-white/10 rounded-xl py-3.5 pl-12 pr-4 text-sm text-[var(--foreground)] focus:outline-none focus:border-luxury-gold/50 transition-colors"
+                    className="w-full bg-(--foreground)/5 border border-white/10 rounded-xl py-3.5 pl-12 pr-4 text-sm text-(--foreground) focus:outline-none focus:border-luxury-gold/50 transition-colors"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
-                  <label className="text-[10px] uppercase tracking-widest text-[var(--foreground)]/40 font-bold ml-1">Delivery Zone</label>
+                  <label className="text-[10px] uppercase tracking-widest text-(--foreground)/40 font-bold ml-1">Delivery Zone</label>
                   <select
                     value={formData.zone}
                     onChange={(e) => setFormData({ ...formData, zone: e.target.value as 'Inside Dhaka' | 'Outside Dhaka' })}
-                    className="w-full bg-[var(--foreground)]/5 border border-white/10 rounded-xl py-3.5 px-4 text-sm text-[var(--foreground)] focus:outline-none focus:border-luxury-gold/50 transition-colors appearance-none cursor-pointer"
+                    className="w-full bg-(--foreground)/5 border border-white/10 rounded-xl py-3.5 px-4 text-sm text-(--foreground) focus:outline-none focus:border-luxury-gold/50 transition-colors appearance-none cursor-pointer"
                   >
                     <option value="Inside Dhaka" className="bg-black">Inside Dhaka</option>
                     <option value="Outside Dhaka" className="bg-black">Outside Dhaka</option>
                   </select>
                 </div>
                 <div className="space-y-1.5">
-                  <label className="text-[10px] uppercase tracking-widest text-[var(--foreground)]/40 font-bold ml-1">Payment Method</label>
+                  <label className="text-[10px] uppercase tracking-widest text-(--foreground)/40 font-bold ml-1">Payment Method</label>
                   <select
                     value={formData.paymentMethod}
                     onChange={(e) => setFormData({ ...formData, paymentMethod: e.target.value as 'Cash on Delivery' | 'bKash (Manual)' })}
-                    className="w-full bg-[var(--foreground)]/5 border border-white/10 rounded-xl py-3.5 px-4 text-sm text-[var(--foreground)] focus:outline-none focus:border-luxury-gold/50 transition-colors appearance-none cursor-pointer"
+                    className="w-full bg-(--foreground)/5 border border-white/10 rounded-xl py-3.5 px-4 text-sm text-(--foreground) focus:outline-none focus:border-luxury-gold/50 transition-colors appearance-none cursor-pointer"
                   >
                     <option value="Cash on Delivery" className="bg-black">Cash on Delivery</option>
                     <option value="bKash (Manual)" className="bg-black">bKash (Manual)</option>
@@ -160,7 +160,7 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-[10px] uppercase tracking-widest text-[var(--foreground)]/40 font-bold ml-1">WhatsApp (Optional)</label>
+                <label className="text-[10px] uppercase tracking-widest text-(--foreground)/40 font-bold ml-1">WhatsApp (Optional)</label>
                 <div className="relative">
                   <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-luxury-gold w-4 h-4" />
                   <input
@@ -168,13 +168,13 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({
                     value={formData.whatsapp}
                     onChange={(e) => setFormData({ ...formData, whatsapp: e.target.value })}
                     placeholder="01XXX-XXXXXX"
-                    className="w-full bg-[var(--foreground)]/5 border border-white/10 rounded-xl py-3.5 pl-12 pr-4 text-sm text-[var(--foreground)] focus:outline-none focus:border-luxury-gold/50 transition-colors"
+                    className="w-full bg-(--foreground)/5 border border-white/10 rounded-xl py-3.5 pl-12 pr-4 text-sm text-(--foreground) focus:outline-none focus:border-luxury-gold/50 transition-colors"
                   />
                 </div>
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-[10px] uppercase tracking-widest text-[var(--foreground)]/40 font-bold ml-1">Precise Location</label>
+                <label className="text-[10px] uppercase tracking-widest text-(--foreground)/40 font-bold ml-1">Precise Location</label>
                 <div className="relative">
                   <MapPin className="absolute left-4 top-4 text-luxury-gold w-4 h-4" />
                   <textarea
@@ -183,7 +183,7 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({
                     onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                     rows={3}
                     placeholder="House, Road, Area, etc."
-                    className="w-full bg-[var(--foreground)]/5 border border-white/10 rounded-xl py-3.5 pl-12 pr-4 text-sm text-[var(--foreground)] focus:outline-none focus:border-luxury-gold/50 transition-colors resize-none"
+                    className="w-full bg-(--foreground)/5 border border-white/10 rounded-xl py-3.5 pl-12 pr-4 text-sm text-(--foreground) focus:outline-none focus:border-luxury-gold/50 transition-colors resize-none"
                   />
                 </div>
               </div>
@@ -194,17 +194,17 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({
               <div className="max-h-32 overflow-y-auto space-y-3">
                 {items.map((item, idx) => (
                   <div key={idx} className="flex justify-between items-center text-[10px] uppercase tracking-widest">
-                    <span className="text-[var(--foreground)]/60">{item.name} x{item.quantity}</span>
-                    <span className="text-[var(--foreground)] font-bold">৳{item.selectedPrice * item.quantity}</span>
+                    <span className="text-(--foreground)/60">{item.name} x{item.quantity}</span>
+                    <span className="text-(--foreground) font-bold">৳{item.selectedPrice * item.quantity}</span>
                   </div>
                 ))}
               </div>
               <div className="flex justify-between items-center pt-3 border-t border-white/10">
                 <div>
                   <p className="text-[8px] uppercase tracking-[0.2em] text-luxury-gold font-bold">Grand Total</p>
-                  <p className="text-xl font-bold text-[var(--foreground)]">৳{grandTotal}</p>
+                  <p className="text-xl font-bold text-(--foreground)">৳{grandTotal}</p>
                 </div>
-                <p className="text-[8px] uppercase tracking-widest text-[var(--foreground)]/30">Inc. ৳{deliveryCost} delivery</p>
+                <p className="text-[8px] uppercase tracking-widest text-(--foreground)/30">Inc. ৳{deliveryCost} delivery</p>
               </div>
             </div>
 

@@ -18,7 +18,7 @@ export default async function ProductsPage() {
   const products = dbProducts || [];
 
   return (
-    <Suspense fallback={<div className="min-h-screen bg-[var(--background)]" />}>
+    <Suspense fallback={<div className="min-h-screen bg-(--background)" />}>
       <ProductsContent initialProducts={products} />
     </Suspense>
   );

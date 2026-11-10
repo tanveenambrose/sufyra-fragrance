@@ -1,6 +1,6 @@
 export default function Loading() {
   return (
-    <div className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[var(--background)]">
+    <div className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-(--background)">
       {/* Decorative concentric rings */}
       <div className="relative w-32 h-32 mb-12">
         <div className="absolute inset-0 rounded-full border border-luxury-gold/10 animate-[ring-spin_4s_linear_infinite]" />
@@ -12,12 +12,12 @@ export default function Loading() {
       </div>
 
       {/* Brand name with shimmer */}
-      <h1 className="text-4xl md:text-5xl font-serif bg-linear-to-r from-luxury-gold/80 via-[var(--foreground)] to-luxury-gold/80 bg-[length:200%_auto] animate-[shimmer_3s_ease-in-out_infinite] bg-clip-text text-transparent">
+      <h1 className="text-4xl md:text-5xl font-serif bg-linear-to-r from-luxury-gold/80 via-(--foreground) to-luxury-gold/80 bg-[length:200%_auto] animate-[shimmer_3s_ease-in-out_infinite] bg-clip-text text-transparent">
         Sufyra
       </h1>
 
       {/* Tagline */}
-      <p className="mt-4 text-[10px] md:text-xs uppercase tracking-[0.5em] text-[var(--foreground)]/30 font-medium animate-[fade-in-up_1s_ease-out_0.5s_both]">
+      <p className="mt-4 text-[10px] md:text-xs uppercase tracking-[0.5em] text-(--foreground)/30 font-medium animate-[fade-in-up_1s_ease-out_0.5s_both]">
         Experience the Essence of Luxury
       </p>
 

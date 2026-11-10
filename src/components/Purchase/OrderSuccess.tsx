@@ -28,10 +28,10 @@ export default function OrderSuccess({ isOpen, onClose, orderId }: OrderSuccessP
 
   return (
     <div 
-      className={`fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md transition-opacity duration-500 ${isOpen ? 'opacity-100' : 'opacity-0'}`}
+      className={`fixed inset-0 z-200 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md transition-opacity duration-500 ${isOpen ? 'opacity-100' : 'opacity-0'}`}
     >
       <div 
-        className={`relative w-full max-w-lg bg-[#0A0A0A] border border-luxury-gold/20 rounded-[2.5rem] p-8 sm:p-12 overflow-hidden shadow-[0_0_100px_rgba(212,175,55,0.1)] transition-all duration-500 transform ${isOpen ? 'scale-100 translate-y-0 opacity-100' : 'scale-90 translate-y-8 opacity-0'}`}
+        className={`relative w-full max-w-lg bg-luxury-charcoal border border-luxury-gold/20 rounded-[2.5rem] p-8 sm:p-12 overflow-hidden shadow-[0_0_100px_rgba(212,175,55,0.1)] transition-all duration-500 transform ${isOpen ? 'scale-100 translate-y-0 opacity-100' : 'scale-90 translate-y-8 opacity-0'}`}
       >
         {/* Decorative Background Elements */}
         <div className="absolute top-0 right-0 w-64 h-64 bg-luxury-gold/5 rounded-full blur-[100px] -mr-32 -mt-32" />
@@ -53,7 +53,7 @@ export default function OrderSuccess({ isOpen, onClose, orderId }: OrderSuccessP
             
             <h2 className="text-3xl sm:text-4xl font-serif text-white italic">Your Scent Journey <br /> <span className="text-luxury-gold not-italic font-normal">Has Begun</span></h2>
             
-            <p className="text-[var(--foreground)]/40 text-xs sm:text-sm max-w-xs mx-auto leading-relaxed uppercase tracking-widest font-medium py-2">
+            <p className="text-(--foreground)/40 text-xs sm:text-sm max-w-xs mx-auto leading-relaxed uppercase tracking-widest font-medium py-2">
               We have received your manifest. Our artisans are now curating your selection with meticulous care.
             </p>
 

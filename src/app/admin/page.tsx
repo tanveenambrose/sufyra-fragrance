@@ -237,7 +237,7 @@ export default function AdminDashboard() {
       {/* Primary KPI Metrics Grid */}
       <div className="grid grid-cols-2 lg:grid-cols-5 gap-3.5 sm:gap-4 lg:gap-5">
         {/* 1. Gross Revenue */}
-        <div className="col-span-2 sm:col-span-1 p-5 rounded-2xl bg-[#0a0a0a] border border-luxury-gold/25 hover:border-luxury-gold/50 shadow-lg hover:shadow-[0_8px_30px_rgba(212,175,55,0.1)] transition-all group flex flex-col justify-between">
+        <div className="col-span-2 sm:col-span-1 p-5 rounded-2xl bg-luxury-charcoal border border-luxury-gold/25 hover:border-luxury-gold/50 shadow-lg hover:shadow-[0_8px_30px_rgba(212,175,55,0.1)] transition-all group flex flex-col justify-between">
           <div className="flex items-center justify-between">
             <div className="w-10 h-10 rounded-xl bg-luxury-gold/15 border border-luxury-gold/30 flex items-center justify-center text-luxury-gold group-hover:scale-110 transition-transform">
               <Coins size={18} />
@@ -260,7 +260,7 @@ export default function AdminDashboard() {
         {/* 2. Live Orders */}
         <Link
           href="/admin/orders"
-          className="p-5 rounded-2xl bg-[#0a0a0a] border border-white/5 hover:border-luxury-gold/40 shadow-lg hover:shadow-[0_8px_30px_rgba(212,175,55,0.08)] transition-all group flex flex-col justify-between"
+          className="p-5 rounded-2xl bg-luxury-charcoal border border-white/5 hover:border-luxury-gold/40 shadow-lg hover:shadow-[0_8px_30px_rgba(212,175,55,0.08)] transition-all group flex flex-col justify-between"
         >
           <div className="flex items-center justify-between">
             <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition-transform">
@@ -284,7 +284,7 @@ export default function AdminDashboard() {
         {/* 3. Total Scents */}
         <Link
           href="/admin/products"
-          className="p-5 rounded-2xl bg-[#0a0a0a] border border-white/5 hover:border-luxury-gold/40 shadow-lg hover:shadow-[0_8px_30px_rgba(212,175,55,0.08)] transition-all group flex flex-col justify-between"
+          className="p-5 rounded-2xl bg-luxury-charcoal border border-white/5 hover:border-luxury-gold/40 shadow-lg hover:shadow-[0_8px_30px_rgba(212,175,55,0.08)] transition-all group flex flex-col justify-between"
         >
           <div className="flex items-center justify-between">
             <div className="w-10 h-10 rounded-xl bg-luxury-gold/10 border border-luxury-gold/20 flex items-center justify-center text-luxury-gold group-hover:scale-110 transition-transform">
@@ -305,7 +305,7 @@ export default function AdminDashboard() {
         {/* 4. Combos & Sets */}
         <Link
           href="/admin/products"
-          className="p-5 rounded-2xl bg-[#0a0a0a] border border-white/5 hover:border-luxury-gold/40 shadow-lg hover:shadow-[0_8px_30px_rgba(212,175,55,0.08)] transition-all group flex flex-col justify-between"
+          className="p-5 rounded-2xl bg-luxury-charcoal border border-white/5 hover:border-luxury-gold/40 shadow-lg hover:shadow-[0_8px_30px_rgba(212,175,55,0.08)] transition-all group flex flex-col justify-between"
         >
           <div className="flex items-center justify-between">
             <div className="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 group-hover:scale-110 transition-transform">
@@ -326,7 +326,7 @@ export default function AdminDashboard() {
         {/* 5. Live Deals */}
         <Link
           href="/admin/products"
-          className="p-5 rounded-2xl bg-[#0a0a0a] border border-white/5 hover:border-luxury-gold/40 shadow-lg hover:shadow-[0_8px_30px_rgba(212,175,55,0.08)] transition-all group flex flex-col justify-between"
+          className="p-5 rounded-2xl bg-luxury-charcoal border border-white/5 hover:border-luxury-gold/40 shadow-lg hover:shadow-[0_8px_30px_rgba(212,175,55,0.08)] transition-all group flex flex-col justify-between"
         >
           <div className="flex items-center justify-between">
             <div className="w-10 h-10 rounded-xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-400 group-hover:scale-110 transition-transform">
@@ -350,7 +350,7 @@ export default function AdminDashboard() {
         {/* Left 2 Cols: Live Orders Stream & Management Modules */}
         <div className="lg:col-span-2 space-y-8">
           {/* Live Procurements Stream Card */}
-          <div className="rounded-3xl bg-[#0a0a0a] border border-luxury-gold/15 overflow-hidden shadow-xl">
+          <div className="rounded-3xl bg-luxury-charcoal border border-luxury-gold/15 overflow-hidden shadow-xl">
             {/* Header */}
             <div className="p-6 border-b border-white/5 flex items-center justify-between bg-white/1">
               <div className="flex items-center gap-3">
@@ -495,7 +495,7 @@ export default function AdminDashboard() {
               {/* Card 1: Add Fragrance */}
               <Link
                 href="/admin/products/new"
-                className="group p-6 rounded-3xl bg-[#0a0a0a] border border-white/5 hover:border-luxury-gold/40 transition-all shadow-lg hover:shadow-[0_8px_30px_rgba(212,175,55,0.08)] space-y-4 relative overflow-hidden"
+                className="group p-6 rounded-3xl bg-luxury-charcoal border border-white/5 hover:border-luxury-gold/40 transition-all shadow-lg hover:shadow-[0_8px_30px_rgba(212,175,55,0.08)] space-y-4 relative overflow-hidden"
               >
                 <div className="absolute top-0 right-0 w-32 h-32 bg-luxury-gold/5 rounded-full blur-2xl group-hover:bg-luxury-gold/10 transition-all pointer-events-none" />
                 <div className="flex items-center justify-between">
@@ -517,7 +517,7 @@ export default function AdminDashboard() {
               {/* Card 2: Orders Manifest */}
               <Link
                 href="/admin/orders"
-                className="group p-6 rounded-3xl bg-[#0a0a0a] border border-white/5 hover:border-luxury-gold/40 transition-all shadow-lg hover:shadow-[0_8px_30px_rgba(212,175,55,0.08)] space-y-4 relative overflow-hidden"
+                className="group p-6 rounded-3xl bg-luxury-charcoal border border-white/5 hover:border-luxury-gold/40 transition-all shadow-lg hover:shadow-[0_8px_30px_rgba(212,175,55,0.08)] space-y-4 relative overflow-hidden"
               >
                 <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-full blur-2xl group-hover:bg-emerald-500/10 transition-all pointer-events-none" />
                 <div className="flex items-center justify-between">
@@ -542,7 +542,7 @@ export default function AdminDashboard() {
         {/* Right Col: Recent Library Additions & System Health */}
         <div className="space-y-8">
           {/* Recent Fragrance Flacons */}
-          <div className="rounded-3xl bg-[#0a0a0a] border border-luxury-gold/15 overflow-hidden shadow-xl">
+          <div className="rounded-3xl bg-luxury-charcoal border border-luxury-gold/15 overflow-hidden shadow-xl">
             <div className="p-5 border-b border-white/5 flex justify-between items-center bg-white/1">
               <div className="flex items-center gap-2">
                 <Package size={15} className="text-luxury-gold" />
@@ -616,7 +616,7 @@ export default function AdminDashboard() {
           </div>
 
           {/* Infrastructure Health Card */}
-          <div className="p-6 rounded-3xl bg-[#0a0a0a] border border-white/5 space-y-4 shadow-xl">
+          <div className="p-6 rounded-3xl bg-luxury-charcoal border border-white/5 space-y-4 shadow-xl">
             <div className="flex items-center gap-2">
               <ShieldCheck size={16} className="text-luxury-gold" />
               <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-white">System Infrastructure</h3>

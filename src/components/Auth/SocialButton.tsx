@@ -16,7 +16,7 @@ const SocialButton: React.FC<SocialButtonProps> = ({ provider, onClick, isLoadin
     <button
       onClick={onClick}
       disabled={isLoading}
-      className="flex items-center justify-center gap-2 sm:gap-3 w-full bg-[var(--foreground)]/5 border border-[var(--foreground)]/10 rounded-xl py-2.5 px-3 sm:py-3 sm:px-4 hover:bg-[var(--foreground)]/10 hover:border-[var(--foreground)]/20 transition-all group disabled:opacity-50 disabled:cursor-not-allowed"
+      className="flex items-center justify-center gap-2 sm:gap-3 w-full bg-(--foreground)/5 border border-(--foreground)/10 rounded-xl py-2.5 px-3 sm:py-3 sm:px-4 hover:bg-(--foreground)/10 hover:border-(--foreground)/20 transition-all group disabled:opacity-50 disabled:cursor-not-allowed"
     >
       <div className="relative w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0">
         {isGoogle ? (
@@ -34,7 +34,7 @@ const SocialButton: React.FC<SocialButtonProps> = ({ provider, onClick, isLoadin
           </svg>
         )}
       </div>
-      <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[var(--foreground)]/40 group-hover:text-[var(--foreground)] transition-colors whitespace-nowrap">
+      <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-(--foreground)/40 group-hover:text-(--foreground) transition-colors whitespace-nowrap">
         <span className="hidden sm:inline">Sign in with </span>{isGoogle ? 'Google' : 'Facebook'}
       </span>
     </button>
