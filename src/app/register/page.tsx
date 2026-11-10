@@ -64,6 +64,24 @@ const RegisterPage = () => {
         } catch (dbErr) {
           console.warn('Non-blocking user profile update warning:', dbErr);
         }
+
+        // Dispatch Welcome Email from official Sufyra email system
+        try {
+          fetch('/api/auth/send-welcome-email', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              email: data.user.email || email.trim(),
+              name: fullName,
+              userId: data.user.id,
+              provider: 'email',
+            }),
+          }).catch((fetchErr) => {
+            console.warn('[Register] Non-blocking welcome email dispatch error:', fetchErr);
+          });
+        } catch (mailErr) {
+          console.warn('[Register] Welcome email trigger error:', mailErr);
+        }
       }
 
       router.push('/');
@@ -85,13 +103,19 @@ const RegisterPage = () => {
         provider,
         options: {
           redirectTo: redirectURL,
+          ...(provider === 'facebook' ? { scopes: 'email,public_profile' } : {}),
         }
       });
       
       if (error) throw error;
       // Note: Redirect happens automatically for OAuth
     } catch (err) {
-      setError(err instanceof Error ? err.message : `Failed to register with ${provider}.`);
+      const errMsg = err instanceof Error ? err.message : `Failed to register with ${provider}.`;
+      if (errMsg.toLowerCase().includes('not enabled') || errMsg.toLowerCase().includes('validation_failed')) {
+        setError(`${provider === 'facebook' ? 'Facebook' : 'Google'} authentication is being configured. Please use Google or manual email sign up.`);
+      } else {
+        setError(errMsg);
+      }
       setLoading(false);
     }
   };

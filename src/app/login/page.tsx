@@ -35,11 +35,15 @@ function LoginFormContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const nextUrl = searchParams.get('next');
+  const errorParam = searchParams.get('error');
   const { theme } = useTheme();
 
   useEffect(() => {
     setMounted(true);
-  }, []);
+    if (errorParam) {
+      setError(errorParam);
+    }
+  }, [errorParam]);
 
   // Cooldown countdown for resending code
   useEffect(() => {
@@ -103,12 +107,18 @@ function LoginFormContent() {
         provider,
         options: {
           redirectTo: redirectURL,
+          ...(provider === 'facebook' ? { scopes: 'email,public_profile' } : {}),
         },
       });
 
       if (oauthError) throw oauthError;
     } catch (err) {
-      setError(err instanceof Error ? err.message : `Failed to sign in with ${provider}.`);
+      const errMsg = err instanceof Error ? err.message : `Failed to sign in with ${provider}.`;
+      if (errMsg.toLowerCase().includes('not enabled') || errMsg.toLowerCase().includes('validation_failed')) {
+        setError(`${provider === 'facebook' ? 'Facebook' : 'Google'} sign-in is being set up in the sanctuary. Please sign in with Google or email.`);
+      } else {
+        setError(errMsg);
+      }
       setLoading(false);
     }
   };

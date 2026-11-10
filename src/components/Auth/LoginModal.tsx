@@ -43,7 +43,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onSuccess }) =
         if (error) throw error;
         onSuccess();
       } else if (mode === 'register') {
-        const { error } = await supabase.auth.signUp({ 
+        const { data: signUpData, error } = await supabase.auth.signUp({ 
           email: email.trim(), 
           password,
           options: {
@@ -51,6 +51,23 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onSuccess }) =
           }
         });
         if (error) throw error;
+
+        // Dispatch welcome email from official Sufyra email system
+        try {
+          fetch('/api/auth/send-welcome-email', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              email: email.trim(),
+              name: email.split('@')[0],
+              userId: signUpData.user?.id,
+              provider: 'email',
+            }),
+          }).catch((mailErr) => console.warn('[LoginModal] Welcome email warning:', mailErr));
+        } catch (mErr) {
+          console.warn('[LoginModal] Welcome email dispatch error:', mErr);
+        }
+
         alert('Verification email sent! Please check your inbox.');
         onSuccess();
       }
@@ -183,11 +200,17 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onSuccess }) =
         provider,
         options: {
           redirectTo: `${getURL()}auth/callback`,
+          ...(provider === 'facebook' ? { scopes: 'email,public_profile' } : {}),
         }
       });
       if (error) throw error;
     } catch (err) {
-      setError(err instanceof Error ? err.message : `Failed to sign in with ${provider}.`);
+      const errMsg = err instanceof Error ? err.message : `Failed to sign in with ${provider}.`;
+      if (errMsg.toLowerCase().includes('not enabled') || errMsg.toLowerCase().includes('validation_failed')) {
+        setError(`${provider === 'facebook' ? 'Facebook' : 'Google'} authentication is being configured. Please use Google or email login.`);
+      } else {
+        setError(errMsg);
+      }
       setLoading(false);
     }
   };
