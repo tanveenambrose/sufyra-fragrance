@@ -1,4 +1,4 @@
-import { createServerClient, type CookieOptions } from '@supabase/ssr';
+import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
 
 export async function middleware(request: NextRequest) {
@@ -13,67 +13,41 @@ export async function middleware(request: NextRequest) {
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {
-        get(name: string) {
-          return request.cookies.get(name)?.value;
+        getAll() {
+          return request.cookies.getAll();
         },
-        set(name: string, value: string, options: CookieOptions) {
-          request.cookies.set({
-            name,
-            value,
-            ...options,
-          });
+        setAll(cookiesToSet) {
+          cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value));
           response = NextResponse.next({
-            request: {
-              headers: request.headers,
-            },
+            request,
           });
-          response.cookies.set({
-            name,
-            value,
-            ...options,
-          });
-        },
-        remove(name: string, options: CookieOptions) {
-          request.cookies.set({
-            name,
-            value: '',
-            ...options,
-          });
-          response = NextResponse.next({
-            request: {
-              headers: request.headers,
-            },
-          });
-          response.cookies.set({
-            name,
-            value: '',
-            ...options,
-          });
+          cookiesToSet.forEach(({ name, value, options }) =>
+            response.cookies.set(name, value, options)
+          );
         },
       },
     }
   );
 
+  // IMPORTANT: Calling getUser() refreshes expired auth tokens and sets the updated cookie
+  // in response.cookies. This prevents users from being randomly logged out after token expiration.
+  let user = null;
+  try {
+    const { data } = await supabase.auth.getUser();
+    user = data.user;
+  } catch (err) {
+    console.error('Middleware auth check error:', err);
+  }
+
   // Admin routes protection
   if (request.nextUrl.pathname.startsWith('/admin')) {
-    try {
-      // Use Promise.race with a 3-second timeout so offline DB never hangs page requests
-      const authPromise = supabase.auth.getUser();
-      const timeoutPromise = new Promise<{ data: { user: null }; error: Error }>((resolve) =>
-        setTimeout(() => resolve({ data: { user: null }, error: new Error('Auth timeout') }), 3000)
-      );
+    const authorizedAdmins = ['racoctanveen15@gmail.com', 'rs80359@gmail.com'];
 
-      const { data: { user } } = await Promise.race([authPromise, timeoutPromise]);
-      const authorizedAdmins = ['racoctanveen15@gmail.com', 'rs80359@gmail.com'];
-
-      if (!user || !user.email || !authorizedAdmins.includes(user.email)) {
-        const loginUrl = request.nextUrl.clone();
-        loginUrl.pathname = '/login';
-        loginUrl.searchParams.set('next', request.nextUrl.pathname);
-        return NextResponse.redirect(loginUrl);
-      }
-    } catch {
-      // In case of error/offline Supabase, fallback to client-side auth in layout
+    if (!user || !user.email || !authorizedAdmins.includes(user.email)) {
+      const loginUrl = request.nextUrl.clone();
+      loginUrl.pathname = '/login';
+      loginUrl.searchParams.set('next', request.nextUrl.pathname);
+      return NextResponse.redirect(loginUrl);
     }
   }
 
@@ -87,7 +61,7 @@ export const config = {
      * - _next/static (static files)
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
-     * Feel free to modify this pattern to include more paths.
+     * - images, svg, icons
      */
     '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
   ],

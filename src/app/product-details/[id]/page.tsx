@@ -2,7 +2,7 @@ import React from 'react';
 import { supabaseStatic } from '@/utils/supabase/static';
 import ProductDetailsClient from '@/components/Products/ProductDetailsClient';
 import { notFound } from 'next/navigation';
-import { Product } from '@/data/products';
+import { Product, products as hardcodedProducts } from '@/data/products';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -53,10 +53,23 @@ export default async function ProductDetailsPage({ params }: PageProps) {
     };
   }
 
+  // Fetch related products for bottom showcase
+  const { data: relatedProductsData } = await supabaseStatic
+    .from('products')
+    .select('*')
+    .neq('id', id)
+    .limit(4);
+
+  let relatedProducts = (relatedProductsData as Product[]) || [];
+  if (relatedProducts.length === 0) {
+    relatedProducts = hardcodedProducts.filter((p) => p.id !== id).slice(0, 4);
+  }
+
   return (
     <ProductDetailsClient
       product={product}
       adjacentIds={adjacentIds}
+      relatedProducts={relatedProducts}
     />
   );
 }

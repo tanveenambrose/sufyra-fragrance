@@ -3,10 +3,12 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 import { User } from '@supabase/supabase-js';
+import { useRouter } from 'next/navigation';
 
 export const useAuth = () => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
     // Get initial session
@@ -30,7 +32,15 @@ export const useAuth = () => {
   }, []);
 
   const signOut = async () => {
-    await supabase.auth.signOut();
+    try {
+      await supabase.auth.signOut();
+    } catch (err) {
+      console.error('Error during sign out:', err);
+    } finally {
+      setUser(null);
+      router.refresh();
+      router.push('/');
+    }
   };
 
   const authorizedAdmins = ['racoctanveen15@gmail.com', 'rs80359@gmail.com'];

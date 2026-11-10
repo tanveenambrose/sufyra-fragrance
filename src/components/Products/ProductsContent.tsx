@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import ProductCard from '@/components/ProductCard';
-import { SlidersHorizontal, ChevronDown, Sparkles } from 'lucide-react';
+import { SlidersHorizontal, ChevronDown } from 'lucide-react';
 import { Product } from '@/data/products';
 
 interface ProductsContentProps {
@@ -70,102 +70,8 @@ export default function ProductsContent({ initialProducts }: ProductsContentProp
   ];
 
   return (
-    <main className="min-h-screen bg-(--background) pb-24 pt-32 lg:pt-44 transition-colors duration-300">
+    <main className="min-h-screen bg-(--background) pb-24 pt-28 sm:pt-32 lg:pt-36 transition-colors duration-300">
       <div className="container mx-auto px-6">
-        <div className="mb-12 sm:mb-16 flex flex-col md:flex-row items-center justify-between gap-12 bg-linear-to-r from-(--foreground)/5 to-transparent p-8 sm:p-12 rounded-3xl border border-(--foreground)/10 overflow-hidden relative">
-          <div className="text-center md:text-left relative z-10 w-full md:w-3/5">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-luxury-gold/30 bg-luxury-gold/10 mb-6">
-              <Sparkles className="w-3 h-3 text-luxury-gold" />
-              <span className="text-[10px] text-luxury-gold uppercase tracking-[0.2em] font-bold">Premium Scents</span>
-            </div>
-            <h1 className="text-(--foreground) font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl mb-6 transition-colors duration-300 tracking-tight leading-[0.9]">
-              Discover Our <br /> <span className="font-normal italic text-luxury-gold">Collection</span>
-            </h1>
-            <p className="text-(--foreground)/60 text-sm md:text-base max-w-md mx-auto md:mx-0">
-              Immerse yourself in a world of captivating aromas. Each bottle is a journey of elegance and sophistication, crafted to leave a lasting impression.
-            </p>
-          </div>
-          
-          <div className="relative z-10 shrink-0 flex items-center justify-center group w-full md:w-2/5 mt-8 md:mt-0">
-            <div className="relative w-48 h-48 lg:w-64 lg:h-64">
-              {/* Spinning rings */}
-              <div className="absolute inset-0 border-[1.5px] border-dashed border-(--foreground)/20 rounded-full animate-[spin_30s_linear_infinite]" />
-              <div className="absolute inset-4 border border-luxury-gold/40 rounded-full animate-[spin_20s_linear_infinite_reverse]" />
-              
-              {/* Water Drop Container */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="relative w-28 h-28 lg:w-36 lg:h-36 bg-(--background) border border-(--foreground)/10 rounded-full flex items-center justify-center backdrop-blur-md transition-all duration-500 hover:shadow-[0_0_40px_rgba(212,175,55,0.3)] group/drop cursor-pointer overflow-hidden">
-                  
-                  {/* The Main Water Drop SVG */}
-                  <svg 
-                    viewBox="0 0 100 100" 
-                    className="w-16 h-16 lg:w-20 lg:h-20 drop-shadow-[0_0_8px_rgba(212,175,55,0.4)]"
-                  >
-                    <defs>
-                      <linearGradient id="dropGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#D4AF37" stopOpacity="0.8" />
-                        <stop offset="100%" stopColor="#AA8E2E" stopOpacity="1" />
-                      </linearGradient>
-                      
-                      <filter id="goo">
-                        <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur" />
-                        <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" />
-                      </filter>
-                    </defs>
-
-                    {/* Liquid Animation Layer */}
-                    <g filter="url(#goo)">
-                      {/* Main Drop Shape with Wobble */}
-                      <path 
-                        d="M50 5 C50 5 20 40 20 65 A30 30 0 1 0 80 65 C80 40 50 5 50 5Z" 
-                        fill="url(#dropGradient)"
-                        className="animate-[wobble_4s_ease-in-out_infinite] origin-bottom"
-                      />
-
-                      {/* Falling Inner Drop */}
-                      <circle 
-                        cx="50" 
-                        cy="20" 
-                        r="4" 
-                        fill="white" 
-                        className="animate-[fall_3s_infinite_ease-in]"
-                      />
-                    </g>
-
-                    {/* Ripple Effect (Outside goo filter to keep sharp) */}
-                    <ellipse 
-                      cx="50" 
-                      cy="75" 
-                      rx="0" 
-                      ry="0" 
-                      fill="none" 
-                      stroke="white" 
-                      strokeWidth="0.5" 
-                      className="animate-[ripple_3s_infinite_ease-out]"
-                    />
-
-                    {/* Inner Logo / Luxury Element */}
-                    <g className="animate-[morph_8s_infinite_linear] origin-center">
-                      <path 
-                        d="M50 35 L53 47 L65 50 L53 53 L50 65 L47 53 L35 50 L47 47 Z" 
-                        className="animate-[color-shift_4s_infinite_ease-in-out]"
-                        fill="white"
-                        fillOpacity="0.9"
-                      />
-                      <circle cx="50" cy="50" r="2" fill="white" className="animate-pulse" />
-                    </g>
-                  </svg>
-
-                  {/* Reflection / Shine */}
-                  <div className="absolute top-1/4 left-1/3 w-2 h-4 bg-white/20 rounded-full rotate-30 blur-[1px]" />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="absolute top-1/2 right-1/4 w-96 h-96 bg-luxury-gold/5 rounded-full blur-[100px] -translate-y-1/2 pointer-events-none" />
-        </div>
-
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-start">
           <aside className="hidden lg:block w-64 shrink-0 space-y-16 sticky top-32">
             <div className="space-y-6">

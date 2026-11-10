@@ -43,24 +43,27 @@ const RegisterPage = () => {
         options: {
           data: {
             full_name: fullName,
+            display_name: fullName,
           }
         }
       });
 
       if (authError) throw authError;
 
+      // Note: Supabase Postgres trigger `on_auth_user_created` automatically inserts
+      // the new user into `public.users` with display_name and email.
       if (data.user) {
-        // Save to users table
-        const { error: dbError } = await supabase
-          .from('users')
-          .insert({
-            id: data.user.id,
-            display_name: fullName,
-            email: email,
-            role: 'customer'
-          });
-
-        if (dbError) throw dbError;
+        try {
+          await supabase
+            .from('users')
+            .update({
+              display_name: fullName,
+              role: 'customer'
+            })
+            .eq('id', data.user.id);
+        } catch (dbErr) {
+          console.warn('Non-blocking user profile update warning:', dbErr);
+        }
       }
 
       router.push('/');

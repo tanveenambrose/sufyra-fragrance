@@ -12,7 +12,7 @@ export default function Loading() {
       </div>
 
       {/* Brand name with shimmer */}
-      <h1 className="text-4xl md:text-5xl font-serif bg-gradient-to-r from-luxury-gold/80 via-[var(--foreground)] to-luxury-gold/80 bg-[length:200%_auto] animate-[shimmer_3s_ease-in-out_infinite] bg-clip-text text-transparent">
+      <h1 className="text-4xl md:text-5xl font-serif bg-linear-to-r from-luxury-gold/80 via-[var(--foreground)] to-luxury-gold/80 bg-[length:200%_auto] animate-[shimmer_3s_ease-in-out_infinite] bg-clip-text text-transparent">
         Sufyra
       </h1>
 
@@ -22,8 +22,8 @@ export default function Loading() {
       </p>
 
       {/* Loading bar */}
-      <div className="mt-12 w-32 h-[1px] bg-[var(--foreground)]/5 overflow-hidden rounded-full">
-        <div className="w-full h-full bg-gradient-to-r from-transparent via-luxury-gold to-transparent animate-[loading-bar_2s_ease-in-out_infinite]" />
+      <div className="mt-12 w-32 h-px bg-(--foreground)/5 overflow-hidden rounded-full">
+        <div className="w-full h-full bg-linear-to-r from-transparent via-luxury-gold to-transparent animate-[loading-bar_2s_ease-in-out_infinite]" />
       </div>
     </div>
   );

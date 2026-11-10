@@ -46,9 +46,9 @@ export default async function Home() {
               It is the key to our heart, and the soul of our identity.
             </p>
             <div className="mt-6 sm:mt-10 flex items-center justify-center gap-3 sm:gap-4" suppressHydrationWarning>
-               <div className="w-8 sm:w-12 h-[1px] bg-luxury-gold/30" suppressHydrationWarning />
+               <div className="w-8 sm:w-12 h-px bg-luxury-gold/30" suppressHydrationWarning />
                <span className="text-luxury-gold uppercase tracking-[0.3em] sm:tracking-[0.5em] text-[8px] sm:text-xs font-bold">Sufyra Signature</span>
-               <div className="w-8 sm:w-12 h-[1px] bg-luxury-gold/30" suppressHydrationWarning />
+               <div className="w-8 sm:w-12 h-px bg-luxury-gold/30" suppressHydrationWarning />
             </div>
           </div>
         </section>
