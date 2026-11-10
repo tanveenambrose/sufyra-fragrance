@@ -80,26 +80,26 @@ export default function AdminProductsPage() {
       {deleteConfirm && (
         <div className="fixed inset-0 z-100 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/80 backdrop-blur-md animate-in fade-in duration-300" onClick={() => setDeleteConfirm(null)} />
-          <div className="bg-luxury-charcoal border border-white/10 rounded-3xl p-8 max-w-sm w-full space-y-8 animate-in zoom-in-95 duration-300 relative shadow-[0_0_50px_rgba(0,0,0,1)]">
+          <div className="bg-(--card) border border-(--foreground)/10 rounded-3xl p-8 max-w-sm w-full space-y-8 animate-in zoom-in-95 duration-300 relative shadow-[0_0_50px_rgba(0,0,0,1)]">
             <div className="w-20 h-20 rounded-full bg-red-500/10 flex items-center justify-center mx-auto border border-red-500/20">
               <Trash2 size={32} className="text-red-500" />
             </div>
             <div className="text-center space-y-2">
               <h3 className="text-xl font-serif text-luxury-cream">Irreversible Action</h3>
-              <p className="text-xs text-white/40 leading-relaxed">
-                You are about to remove <span className="text-white font-bold">&quot;{deleteConfirm.name}&quot;</span> from the mansion collection. This cannot be undone. Are you certain?
+              <p className="text-xs text-(--foreground)/40 leading-relaxed">
+                You are about to remove <span className="text-(--foreground) font-bold">&quot;{deleteConfirm.name}&quot;</span> from the mansion collection. This cannot be undone. Are you certain?
               </p>
             </div>
             <div className="grid grid-cols-2 gap-4 pt-4">
               <button 
                 onClick={() => setDeleteConfirm(null)}
-                className="py-4 rounded-xl border border-white/5 text-[10px] font-bold uppercase tracking-widest text-white/40 hover:text-white hover:bg-white/5 transition-all"
+                className="py-4 rounded-xl border border-(--foreground)/5 text-[10px] font-bold uppercase tracking-widest text-(--foreground)/40 hover:text-white hover:bg-(--foreground)/5 transition-all"
               >
                 Cancel
               </button>
               <button 
                 onClick={handleDelete}
-                className="py-4 rounded-xl bg-red-500 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-red-600 transition-all shadow-lg shadow-red-500/20"
+                className="py-4 rounded-xl bg-red-500 text-(--foreground) text-[10px] font-bold uppercase tracking-widest hover:bg-red-600 transition-all shadow-lg shadow-red-500/20"
               >
                 {isLoading ? 'Removing...' : 'Confirm Delete'}
               </button>
@@ -108,13 +108,13 @@ export default function AdminProductsPage() {
         </div>
       )}
 
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 border-b border-white/5 pb-8">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 border-b border-(--foreground)/5 pb-8">
         <div>
           <Link href="/admin" className="text-[10px] text-luxury-gold hover:underline uppercase tracking-widest font-bold flex items-center gap-2 mb-4">
             <ArrowLeft size={12} /> Back to Dashboard
           </Link>
           <h2 className="text-3xl font-serif text-luxury-gold">Scent Library</h2>
-          <p className="text-white/40 text-xs tracking-widest uppercase mt-2">Manage your luxury fragrance collection</p>
+          <p className="text-(--foreground)/40 text-xs tracking-widest uppercase mt-2">Manage your luxury fragrance collection</p>
         </div>
         <Link 
           href="/admin/products/new"
@@ -128,40 +128,40 @@ export default function AdminProductsPage() {
       {/* Filters & Search */}
       <div className="flex flex-col md:flex-row gap-4">
         <div className="relative group grow">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-luxury-gold transition-colors" size={18} />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-(--foreground)/20 group-focus-within:text-luxury-gold transition-colors" size={18} />
           <input 
             type="text" 
             placeholder="Search by name or notes..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-luxury-charcoal border border-white/5 rounded-xl py-4 pl-12 pr-6 focus:border-luxury-gold/50 focus:outline-none transition-all text-sm text-ellipsis"
+            className="w-full bg-(--card) border border-(--foreground)/5 rounded-xl py-4 pl-12 pr-6 focus:border-luxury-gold/50 focus:outline-none transition-all text-sm text-ellipsis"
           />
         </div>
         <div className="relative min-w-50">
-          <Filter className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20" size={18} />
+          <Filter className="absolute left-4 top-1/2 -translate-y-1/2 text-(--foreground)/20" size={18} />
           <select 
             value={categoryFilter}
             onChange={(e) => setCategoryFilter(e.target.value as 'all' | 'perfume-oil' | 'combo')}
-            className="w-full bg-luxury-charcoal border border-white/5 rounded-xl py-4 pl-12 pr-10 focus:border-luxury-gold/50 focus:outline-none transition-all text-sm appearance-none overflow-hidden text-ellipsis whitespace-nowrap"
+            className="w-full bg-(--card) border border-(--foreground)/5 rounded-xl py-4 pl-12 pr-10 focus:border-luxury-gold/50 focus:outline-none transition-all text-sm appearance-none overflow-hidden text-ellipsis whitespace-nowrap"
           >
             <option value="all">All Collections</option>
             <option value="perfume-oil">Regular Versions</option>
             <option value="combo">Combo Packs</option>
           </select>
-          <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-white/20 pointer-events-none" size={16} />
+          <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-(--foreground)/20 pointer-events-none" size={16} />
         </div>
       </div>
 
       {/* Products Table */}
-      <div className="bg-luxury-charcoal rounded-2xl border border-white/5 overflow-hidden">
+      <div className="bg-(--card) rounded-2xl border border-(--foreground)/5 overflow-hidden">
         {isLoading && products.length === 0 ? (
           <div className="px-6 py-24 text-center">
             <div className="w-12 h-12 border-4 border-luxury-gold border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-            <p className="text-[10px] uppercase tracking-[0.2em] text-white/20">Optimizing catalog...</p>
+            <p className="text-[10px] uppercase tracking-[0.2em] text-(--foreground)/20">Optimizing catalog...</p>
           </div>
         ) : filteredProducts.length === 0 ? (
           <div className="px-6 py-24 text-center space-y-4">
-            <p className="text-white/20 uppercase tracking-[0.2em] text-[10px]">No scents found matching your criteria</p>
+            <p className="text-(--foreground)/20 uppercase tracking-[0.2em] text-[10px]">No scents found matching your criteria</p>
             <button onClick={() => {setSearchQuery(''); setCategoryFilter('all');}} className="text-luxury-gold text-xs hover:underline">Clear all filters</button>
           </div>
         ) : (
@@ -170,7 +170,7 @@ export default function AdminProductsPage() {
             <div className="hidden md:block overflow-x-auto">
               <table className="w-full text-left border-collapse min-w-200">
                 <thead>
-                  <tr className="bg-white/2 text-[10px] uppercase tracking-[0.2em] text-white/40">
+                  <tr className="bg-(--foreground)/2 text-[10px] uppercase tracking-[0.2em] text-(--foreground)/40">
                     <th className="px-8 py-5 font-bold">Product Details</th>
                     <th className="px-8 py-5 font-bold text-center">Category</th>
                     <th className="px-8 py-5 font-bold text-center">Variants</th>
@@ -178,23 +178,23 @@ export default function AdminProductsPage() {
                     <th className="px-8 py-5 font-bold text-right">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-white/5">
+                <tbody className="divide-y divide-(--foreground)/5">
                   {filteredProducts.map((p) => (
-                    <tr key={p.id} className="hover:bg-white/1 transition-colors group">
+                    <tr key={p.id} className="hover:bg-(--foreground)/1 transition-colors group">
                       <td className="px-8 py-6">
                         <div className="flex items-center gap-6">
-                          <div className="w-16 h-20 rounded-lg bg-white/5 overflow-hidden shrink-0 relative border border-white/10">
+                          <div className="w-16 h-20 rounded-lg bg-(--foreground)/5 overflow-hidden shrink-0 relative border border-(--foreground)/10">
                             {p.image_url ? (
                               <Image src={p.image_url} alt={p.name} width={64} height={80} className="w-full h-full object-cover" unoptimized />
                             ) : (
-                              <div className="w-full h-full bg-white/5 flex items-center justify-center">
-                                <ImageIcon size={18} className="text-white/20" />
+                              <div className="w-full h-full bg-(--foreground)/5 flex items-center justify-center">
+                                <ImageIcon size={18} className="text-(--foreground)/20" />
                               </div>
                             )}
                           </div>
                           <div className="space-y-1">
                             <p className="text-base font-bold text-luxury-cream group-hover:text-luxury-gold transition-colors">{p.name}</p>
-                            <p className="text-[10px] text-white/40 line-clamp-1 max-w-62.5 uppercase tracking-wider">{p.description}</p>
+                            <p className="text-[10px] text-(--foreground)/40 line-clamp-1 max-w-62.5 uppercase tracking-wider">{p.description}</p>
                           </div>
                         </div>
                       </td>
@@ -208,7 +208,7 @@ export default function AdminProductsPage() {
                       <td className="px-8 py-6 text-center">
                         <div className="flex flex-col gap-1 items-center">
                           {p.variants.map((v, i) => (
-                            <span key={i} className="text-[10px] text-white/60 font-mono">{v.size}: {v.price}৳</span>
+                            <span key={i} className="text-[10px] text-(--foreground)/60 font-mono">{v.size}: {v.price}৳</span>
                           ))}
                         </div>
                       </td>
@@ -226,7 +226,7 @@ export default function AdminProductsPage() {
                         <div className="flex justify-end gap-3 opacity-100 lg:opacity-0 group-hover:opacity-100 transition-all duration-300 relative z-10 pointer-events-auto">
                           <Link 
                             href={`/admin/products/${p.id}/edit`}
-                            className="p-2.5 bg-white/5 hover:bg-luxury-gold/10 rounded-lg text-white/40 hover:text-luxury-gold transition-all flex items-center justify-center pointer-events-auto"
+                            className="p-2.5 bg-(--foreground)/5 hover:bg-luxury-gold/10 rounded-lg text-(--foreground)/40 hover:text-luxury-gold transition-all flex items-center justify-center pointer-events-auto"
                             title="Edit Scent"
                           >
                             <Edit2 size={16} />
@@ -238,14 +238,14 @@ export default function AdminProductsPage() {
                               e.stopPropagation();
                               setDeleteConfirm({id: p.id, name: p.name});
                             }}
-                            className="p-2.5 bg-white/5 hover:bg-red-500/10 rounded-lg text-white/40 hover:text-red-400 transition-all flex items-center justify-center cursor-pointer pointer-events-auto"
+                            className="p-2.5 bg-(--foreground)/5 hover:bg-red-500/10 rounded-lg text-(--foreground)/40 hover:text-red-400 transition-all flex items-center justify-center cursor-pointer pointer-events-auto"
                             title="Delete Scent"
                           >
                             <Trash2 size={16} />
                           </button>
                         </div>
                         <div className="hidden lg:flex group-hover:hidden transition-all justify-end">
-                           <MoreVertical size={16} className="text-white/20" />
+                           <MoreVertical size={16} className="text-(--foreground)/20" />
                         </div>
                       </td>
                     </tr>
@@ -255,16 +255,16 @@ export default function AdminProductsPage() {
             </div>
 
             {/* Mobile Card View */}
-            <div className="md:hidden flex flex-col divide-y divide-white/5">
+            <div className="md:hidden flex flex-col divide-y divide-(--foreground)/5">
               {filteredProducts.map((p) => (
                 <div key={p.id} className="p-4 sm:p-6 flex flex-col gap-4">
                   <div className="flex gap-4">
-                    <div className="w-20 h-24 rounded-lg bg-white/5 overflow-hidden shrink-0 relative border border-white/10">
+                    <div className="w-20 h-24 rounded-lg bg-(--foreground)/5 overflow-hidden shrink-0 relative border border-(--foreground)/10">
                       {p.image_url ? (
                         <Image src={p.image_url} alt={p.name} width={80} height={96} className="w-full h-full object-cover" unoptimized />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center">
-                          <ImageIcon size={20} className="text-white/20" />
+                          <ImageIcon size={20} className="text-(--foreground)/20" />
                         </div>
                       )}
                     </div>
@@ -279,14 +279,14 @@ export default function AdminProductsPage() {
                       </div>
                       <div className="flex flex-wrap gap-2">
                         {p.variants.slice(0, 2).map((v, i) => (
-                          <span key={i} className="text-[10px] text-white/60 font-mono bg-white/5 px-2 py-0.5 rounded">{v.size}: {v.price}৳</span>
+                          <span key={i} className="text-[10px] text-(--foreground)/60 font-mono bg-(--foreground)/5 px-2 py-0.5 rounded">{v.size}: {v.price}৳</span>
                         ))}
-                        {p.variants.length > 2 && <span className="text-[10px] text-white/40">+{p.variants.length - 2} more</span>}
+                        {p.variants.length > 2 && <span className="text-[10px] text-(--foreground)/40">+{p.variants.length - 2} more</span>}
                       </div>
                     </div>
                   </div>
 
-                  <div className="flex justify-between items-center pt-3 border-t border-white/5">
+                  <div className="flex justify-between items-center pt-3 border-t border-(--foreground)/5">
                     <div>
                       {(p.discount_percent || 0) > 0 ? (
                         <div className="flex items-center gap-2">
@@ -300,7 +300,7 @@ export default function AdminProductsPage() {
                     <div className="flex gap-2">
                       <Link 
                         href={`/admin/products/${p.id}/edit`}
-                        className="px-4 py-2 bg-white/5 hover:bg-luxury-gold/10 rounded-lg text-white/60 hover:text-luxury-gold transition-all text-[10px] font-bold uppercase tracking-widest border border-white/10"
+                        className="px-4 py-2 bg-(--foreground)/5 hover:bg-luxury-gold/10 rounded-lg text-(--foreground)/60 hover:text-luxury-gold transition-all text-[10px] font-bold uppercase tracking-widest border border-(--foreground)/10"
                       >
                         Edit
                       </Link>

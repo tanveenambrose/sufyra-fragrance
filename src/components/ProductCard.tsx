@@ -35,7 +35,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority = false, re
   const discountedPrice = discount > 0 ? Math.round(currentPrice * (1 - discount / 100)) : currentPrice;
 
   return (
-    <div className={`group rounded-4xl overflow-hidden flex flex-col h-full ${reveal ? 'reveal' : ''} bg-(--foreground)/3 hover:bg-(--foreground)/5 border border-(--foreground)/5 transition-all duration-500 hover:shadow-xl hover:shadow-luxury-gold/5`} suppressHydrationWarning>
+    <div className={`group rounded-2xl sm:rounded-3xl overflow-hidden flex flex-col h-full ${reveal ? 'reveal' : ''} bg-(--foreground)/3 hover:bg-(--foreground)/5 border border-(--foreground)/10 hover:border-luxury-gold/40 transition-all duration-300 hover:shadow-xl hover:shadow-luxury-gold/5`} suppressHydrationWarning>
       {/* Product Image */}
       <Link href={`/product-details/${product.id}`} className="relative aspect-square block overflow-hidden group-hover:cursor-pointer" suppressHydrationWarning>
         <div className="relative w-full h-full bg-luxury-cream/5" suppressHydrationWarning>
@@ -44,8 +44,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority = false, re
               src={displayImage}
               alt={product.name}
               fill
-              sizes="(max-width: 640px) 80vw, (max-width: 768px) 45vw, (max-width: 1024px) 25vw, 20vw"
-              className="object-cover transition-transform duration-1000 group-hover:scale-110"
+              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+              className="object-cover transition-transform duration-700 group-hover:scale-105"
               priority={priority} 
             />
           ) : (
@@ -57,7 +57,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority = false, re
           
           {/* Badge if discount */}
           {discount > 0 && (
-            <div className="absolute top-4 right-4 bg-luxury-gold text-white text-[10px] font-bold px-3 py-1 rounded-full shadow-lg z-10">
+            <div className="absolute top-2.5 right-2.5 sm:top-4 sm:right-4 bg-luxury-gold text-white text-[8px] sm:text-[10px] font-bold px-2 sm:px-3 py-0.5 sm:py-1 rounded-full shadow-lg z-10">
               -{discount}%
             </div>
           )}
@@ -65,33 +65,33 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority = false, re
       </Link>
 
       {/* Product Info */}
-      <div className="p-4 sm:p-6 flex flex-col flex-1" suppressHydrationWarning>
-        <div className="mb-2 sm:mb-4" suppressHydrationWarning>
+      <div className="p-3 sm:p-5 flex flex-col flex-1" suppressHydrationWarning>
+        <div className="mb-2 sm:mb-3" suppressHydrationWarning>
           <Link href={`/product-details/${product.id}`} className="hover:text-luxury-gold transition-colors block mb-1">
-            <h3 className="text-[13px] sm:text-lg font-serif text-(--foreground) font-bold tracking-tight line-clamp-1 leading-tight">{product.name}</h3>
+            <h3 className="text-xs sm:text-base font-serif text-(--foreground) font-bold tracking-tight line-clamp-1 leading-tight">{product.name}</h3>
           </Link>
           <div className="flex items-center gap-1.5 sm:gap-2" suppressHydrationWarning>
-             <span className="text-luxury-gold font-bold text-[13px] sm:text-lg">{discountedPrice}৳</span>
+             <span className="text-luxury-gold font-bold text-xs sm:text-base">{discountedPrice}৳</span>
              {discount > 0 && (
-               <span className="text-(--foreground)/30 line-through text-[9px] sm:text-[11px] font-medium">{currentPrice}৳</span>
+               <span className="text-(--foreground)/30 line-through text-[9px] sm:text-xs font-medium">{currentPrice}৳</span>
              )}
           </div>
         </div>
         
-        <p className="text-(--foreground)/50 text-[9px] sm:text-[11px] mb-3 sm:mb-5 line-clamp-2 leading-relaxed font-medium" suppressHydrationWarning>
+        <p className="text-(--foreground)/50 text-[10px] sm:text-[11px] mb-3 line-clamp-2 leading-relaxed font-medium hidden sm:block" suppressHydrationWarning>
           {product.description}
         </p>
         
         {/* Size Selection */}
-        <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-4 sm:mb-6 mt-auto" suppressHydrationWarning>
+        <div className="flex flex-wrap gap-1 sm:gap-1.5 mb-2.5 sm:mb-4 mt-auto" suppressHydrationWarning>
           {product.variants.map((variant) => (
             <button
               key={variant.size}
               onClick={() => setSelectedSize(variant.size)}
-              className={`px-2.5 py-1 rounded-full transition-all text-[8px] sm:text-[9px] font-bold border ${
+              className={`px-2 py-0.5 rounded-md sm:rounded-full transition-all text-[8px] sm:text-[9px] font-bold border ${
                 selectedSize === variant.size
                   ? 'border-luxury-gold bg-luxury-gold text-white'
-                  : 'border-(--foreground)/10 text-(--foreground)/40 hover:border-luxury-gold hover:text-luxury-gold'
+                  : 'border-(--foreground)/15 text-(--foreground)/50 hover:border-luxury-gold hover:text-luxury-gold'
               }`}
             >
               {variant.size}
@@ -103,7 +103,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority = false, re
           <CartSparkBurst active={isSparking} />
           <button 
             onClick={handleAddItem}
-            className={`w-full py-2.5 sm:py-4 rounded-xl font-bold text-[9px] sm:text-[11px] uppercase tracking-[0.2em] flex items-center justify-center gap-2 transition-all shadow-md active:scale-[0.98] ${
+            className={`w-full py-2 sm:py-2.5 rounded-lg sm:rounded-xl font-bold text-[9px] sm:text-[10px] uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all shadow-sm active:scale-[0.98] ${
               isSparking 
                 ? 'bg-luxury-gold text-white scale-[1.02] shadow-luxury-gold/30' 
                 : 'bg-luxury-charcoal text-white dark:bg-white dark:text-black hover:bg-luxury-gold dark:hover:bg-luxury-gold dark:hover:text-white'
@@ -112,12 +112,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority = false, re
           >
             {isSparking ? (
               <>
-                <SparkleStar size={14} className="text-white animate-spin" />
-                <span>Added to Bag ✨</span>
+                <SparkleStar size={12} className="text-white animate-spin" />
+                <span>Added ✨</span>
               </>
             ) : (
               <>
-                <Plus className="w-3 h-3 sm:w-4 sm:h-4" />
+                <Plus className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                 <span>Add to Bag</span>
               </>
             )}

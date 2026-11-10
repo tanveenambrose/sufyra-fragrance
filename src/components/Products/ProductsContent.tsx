@@ -71,8 +71,8 @@ export default function ProductsContent({ initialProducts }: ProductsContentProp
 
   return (
     <main className="min-h-screen bg-(--background) pb-24 pt-28 sm:pt-32 lg:pt-36 transition-colors duration-300">
-      <div className="container mx-auto px-6">
-        <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-start">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-stretch lg:items-start w-full">
           <aside className="hidden lg:block w-64 shrink-0 space-y-16 sticky top-32">
             <div className="space-y-6">
               <h3 className="text-luxury-gold text-[10px] font-bold uppercase tracking-[0.4em] mb-6">Filter By Price</h3>
@@ -138,24 +138,24 @@ export default function ProductsContent({ initialProducts }: ProductsContentProp
             </div>
           </aside>
 
-          <div className="lg:hidden flex items-center justify-between border-y border-(--foreground)/5 py-4 mb-8">
+          <div className="lg:hidden w-full flex items-center justify-between border-y border-(--foreground)/10 py-3 mb-6 px-1">
             <button
               onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}
-              className="flex items-center gap-2 text-luxury-gold text-[10px] font-bold uppercase tracking-widest"
+              className="flex items-center gap-2 text-luxury-gold text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-lg bg-(--foreground)/5 border border-luxury-gold/30 hover:bg-(--foreground)/10 transition-colors"
             >
               <SlidersHorizontal size={14} />
               Filters
             </button>
-            <span className="text-[10px] text-(--foreground)/60 uppercase tracking-widest font-bold">{filteredProducts.length} Products Found</span>
+            <span className="text-[11px] text-(--foreground)/70 uppercase tracking-widest font-bold font-mono">
+              {filteredProducts.length} Scents Found
+            </span>
           </div>
 
-          <div className="grow">
+          <div className="w-full grow">
             {filteredProducts.length > 0 ? (
-              <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-3 sm:gap-x-6 gap-y-10 sm:gap-y-16">
+              <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
                 {filteredProducts.map((product, index) => (
-                  <div key={product.id} className="reveal reveal-fast">
-                    <ProductCard product={product} priority={index < 4} />
-                  </div>
+                  <ProductCard key={product.id} product={product} priority={index < 4} />
                 ))}
               </div>
             ) : (

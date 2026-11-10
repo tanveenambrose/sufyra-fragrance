@@ -23,6 +23,7 @@ import {
   Package
 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 interface RealtimeOrderAlert {
   id: string;
@@ -98,38 +99,47 @@ export default function AdminLayout({
     }
   }, [pathname]);
 
-  // Real-time Supabase Subscription across the entire admin dashboard
+  // Real-time Supabase postgres_changes listener for new orders
   useEffect(() => {
     if (!isAdmin) return;
 
     const channel = supabase
-      .channel('admin-global-realtime-orders')
+      .channel('admin-orders-stream')
       .on(
         'postgres_changes',
-        { event: 'INSERT', schema: 'public', table: 'orders' },
+        {
+          event: 'INSERT',
+          schema: 'public',
+          table: 'orders',
+        },
         (payload) => {
           const newOrder = payload.new as RealtimeOrderAlert;
+
+          playOrderChime();
           setNewOrdersCount((prev) => prev + 1);
           setLatestAlert(newOrder);
-          playOrderChime();
 
-          if (alertTimeoutRef.current) clearTimeout(alertTimeoutRef.current);
+          if (alertTimeoutRef.current) {
+            clearTimeout(alertTimeoutRef.current);
+          }
           alertTimeoutRef.current = setTimeout(() => {
             setLatestAlert(null);
-          }, 12000);
+          }, 9000);
         }
       )
       .subscribe();
 
     return () => {
       supabase.removeChannel(channel);
-      if (alertTimeoutRef.current) clearTimeout(alertTimeoutRef.current);
+      if (alertTimeoutRef.current) {
+        clearTimeout(alertTimeoutRef.current);
+      }
     };
   }, [isAdmin, playOrderChime]);
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#070707] flex flex-col items-center justify-center space-y-4">
+      <div className="min-h-screen bg-(--background) flex flex-col items-center justify-center space-y-4">
         <div className="w-12 h-12 border-3 border-luxury-gold/20 border-t-luxury-gold rounded-full animate-spin" />
         <p className="text-[10px] uppercase font-bold tracking-[0.3em] text-luxury-gold/70 animate-pulse">
           Authenticating Executive Session...
@@ -148,10 +158,10 @@ export default function AdminLayout({
   ];
 
   return (
-    <div className="min-h-screen bg-[#050505] text-[#F3EFE6] selection:bg-luxury-gold/30 selection:text-white relative flex flex-col antialiased">
+    <div className="min-h-screen bg-(--background) text-(--foreground) selection:bg-luxury-gold/30 selection:text-white relative flex flex-col antialiased transition-colors duration-300">
       {/* Real-time Order Alert Toast (Top-Right Floating) */}
       {latestAlert && (
-        <div className="fixed top-5 right-5 z-[9999] max-w-sm w-full bg-[#0F0F0F]/95 backdrop-blur-2xl border border-luxury-gold/40 rounded-2xl p-4 sm:p-5 shadow-[0_20px_60px_rgba(0,0,0,0.8),0_0_30px_rgba(212,175,55,0.2)] animate-in slide-in-from-top-4 duration-300">
+        <div className="fixed top-5 right-5 z-200 max-w-sm w-full bg-luxury-charcoal/95 backdrop-blur-2xl border border-luxury-gold/40 rounded-2xl p-4 sm:p-5 shadow-[0_20px_60px_rgba(0,0,0,0.8),0_0_30px_rgba(212,175,55,0.2)] animate-in slide-in-from-top-4 duration-300 text-white">
           <div className="flex items-start justify-between gap-3">
             <div className="flex items-center gap-2 text-luxury-gold">
               <span className="relative flex h-2.5 w-2.5">
@@ -212,12 +222,12 @@ export default function AdminLayout({
       )}
 
       {/* Mobile Top Bar */}
-      <header className="lg:hidden sticky top-0 z-50 bg-luxury-charcoal/90 backdrop-blur-xl border-b border-luxury-gold/15 px-4 py-3 flex items-center justify-between">
-        <div className="flex items-center gap-3">
+      <header className="lg:hidden sticky top-0 z-40 bg-(--navbar) backdrop-blur-xl border-b border-luxury-gold/15 px-4 py-2.5 flex items-center justify-between transition-colors">
+        <div className="flex items-center gap-2">
           <button 
             onClick={() => setIsSidebarOpen(true)}
             aria-label="Open navigation menu"
-            className="p-2 -ml-2 text-luxury-gold hover:bg-white/5 rounded-xl transition-colors"
+            className="p-2 -ml-1 text-luxury-gold hover:bg-(--foreground)/5 rounded-xl transition-colors"
           >
             <Menu size={22} />
           </button>
@@ -225,11 +235,12 @@ export default function AdminLayout({
             <span className="w-7 h-7 rounded-lg bg-luxury-gold/15 border border-luxury-gold/30 flex items-center justify-center text-luxury-gold font-serif font-bold text-xs">
               S
             </span>
-            <span className="font-serif text-base tracking-[0.2em] text-luxury-gold font-bold">SUFYRA</span>
+            <span className="font-serif text-sm tracking-[0.2em] text-luxury-gold font-bold">SUFYRA</span>
           </div>
         </div>
 
         <div className="flex items-center gap-2">
+          <ThemeToggle />
           {newOrdersCount > 0 && (
             <Link 
               href="/admin/orders" 
@@ -241,7 +252,7 @@ export default function AdminLayout({
           )}
           <Link 
             href="/" 
-            className="flex items-center gap-1 px-3 py-1.5 rounded-lg border border-white/10 text-white/70 hover:text-luxury-gold hover:border-luxury-gold/30 text-[10px] font-bold uppercase tracking-wider transition-colors"
+            className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg border border-(--foreground)/15 text-(--foreground)/70 hover:text-luxury-gold hover:border-luxury-gold/30 text-[10px] font-bold uppercase tracking-wider transition-colors"
           >
             <ArrowLeft size={12} />
             Store
@@ -260,13 +271,13 @@ export default function AdminLayout({
       <div className="flex-1 flex">
         {/* Desktop & Mobile Sidebar */}
         <aside className={`
-          fixed inset-y-0 left-0 z-50 w-72 bg-[#090909]/95 backdrop-blur-2xl border-r border-luxury-gold/15 flex flex-col justify-between transition-transform duration-300 ease-in-out shadow-2xl
+          fixed inset-y-0 left-0 z-50 w-72 bg-(--background) backdrop-blur-2xl border-r border-luxury-gold/15 flex flex-col justify-between transition-transform duration-300 ease-in-out shadow-2xl
           ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
           lg:translate-x-0
         `}>
           {/* Top Brand Crest */}
           <div>
-            <div className="p-6 border-b border-white/5 flex items-center justify-between">
+            <div className="p-6 border-b border-(--foreground)/10 flex items-center justify-between">
               <Link href="/admin" className="flex items-center gap-3.5 group">
                 <div className="w-10 h-10 rounded-xl bg-linear-to-br from-luxury-gold/20 via-luxury-gold/10 to-transparent border border-luxury-gold/40 flex items-center justify-center text-luxury-gold shadow-[0_0_15px_rgba(212,175,55,0.15)] group-hover:scale-105 transition-transform">
                   <Package size={20} className="text-luxury-gold" />
@@ -276,43 +287,43 @@ export default function AdminLayout({
                     <h1 className="font-serif text-lg tracking-[0.25em] text-luxury-gold font-bold">SUFYRA</h1>
                     <span className="text-[8px] uppercase tracking-wider px-1.5 py-0.5 rounded bg-luxury-gold/15 text-luxury-gold border border-luxury-gold/30 font-bold">PRO</span>
                   </div>
-                  <p className="text-[9px] uppercase tracking-[0.35em] text-white/40 mt-0.5 font-sans font-medium">Executive Console</p>
+                  <p className="text-[9px] uppercase tracking-[0.35em] text-(--foreground)/50 mt-0.5 font-sans font-medium">Executive Console</p>
                 </div>
               </Link>
               
               <button 
                 onClick={() => setIsSidebarOpen(false)}
-                className="lg:hidden p-2 text-white/40 hover:text-white rounded-lg hover:bg-white/5 transition-colors"
+                className="lg:hidden p-2 text-(--foreground)/50 hover:text-(--foreground) rounded-lg hover:bg-(--foreground)/5 transition-colors"
               >
                 <X size={18} />
               </button>
             </div>
 
             {/* Live Realtime Status Pill & Sound Control */}
-            <div className="px-6 py-3.5 mx-4 mt-4 rounded-xl bg-white/2 border border-white/5 flex items-center justify-between">
+            <div className="px-5 py-3 mx-4 mt-4 rounded-xl bg-(--foreground)/3 border border-(--foreground)/10 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
                 </span>
-                <span className="text-[9px] font-bold uppercase tracking-[0.25em] text-emerald-400">Realtime Active</span>
+                <span className="text-[9px] font-bold uppercase tracking-[0.25em] text-emerald-500">Realtime Active</span>
               </div>
               <button
                 onClick={() => setSoundEnabled(!soundEnabled)}
                 title={soundEnabled ? 'Mute order notification chime' : 'Enable order notification chime'}
-                className="p-1 rounded-md text-white/40 hover:text-luxury-gold hover:bg-white/5 transition-colors flex items-center gap-1 text-[9px]"
+                className="p-1 rounded-md text-(--foreground)/50 hover:text-luxury-gold hover:bg-(--foreground)/5 transition-colors flex items-center gap-1 text-[9px]"
               >
                 {soundEnabled ? (
                   <Volume2 size={13} className="text-luxury-gold" />
                 ) : (
-                  <VolumeX size={13} className="text-white/30" />
+                  <VolumeX size={13} className="text-(--foreground)/30" />
                 )}
               </button>
             </div>
 
             {/* Vertical Navigation Bar */}
             <div className="px-4 py-5">
-              <p className="px-3 pb-2 text-[8px] uppercase tracking-[0.3em] font-bold text-white/30">
+              <p className="px-3 pb-2 text-[8px] uppercase tracking-[0.3em] font-bold text-(--foreground)/40">
                 Administration
               </p>
               <nav className="flex flex-col space-y-1.5">
@@ -331,15 +342,15 @@ export default function AdminLayout({
                       }}
                       className={`flex items-center justify-between px-3.5 py-3 rounded-xl transition-all text-xs group relative ${
                         isActive 
-                          ? 'bg-linear-to-r from-luxury-gold/15 via-luxury-gold/5 to-transparent text-luxury-gold border-l-2 border-luxury-gold font-semibold shadow-[0_4px_20px_rgba(212,175,55,0.08)]' 
-                          : 'text-white/60 hover:text-luxury-cream hover:bg-white/4'
+                          ? 'bg-linear-to-r from-luxury-gold/20 via-luxury-gold/10 to-transparent text-luxury-gold border-l-2 border-luxury-gold font-bold shadow-[0_4px_20px_rgba(212,175,55,0.08)]' 
+                          : 'text-(--foreground)/70 hover:text-luxury-gold hover:bg-(--foreground)/5'
                       }`}
                     >
                       <div className="flex items-center gap-3">
                         <item.icon 
                           size={18} 
                           className={`transition-colors ${
-                            isActive ? 'text-luxury-gold' : 'text-white/40 group-hover:text-luxury-gold/80'
+                            isActive ? 'text-luxury-gold' : 'text-(--foreground)/40 group-hover:text-luxury-gold'
                           }`} 
                         />
                         <span className="uppercase tracking-[0.18em] text-[11px] font-medium">{item.label}</span>
@@ -355,36 +366,36 @@ export default function AdminLayout({
                 })}
               </nav>
 
-              <div className="mt-6 pt-4 border-t border-white/5">
-                <p className="px-3 pb-2 text-[8px] uppercase tracking-[0.3em] font-bold text-white/30">
+              <div className="mt-6 pt-4 border-t border-(--foreground)/10">
+                <p className="px-3 pb-2 text-[8px] uppercase tracking-[0.3em] font-bold text-(--foreground)/40">
                   Storefront
                 </p>
                 <Link 
                   href="/" 
                   target="_blank"
-                  className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-white/50 hover:text-luxury-gold hover:bg-white/4 transition-all text-xs group"
+                  className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-(--foreground)/60 hover:text-luxury-gold hover:bg-(--foreground)/5 transition-all text-xs group"
                 >
                   <div className="flex items-center gap-3">
-                    <ExternalLink size={16} className="text-white/40 group-hover:text-luxury-gold transition-colors" />
+                    <ExternalLink size={16} className="text-(--foreground)/40 group-hover:text-luxury-gold transition-colors" />
                     <span className="uppercase tracking-[0.18em] text-[11px] font-medium">Live Boutique</span>
                   </div>
-                  <ArrowRight size={13} className="text-white/30 group-hover:text-luxury-gold group-hover:translate-x-0.5 transition-all" />
+                  <ArrowRight size={13} className="text-(--foreground)/30 group-hover:text-luxury-gold group-hover:translate-x-0.5 transition-all" />
                 </Link>
               </div>
             </div>
           </div>
 
           {/* User Profile & Sign Out Footer */}
-          <div className="p-4 m-4 rounded-2xl bg-[#0c0c0c] border border-white/5 space-y-3">
+          <div className="p-4 m-4 rounded-2xl bg-(--foreground)/4 border border-(--foreground)/10 space-y-3">
             <div className="flex items-center gap-3">
               <div className="w-9 h-9 rounded-xl bg-luxury-gold/15 border border-luxury-gold/30 flex items-center justify-center shrink-0">
                 <ShieldCheck size={18} className="text-luxury-gold" />
               </div>
               <div className="flex flex-col min-w-0">
-                <span className="text-[11px] font-bold text-luxury-cream truncate">
+                <span className="text-[11px] font-bold text-(--foreground) truncate">
                   {user?.email?.split('@')[0]}
                 </span>
-                <span className="text-[8px] text-luxury-gold/70 uppercase tracking-[0.2em] font-mono">
+                <span className="text-[8px] text-luxury-gold/90 uppercase tracking-[0.2em] font-mono">
                   Master Administrator
                 </span>
               </div>
@@ -392,7 +403,7 @@ export default function AdminLayout({
 
             <button 
               onClick={() => signOut()}
-              className="w-full flex items-center justify-center gap-2 py-2 px-3 rounded-xl border border-red-500/20 bg-red-500/5 hover:bg-red-500/15 text-red-400 hover:text-red-300 transition-all text-xs font-semibold uppercase tracking-wider group"
+              className="w-full flex items-center justify-center gap-2 py-2 px-3 rounded-xl border border-red-500/20 bg-red-500/5 hover:bg-red-500/15 text-red-500 hover:text-red-400 transition-all text-xs font-semibold uppercase tracking-wider group"
             >
               <LogOut size={14} className="group-hover:-translate-x-0.5 transition-transform" />
               <span>Log Out</span>
@@ -402,32 +413,34 @@ export default function AdminLayout({
 
         {/* Main Content Area */}
         <main className="lg:pl-72 flex-1 min-w-0 flex flex-col min-h-screen">
-          {/* Subtle Top Ambient Ribbon on Desktop */}
-          <div className="hidden lg:flex items-center justify-between px-8 py-3.5 bg-[#080808]/80 backdrop-blur-md border-b border-white/5 text-xs text-white/40 sticky top-0 z-30">
+          {/* Top Ambient Ribbon on Desktop */}
+          <div className="hidden lg:flex items-center justify-between px-8 py-3.5 bg-(--navbar) backdrop-blur-md border-b border-(--foreground)/10 text-xs text-(--foreground)/60 sticky top-0 z-30 transition-colors">
             <div className="flex items-center gap-3">
-              <span className="text-[10px] uppercase tracking-[0.25em] font-medium text-white/50">
+              <span className="text-[10px] uppercase tracking-[0.25em] font-medium text-(--foreground)/60">
                 Sufyra Parfumerie Control Plane
               </span>
-              <span className="text-white/20">•</span>
-              <span className="text-[10px] text-emerald-400/90 font-mono flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span className="text-(--foreground)/20">•</span>
+              <span className="text-[10px] text-emerald-500 font-mono flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
                 Secure Cloud Cluster
               </span>
             </div>
 
             <div className="flex items-center gap-4 text-[11px]">
+              <ThemeToggle />
+              <span className="text-(--foreground)/20">|</span>
               <Link 
                 href="/admin/products/new" 
-                className="flex items-center gap-1.5 text-luxury-gold hover:text-luxury-cream font-medium tracking-wider uppercase text-[10px] transition-colors"
+                className="flex items-center gap-1.5 text-luxury-gold hover:text-(--foreground) font-medium tracking-wider uppercase text-[10px] transition-colors"
               >
                 <PlusCircle size={13} />
                 New Fragrance
               </Link>
-              <span className="text-white/20">|</span>
+              <span className="text-(--foreground)/20">|</span>
               <Link 
                 href="/" 
                 target="_blank"
-                className="flex items-center gap-1 text-white/50 hover:text-white transition-colors"
+                className="flex items-center gap-1 text-(--foreground)/60 hover:text-(--foreground) transition-colors"
               >
                 <span>Boutique</span>
                 <ExternalLink size={12} />
@@ -436,7 +449,7 @@ export default function AdminLayout({
           </div>
 
           {/* Page Children Container */}
-          <div className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto animate-in fade-in duration-300">
+          <div className="flex-1 p-3.5 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto animate-in fade-in duration-300">
             {children}
           </div>
         </main>

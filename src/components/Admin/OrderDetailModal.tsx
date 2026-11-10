@@ -35,7 +35,7 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({ order, isOpen, onCl
       case 'received': return 'text-blue-400 bg-blue-400/10 border-blue-400/20';
       case 'processing': return 'text-luxury-gold bg-luxury-gold/10 border-luxury-gold/20';
       case 'shipped': return 'text-emerald-400 bg-emerald-400/10 border-emerald-400/20';
-      default: return 'text-white/40 bg-white/5 border-white/10';
+      default: return 'text-(--foreground)/40 bg-(--foreground)/5 border-(--foreground)/10';
     }
   };
 
@@ -43,7 +43,7 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({ order, isOpen, onCl
     <div className="fixed inset-0 z-100 flex items-center justify-center p-4 sm:p-6 animate-in fade-in duration-300">
       <div className="absolute inset-0 bg-black/90 backdrop-blur-xl" onClick={onClose} />
       
-      <div className="relative w-full max-w-2xl bg-luxury-charcoal border border-white/10 rounded-[30px] overflow-hidden shadow-2xl animate-in zoom-in-95 duration-300">
+      <div className="relative w-full max-w-2xl bg-(--card) border border-(--foreground)/10 rounded-[30px] overflow-hidden shadow-2xl animate-in zoom-in-95 duration-300">
         <div className="p-8 md:p-10">
           <div className="flex justify-between items-start mb-10">
             <div>
@@ -54,14 +54,14 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({ order, isOpen, onCl
                 </span>
               </div>
               <h2 className="text-3xl font-serif text-luxury-cream">#{order.id.slice(0, 8).toUpperCase()}</h2>
-              <div className="flex items-center gap-2 text-white/40 mt-2">
+              <div className="flex items-center gap-2 text-(--foreground)/40 mt-2">
                 <Calendar size={12} />
                 <span className="text-[10px] uppercase tracking-widest">{formatDate(order.created_at)}</span>
               </div>
             </div>
             <button
               onClick={onClose}
-              className="p-2 bg-white/5 hover:bg-white/10 rounded-full text-white/40 hover:text-white transition-all"
+              className="p-2 bg-(--foreground)/5 hover:bg-(--foreground)/10 rounded-full text-(--foreground)/40 hover:text-white transition-all"
             >
               <X size={20} />
             </button>
@@ -71,35 +71,35 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({ order, isOpen, onCl
             {/* Customer & Delivery */}
             <div className="space-y-8">
               <div>
-                <h3 className="text-[10px] uppercase tracking-[0.2em] text-white/20 font-bold mb-4 flex items-center gap-2">
+                <h3 className="text-[10px] uppercase tracking-[0.2em] text-(--foreground)/20 font-bold mb-4 flex items-center gap-2">
                   <User size={12} className="text-luxury-gold" />
                   Consignee Details
                 </h3>
                 <div className="space-y-3">
                   <p className="text-sm font-bold text-luxury-cream">{order.delivery_name}</p>
-                  <div className="flex items-start gap-2 text-xs text-white/60">
+                  <div className="flex items-start gap-2 text-xs text-(--foreground)/60">
                     <MapPin size={14} className="text-luxury-gold shrink-0 mt-0.5" />
                     <p className="leading-relaxed">{order.delivery_address}</p>
                   </div>
-                  <p className="text-[10px] uppercase tracking-widest text-white/40 ml-5">{order.delivery_zone}</p>
+                  <p className="text-[10px] uppercase tracking-widest text-(--foreground)/40 ml-5">{order.delivery_zone}</p>
                 </div>
               </div>
 
               <div>
-                <h3 className="text-[10px] uppercase tracking-[0.2em] text-white/20 font-bold mb-4 flex items-center gap-2">
+                <h3 className="text-[10px] uppercase tracking-[0.2em] text-(--foreground)/20 font-bold mb-4 flex items-center gap-2">
                   <Phone size={12} className="text-luxury-gold" />
                   Contact Channels
                 </h3>
                 <div className="space-y-2">
-                  <p className="text-xs text-white/60 flex items-center gap-2">
+                  <p className="text-xs text-(--foreground)/60 flex items-center gap-2">
                     <span className="text-[10px] uppercase tracking-widest w-16">Email:</span>
                     <span className="text-luxury-gold font-medium truncate">{order.delivery_email || 'Not Provided'}</span>
                   </p>
-                  <p className="text-xs text-white/60 flex items-center gap-2">
+                  <p className="text-xs text-(--foreground)/60 flex items-center gap-2">
                     <span className="text-[10px] uppercase tracking-widest w-16">WhatsApp:</span>
                     <span className="text-luxury-cream font-mono">{order.whatsapp_number || 'Not Provided'}</span>
                   </p>
-                  <p className="text-xs text-white/60 flex items-center gap-2">
+                  <p className="text-xs text-(--foreground)/60 flex items-center gap-2">
                     <span className="text-[10px] uppercase tracking-widest w-16">Account:</span>
                     <span className="text-luxury-cream truncate">{order.user_id}</span>
                   </p>
@@ -110,11 +110,11 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({ order, isOpen, onCl
             {/* Order Content */}
             <div className="space-y-8">
               <div>
-                <h3 className="text-[10px] uppercase tracking-[0.2em] text-white/20 font-bold mb-4 flex items-center gap-2">
+                <h3 className="text-[10px] uppercase tracking-[0.2em] text-(--foreground)/20 font-bold mb-4 flex items-center gap-2">
                   <Package size={12} className="text-luxury-gold" />
                   Procurement Content
                 </h3>
-                <div className="bg-white/2 border border-white/5 rounded-2xl p-4 space-y-4">
+                <div className="bg-(--foreground)/2 border border-(--foreground)/5 rounded-2xl p-4 space-y-4">
                   {(() => {
                     let parsedItems: OrderItem[] | null = null;
                     try {
@@ -129,7 +129,7 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({ order, isOpen, onCl
                       return (
                         <div className="space-y-4">
                           {parsedItems.map((item: OrderItem, idx: number) => (
-                            <div key={idx} className="flex justify-between items-start pb-4 border-b border-white/5 last:border-0 last:pb-0">
+                            <div key={idx} className="flex justify-between items-start pb-4 border-b border-(--foreground)/5 last:border-0 last:pb-0">
                               <div>
                                 <p className="text-sm font-bold text-luxury-cream">{item.name}</p>
                                 <p className="text-[9px] uppercase tracking-widest text-luxury-gold mt-1">Size: {item.size} | Qty: {item.quantity}</p>
@@ -152,12 +152,12 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({ order, isOpen, onCl
                       </div>
                     );
                   })()}
-                  <div className="pt-4 border-t border-white/5 space-y-2">
-                    <div className="flex justify-between text-[10px] uppercase tracking-widest text-white/40">
+                  <div className="pt-4 border-t border-(--foreground)/5 space-y-2">
+                    <div className="flex justify-between text-[10px] uppercase tracking-widest text-(--foreground)/40">
                       <span>Delivery Service</span>
                       <span>৳{order.delivery_cost}</span>
                     </div>
-                    <div className="flex justify-between items-center pt-2 mt-2 border-t border-white/10">
+                    <div className="flex justify-between items-center pt-2 mt-2 border-t border-(--foreground)/10">
                       <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-luxury-gold">Grand Total</span>
                       <span className="text-xl font-bold text-luxury-cream">৳{order.total_price}</span>
                     </div>
@@ -166,12 +166,12 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({ order, isOpen, onCl
               </div>
 
               <div>
-                <h3 className="text-[10px] uppercase tracking-[0.2em] text-white/20 font-bold mb-4 flex items-center gap-2">
+                <h3 className="text-[10px] uppercase tracking-[0.2em] text-(--foreground)/20 font-bold mb-4 flex items-center gap-2">
                   <CreditCard size={12} className="text-luxury-gold" />
                   Payment Status
                 </h3>
                 <div className="flex items-center gap-3">
-                  <div className="px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-[10px] font-bold uppercase tracking-widest text-luxury-cream">
+                  <div className="px-4 py-2 bg-(--foreground)/5 border border-(--foreground)/10 rounded-xl text-[10px] font-bold uppercase tracking-widest text-luxury-cream">
                     {order.payment_method || 'Cash on Delivery'}
                   </div>
                 </div>

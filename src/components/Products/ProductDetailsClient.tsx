@@ -20,7 +20,8 @@ import {
   Truck,
   Gift,
   Check,
-  Info
+  Info,
+  ShoppingBag
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import PurchaseFlow from '@/components/Purchase/PurchaseFlow';
@@ -476,33 +477,33 @@ export default function ProductDetailsClient({
             </div>
 
             {/* Purchasing & Action Dock */}
-            <div className="space-y-3 pt-1">
-              <div className="flex flex-col sm:flex-row gap-2.5">
+            <div className="space-y-2.5 pt-1">
+              <div className="flex items-center gap-2">
                 {/* Quantity Stepper */}
-                <div className="flex items-center justify-between bg-white/3 rounded-xl border border-white/10 h-11 px-3 w-full sm:w-28 shrink-0">
+                <div className="flex items-center justify-between bg-(--foreground)/5 rounded-xl border border-(--foreground)/15 h-12 px-3 w-28 shrink-0">
                   <button
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
                     aria-label="Decrease quantity"
-                    className="p-1 text-(--foreground)/70 hover:text-luxury-gold transition-colors"
+                    className="p-1.5 text-(--foreground)/70 hover:text-luxury-gold transition-colors active:scale-90"
                   >
-                    <Minus size={12} />
+                    <Minus size={13} />
                   </button>
-                  <span className="text-xs font-bold text-(--foreground) font-mono">{quantity}</span>
+                  <span className="text-sm font-bold text-(--foreground) font-mono">{quantity}</span>
                   <button
                     onClick={() => setQuantity(quantity + 1)}
                     aria-label="Increase quantity"
-                    className="p-1 text-(--foreground)/70 hover:text-luxury-gold transition-colors"
+                    className="p-1.5 text-(--foreground)/70 hover:text-luxury-gold transition-colors active:scale-90"
                   >
-                    <Plus size={12} />
+                    <Plus size={13} />
                   </button>
                 </div>
 
                 {/* Add to Cart Button */}
-                <div className="relative flex-1 h-11">
+                <div className="relative flex-1 h-12">
                   <CartSparkBurst active={isSparking} />
                   <button
                     onClick={handleAddToCart}
-                    className={`w-full h-full luxury-gradient rounded-xl text-luxury-charcoal font-bold uppercase tracking-[0.18em] text-[10px] hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-lg shadow-luxury-gold/15 ${
+                    className={`w-full h-full luxury-gradient rounded-xl text-luxury-charcoal font-bold uppercase tracking-wider text-[10px] sm:text-[11px] hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 shadow-md shadow-luxury-gold/15 ${
                       isSparking ? 'brightness-125 ring-2 ring-luxury-gold/60 scale-[1.01]' : ''
                     }`}
                   >
@@ -512,19 +513,23 @@ export default function ProductDetailsClient({
                         <span>Added to Cart ✨</span>
                       </>
                     ) : (
-                      <span>Add to Cart Portfolio</span>
+                      <>
+                        <ShoppingBag size={14} className="text-luxury-charcoal shrink-0" />
+                        <span>Add to Cart</span>
+                      </>
                     )}
                   </button>
                 </div>
-
-                {/* Instant Order Button */}
-                <button
-                  onClick={() => setIsPurchaseModalOpen(true)}
-                  className="h-11 px-6 bg-luxury-gold text-luxury-charcoal font-bold uppercase tracking-[0.18em] text-[10px] hover:bg-luxury-gold/90 active:scale-[0.98] transition-all rounded-xl shadow-lg shadow-luxury-gold/20 shrink-0"
-                >
-                  Purchase Now
-                </button>
               </div>
+
+              {/* Instant Order Button */}
+              <button
+                onClick={() => setIsPurchaseModalOpen(true)}
+                className="w-full h-12 bg-luxury-gold hover:bg-luxury-gold/90 text-luxury-charcoal font-bold uppercase tracking-[0.18em] text-xs active:scale-[0.98] transition-all rounded-xl shadow-lg shadow-luxury-gold/25 flex items-center justify-center gap-2"
+              >
+                <span>Purchase Now</span>
+                <ArrowRight size={14} />
+              </button>
 
               {/* Luxury Guarantees Banner */}
               <div className="grid grid-cols-3 gap-2 py-2.5 border-y border-(--foreground)/10 text-center">

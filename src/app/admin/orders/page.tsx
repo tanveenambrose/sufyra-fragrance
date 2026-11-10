@@ -166,14 +166,14 @@ export default function AdminOrders() {
       case 'shipped': return 'text-emerald-400 border-emerald-400/30 bg-emerald-400/5';
       case 'delivered': return 'text-emerald-500 border-emerald-500/30 bg-emerald-500/5';
       case 'cancelled': return 'text-red-400 border-red-400/30 bg-red-400/5';
-      default: return 'text-white/40 border-white/10 bg-white/5';
+      default: return 'text-(--foreground)/40 border-(--foreground)/10 bg-(--foreground)/5';
     }
   };
 
   return (
     <div className="space-y-8">
       {/* Page Header */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 border-b border-white/5 pb-8">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 border-b border-(--foreground)/5 pb-8">
         <div>
           <div className="flex items-center gap-3">
             <h2 className="text-3xl font-serif text-luxury-gold">Procurement Manifest</h2>
@@ -182,45 +182,45 @@ export default function AdminOrders() {
               Live Sync
             </span>
           </div>
-          <p className="text-white/40 text-xs tracking-widest uppercase mt-2">Manage customer scents, live orders and deliveries</p>
+          <p className="text-(--foreground)/40 text-xs tracking-widest uppercase mt-2">Manage customer scents, live orders and deliveries</p>
         </div>
         <div className="relative w-full md:w-72">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20" size={16} />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-(--foreground)/20" size={16} />
           <input
             type="text"
             placeholder="Search name, email, manifest..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full bg-white/2 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-xs text-luxury-cream focus:outline-none focus:border-luxury-gold/50 transition-all placeholder:text-white/20"
+            className="w-full bg-(--foreground)/2 border border-(--foreground)/10 rounded-xl py-3 pl-12 pr-4 text-xs text-luxury-cream focus:outline-none focus:border-luxury-gold/50 transition-all placeholder:text-(--foreground)/20"
           />
         </div>
       </div>
 
-      <div className="bg-luxury-charcoal rounded-2xl border border-white/5 overflow-hidden shadow-2xl">
+      <div className="bg-(--card) rounded-2xl border border-(--foreground)/5 overflow-hidden shadow-2xl">
         <div className="w-full">
           {/* Desktop Table View */}
           <div className="hidden md:block overflow-x-auto">
             <table className="w-full text-left min-w-212.5">
               <thead>
-                <tr className="border-b border-white/5 bg-white/1">
-                  <th className="px-6 py-4 text-[9px] uppercase tracking-[0.2em] text-white/40 font-bold">Manifest ID</th>
-                  <th className="px-6 py-4 text-[9px] uppercase tracking-[0.2em] text-white/40 font-bold">Consignee &amp; Email</th>
-                  <th className="px-6 py-4 text-[9px] uppercase tracking-[0.2em] text-white/40 font-bold">Selection</th>
-                  <th className="px-6 py-4 text-[9px] uppercase tracking-[0.2em] text-white/40 font-bold">Total</th>
-                  <th className="px-6 py-4 text-[9px] uppercase tracking-[0.2em] text-white/40 font-bold">Status</th>
-                  <th className="px-6 py-4 text-[9px] uppercase tracking-[0.2em] text-white/40 font-bold text-right">Actions</th>
+                <tr className="border-b border-(--foreground)/5 bg-(--foreground)/1">
+                  <th className="px-6 py-4 text-[9px] uppercase tracking-[0.2em] text-(--foreground)/40 font-bold">Manifest ID</th>
+                  <th className="px-6 py-4 text-[9px] uppercase tracking-[0.2em] text-(--foreground)/40 font-bold">Consignee &amp; Email</th>
+                  <th className="px-6 py-4 text-[9px] uppercase tracking-[0.2em] text-(--foreground)/40 font-bold">Selection</th>
+                  <th className="px-6 py-4 text-[9px] uppercase tracking-[0.2em] text-(--foreground)/40 font-bold">Total</th>
+                  <th className="px-6 py-4 text-[9px] uppercase tracking-[0.2em] text-(--foreground)/40 font-bold">Status</th>
+                  <th className="px-6 py-4 text-[9px] uppercase tracking-[0.2em] text-(--foreground)/40 font-bold text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/5">
+              <tbody className="divide-y divide-(--foreground)/5">
                 {isLoading ? (
                   <tr>
-                    <td colSpan={6} className="px-6 py-12 text-center text-white/20 uppercase tracking-widest text-[10px]">
+                    <td colSpan={6} className="px-6 py-12 text-center text-(--foreground)/20 uppercase tracking-widest text-[10px]">
                       Optimizing Manifests...
                     </td>
                   </tr>
                 ) : filteredOrders.length === 0 ? (
                   <tr>
-                    <td colSpan={6} className="px-6 py-12 text-center text-white/20 uppercase tracking-widest text-[10px]">
+                    <td colSpan={6} className="px-6 py-12 text-center text-(--foreground)/20 uppercase tracking-widest text-[10px]">
                       No manifests found in current library
                     </td>
                   </tr>
@@ -233,7 +233,7 @@ export default function AdminOrders() {
                         className={`group transition-all ${
                           isNew 
                             ? 'bg-luxury-gold/6 border-l-4 border-luxury-gold animate-in fade-in duration-500' 
-                            : 'hover:bg-white/1'
+                            : 'hover:bg-(--foreground)/1'
                         }`}
                       >
                         <td className="px-6 py-4">
@@ -247,7 +247,7 @@ export default function AdminOrders() {
                                 </span>
                               )}
                             </div>
-                            <span className="text-[8px] text-white/20 uppercase tracking-tighter mt-1">
+                            <span className="text-[8px] text-(--foreground)/20 uppercase tracking-tighter mt-1">
                               {new Date(order.created_at).toLocaleDateString()}
                             </span>
                           </div>
@@ -259,12 +259,12 @@ export default function AdminOrders() {
                               <Mail size={10} className="text-luxury-gold/60" />
                               {order.delivery_email || 'No email saved'}
                             </span>
-                            <span className="text-[8px] text-white/30 uppercase tracking-widest mt-0.5">{order.delivery_zone}</span>
+                            <span className="text-[8px] text-(--foreground)/30 uppercase tracking-widest mt-0.5">{order.delivery_zone}</span>
                           </div>
                         </td>
                         <td className="px-6 py-4">
                           <div className="flex flex-col">
-                            <span className="text-xs text-white/60">
+                            <span className="text-xs text-(--foreground)/60">
                               {(() => {
                                 try {
                                   if (order.product_name.startsWith('[') && order.product_name.endsWith(']')) {
@@ -315,7 +315,7 @@ export default function AdminOrders() {
                             setSelectedOrder(order);
                             setIsModalOpen(true);
                           }}
-                          className="p-2 text-white/20 hover:text-luxury-gold transition-colors"
+                          className="p-2 text-(--foreground)/20 hover:text-luxury-gold transition-colors"
                           title="View Order Manifest"
                         >
                           <Eye size={16} />
@@ -330,13 +330,13 @@ export default function AdminOrders() {
         </div>
 
         {/* Mobile Card View */}
-        <div className="md:hidden flex flex-col divide-y divide-white/5">
+        <div className="md:hidden flex flex-col divide-y divide-(--foreground)/5">
           {isLoading ? (
-            <div className="px-6 py-12 text-center text-white/20 uppercase tracking-widest text-[10px]">
+            <div className="px-6 py-12 text-center text-(--foreground)/20 uppercase tracking-widest text-[10px]">
               Optimizing Manifests...
             </div>
           ) : filteredOrders.length === 0 ? (
-            <div className="px-6 py-12 text-center text-white/20 uppercase tracking-widest text-[10px]">
+            <div className="px-6 py-12 text-center text-(--foreground)/20 uppercase tracking-widest text-[10px]">
               No manifests found in current library
             </div>
           ) : (
@@ -359,7 +359,7 @@ export default function AdminOrders() {
                           </span>
                         )}
                       </div>
-                      <span className="text-[8px] text-white/20 uppercase tracking-tighter mt-1">
+                      <span className="text-[8px] text-(--foreground)/20 uppercase tracking-tighter mt-1">
                         {new Date(order.created_at).toLocaleDateString()}
                       </span>
                     </div>
@@ -368,14 +368,14 @@ export default function AdminOrders() {
 
                   <div className="grid grid-cols-2 gap-4">
                     <div className="flex flex-col">
-                      <span className="text-[8px] text-white/40 uppercase tracking-widest mb-1">Consignee</span>
+                      <span className="text-[8px] text-(--foreground)/40 uppercase tracking-widest mb-1">Consignee</span>
                       <span className="text-xs font-bold text-luxury-cream">{order.delivery_name}</span>
                       <span className="text-[9px] text-luxury-gold/90 font-mono truncate">{order.delivery_email || 'No email'}</span>
-                      <span className="text-[9px] text-white/40 uppercase tracking-widest mt-0.5">{order.delivery_zone}</span>
+                      <span className="text-[9px] text-(--foreground)/40 uppercase tracking-widest mt-0.5">{order.delivery_zone}</span>
                     </div>
                     <div className="flex flex-col">
-                      <span className="text-[8px] text-white/40 uppercase tracking-widest mb-1">Selection</span>
-                      <span className="text-xs text-white/60">
+                      <span className="text-[8px] text-(--foreground)/40 uppercase tracking-widest mb-1">Selection</span>
+                      <span className="text-xs text-(--foreground)/60">
                         {(() => {
                           try {
                             if (order.product_name.startsWith('[') && order.product_name.endsWith(']')) {
@@ -394,7 +394,7 @@ export default function AdminOrders() {
                     </div>
                   </div>
 
-                  <div className="flex justify-between items-center pt-3 border-t border-white/5">
+                  <div className="flex justify-between items-center pt-3 border-t border-(--foreground)/5">
                     <div className="relative inline-block">
                       <select
                         disabled={updatingId === order.id}
@@ -423,7 +423,7 @@ export default function AdminOrders() {
                         setSelectedOrder(order);
                         setIsModalOpen(true);
                       }}
-                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-[9px] font-bold uppercase tracking-widest text-luxury-gold hover:bg-luxury-gold/10 transition-colors"
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-(--foreground)/5 border border-(--foreground)/10 text-[9px] font-bold uppercase tracking-widest text-luxury-gold hover:bg-luxury-gold/10 transition-colors"
                     >
                       <Eye size={12} />
                       View

@@ -6,7 +6,7 @@ export default function NewProductPage() {
     <div className="space-y-10">
       <div>
         <h2 className="text-3xl font-serif text-luxury-gold">Add New Scent</h2>
-        <p className="text-white/40 text-xs tracking-widest uppercase mt-2">Expand the Sufyra collection</p>
+        <p className="text-(--foreground)/40 text-xs tracking-widest uppercase mt-2">Expand the Sufyra collection</p>
       </div>
 
       <ProductForm />

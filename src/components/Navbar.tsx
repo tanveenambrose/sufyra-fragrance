@@ -305,22 +305,25 @@ const Navbar: React.FC = () => {
           onClick={() => setIsMenuOpen(false)}
         />
 
-        {/* Slider - Consistent with main site background (Luxury Charcoal) */}
+        {/* Slider - Full 100% width on mobile */}
         <div
           ref={mobileMenuRef}
-          className={`absolute top-0 right-0 bottom-0 w-[75%] bg-(--background) border-l border-(--foreground)/10 shadow-[-20px_0_50px_rgba(0,0,0,0.2)] pointer-events-auto transition-transform duration-500 flex flex-col opacity-100 ${
+          className={`absolute top-0 right-0 bottom-0 w-full sm:max-w-md bg-(--background) border-l border-(--foreground)/10 shadow-[-20px_0_50px_rgba(0,0,0,0.2)] pointer-events-auto transition-transform duration-500 flex flex-col opacity-100 ${
             isMenuOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
           suppressHydrationWarning
         >
           {/* Header of mobile menu */}
-          <div className="flex items-center justify-between p-6 border-b border-(--foreground)/10 bg-(--foreground)/2">
-            <span className="font-serif text-luxury-gold text-lg tracking-[0.2em] uppercase font-bold">Navigation</span>
+          <div className="flex items-center justify-between p-5 border-b border-(--foreground)/10 bg-(--foreground)/2">
+            <div className="flex items-center gap-2.5">
+              <span className="font-serif text-luxury-gold text-base sm:text-lg tracking-[0.2em] uppercase font-bold">Navigation</span>
+              <ThemeToggle />
+            </div>
             <button
               onClick={() => setIsMenuOpen(false)}
-              className="p-2 text-(--foreground)/60 hover:text-luxury-gold transition-colors"
+              className="p-2 text-(--foreground)/60 hover:text-luxury-gold transition-colors rounded-full hover:bg-(--foreground)/5"
             >
-              <X size={24} />
+              <X size={22} />
             </button>
           </div>
 
