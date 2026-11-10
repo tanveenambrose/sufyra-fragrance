@@ -192,7 +192,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onSuccess }) =
     }
   };
 
-  const handleSocialLogin = async (provider: 'google' | 'facebook') => {
+  const handleSocialLogin = async (provider: 'google' = 'google') => {
     setLoading(true);
     setError('');
     try {
@@ -200,17 +200,11 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onSuccess }) =
         provider,
         options: {
           redirectTo: `${getURL()}auth/callback`,
-          ...(provider === 'facebook' ? { scopes: 'email,public_profile' } : {}),
         }
       });
       if (error) throw error;
     } catch (err) {
-      const errMsg = err instanceof Error ? err.message : `Failed to sign in with ${provider}.`;
-      if (errMsg.toLowerCase().includes('not enabled') || errMsg.toLowerCase().includes('validation_failed')) {
-        setError(`${provider === 'facebook' ? 'Facebook' : 'Google'} authentication is being configured. Please use Google or email login.`);
-      } else {
-        setError(errMsg);
-      }
+      setError(err instanceof Error ? err.message : `Failed to sign in with Google.`);
       setLoading(false);
     }
   };
@@ -430,9 +424,8 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onSuccess }) =
                 <div className="h-px bg-(--foreground)/5 grow"></div>
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="w-full">
                 <SocialButton provider="google" onClick={() => handleSocialLogin('google')} isLoading={loading} />
-                <SocialButton provider="facebook" onClick={() => handleSocialLogin('facebook')} isLoading={loading} />
               </div>
 
               <div className="mt-8 text-center">

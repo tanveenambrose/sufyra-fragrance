@@ -92,7 +92,7 @@ const RegisterPage = () => {
     }
   };
 
-  const handleSocialRegister = async (provider: 'google' | 'facebook') => {
+  const handleSocialRegister = async (provider: 'google' = 'google') => {
     setLoading(true);
     setError('');
     
@@ -103,19 +103,13 @@ const RegisterPage = () => {
         provider,
         options: {
           redirectTo: redirectURL,
-          ...(provider === 'facebook' ? { scopes: 'email,public_profile' } : {}),
         }
       });
       
       if (error) throw error;
       // Note: Redirect happens automatically for OAuth
     } catch (err) {
-      const errMsg = err instanceof Error ? err.message : `Failed to register with ${provider}.`;
-      if (errMsg.toLowerCase().includes('not enabled') || errMsg.toLowerCase().includes('validation_failed')) {
-        setError(`${provider === 'facebook' ? 'Facebook' : 'Google'} authentication is being configured. Please use Google or manual email sign up.`);
-      } else {
-        setError(errMsg);
-      }
+      setError(err instanceof Error ? err.message : `Failed to register with Google.`);
       setLoading(false);
     }
   };
@@ -204,9 +198,8 @@ const RegisterPage = () => {
           <div className="h-px bg-(--foreground)/5 grow"></div>
         </div>
 
-        <div className="grid grid-cols-2 gap-3 sm:gap-4">
+        <div className="w-full">
           <SocialButton provider="google" onClick={() => handleSocialRegister('google')} isLoading={loading} />
-          <SocialButton provider="facebook" onClick={() => handleSocialRegister('facebook')} isLoading={loading} />
         </div>
 
         <p className="mt-6 sm:mt-8 text-center text-[10px] sm:text-[11px] text-(--foreground)/30 leading-relaxed uppercase tracking-tighter font-medium">

@@ -94,7 +94,7 @@ function LoginFormContent() {
     }
   };
 
-  const handleSocialLogin = async (provider: 'google' | 'facebook') => {
+  const handleSocialLogin = async (provider: 'google' = 'google') => {
     setLoading(true);
     setError('');
 
@@ -107,18 +107,12 @@ function LoginFormContent() {
         provider,
         options: {
           redirectTo: redirectURL,
-          ...(provider === 'facebook' ? { scopes: 'email,public_profile' } : {}),
         },
       });
 
       if (oauthError) throw oauthError;
     } catch (err) {
-      const errMsg = err instanceof Error ? err.message : `Failed to sign in with ${provider}.`;
-      if (errMsg.toLowerCase().includes('not enabled') || errMsg.toLowerCase().includes('validation_failed')) {
-        setError(`${provider === 'facebook' ? 'Facebook' : 'Google'} sign-in is being set up in the sanctuary. Please sign in with Google or email.`);
-      } else {
-        setError(errMsg);
-      }
+      setError(err instanceof Error ? err.message : `Failed to sign in with Google.`);
       setLoading(false);
     }
   };
@@ -542,9 +536,8 @@ function LoginFormContent() {
                 <div className="h-px bg-(--foreground)/10 grow" />
               </div>
 
-              <div className="grid grid-cols-2 gap-2.5 sm:gap-3">
+              <div className="w-full">
                 <SocialButton provider="google" onClick={() => handleSocialLogin('google')} isLoading={loading} />
-                <SocialButton provider="facebook" onClick={() => handleSocialLogin('facebook')} isLoading={loading} />
               </div>
 
               <div className="mt-4 sm:mt-5 text-center">
