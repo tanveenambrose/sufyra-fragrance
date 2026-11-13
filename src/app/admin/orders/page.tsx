@@ -182,33 +182,33 @@ export default function AdminOrders() {
               Live Sync
             </span>
           </div>
-          <p className="text-(--foreground)/40 text-xs tracking-widest uppercase mt-2">Manage customer scents, live orders and deliveries</p>
+          <p className="text-(--foreground)/60 text-xs tracking-widest uppercase mt-2">Manage customer scents, live orders and deliveries</p>
         </div>
         <div className="relative w-full md:w-72">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-(--foreground)/20" size={16} />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-(--foreground)/40" size={16} />
           <input
             type="text"
             placeholder="Search name, email, manifest..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full bg-(--foreground)/2 border border-(--foreground)/10 rounded-xl py-3 pl-12 pr-4 text-xs text-luxury-cream focus:outline-none focus:border-luxury-gold/50 transition-all placeholder:text-(--foreground)/20"
+            className="w-full bg-(--card) border border-(--foreground)/15 rounded-xl py-3 pl-12 pr-4 text-xs text-(--foreground) focus:outline-none focus:border-luxury-gold transition-all placeholder:text-(--foreground)/40 shadow-sm"
           />
         </div>
       </div>
 
-      <div className="bg-(--card) rounded-2xl border border-(--foreground)/5 overflow-hidden shadow-2xl">
+      <div className="bg-(--card) rounded-2xl border border-(--foreground)/10 overflow-hidden shadow-lg">
         <div className="w-full">
           {/* Desktop Table View */}
           <div className="hidden md:block overflow-x-auto">
             <table className="w-full text-left min-w-212.5">
               <thead>
-                <tr className="border-b border-(--foreground)/5 bg-(--foreground)/1">
-                  <th className="px-6 py-4 text-[9px] uppercase tracking-[0.2em] text-(--foreground)/40 font-bold">Manifest ID</th>
-                  <th className="px-6 py-4 text-[9px] uppercase tracking-[0.2em] text-(--foreground)/40 font-bold">Consignee &amp; Email</th>
-                  <th className="px-6 py-4 text-[9px] uppercase tracking-[0.2em] text-(--foreground)/40 font-bold">Selection</th>
-                  <th className="px-6 py-4 text-[9px] uppercase tracking-[0.2em] text-(--foreground)/40 font-bold">Total</th>
-                  <th className="px-6 py-4 text-[9px] uppercase tracking-[0.2em] text-(--foreground)/40 font-bold">Status</th>
-                  <th className="px-6 py-4 text-[9px] uppercase tracking-[0.2em] text-(--foreground)/40 font-bold text-right">Actions</th>
+                <tr className="border-b border-(--foreground)/10 bg-(--foreground)/3 text-(--foreground)/60">
+                  <th className="px-6 py-4 text-[9px] uppercase tracking-[0.2em] font-bold">Manifest ID</th>
+                  <th className="px-6 py-4 text-[9px] uppercase tracking-[0.2em] font-bold">Consignee &amp; Email</th>
+                  <th className="px-6 py-4 text-[9px] uppercase tracking-[0.2em] font-bold">Selection</th>
+                  <th className="px-6 py-4 text-[9px] uppercase tracking-[0.2em] font-bold">Total</th>
+                  <th className="px-6 py-4 text-[9px] uppercase tracking-[0.2em] font-bold">Status</th>
+                  <th className="px-6 py-4 text-[9px] uppercase tracking-[0.2em] font-bold text-right">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-(--foreground)/5">
@@ -254,12 +254,12 @@ export default function AdminOrders() {
                         </td>
                         <td className="px-6 py-4">
                           <div className="flex flex-col">
-                            <span className="text-xs font-bold text-luxury-cream">{order.delivery_name}</span>
+                            <span className="text-xs font-bold text-(--foreground)">{order.delivery_name}</span>
                             <span className="text-[10px] text-luxury-gold/90 font-mono flex items-center gap-1 mt-0.5">
                               <Mail size={10} className="text-luxury-gold/60" />
                               {order.delivery_email || 'No email saved'}
                             </span>
-                            <span className="text-[8px] text-(--foreground)/30 uppercase tracking-widest mt-0.5">{order.delivery_zone}</span>
+                            <span className="text-[8px] text-(--foreground)/50 uppercase tracking-widest mt-0.5">{order.delivery_zone}</span>
                           </div>
                         </td>
                         <td className="px-6 py-4">
@@ -283,7 +283,7 @@ export default function AdminOrders() {
                         </div>
                       </td>
                       <td className="px-6 py-4">
-                        <span className="text-sm font-bold text-luxury-cream">৳{order.total_price}</span>
+                        <span className="text-sm font-bold text-luxury-gold">৳{order.total_price}</span>
                       </td>
                       <td className="px-6 py-4">
                         <div className="relative inline-block">
@@ -315,7 +315,7 @@ export default function AdminOrders() {
                             setSelectedOrder(order);
                             setIsModalOpen(true);
                           }}
-                          className="p-2 text-(--foreground)/20 hover:text-luxury-gold transition-colors"
+                          className="p-2 rounded-lg text-(--foreground)/60 hover:text-luxury-gold hover:bg-(--foreground)/5 transition-all"
                           title="View Order Manifest"
                         >
                           <Eye size={16} />
@@ -363,18 +363,18 @@ export default function AdminOrders() {
                         {new Date(order.created_at).toLocaleDateString()}
                       </span>
                     </div>
-                    <span className="text-sm font-bold text-luxury-cream">৳{order.total_price}</span>
+                    <span className="text-sm font-bold text-luxury-gold">৳{order.total_price}</span>
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
                     <div className="flex flex-col">
-                      <span className="text-[8px] text-(--foreground)/40 uppercase tracking-widest mb-1">Consignee</span>
-                      <span className="text-xs font-bold text-luxury-cream">{order.delivery_name}</span>
+                      <span className="text-[8px] text-(--foreground)/60 uppercase tracking-widest mb-1">Consignee</span>
+                      <span className="text-xs font-bold text-(--foreground)">{order.delivery_name}</span>
                       <span className="text-[9px] text-luxury-gold/90 font-mono truncate">{order.delivery_email || 'No email'}</span>
-                      <span className="text-[9px] text-(--foreground)/40 uppercase tracking-widest mt-0.5">{order.delivery_zone}</span>
+                      <span className="text-[9px] text-(--foreground)/50 uppercase tracking-widest mt-0.5">{order.delivery_zone}</span>
                     </div>
                     <div className="flex flex-col">
-                      <span className="text-[8px] text-(--foreground)/40 uppercase tracking-widest mb-1">Selection</span>
+                      <span className="text-[8px] text-(--foreground)/60 uppercase tracking-widest mb-1">Selection</span>
                       <span className="text-xs text-(--foreground)/60">
                         {(() => {
                           try {

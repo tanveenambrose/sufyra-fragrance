@@ -80,26 +80,26 @@ export default function AdminProductsPage() {
       {deleteConfirm && (
         <div className="fixed inset-0 z-100 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/80 backdrop-blur-md animate-in fade-in duration-300" onClick={() => setDeleteConfirm(null)} />
-          <div className="bg-(--card) border border-(--foreground)/10 rounded-3xl p-8 max-w-sm w-full space-y-8 animate-in zoom-in-95 duration-300 relative shadow-[0_0_50px_rgba(0,0,0,1)]">
+          <div className="bg-(--card) border border-(--foreground)/15 rounded-3xl p-8 max-w-sm w-full space-y-8 animate-in zoom-in-95 duration-300 relative shadow-2xl">
             <div className="w-20 h-20 rounded-full bg-red-500/10 flex items-center justify-center mx-auto border border-red-500/20">
               <Trash2 size={32} className="text-red-500" />
             </div>
             <div className="text-center space-y-2">
-              <h3 className="text-xl font-serif text-luxury-cream">Irreversible Action</h3>
-              <p className="text-xs text-(--foreground)/40 leading-relaxed">
-                You are about to remove <span className="text-(--foreground) font-bold">&quot;{deleteConfirm.name}&quot;</span> from the mansion collection. This cannot be undone. Are you certain?
+              <h3 className="text-xl font-serif text-(--foreground) font-bold">Irreversible Action</h3>
+              <p className="text-xs text-(--foreground)/60 leading-relaxed">
+                You are about to remove <span className="text-luxury-gold font-bold">&quot;{deleteConfirm.name}&quot;</span> from the collection. This cannot be undone. Are you certain?
               </p>
             </div>
             <div className="grid grid-cols-2 gap-4 pt-4">
               <button 
                 onClick={() => setDeleteConfirm(null)}
-                className="py-4 rounded-xl border border-(--foreground)/5 text-[10px] font-bold uppercase tracking-widest text-(--foreground)/40 hover:text-white hover:bg-(--foreground)/5 transition-all"
+                className="py-4 rounded-xl border border-(--foreground)/15 text-[10px] font-bold uppercase tracking-widest text-(--foreground)/70 hover:text-(--foreground) hover:bg-(--foreground)/5 transition-all"
               >
                 Cancel
               </button>
               <button 
                 onClick={handleDelete}
-                className="py-4 rounded-xl bg-red-500 text-(--foreground) text-[10px] font-bold uppercase tracking-widest hover:bg-red-600 transition-all shadow-lg shadow-red-500/20"
+                className="py-4 rounded-xl bg-red-500 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-red-600 transition-all shadow-lg shadow-red-500/20"
               >
                 {isLoading ? 'Removing...' : 'Confirm Delete'}
               </button>
@@ -128,32 +128,32 @@ export default function AdminProductsPage() {
       {/* Filters & Search */}
       <div className="flex flex-col md:flex-row gap-4">
         <div className="relative group grow">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-(--foreground)/20 group-focus-within:text-luxury-gold transition-colors" size={18} />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-(--foreground)/30 group-focus-within:text-luxury-gold transition-colors" size={18} />
           <input 
             type="text" 
             placeholder="Search by name or notes..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-(--card) border border-(--foreground)/5 rounded-xl py-4 pl-12 pr-6 focus:border-luxury-gold/50 focus:outline-none transition-all text-sm text-ellipsis"
+            className="w-full bg-(--card) border border-(--foreground)/15 rounded-xl py-4 pl-12 pr-6 focus:border-luxury-gold focus:outline-none transition-all text-sm text-(--foreground) placeholder:text-(--foreground)/40 shadow-sm"
           />
         </div>
         <div className="relative min-w-50">
-          <Filter className="absolute left-4 top-1/2 -translate-y-1/2 text-(--foreground)/20" size={18} />
+          <Filter className="absolute left-4 top-1/2 -translate-y-1/2 text-(--foreground)/30" size={18} />
           <select 
             value={categoryFilter}
             onChange={(e) => setCategoryFilter(e.target.value as 'all' | 'perfume-oil' | 'combo')}
-            className="w-full bg-(--card) border border-(--foreground)/5 rounded-xl py-4 pl-12 pr-10 focus:border-luxury-gold/50 focus:outline-none transition-all text-sm appearance-none overflow-hidden text-ellipsis whitespace-nowrap"
+            className="w-full bg-(--card) border border-(--foreground)/15 rounded-xl py-4 pl-12 pr-10 focus:border-luxury-gold focus:outline-none transition-all text-sm appearance-none overflow-hidden text-ellipsis whitespace-nowrap text-(--foreground) shadow-sm"
           >
             <option value="all">All Collections</option>
             <option value="perfume-oil">Regular Versions</option>
             <option value="combo">Combo Packs</option>
           </select>
-          <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-(--foreground)/20 pointer-events-none" size={16} />
+          <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-(--foreground)/30 pointer-events-none" size={16} />
         </div>
       </div>
 
       {/* Products Table */}
-      <div className="bg-(--card) rounded-2xl border border-(--foreground)/5 overflow-hidden">
+      <div className="bg-(--card) rounded-2xl border border-(--foreground)/10 overflow-hidden shadow-lg">
         {isLoading && products.length === 0 ? (
           <div className="px-6 py-24 text-center">
             <div className="w-12 h-12 border-4 border-luxury-gold border-t-transparent rounded-full animate-spin mx-auto mb-4" />
@@ -170,7 +170,7 @@ export default function AdminProductsPage() {
             <div className="hidden md:block overflow-x-auto">
               <table className="w-full text-left border-collapse min-w-200">
                 <thead>
-                  <tr className="bg-(--foreground)/2 text-[10px] uppercase tracking-[0.2em] text-(--foreground)/40">
+                  <tr className="bg-(--foreground)/3 text-[10px] uppercase tracking-[0.2em] text-(--foreground)/60 border-b border-(--foreground)/10">
                     <th className="px-8 py-5 font-bold">Product Details</th>
                     <th className="px-8 py-5 font-bold text-center">Category</th>
                     <th className="px-8 py-5 font-bold text-center">Variants</th>
@@ -193,8 +193,8 @@ export default function AdminProductsPage() {
                             )}
                           </div>
                           <div className="space-y-1">
-                            <p className="text-base font-bold text-luxury-cream group-hover:text-luxury-gold transition-colors">{p.name}</p>
-                            <p className="text-[10px] text-(--foreground)/40 line-clamp-1 max-w-62.5 uppercase tracking-wider">{p.description}</p>
+                            <p className="text-base font-bold text-(--foreground) group-hover:text-luxury-gold transition-colors">{p.name}</p>
+                            <p className="text-[10px] text-(--foreground)/60 line-clamp-1 max-w-62.5 uppercase tracking-wider">{p.description}</p>
                           </div>
                         </div>
                       </td>
@@ -226,7 +226,7 @@ export default function AdminProductsPage() {
                         <div className="flex justify-end gap-3 opacity-100 lg:opacity-0 group-hover:opacity-100 transition-all duration-300 relative z-10 pointer-events-auto">
                           <Link 
                             href={`/admin/products/${p.id}/edit`}
-                            className="p-2.5 bg-(--foreground)/5 hover:bg-luxury-gold/10 rounded-lg text-(--foreground)/40 hover:text-luxury-gold transition-all flex items-center justify-center pointer-events-auto"
+                            className="p-2.5 bg-(--foreground)/5 hover:bg-luxury-gold/10 rounded-lg text-(--foreground)/70 hover:text-luxury-gold border border-(--foreground)/10 hover:border-luxury-gold/30 transition-all flex items-center justify-center pointer-events-auto"
                             title="Edit Scent"
                           >
                             <Edit2 size={16} />
@@ -238,7 +238,7 @@ export default function AdminProductsPage() {
                               e.stopPropagation();
                               setDeleteConfirm({id: p.id, name: p.name});
                             }}
-                            className="p-2.5 bg-(--foreground)/5 hover:bg-red-500/10 rounded-lg text-(--foreground)/40 hover:text-red-400 transition-all flex items-center justify-center cursor-pointer pointer-events-auto"
+                            className="p-2.5 bg-(--foreground)/5 hover:bg-red-500/10 rounded-lg text-(--foreground)/70 hover:text-red-500 border border-(--foreground)/10 hover:border-red-500/30 transition-all flex items-center justify-center cursor-pointer pointer-events-auto"
                             title="Delete Scent"
                           >
                             <Trash2 size={16} />
@@ -270,7 +270,7 @@ export default function AdminProductsPage() {
                     </div>
                     <div className="grow flex flex-col justify-center space-y-2">
                       <div>
-                        <p className="text-sm font-bold text-luxury-cream">{p.name}</p>
+                        <p className="text-sm font-bold text-(--foreground)">{p.name}</p>
                         <span className={`text-[8px] font-bold px-2 py-0.5 rounded-full uppercase tracking-widest inline-block mt-1 ${
                           p.category === 'combo' ? 'bg-purple-500/10 text-purple-400 border border-purple-500/20' : 'bg-blue-500/10 text-blue-400 border border-blue-500/20'
                         }`}>
@@ -300,13 +300,13 @@ export default function AdminProductsPage() {
                     <div className="flex gap-2">
                       <Link 
                         href={`/admin/products/${p.id}/edit`}
-                        className="px-4 py-2 bg-(--foreground)/5 hover:bg-luxury-gold/10 rounded-lg text-(--foreground)/60 hover:text-luxury-gold transition-all text-[10px] font-bold uppercase tracking-widest border border-(--foreground)/10"
+                        className="px-4 py-2 bg-(--foreground)/5 hover:bg-luxury-gold/10 rounded-lg text-(--foreground)/80 hover:text-luxury-gold transition-all text-[10px] font-bold uppercase tracking-widest border border-(--foreground)/15 hover:border-luxury-gold/30"
                       >
                         Edit
                       </Link>
                       <button 
                         onClick={() => setDeleteConfirm({id: p.id, name: p.name})}
-                        className="p-2 bg-red-500/10 hover:bg-red-500/20 rounded-lg text-red-400 transition-all border border-red-500/20"
+                        className="p-2 bg-red-500/10 hover:bg-red-500/20 rounded-lg text-red-500 transition-all border border-red-500/20"
                       >
                         <Trash2 size={16} />
                       </button>

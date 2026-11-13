@@ -53,7 +53,7 @@ export default function EditProductPage() {
     <div className="space-y-10">
       <div>
         <h2 className="text-3xl font-serif text-luxury-gold">Refine Scents</h2>
-        <p className="text-(--foreground)/40 text-xs tracking-widest uppercase mt-2">Adjust details for {product.name}</p>
+        <p className="text-(--foreground)/60 text-xs tracking-widest uppercase mt-2">Adjust details for {product.name}</p>
       </div>
 
       <ProductForm initialData={product} />

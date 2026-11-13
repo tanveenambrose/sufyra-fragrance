@@ -179,15 +179,15 @@ export default function AdminDashboard() {
   return (
     <div className="space-y-8">
       {/* Executive Header Banner */}
-      <div className="relative overflow-hidden rounded-3xl bg-linear-to-r from-black via-[#14120e] to-black border border-luxury-gold/30 p-5 sm:p-8 lg:p-10 shadow-xl text-white">
+      <div className="relative overflow-hidden rounded-3xl bg-linear-to-r from-[#111111] via-[#1a1712] to-[#111111] border border-luxury-gold/30 p-5 sm:p-8 lg:p-10 shadow-xl text-white">
         {/* Subtle background luxury glow */}
-        <div className="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 rounded-full bg-luxury-gold/5 blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-1/3 -mb-20 w-60 h-60 rounded-full bg-luxury-gold/5 blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 rounded-full bg-luxury-gold/10 blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-1/3 -mb-20 w-60 h-60 rounded-full bg-luxury-gold/10 blur-3xl pointer-events-none" />
 
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-2">
             <div className="flex items-center gap-2">
-              <span className="px-2.5 py-0.5 rounded-full bg-luxury-gold/15 border border-luxury-gold/30 text-luxury-gold text-[9px] font-bold uppercase tracking-[0.25em] flex items-center gap-1.5">
+              <span className="px-2.5 py-0.5 rounded-full bg-luxury-gold/20 border border-luxury-gold/40 text-luxury-gold text-[9px] font-bold uppercase tracking-[0.25em] flex items-center gap-1.5">
                 <Sparkles size={11} />
                 Sufyra Atelier HQ
               </span>
@@ -196,10 +196,10 @@ export default function AdminDashboard() {
                 Operational
               </span>
             </div>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-serif tracking-wide text-(--foreground)">
-              Executive <span className="text-transparent bg-clip-text bg-linear-to-r from-luxury-gold via-[#e6cf8b] to-luxury-gold font-normal">Console</span>
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-serif tracking-wide text-white font-bold">
+              Executive <span className="text-transparent bg-clip-text bg-linear-to-r from-luxury-gold via-[#f2de9f] to-luxury-gold font-normal">Console</span>
             </h2>
-            <p className="text-xs sm:text-sm text-(--foreground)/50 max-w-xl font-light leading-relaxed">
+            <p className="text-xs sm:text-sm text-white/70 max-w-xl font-light leading-relaxed">
               Real-time surveillance of flacon inventory, haute procurements stream, and client fulfillment metrics.
             </p>
           </div>
@@ -210,14 +210,14 @@ export default function AdminDashboard() {
               onClick={fetchDashboardData}
               disabled={isRefreshing}
               title="Refresh metrics"
-              className="p-3 rounded-xl border border-(--foreground)/10 hover:border-luxury-gold/30 bg-(--foreground)/3 text-(--foreground)/60 hover:text-luxury-gold transition-all"
+              className="p-3 rounded-xl border border-white/20 hover:border-luxury-gold bg-white/5 text-white/80 hover:text-luxury-gold transition-all"
             >
               <RefreshCw size={16} className={isRefreshing ? 'animate-spin text-luxury-gold' : ''} />
             </button>
 
             <button
               onClick={handleSeedData}
-              className="px-4 py-3 rounded-xl border border-(--foreground)/10 text-(--foreground)/70 hover:text-luxury-gold hover:border-luxury-gold/30 text-xs font-semibold uppercase tracking-wider bg-(--foreground)/2 hover:bg-(--foreground)/5 transition-all flex items-center gap-2"
+              className="px-4 py-3 rounded-xl border border-white/20 text-white/90 hover:text-luxury-gold hover:border-luxury-gold text-xs font-semibold uppercase tracking-wider bg-white/5 hover:bg-white/10 transition-all flex items-center gap-2"
             >
               <Database size={15} />
               <span>Seed Catalog</span>
@@ -225,9 +225,9 @@ export default function AdminDashboard() {
 
             <Link
               href="/admin/products/new"
-              className="px-5 py-3 rounded-xl bg-linear-to-r from-luxury-gold via-[#e5c76b] to-luxury-gold text-black font-bold text-xs uppercase tracking-widest shadow-[0_0_25px_rgba(212,175,55,0.3)] hover:shadow-[0_0_35px_rgba(212,175,55,0.5)] hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-2 group"
+              className="px-5 py-3 rounded-xl bg-linear-to-r from-luxury-gold via-[#e5c76b] to-luxury-gold text-luxury-charcoal font-bold text-xs uppercase tracking-widest shadow-[0_0_25px_rgba(212,175,55,0.3)] hover:shadow-[0_0_35px_rgba(212,175,55,0.5)] hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-2 group"
             >
-              <Plus size={16} className="text-black group-hover:rotate-90 transition-transform duration-300" />
+              <Plus size={16} className="text-luxury-charcoal group-hover:rotate-90 transition-transform duration-300" />
               <span>Release New Scent</span>
             </Link>
           </div>
@@ -236,46 +236,60 @@ export default function AdminDashboard() {
 
       {/* Primary KPI Metrics Grid */}
       <div className="grid grid-cols-2 lg:grid-cols-5 gap-3.5 sm:gap-4 lg:gap-5">
-        {/* 1. Gross Revenue */}
-        <div className="col-span-2 sm:col-span-1 p-5 rounded-2xl bg-(--card) border border-luxury-gold/25 hover:border-luxury-gold/50 shadow-lg hover:shadow-[0_8px_30px_rgba(212,175,55,0.1)] transition-all group flex flex-col justify-between">
+        {/* 1. Total Volume / Revenue -> Revenue Analytics */}
+        <Link
+          href="/admin/revenue-analytics"
+          className="col-span-2 sm:col-span-1 p-5 rounded-2xl bg-(--card) border border-luxury-gold/25 hover:border-luxury-gold/60 shadow-md hover:shadow-luxury-gold/15 transition-all group flex flex-col justify-between relative overflow-hidden"
+          title="Explore Revenue Analytics & Historical Breakdown"
+        >
           <div className="flex items-center justify-between">
             <div className="w-10 h-10 rounded-xl bg-luxury-gold/15 border border-luxury-gold/30 flex items-center justify-center text-luxury-gold group-hover:scale-110 transition-transform">
               <Coins size={18} />
             </div>
-            <span className="text-[9px] font-mono text-emerald-400 font-bold uppercase tracking-widest flex items-center gap-1">
-              <TrendingUp size={11} />
-              Gross
-            </span>
+            <div className="flex items-center gap-1.5">
+              <span className="text-[9px] font-mono text-emerald-500 font-bold uppercase tracking-widest flex items-center gap-1">
+                <TrendingUp size={11} />
+                Gross
+              </span>
+              <span className="text-[9px] text-luxury-gold font-bold uppercase tracking-wider flex items-center opacity-70 group-hover:opacity-100 transition-opacity">
+                <ArrowRight size={11} className="group-hover:translate-x-0.5 transition-transform" />
+              </span>
+            </div>
           </div>
           <div className="mt-4">
             <p className="text-2xl sm:text-3xl font-serif text-(--foreground) group-hover:text-luxury-gold transition-colors font-bold">
               ৳{totalRevenue.toLocaleString()}
             </p>
-            <p className="text-[10px] uppercase font-bold tracking-[0.2em] text-(--foreground)/40 mt-1">
-              Total Volume
-            </p>
+            <div className="flex items-center justify-between mt-1">
+              <p className="text-[10px] uppercase font-bold tracking-[0.2em] text-(--foreground)/60">
+                Total Volume
+              </p>
+              <span className="text-[9px] uppercase tracking-widest font-semibold text-luxury-gold/80 group-hover:text-luxury-gold flex items-center gap-0.5">
+                Analytics &rarr;
+              </span>
+            </div>
           </div>
-        </div>
+        </Link>
 
         {/* 2. Live Orders */}
         <Link
           href="/admin/orders"
-          className="p-5 rounded-2xl bg-(--card) border border-(--foreground)/5 hover:border-luxury-gold/40 shadow-lg hover:shadow-[0_8px_30px_rgba(212,175,55,0.08)] transition-all group flex flex-col justify-between"
+          className="p-5 rounded-2xl bg-(--card) border border-luxury-gold/20 hover:border-luxury-gold/50 shadow-md hover:shadow-luxury-gold/10 transition-all group flex flex-col justify-between"
         >
           <div className="flex items-center justify-between">
-            <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition-transform">
+            <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-500 group-hover:scale-110 transition-transform">
               <ClipboardList size={18} />
             </div>
             <div className="flex items-center gap-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-              <span className="text-[9px] font-bold text-emerald-400 uppercase tracking-wider">Live</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+              <span className="text-[9px] font-bold text-emerald-500 uppercase tracking-wider">Live</span>
             </div>
           </div>
           <div className="mt-4">
             <p className="text-2xl sm:text-3xl font-serif text-(--foreground) group-hover:text-luxury-gold transition-colors font-bold">
               {ordersCount}
             </p>
-            <p className="text-[10px] uppercase font-bold tracking-[0.2em] text-(--foreground)/40 mt-1">
+            <p className="text-[10px] uppercase font-bold tracking-[0.2em] text-(--foreground)/60 mt-1">
               Procurements
             </p>
           </div>
@@ -284,19 +298,19 @@ export default function AdminDashboard() {
         {/* 3. Total Scents */}
         <Link
           href="/admin/products"
-          className="p-5 rounded-2xl bg-(--card) border border-(--foreground)/5 hover:border-luxury-gold/40 shadow-lg hover:shadow-[0_8px_30px_rgba(212,175,55,0.08)] transition-all group flex flex-col justify-between"
+          className="p-5 rounded-2xl bg-(--card) border border-luxury-gold/20 hover:border-luxury-gold/50 shadow-md hover:shadow-luxury-gold/10 transition-all group flex flex-col justify-between"
         >
           <div className="flex items-center justify-between">
-            <div className="w-10 h-10 rounded-xl bg-luxury-gold/10 border border-luxury-gold/20 flex items-center justify-center text-luxury-gold group-hover:scale-110 transition-transform">
+            <div className="w-10 h-10 rounded-xl bg-luxury-gold/15 border border-luxury-gold/30 flex items-center justify-center text-luxury-gold group-hover:scale-110 transition-transform">
               <ShoppingBag size={18} />
             </div>
-            <span className="text-[9px] font-mono text-(--foreground)/30 uppercase tracking-widest">Active</span>
+            <span className="text-[9px] font-mono text-(--foreground)/50 uppercase tracking-widest font-bold">Active</span>
           </div>
           <div className="mt-4">
             <p className="text-2xl sm:text-3xl font-serif text-(--foreground) group-hover:text-luxury-gold transition-colors font-bold">
               {stats.total}
             </p>
-            <p className="text-[10px] uppercase font-bold tracking-[0.2em] text-(--foreground)/40 mt-1">
+            <p className="text-[10px] uppercase font-bold tracking-[0.2em] text-(--foreground)/60 mt-1">
               Fragrance Flacons
             </p>
           </div>
@@ -305,19 +319,19 @@ export default function AdminDashboard() {
         {/* 4. Combos & Sets */}
         <Link
           href="/admin/products"
-          className="p-5 rounded-2xl bg-(--card) border border-(--foreground)/5 hover:border-luxury-gold/40 shadow-lg hover:shadow-[0_8px_30px_rgba(212,175,55,0.08)] transition-all group flex flex-col justify-between"
+          className="p-5 rounded-2xl bg-(--card) border border-luxury-gold/20 hover:border-luxury-gold/50 shadow-md hover:shadow-luxury-gold/10 transition-all group flex flex-col justify-between"
         >
           <div className="flex items-center justify-between">
-            <div className="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 group-hover:scale-110 transition-transform">
+            <div className="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-500 group-hover:scale-110 transition-transform">
               <Layers size={18} />
             </div>
-            <span className="text-[9px] font-mono text-(--foreground)/30 uppercase tracking-widest">Sets</span>
+            <span className="text-[9px] font-mono text-(--foreground)/50 uppercase tracking-widest font-bold">Sets</span>
           </div>
           <div className="mt-4">
             <p className="text-2xl sm:text-3xl font-serif text-(--foreground) group-hover:text-luxury-gold transition-colors font-bold">
               {stats.combo}
             </p>
-            <p className="text-[10px] uppercase font-bold tracking-[0.2em] text-(--foreground)/40 mt-1">
+            <p className="text-[10px] uppercase font-bold tracking-[0.2em] text-(--foreground)/60 mt-1">
               Curated Sets
             </p>
           </div>
@@ -326,19 +340,19 @@ export default function AdminDashboard() {
         {/* 5. Live Deals */}
         <Link
           href="/admin/products"
-          className="p-5 rounded-2xl bg-(--card) border border-(--foreground)/5 hover:border-luxury-gold/40 shadow-lg hover:shadow-[0_8px_30px_rgba(212,175,55,0.08)] transition-all group flex flex-col justify-between"
+          className="p-5 rounded-2xl bg-(--card) border border-luxury-gold/20 hover:border-luxury-gold/50 shadow-md hover:shadow-luxury-gold/10 transition-all group flex flex-col justify-between"
         >
           <div className="flex items-center justify-between">
-            <div className="w-10 h-10 rounded-xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-400 group-hover:scale-110 transition-transform">
+            <div className="w-10 h-10 rounded-xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-500 group-hover:scale-110 transition-transform">
               <Flame size={18} />
             </div>
-            <span className="text-[9px] font-mono text-rose-400 font-bold uppercase tracking-widest">Discount</span>
+            <span className="text-[9px] font-mono text-rose-500 font-bold uppercase tracking-widest">Discount</span>
           </div>
           <div className="mt-4">
             <p className="text-2xl sm:text-3xl font-serif text-(--foreground) group-hover:text-luxury-gold transition-colors font-bold">
               {stats.onSale}
             </p>
-            <p className="text-[10px] uppercase font-bold tracking-[0.2em] text-(--foreground)/40 mt-1">
+            <p className="text-[10px] uppercase font-bold tracking-[0.2em] text-(--foreground)/60 mt-1">
               Promotional Deals
             </p>
           </div>
@@ -484,31 +498,31 @@ export default function AdminDashboard() {
           {/* Quick Operations Suite */}
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <h3 className="text-xs font-bold uppercase tracking-[0.25em] text-(--foreground)/50 flex items-center gap-2">
+              <h3 className="text-xs font-bold uppercase tracking-[0.25em] text-(--foreground)/70 flex items-center gap-2">
                 <Sparkles size={13} className="text-luxury-gold" />
                 Atelier Quick Operations
               </h3>
-              <span className="text-[10px] text-(--foreground)/30 font-mono">Action Shortcuts</span>
+              <span className="text-[10px] text-(--foreground)/40 font-mono font-medium">Action Shortcuts</span>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {/* Card 1: Add Fragrance */}
               <Link
                 href="/admin/products/new"
-                className="group p-6 rounded-3xl bg-(--card) border border-(--foreground)/5 hover:border-luxury-gold/40 transition-all shadow-lg hover:shadow-[0_8px_30px_rgba(212,175,55,0.08)] space-y-4 relative overflow-hidden"
+                className="group p-6 rounded-3xl bg-(--card) border border-luxury-gold/25 hover:border-luxury-gold/60 transition-all shadow-md hover:shadow-luxury-gold/10 space-y-4 relative overflow-hidden"
               >
-                <div className="absolute top-0 right-0 w-32 h-32 bg-luxury-gold/5 rounded-full blur-2xl group-hover:bg-luxury-gold/10 transition-all pointer-events-none" />
+                <div className="absolute top-0 right-0 w-32 h-32 bg-luxury-gold/5 rounded-full blur-2xl group-hover:bg-luxury-gold/15 transition-all pointer-events-none" />
                 <div className="flex items-center justify-between">
                   <div className="w-12 h-12 rounded-2xl bg-luxury-gold/15 border border-luxury-gold/30 flex items-center justify-center text-luxury-gold group-hover:scale-110 transition-transform">
                     <Plus size={22} />
                   </div>
-                  <ArrowRight size={16} className="text-(--foreground)/20 group-hover:text-luxury-gold group-hover:translate-x-1 transition-all" />
+                  <ArrowRight size={16} className="text-(--foreground)/40 group-hover:text-luxury-gold group-hover:translate-x-1 transition-all" />
                 </div>
                 <div>
                   <h4 className="text-base font-serif text-(--foreground) group-hover:text-luxury-gold transition-colors font-bold">
                     Release New Scent
                   </h4>
-                  <p className="text-xs text-(--foreground)/40 mt-1 leading-relaxed">
+                  <p className="text-xs text-(--foreground)/60 mt-1 leading-relaxed">
                     Upload flacon photography, compose olfactory notes, and publish single oils or combo boxes.
                   </p>
                 </div>
@@ -517,20 +531,20 @@ export default function AdminDashboard() {
               {/* Card 2: Orders Manifest */}
               <Link
                 href="/admin/orders"
-                className="group p-6 rounded-3xl bg-(--card) border border-(--foreground)/5 hover:border-luxury-gold/40 transition-all shadow-lg hover:shadow-[0_8px_30px_rgba(212,175,55,0.08)] space-y-4 relative overflow-hidden"
+                className="group p-6 rounded-3xl bg-(--card) border border-emerald-500/25 hover:border-emerald-500/60 transition-all shadow-md hover:shadow-emerald-500/10 space-y-4 relative overflow-hidden"
               >
-                <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-full blur-2xl group-hover:bg-emerald-500/10 transition-all pointer-events-none" />
+                <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-full blur-2xl group-hover:bg-emerald-500/15 transition-all pointer-events-none" />
                 <div className="flex items-center justify-between">
-                  <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition-transform">
+                  <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-500 group-hover:scale-110 transition-transform">
                     <ClipboardList size={22} />
                   </div>
-                  <ArrowRight size={16} className="text-(--foreground)/20 group-hover:text-emerald-400 group-hover:translate-x-1 transition-all" />
+                  <ArrowRight size={16} className="text-(--foreground)/40 group-hover:text-emerald-500 group-hover:translate-x-1 transition-all" />
                 </div>
                 <div>
-                  <h4 className="text-base font-serif text-(--foreground) group-hover:text-emerald-400 transition-colors font-bold">
-                    Fulfillment & Manifests
+                  <h4 className="text-base font-serif text-(--foreground) group-hover:text-emerald-500 transition-colors font-bold">
+                    Fulfillment &amp; Manifests
                   </h4>
-                  <p className="text-xs text-(--foreground)/40 mt-1 leading-relaxed">
+                  <p className="text-xs text-(--foreground)/60 mt-1 leading-relaxed">
                     Audit incoming shipments, update delivery progress, and dispatch automated status emails to customers.
                   </p>
                 </div>

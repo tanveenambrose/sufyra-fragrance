@@ -20,7 +20,8 @@ import {
   ArrowRight,
   ExternalLink,
   ShieldCheck,
-  Package
+  Package,
+  TrendingUp
 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { ThemeToggle } from '@/components/ThemeToggle';
@@ -152,6 +153,7 @@ export default function AdminLayout({
 
   const navLinks = [
     { href: '/admin', icon: LayoutDashboard, label: 'Dashboard', exact: true },
+    { href: '/admin/revenue-analytics', icon: TrendingUp, label: 'Analytics', exact: false },
     { href: '/admin/products', icon: ShoppingBag, label: 'Products', exact: true },
     { href: '/admin/products/new', icon: PlusCircle, label: 'Add Product', exact: false },
     { href: '/admin/orders', icon: ClipboardList, label: 'Orders', badge: newOrdersCount, exact: false },
@@ -182,7 +184,7 @@ export default function AdminLayout({
           </div>
 
           <div className="mt-3 space-y-1">
-            <p className="text-sm font-bold text-luxury-cream">{latestAlert.delivery_name || 'Customer'}</p>
+            <p className="text-sm font-bold text-white">{latestAlert.delivery_name || 'Customer'}</p>
             <p className="text-xs text-luxury-gold font-mono font-semibold">
               ৳{latestAlert.total_price} • #{latestAlert.id.slice(0, 8).toUpperCase()}
             </p>
