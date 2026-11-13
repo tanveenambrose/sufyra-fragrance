@@ -13,7 +13,6 @@ import {
   Sparkles,
   Mail,
   Coins,
-  Layers,
   Flame,
   TrendingUp,
   RefreshCw,
@@ -235,11 +234,11 @@ export default function AdminDashboard() {
       </div>
 
       {/* Primary KPI Metrics Grid */}
-      <div className="grid grid-cols-2 lg:grid-cols-5 gap-3.5 sm:gap-4 lg:gap-5">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4 lg:gap-5">
         {/* 1. Total Volume / Revenue -> Revenue Analytics */}
         <Link
           href="/admin/revenue-analytics"
-          className="col-span-2 sm:col-span-1 p-5 rounded-2xl bg-(--card) border border-luxury-gold/25 hover:border-luxury-gold/60 shadow-md hover:shadow-luxury-gold/15 transition-all group flex flex-col justify-between relative overflow-hidden"
+          className="p-5 rounded-2xl bg-(--card) border border-luxury-gold/25 hover:border-luxury-gold/60 shadow-md hover:shadow-luxury-gold/15 transition-all group flex flex-col justify-between relative overflow-hidden"
           title="Explore Revenue Analytics & Historical Breakdown"
         >
           <div className="flex items-center justify-between">
@@ -316,28 +315,8 @@ export default function AdminDashboard() {
           </div>
         </Link>
 
-        {/* 4. Combos & Sets */}
-        <Link
-          href="/admin/products"
-          className="p-5 rounded-2xl bg-(--card) border border-luxury-gold/20 hover:border-luxury-gold/50 shadow-md hover:shadow-luxury-gold/10 transition-all group flex flex-col justify-between"
-        >
-          <div className="flex items-center justify-between">
-            <div className="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-500 group-hover:scale-110 transition-transform">
-              <Layers size={18} />
-            </div>
-            <span className="text-[9px] font-mono text-(--foreground)/50 uppercase tracking-widest font-bold">Sets</span>
-          </div>
-          <div className="mt-4">
-            <p className="text-2xl sm:text-3xl font-serif text-(--foreground) group-hover:text-luxury-gold transition-colors font-bold">
-              {stats.combo}
-            </p>
-            <p className="text-[10px] uppercase font-bold tracking-[0.2em] text-(--foreground)/60 mt-1">
-              Curated Sets
-            </p>
-          </div>
-        </Link>
 
-        {/* 5. Live Deals */}
+        {/* 4. Live Deals */}
         <Link
           href="/admin/products"
           className="p-5 rounded-2xl bg-(--card) border border-luxury-gold/20 hover:border-luxury-gold/50 shadow-md hover:shadow-luxury-gold/10 transition-all group flex flex-col justify-between"

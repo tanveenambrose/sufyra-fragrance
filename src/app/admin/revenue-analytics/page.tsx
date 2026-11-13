@@ -765,7 +765,7 @@ export default function RevenueAnalyticsPage() {
         </div>
 
         {/* Chart Canvas */}
-        <div className="w-full h-[360px] sm:h-[420px] pt-4">
+        <div className="w-full h-90 sm:h-105 pt-4">
           {!isMounted || isLoading ? (
             <div className="w-full h-full flex flex-col items-center justify-center space-y-4">
               <div className="w-10 h-10 border-3 border-luxury-gold/30 border-t-luxury-gold rounded-full animate-spin" />
@@ -859,7 +859,7 @@ export default function RevenueAnalyticsPage() {
                     if (active && payload && payload.length) {
                       const data = payload[0].payload as AggregatedDataPoint;
                       return (
-                        <div className="bg-luxury-charcoal/95 backdrop-blur-xl border border-luxury-gold/40 p-4 rounded-2xl shadow-2xl text-white space-y-2 min-w-[200px]">
+                        <div className="bg-luxury-charcoal/95 backdrop-blur-xl border border-luxury-gold/40 p-4 rounded-2xl shadow-2xl text-white space-y-2 min-w-50">
                           <p className="text-[10px] uppercase font-bold tracking-widest text-luxury-gold border-b border-white/10 pb-1.5 flex items-center justify-between">
                             <span>{data.fullDate}</span>
                             <Sparkles size={11} className="text-luxury-gold" />
@@ -987,7 +987,7 @@ export default function RevenueAnalyticsPage() {
         {/* Table Container */}
         <div className="bg-(--card) rounded-2xl border border-(--foreground)/10 overflow-hidden shadow-lg">
           <div className="overflow-x-auto">
-            <table className="w-full text-left min-w-[720px]">
+            <table className="w-full text-left min-w-180">
               <thead>
                 <tr className="border-b border-(--foreground)/10 bg-(--foreground)/3 text-(--foreground)/60 text-[9px] uppercase tracking-[0.2em] font-bold">
                   <th className="px-6 py-4">Manifest ID</th>
@@ -1032,11 +1032,11 @@ export default function RevenueAnalyticsPage() {
                       </td>
                       <td className="px-6 py-4">
                         <p className="font-bold text-(--foreground) text-xs">{order.delivery_name}</p>
-                        <p className="text-[10px] text-luxury-gold/80 font-mono truncate max-w-[180px]">
+                        <p className="text-[10px] text-luxury-gold/80 font-mono truncate max-w-45">
                           {order.delivery_email || order.whatsapp_number || 'Direct Guest'}
                         </p>
                       </td>
-                      <td className="px-6 py-4 text-(--foreground)/70 text-xs max-w-[200px] truncate">
+                      <td className="px-6 py-4 text-(--foreground)/70 text-xs max-w-50 truncate">
                         {(() => {
                           try {
                             if (order.product_name.startsWith('[') && order.product_name.endsWith(']')) {

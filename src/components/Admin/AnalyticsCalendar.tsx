@@ -296,7 +296,7 @@ export default function AnalyticsCalendar({
         className="fixed inset-0 bg-black/40 backdrop-blur-xs lg:hidden"
         onClick={onClose}
       />
-      <div className="absolute right-0 top-2 mt-2 w-full sm:w-[480px] md:w-[620px] bg-(--card) border border-luxury-gold/30 rounded-3xl p-5 sm:p-6 shadow-2xl text-(--foreground) overflow-hidden">
+      <div className="absolute right-0 top-2 mt-2 w-full sm:w-120 md:w-155 bg-(--card) border border-luxury-gold/30 rounded-3xl p-5 sm:p-6 shadow-2xl text-(--foreground) overflow-hidden">
         {/* Luxury Top Ambient Glow */}
         <div className="absolute top-0 right-0 w-48 h-48 bg-luxury-gold/5 rounded-full blur-3xl pointer-events-none" />
 
@@ -603,3 +603,4 @@ export default function AnalyticsCalendar({
     </div>
   );
 }
+
