@@ -1,6 +1,7 @@
 import React from 'react';
 import Hero from '@/components/Hero';
 import ProductSlider from '@/components/ProductSlider';
+import AdBannerCarousel from '@/components/AdBannerCarousel';
 import { supabaseStatic } from '@/utils/supabase/static';
 import Reveal from '@/components/Reveal';
 
@@ -22,6 +23,7 @@ export default async function Home() {
   return (
     <main className="min-h-screen bg-(--background) transition-colors duration-300">
       <Hero />
+      <AdBannerCarousel />
 
       <Reveal>
         {/* Featured Collections */}
