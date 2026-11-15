@@ -92,7 +92,7 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({
         <form onSubmit={handleSubmit} className="flex flex-col md:flex-row h-full overflow-hidden">
           
           {/* Left Column: Product Thumbnail & Pricing Summary */}
-          <div className="w-full md:w-[42%] lg:w-[40%] bg-(--foreground)/[0.02] border-b md:border-b-0 md:border-r border-(--foreground)/10 p-6 sm:p-8 flex flex-col justify-between overflow-y-auto space-y-6">
+          <div className="w-full md:w-[42%] lg:w-[40%] bg-(--foreground)/2 border-b md:border-b-0 md:border-r border-(--foreground)/10 p-6 sm:p-8 flex flex-col justify-between overflow-y-auto space-y-6">
             <div className="space-y-6">
               {/* Header */}
               <div>
@@ -223,7 +223,7 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     placeholder="e.g. Tanveen Ambrose"
-                    className="w-full bg-(--foreground)/[0.03] hover:bg-(--foreground)/[0.05] focus:bg-(--card) border border-(--foreground)/12 focus:border-luxury-gold/50 rounded-xl px-4 py-3 text-xs sm:text-sm text-(--foreground) transition-all focus:ring-2 focus:ring-luxury-gold/15 outline-none placeholder:text-(--foreground)/30 font-medium"
+                    className="w-full bg-(--foreground)/3 hover:bg-(--foreground)/5 focus:bg-(--card) border border-(--foreground)/10 focus:border-luxury-gold/50 rounded-xl px-4 py-3 text-xs sm:text-sm text-(--foreground) transition-all focus:ring-2 focus:ring-luxury-gold/15 outline-none placeholder:text-(--foreground)/30 font-medium"
                   />
                 </div>
 
@@ -237,7 +237,7 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({
                     <select
                       value={formData.zone}
                       onChange={(e) => setFormData({ ...formData, zone: e.target.value as 'Inside Dhaka' | 'Outside Dhaka' })}
-                      className="w-full bg-(--foreground)/[0.03] hover:bg-(--foreground)/[0.05] focus:bg-(--card) border border-(--foreground)/12 focus:border-luxury-gold/50 rounded-xl px-4 py-3 text-xs sm:text-sm text-(--foreground) transition-all focus:ring-2 focus:ring-luxury-gold/15 outline-none cursor-pointer font-medium"
+                      className="w-full bg-(--foreground)/3 hover:bg-(--foreground)/5 focus:bg-(--card) border border-(--foreground)/10 focus:border-luxury-gold/50 rounded-xl px-4 py-3 text-xs sm:text-sm text-(--foreground) transition-all focus:ring-2 focus:ring-luxury-gold/15 outline-none cursor-pointer font-medium"
                     >
                       <option value="Inside Dhaka" className="bg-(--card) text-(--foreground)">Inside Dhaka (৳80)</option>
                       <option value="Outside Dhaka" className="bg-(--card) text-(--foreground)">Outside Dhaka (৳150)</option>
@@ -252,7 +252,7 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({
                     <select
                       value={formData.paymentMethod}
                       onChange={(e) => setFormData({ ...formData, paymentMethod: e.target.value as 'Cash on Delivery' | 'bKash (Manual)' })}
-                      className="w-full bg-(--foreground)/[0.03] hover:bg-(--foreground)/[0.05] focus:bg-(--card) border border-(--foreground)/12 focus:border-luxury-gold/50 rounded-xl px-4 py-3 text-xs sm:text-sm text-(--foreground) transition-all focus:ring-2 focus:ring-luxury-gold/15 outline-none cursor-pointer font-medium"
+                      className="w-full bg-(--foreground)/3 hover:bg-(--foreground)/5 focus:bg-(--card) border border-(--foreground)/10 focus:border-luxury-gold/50 rounded-xl px-4 py-3 text-xs sm:text-sm text-(--foreground) transition-all focus:ring-2 focus:ring-luxury-gold/15 outline-none cursor-pointer font-medium"
                     >
                       <option value="Cash on Delivery" className="bg-(--card) text-(--foreground)">Cash on Delivery</option>
                       <option value="bKash (Manual)" className="bg-(--card) text-(--foreground)">bKash (Manual)</option>
@@ -271,7 +271,7 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({
                     value={formData.whatsapp}
                     onChange={(e) => setFormData({ ...formData, whatsapp: e.target.value })}
                     placeholder="e.g. 01700-000000"
-                    className="w-full bg-(--foreground)/[0.03] hover:bg-(--foreground)/[0.05] focus:bg-(--card) border border-(--foreground)/12 focus:border-luxury-gold/50 rounded-xl px-4 py-3 text-xs sm:text-sm text-(--foreground) transition-all focus:ring-2 focus:ring-luxury-gold/15 outline-none placeholder:text-(--foreground)/30 font-mono font-medium"
+                    className="w-full bg-(--foreground)/3 hover:bg-(--foreground)/5 focus:bg-(--card) border border-(--foreground)/10 focus:border-luxury-gold/50 rounded-xl px-4 py-3 text-xs sm:text-sm text-(--foreground) transition-all focus:ring-2 focus:ring-luxury-gold/15 outline-none placeholder:text-(--foreground)/30 font-mono font-medium"
                   />
                 </div>
 
@@ -287,7 +287,7 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({
                     value={formData.address}
                     onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                     placeholder="Apartment/Flat, Building, Road No., Area, District..."
-                    className="w-full bg-(--foreground)/[0.03] hover:bg-(--foreground)/[0.05] focus:bg-(--card) border border-(--foreground)/12 focus:border-luxury-gold/50 rounded-xl px-4 py-3 text-xs sm:text-sm text-(--foreground) transition-all focus:ring-2 focus:ring-luxury-gold/15 outline-none placeholder:text-(--foreground)/30 resize-none font-medium leading-relaxed"
+                    className="w-full bg-(--foreground)/3 hover:bg-(--foreground)/5 focus:bg-(--card) border border-(--foreground)/10 focus:border-luxury-gold/50 rounded-xl px-4 py-3 text-xs sm:text-sm text-(--foreground) transition-all focus:ring-2 focus:ring-luxury-gold/15 outline-none placeholder:text-(--foreground)/30 resize-none font-medium leading-relaxed"
                   />
                 </div>
               </div>
