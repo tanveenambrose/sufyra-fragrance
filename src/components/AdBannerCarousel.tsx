@@ -4,77 +4,43 @@ import React, { useState, useEffect, useCallback } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
 import Link from 'next/link';
+import Image from 'next/image';
 import { 
   Sparkles, 
-  Truck, 
-  Flame, 
-  Gift, 
   ArrowRight, 
   ChevronLeft, 
   ChevronRight 
 } from 'lucide-react';
-
-interface AdSlide {
-  id: string;
-  badge: string;
-  badgeIcon: React.ReactNode;
-  headline: string;
-  subheadline: string;
-  ctaText: string;
-  ctaHref: string;
-  highlightText?: string;
-  accentColor: string;
-}
+import { 
+  CarouselSlide, 
+  getSavedCarouselSlides, 
+  CAROUSEL_EVENT_NAME 
+} from '@/lib/carouselStore';
 
 export default function AdBannerCarousel() {
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [slides, setSlides] = useState<CarouselSlide[]>([]);
+  const [mounted, setMounted] = useState(false);
 
-  const slides: AdSlide[] = [
-    {
-      id: 'welcome-offer',
-      badge: 'Haute Privilege',
-      badgeIcon: <Sparkles size={11} className="text-luxury-gold" />,
-      headline: 'COMPLIMENTARY FIRST ORDER PRIVILEGE',
-      subheadline: 'Receive 15% off your first artisanal flacon acquisition with code',
-      highlightText: 'SUFYRA15',
-      ctaText: 'Claim Offer',
-      ctaHref: '/products',
-      accentColor: 'from-[#1c1810] via-[#241e14] to-[#1c1810]'
-    },
-    {
-      id: 'nationwide-shipping',
-      badge: 'Concierge Logistics',
-      badgeIcon: <Truck size={11} className="text-emerald-400" />,
-      headline: 'FREE NATIONWIDE DELIVERY ACROSS BANGLADESH',
-      subheadline: 'Guaranteed express courier service on all orders exceeding ৳1,000',
-      highlightText: 'EXPRESS DISPATCH',
-      ctaText: 'Explore Scents',
-      ctaHref: '/products',
-      accentColor: 'from-[#0e1713] via-[#14231c] to-[#0e1713]'
-    },
-    {
-      id: 'pure-attars',
-      badge: '100% Pure Oils',
-      badgeIcon: <Flame size={11} className="text-amber-400" />,
-      headline: 'HAUTE CONCENTRATION • 12+ HOUR SILLAGE',
-      subheadline: 'Alcohol-free organic perfume oils hand-poured in small artisanal batches',
-      highlightText: 'PURE ESSENCE',
-      ctaText: 'View Attars',
-      ctaHref: '/products',
-      accentColor: 'from-[#1a1410] via-[#231b14] to-[#1a1410]'
-    },
-    {
-      id: 'curated-sets',
-      badge: 'Bespoke Gifts',
-      badgeIcon: <Gift size={11} className="text-purple-400" />,
-      headline: 'LUXURY FLACON COMBOS & GIFT BOXES',
-      subheadline: 'Pair multiple signature fragrances packaged in our signature golden vault',
-      highlightText: 'LIMITED EDITION',
-      ctaText: 'Shop Combos',
-      ctaHref: '/products',
-      accentColor: 'from-[#16121c] via-[#201928] to-[#16121c]'
-    }
-  ];
+  // Load and listen for carousel slides updates from Admin panel
+  useEffect(() => {
+    const loadSlides = () => {
+      const all = getSavedCarouselSlides();
+      const activeSlides = all.filter((s) => s.isActive !== false);
+      setSlides(activeSlides.length > 0 ? activeSlides : all);
+    };
+
+    loadSlides();
+    setMounted(true);
+
+    window.addEventListener(CAROUSEL_EVENT_NAME, loadSlides);
+    window.addEventListener('storage', loadSlides);
+
+    return () => {
+      window.removeEventListener(CAROUSEL_EVENT_NAME, loadSlides);
+      window.removeEventListener('storage', loadSlides);
+    };
+  }, []);
 
   const [emblaRef, emblaApi] = useEmblaCarousel(
     { 
@@ -82,7 +48,7 @@ export default function AdBannerCarousel() {
       align: 'start',
       skipSnaps: false
     }, 
-    [Autoplay({ delay: 4500, stopOnInteraction: false, stopOnMouseEnter: true })]
+    [Autoplay({ delay: 5000, stopOnInteraction: false, stopOnMouseEnter: true })]
   );
 
   const onSelect = useCallback(() => {
@@ -107,10 +73,18 @@ export default function AdBannerCarousel() {
     if (emblaApi) emblaApi.scrollNext();
   }, [emblaApi]);
 
+  if (!mounted || slides.length === 0) {
+    return (
+      <section className="w-full px-3 sm:px-6 pt-3 pb-6 sm:pb-10" aria-label="Special Announcements">
+        <div className="max-w-325 w-full h-24 sm:h-28 md:h-30 mx-auto rounded-2xl bg-(--card)/50 border border-(--foreground)/10 animate-pulse" />
+      </section>
+    );
+  }
+
   return (
-    <section className="w-full px-4 sm:px-6 pt-4 pb-8 sm:pb-12" aria-label="Special Announcements">
-      {/* 1250px Width & 100px Height Container */}
-      <div className="max-w-[1250px] w-full h-25 mx-auto relative rounded-2xl overflow-hidden border border-luxury-gold/30 bg-[#0f0e0c] shadow-[0_10px_30px_rgba(0,0,0,0.4),0_0_20px_rgba(212,175,55,0.08)] group">
+    <section className="w-full px-3 sm:px-6 pt-3 pb-6 sm:pb-10" aria-label="Special Announcements">
+      {/* 1300px Width & 120px Height Container (max-w-325 & h-30) */}
+      <div className="max-w-325 w-full h-24 sm:h-28 md:h-30 mx-auto relative rounded-2xl overflow-hidden border border-luxury-gold/30 bg-[#0f0e0c] shadow-[0_10px_30px_rgba(0,0,0,0.4),0_0_20px_rgba(212,175,55,0.08)] group">
         
         {/* Subtle Luxury Ambient Glow */}
         <div className="absolute top-0 right-1/4 w-72 h-72 bg-luxury-gold/5 rounded-full blur-3xl pointer-events-none" />
@@ -119,93 +93,152 @@ export default function AdBannerCarousel() {
         {/* Embla Carousel Viewport */}
         <div className="overflow-hidden w-full h-full" ref={emblaRef}>
           <div className="flex h-full">
-            {slides.map((slide) => (
-              <div 
-                key={slide.id} 
-                className="flex-[0_0_100%] min-w-0 h-full relative"
-              >
-                <div className={`w-full h-full bg-linear-to-r ${slide.accentColor} px-4 sm:px-8 lg:px-10 flex items-center justify-between gap-3 sm:gap-6 text-white relative`}>
-                  
-                  {/* Left: Badge & Text */}
-                  <div className="flex items-center gap-3 sm:gap-4 min-w-0 flex-1">
-                    {/* Badge */}
-                    <div className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/40 border border-luxury-gold/30 text-luxury-gold text-[9px] font-bold uppercase tracking-[0.2em] shrink-0 shadow-xs">
-                      {slide.badgeIcon}
-                      <span>{slide.badge}</span>
-                    </div>
+            {slides.map((slide) => {
+              const hasBadge = Boolean(slide.showBadge && slide.badge?.trim());
+              const hasHeadline = Boolean(slide.showHeadline && slide.headline?.trim());
+              const hasSubheadline = Boolean(slide.showSubheadline && slide.subheadline?.trim());
+              const hasButton = Boolean(slide.showButton && slide.buttonText?.trim());
+              const hasAnyOverlay = hasBadge || hasHeadline || hasSubheadline || hasButton;
+              const linkHref = slide.buttonLink?.trim() || '/products';
 
-                    {/* Headline and Description */}
-                    <div className="min-w-0 flex flex-col justify-center">
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <span className="sm:hidden flex items-center gap-1 text-[8px] font-bold uppercase tracking-wider text-luxury-gold">
-                          {slide.badgeIcon}
-                          {slide.badge}
-                        </span>
-                        <h3 className="font-serif text-xs sm:text-sm lg:text-base font-bold tracking-wide text-white truncate">
-                          {slide.headline}
-                        </h3>
-                        {slide.highlightText && (
-                          <span className="px-1.5 py-0.5 rounded bg-luxury-gold/20 border border-luxury-gold/40 text-luxury-gold font-mono text-[9px] sm:text-[10px] font-bold uppercase tracking-wider shrink-0">
-                            {slide.highlightText}
-                          </span>
-                        )}
-                      </div>
-                      <p className="text-[10px] sm:text-xs text-zinc-300 dark:text-zinc-300 line-clamp-1 font-light tracking-wide mt-0.5">
-                        {slide.subheadline}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Right: CTA Button */}
-                  <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-                    <Link
-                      href={slide.ctaHref}
-                      className="px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full bg-linear-to-r from-luxury-gold via-[#e6cf8b] to-luxury-gold text-black font-bold text-[9px] sm:text-xs uppercase tracking-widest hover:brightness-110 active:scale-95 transition-all shadow-md shadow-luxury-gold/20 flex items-center gap-1.5 group/btn whitespace-nowrap"
+              // If pure graphic banner (no text overlay enabled/filled)
+              if (!hasAnyOverlay && slide.imageUrl) {
+                return (
+                  <div key={slide.id} className="flex-[0_0_100%] min-w-0 h-full relative">
+                    <Link 
+                      href={linkHref}
+                      className="block w-full h-full relative group/slide overflow-hidden cursor-pointer"
                     >
-                      <span>{slide.ctaText}</span>
-                      <ArrowRight size={12} className="group-hover/btn:translate-x-0.5 transition-transform" />
+                      <Image
+                        src={slide.imageUrl}
+                        alt="Promotional Banner"
+                        fill
+                        sizes="(max-width: 1300px) 100vw, 1300px"
+                        priority
+                        className="object-cover object-center group-hover/slide:scale-[1.01] transition-transform duration-500"
+                        unoptimized
+                      />
                     </Link>
                   </div>
+                );
+              }
+
+              // Standard / Custom Overlay Slide
+              const fallbackGradient = slide.accentColor || 'from-[#1c1810] via-[#241e14] to-[#1c1810]';
+
+              return (
+                <div key={slide.id} className="flex-[0_0_100%] min-w-0 h-full relative">
+                  <div className={`w-full h-full relative overflow-hidden bg-linear-to-r ${fallbackGradient} px-4 sm:px-8 lg:px-10 flex items-center justify-between gap-3 sm:gap-6 text-white`}>
+                    
+                    {/* Background Banner Image (if provided) */}
+                    {slide.imageUrl && (
+                      <div className="absolute inset-0 z-0">
+                        <Image
+                          src={slide.imageUrl}
+                          alt="Banner background"
+                          fill
+                          sizes="(max-width: 1300px) 100vw, 1300px"
+                          className="object-cover object-center opacity-40"
+                          unoptimized
+                        />
+                        <div className="absolute inset-0 bg-linear-to-r from-black/80 via-black/60 to-black/80" />
+                      </div>
+                    )}
+
+                    {/* Left: Badge & Text Overlays */}
+                    <div className="flex items-center gap-3 sm:gap-4 min-w-0 flex-1 relative z-10">
+                      {/* Badge (Rendered only if enabled and filled) */}
+                      {hasBadge && (
+                        <div className="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/60 border border-luxury-gold/40 text-luxury-gold text-[9px] font-bold uppercase tracking-[0.2em] shrink-0 shadow-xs">
+                          <Sparkles size={11} className="text-luxury-gold" />
+                          <span>{slide.badge}</span>
+                        </div>
+                      )}
+
+                      {/* Headline and Description */}
+                      <div className="min-w-0 flex flex-col justify-center">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          {hasBadge && (
+                            <span className="sm:hidden flex items-center gap-1 text-[8px] font-bold uppercase tracking-wider text-luxury-gold">
+                              <Sparkles size={9} />
+                              {slide.badge}
+                            </span>
+                          )}
+
+                          {/* Headline (Rendered only if enabled and filled) */}
+                          {hasHeadline && (
+                            <h3 className="font-serif text-xs sm:text-sm md:text-base font-bold tracking-wide text-white truncate leading-tight">
+                              {slide.headline}
+                            </h3>
+                          )}
+                        </div>
+
+                        {/* Subheadline (Rendered only if enabled and filled) */}
+                        {hasSubheadline && (
+                          <p className="text-[10px] sm:text-xs text-zinc-300 line-clamp-1 font-light tracking-wide mt-1">
+                            {slide.subheadline}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Right: CTA Button (Rendered only if enabled and filled) */}
+                    {hasButton && (
+                      <div className="flex items-center gap-2 sm:gap-3 shrink-0 relative z-10">
+                        <Link
+                          href={linkHref}
+                          className="px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full bg-linear-to-r from-luxury-gold via-[#e6cf8b] to-luxury-gold text-black font-bold text-[9px] sm:text-xs uppercase tracking-widest hover:brightness-110 active:scale-95 transition-all shadow-md shadow-luxury-gold/20 flex items-center gap-1.5 group/btn whitespace-nowrap"
+                        >
+                          <span>{slide.buttonText}</span>
+                          <ArrowRight size={12} className="group-hover/btn:translate-x-0.5 transition-transform" />
+                        </Link>
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
         {/* Carousel Navigation Arrows */}
-        <button
-          type="button"
-          onClick={scrollPrev}
-          aria-label="Previous promotional slide"
-          className="absolute left-2 top-1/2 -translate-y-1/2 w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-black/60 hover:bg-black/90 border border-luxury-gold/40 text-luxury-gold flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-200 z-10 shadow-md"
-        >
-          <ChevronLeft size={14} />
-        </button>
-        <button
-          type="button"
-          onClick={scrollNext}
-          aria-label="Next promotional slide"
-          className="absolute right-2 top-1/2 -translate-y-1/2 w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-black/60 hover:bg-black/90 border border-luxury-gold/40 text-luxury-gold flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-200 z-10 shadow-md"
-        >
-          <ChevronRight size={14} />
-        </button>
-
-        {/* Slide Indicator Dots */}
-        <div className="absolute bottom-1.5 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-10">
-          {slides.map((_, idx) => (
+        {slides.length > 1 && (
+          <>
             <button
-              key={idx}
               type="button"
-              onClick={() => emblaApi?.scrollTo(idx)}
-              aria-label={`Go to slide ${idx + 1}`}
-              className={`transition-all duration-300 rounded-full ${
-                selectedIndex === idx 
-                  ? 'w-4 h-1 bg-luxury-gold shadow-[0_0_8px_rgba(212,175,55,0.8)]' 
-                  : 'w-1 h-1 bg-white/30 hover:bg-white/60'
-              }`}
-            />
-          ))}
-        </div>
+              onClick={scrollPrev}
+              aria-label="Previous slide"
+              className="absolute left-2 top-1/2 -translate-y-1/2 w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-black/60 hover:bg-black/90 border border-luxury-gold/40 text-luxury-gold flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-200 z-10 shadow-md"
+            >
+              <ChevronLeft size={14} />
+            </button>
+            <button
+              type="button"
+              onClick={scrollNext}
+              aria-label="Next slide"
+              className="absolute right-2 top-1/2 -translate-y-1/2 w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-black/60 hover:bg-black/90 border border-luxury-gold/40 text-luxury-gold flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-200 z-10 shadow-md"
+            >
+              <ChevronRight size={14} />
+            </button>
+
+            {/* Slide Indicator Dots */}
+            <div className="absolute bottom-1.5 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-10">
+              {slides.map((_, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => emblaApi?.scrollTo(idx)}
+                  aria-label={`Go to slide ${idx + 1}`}
+                  className={`transition-all duration-300 rounded-full ${
+                    selectedIndex === idx 
+                      ? 'w-4 h-1 bg-luxury-gold shadow-[0_0_8px_rgba(212,175,55,0.8)]' 
+                      : 'w-1 h-1 bg-white/30 hover:bg-white/60'
+                  }`}
+                />
+              ))}
+            </div>
+          </>
+        )}
       </div>
     </section>
   );
