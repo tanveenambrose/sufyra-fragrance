@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { Plus } from 'lucide-react';
 import { Product } from '@/data/products';
 import { useCart } from '@/store/useCart';
@@ -15,6 +15,7 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, priority = false, reveal = false }) => {
+  const router = useRouter();
   const [selectedSize, setSelectedSize] = useState<string>(product.variants[0].size);
   const [isSparking, setIsSparking] = useState(false);
   const addItem = useCart((state) => state.addItem);
@@ -23,7 +24,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority = false, re
   const currentPrice = currentVariant.price;
   const displayImage = product.image_url;
 
-  const handleAddItem = () => {
+  const handleCardClick = () => {
+    router.push(`/product-details/${product.id}`);
+  };
+
+  const handleAddItem = (e: React.MouseEvent) => {
+    e.stopPropagation();
     // Determine the correct size type for the cart store
     const size = selectedSize as '3ml' | '6ml' | 'set';
     addItem(product, size);
@@ -35,9 +41,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority = false, re
   const discountedPrice = discount > 0 ? Math.round(currentPrice * (1 - discount / 100)) : currentPrice;
 
   return (
-    <div className={`group rounded-2xl sm:rounded-3xl overflow-hidden flex flex-col h-full ${reveal ? 'reveal' : ''} bg-(--foreground)/3 hover:bg-(--foreground)/5 border border-(--foreground)/10 hover:border-luxury-gold/40 transition-all duration-300 hover:shadow-xl hover:shadow-luxury-gold/5`} suppressHydrationWarning>
+    <div 
+      onClick={handleCardClick}
+      className={`group rounded-2xl sm:rounded-3xl overflow-hidden flex flex-col h-full cursor-pointer ${reveal ? 'reveal' : ''} bg-(--foreground)/3 hover:bg-(--foreground)/5 border border-(--foreground)/10 hover:border-luxury-gold/40 transition-all duration-300 hover:shadow-xl hover:shadow-luxury-gold/5`} 
+      suppressHydrationWarning
+    >
       {/* Product Image */}
-      <Link href={`/product-details/${product.id}`} className="relative aspect-square block overflow-hidden group-hover:cursor-pointer" suppressHydrationWarning>
+      <div className="relative aspect-square block overflow-hidden" suppressHydrationWarning>
         <div className="relative w-full h-full bg-luxury-cream/5" suppressHydrationWarning>
           {displayImage ? (
             <Image
@@ -62,14 +72,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority = false, re
             </div>
           )}
         </div>
-      </Link>
+      </div>
 
       {/* Product Info */}
       <div className="p-3 sm:p-5 flex flex-col flex-1" suppressHydrationWarning>
         <div className="mb-2 sm:mb-3" suppressHydrationWarning>
-          <Link href={`/product-details/${product.id}`} className="hover:text-luxury-gold transition-colors block mb-1">
+          <div className="group-hover:text-luxury-gold transition-colors block mb-1">
             <h3 className="text-xs sm:text-base font-serif text-(--foreground) font-bold tracking-tight line-clamp-1 leading-tight">{product.name}</h3>
-          </Link>
+          </div>
           <div className="flex items-center gap-1.5 sm:gap-2" suppressHydrationWarning>
              <span className="text-luxury-gold font-bold text-xs sm:text-base">{discountedPrice}৳</span>
              {discount > 0 && (
@@ -83,7 +93,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority = false, re
           {product.variants.map((variant) => (
             <button
               key={variant.size}
-              onClick={() => setSelectedSize(variant.size)}
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                setSelectedSize(variant.size);
+              }}
               className={`px-2.5 py-0.5 rounded-md sm:rounded-full transition-all text-[8px] sm:text-[9px] font-bold border ${
                 selectedSize === variant.size
                   ? 'border-luxury-gold bg-luxury-gold text-white'
@@ -98,6 +112,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority = false, re
         <div className="relative w-full">
           <CartSparkBurst active={isSparking} />
           <button 
+            type="button"
             onClick={handleAddItem}
             className={`w-full py-2 sm:py-2.5 rounded-lg sm:rounded-xl font-bold text-[9px] sm:text-[10px] uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all shadow-sm active:scale-[0.98] ${
               isSparking 

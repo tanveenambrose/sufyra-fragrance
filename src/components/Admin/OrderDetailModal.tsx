@@ -41,7 +41,7 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({ order, isOpen, onCl
 
   return (
     <div className="fixed inset-0 z-100 flex items-center justify-center p-4 sm:p-6 animate-in fade-in duration-300">
-      <div className="absolute inset-0 bg-black/90 backdrop-blur-xl" onClick={onClose} />
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-md" onClick={onClose} />
       
       <div className="relative w-full max-w-2xl bg-(--card) border border-(--foreground)/10 rounded-[30px] overflow-hidden shadow-2xl animate-in zoom-in-95 duration-300">
         <div className="p-8 md:p-10">

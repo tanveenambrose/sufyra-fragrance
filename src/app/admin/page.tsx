@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
+import CarouselManager from '@/components/Admin/CarouselManager';
 
 interface DashboardOrder {
   id: string;
@@ -650,6 +651,9 @@ export default function AdminDashboard() {
           </div>
         </div>
       </div>
+
+      {/* Carousel & Promotional Banner Management */}
+      <CarouselManager />
     </div>
   );
 }

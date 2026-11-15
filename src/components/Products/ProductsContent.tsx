@@ -79,7 +79,12 @@ export default function ProductsContent({ initialProducts }: ProductsContentProp
               <div className="space-y-6">
                 <div className="flex flex-col gap-4">
                   <div className="space-y-2">
-                    <label className="text-[10px] text-(--foreground)/60 uppercase tracking-widest font-bold">Min Price</label>
+                    <div className="flex justify-between items-center">
+                      <label className="text-[10px] text-(--foreground)/60 uppercase tracking-widest font-bold">Min Price</label>
+                      <span className="px-2 py-0.5 rounded-md bg-luxury-gold/15 border border-luxury-gold/30 text-luxury-gold font-mono font-bold text-[11px] shadow-xs">
+                        {minPrice}৳
+                      </span>
+                    </div>
                     <input
                       type="range"
                       min="0"
@@ -91,7 +96,12 @@ export default function ProductsContent({ initialProducts }: ProductsContentProp
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-[10px] text-(--foreground)/60 uppercase tracking-widest font-bold">Max Price</label>
+                    <div className="flex justify-between items-center">
+                      <label className="text-[10px] text-(--foreground)/60 uppercase tracking-widest font-bold">Max Price</label>
+                      <span className="px-2 py-0.5 rounded-md bg-luxury-gold/15 border border-luxury-gold/30 text-luxury-gold font-mono font-bold text-[11px] shadow-xs">
+                        {maxPrice}৳
+                      </span>
+                    </div>
                     <input
                       type="range"
                       min="0"
@@ -105,8 +115,16 @@ export default function ProductsContent({ initialProducts }: ProductsContentProp
                 </div>
                 <div className="flex flex-col gap-4 py-4 border-y border-(--foreground)/5">
                   <div className="flex justify-between items-center w-full">
-                    <span className="text-[10px] font-bold text-(--foreground)/60 uppercase tracking-widest">Range</span>
-                    <span className="text-[10px] font-bold text-luxury-gold uppercase tracking-widest">{minPrice}৳ — {maxPrice}৳</span>
+                    <span className="text-[10px] font-bold text-(--foreground)/60 uppercase tracking-widest">Active Range</span>
+                    <div className="flex items-center gap-1.5">
+                      <span className="px-2.5 py-1 rounded-lg bg-luxury-gold/15 border border-luxury-gold/35 text-luxury-gold font-mono font-bold text-xs tracking-tight shadow-xs">
+                        {minPrice}৳
+                      </span>
+                      <span className="text-luxury-gold/40 font-bold text-xs">—</span>
+                      <span className="px-2.5 py-1 rounded-lg bg-luxury-gold/15 border border-luxury-gold/35 text-luxury-gold font-mono font-bold text-xs tracking-tight shadow-xs">
+                        {maxPrice}৳
+                      </span>
+                    </div>
                   </div>
                   <button
                     onClick={() => { setMinPrice(0); setMaxPrice(2000); }}
@@ -200,10 +218,26 @@ export default function ProductsContent({ initialProducts }: ProductsContentProp
             </div>
 
             <div className="space-y-6 pt-8 border-t border-(--foreground)/10">
-              <h3 className="text-(--foreground)/70 text-[10px] font-bold uppercase tracking-widest">Price Range: {minPrice}৳ — {maxPrice}৳</h3>
+              <div className="flex justify-between items-center">
+                <h3 className="text-(--foreground)/70 text-[10px] font-bold uppercase tracking-widest">Active Price Range</h3>
+                <div className="flex items-center gap-1.5">
+                  <span className="px-2.5 py-1 rounded-lg bg-luxury-gold/15 border border-luxury-gold/35 text-luxury-gold font-mono font-bold text-xs shadow-xs">
+                    {minPrice}৳
+                  </span>
+                  <span className="text-luxury-gold/40 font-bold text-xs">—</span>
+                  <span className="px-2.5 py-1 rounded-lg bg-luxury-gold/15 border border-luxury-gold/35 text-luxury-gold font-mono font-bold text-xs shadow-xs">
+                    {maxPrice}৳
+                  </span>
+                </div>
+              </div>
               <div className="space-y-6">
                 <div className="space-y-2">
-                  <label className="text-[10px] text-(--foreground)/60 font-bold uppercase tracking-widest">Min Price</label>
+                  <div className="flex justify-between items-center">
+                    <label className="text-[10px] text-(--foreground)/60 font-bold uppercase tracking-widest">Min Price</label>
+                    <span className="px-2 py-0.5 rounded-md bg-luxury-gold/15 border border-luxury-gold/30 text-luxury-gold font-mono font-bold text-[11px]">
+                      {minPrice}৳
+                    </span>
+                  </div>
                   <input
                     type="range"
                     min="0"
@@ -215,7 +249,12 @@ export default function ProductsContent({ initialProducts }: ProductsContentProp
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-[10px] text-(--foreground)/60 font-bold uppercase tracking-widest">Max Price</label>
+                  <div className="flex justify-between items-center">
+                    <label className="text-[10px] text-(--foreground)/60 font-bold uppercase tracking-widest">Max Price</label>
+                    <span className="px-2 py-0.5 rounded-md bg-luxury-gold/15 border border-luxury-gold/30 text-luxury-gold font-mono font-bold text-[11px]">
+                      {maxPrice}৳
+                    </span>
+                  </div>
                   <input
                     type="range"
                     min="0"

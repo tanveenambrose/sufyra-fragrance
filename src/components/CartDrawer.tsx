@@ -30,7 +30,7 @@ const CartDrawer: React.FC = () => {
 
       {/* Drawer */}
       <div
-        className={`fixed top-0 right-0 h-full w-full max-w-md bg-(--background) z-101 cart-drawer flex flex-col transition-all duration-500 ease-[cubic-bezier(0.04,0.56,0.4,1)] ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
+        className={`fixed top-0 right-0 h-full w-full max-w-md bg-(--background) rounded-l-xl overflow-hidden shadow-2xl border-l border-(--foreground)/10 z-101 cart-drawer flex flex-col transition-all duration-500 ease-[cubic-bezier(0.04,0.56,0.4,1)] ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
       >
         {/* Header */}
         <div className="p-6 border-b border-(--foreground)/10 flex items-center justify-between">
